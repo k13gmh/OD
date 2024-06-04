@@ -1,1 +1,70 @@
-<html><body><p>"hi"</p></body>/html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .video-list {
+            margin-top: 20px;
+        }
+        .video-item {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Login</h2>
+<div id="login">
+    <label for="phone">Phone Number:</label>
+    <input type="text" id="phone">
+    <button onclick="login()">Login</button>
+    <p id="login-error" class="hidden">Unknown number, please try again.</p>
+</div>
+
+<div id="video-section" class="hidden">
+    <h2>Video List</h2>
+    <div class="video-list">
+        <div class="video-item" data-video-id="1">
+            <button onclick="viewVideo(1)">Video 1</button>
+        </div>
+        <div class="video-item" data-video-id="2">
+            <button onclick="viewVideo(2)">Video 2</button>
+        </div>
+        <div class="video-item" data-video-id="3">
+            <button onclick="viewVideo(3)">Video 3</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const knownNumbers = ["1234567890", "0987654321"]; // Replace with actual known numbers
+    const viewedVideos = {};
+
+    function login() {
+        const phone = document.getElementById('phone').value;
+        if (knownNumbers.includes(phone)) {
+            document.getElementById('login').classList.add('hidden');
+            document.getElementById('video-section').classList.remove('hidden');
+        } else {
+            document.getElementById('login-error').classList.remove('hidden');
+        }
+    }
+
+    function viewVideo(videoId) {
+        alert(`Viewing video ${videoId}`);
+        viewedVideos[videoId] = true;
+        console.log(`Video ${videoId} viewed.`, viewedVideos);
+    }
+</script>
+
+</body>
+</html>
