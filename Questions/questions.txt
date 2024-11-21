@@ -1,6 +1,48 @@
-1*Q*What are the three holes indicated on this tyre?
-1*A*The tyre has been repaired 3 times
-1*B*Damage driving over a police stinger
-1*C*A manufacturing defect
-1*D*Tread depth indicators
-1*S*A type of minimum tread depth inficators.
+1-q-What are the three holes indicated on this tyre?
+1-a-The tyre has been repaired 3 times
+1-b-Damage driving over a police stinger
+1-c-A manufacturing defect
+1-d-Tread depth indicators
+1-s-d-A type of minimum tread depth inficators.
+2-q-Great night out but it is late and you had one too many.  You should
+2-a-Sleep in your car if parked at the side of the road
+2-b-Sleep in your car if parked in a layby
+2-c-Sleep in your car if parked in a car park
+2-d-None of the above
+2-s-d-Road traffic act 1988 section 5 prohibits driving or being in charge of a motor vehicle if drunk.  You are still seemed to be in charge even when sleeping
+3-q- Whilst driving in Cyprus, even if your car is under control, it it illegal to...
+3-a-Remove your sun glasses
+3-b-Drink water
+3-c-Switch stations on the radio
+3-d-Use hazzard lights whilst moving
+3-s-b-In Cyprus it illegal to take even a sip of water or eat whilst driving
+4-q-In the UK it is illegal to..
+4-a-Swear at another driver
+4-b-Wave at another driver
+4-c-Flash your lights at another driver
+4-d- Sound your horn at a pedestrian
+4-s-a-Swearing at another driver is Disorderly Behavour.Maximum fine of £1000.  Crime and disorder act 1988
+5-q-This sign means...
+5-a-A steep ascent
+5-b-A steep descent
+5-c-Decrease speed by 20%
+5-d-Increase speed by 20%
+5-s-a-A steep ascent
+6-q-In the UK, on a hot day, it is illegal to drive, with a dog in the car, when..
+6-a-The car windows are closed
+6-b-The dog has it head out of the window
+6-c-The dog is secured by a lead
+6-d-None of the above
+6-s-b-Dogs must be secured and not put their heads out of the window
+7-q-Where possible you must keep both hands on the steering wheel
+7-a-you do not have to
+7-b-at all times
+7-c-only on a practical driving test
+7-d-only on an advanced driving test
+7-s-b-Highway code 160 states you should hold the steering wheel with both hands where possible
+8-q-If you park at a parking meter and do not have enough change.  Which answer is incorrect
+8-a-Do not leave just ask passer-by for change
+8-b-You must leave and return when you have change
+8-c-You may not leave a note in the car indicating the meter is broken
+8-d-None of the above are wrong
+8-s-a-Vagrancy act 1824 makes begging for change under any circumstances illegal
