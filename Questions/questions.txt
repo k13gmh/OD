@@ -1,0 +1,6 @@
+1*Q*What are the three holes indicated on this tyre?
+1*A*The tyre has been repaired 3 times
+1*B*Damage driving over a police stinger
+1*C*A manufacturing defect
+1*D*Tread depth indicators
+1*S*A type of minimum tread depth inficators.
