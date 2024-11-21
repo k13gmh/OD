@@ -1,12 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Page Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #answer {
+            margin-top: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
 </head>
 <body>
-
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
-
+    <h1 id="questionTitle"></h1>
+    <div id="options"></div>
+    <div id="controls">
+        <button id="revealButton" style="display: none;">Reveal Answer</button>
+        <p id="answer" style="display: none;"></p>
+        <button id="continueButton" style="display: none;">Continue</button>
+    </div>
+    <script src="quiz.js"></script>
 </body>
 </html>
