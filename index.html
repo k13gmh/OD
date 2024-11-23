@@ -36,41 +36,24 @@
     </style>
 </head>
 <body>
-    <h1>Questions</h1>
+    <h1>Questionsx</h1>
     <ul id="questions-list" class="question-list">
         <!-- Questions will be dynamically inserted here -->
     </ul>
 
     <script>
-        // Fetch the questions from the questions.txt file in the 'questions' subdirectory
+        // Fetch the questions from the 'Questions' subdirectory in your GitHub repository
         fetch('Questions/questions.txt')
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch questions.txt');
+                }
+                return response.text();
+            })
             .then(data => {
+                console.log('Fetched data:', data); // Debugging: log the data fetched from questions.txt
+
                 // Split the data into lines
                 const questions = data.split('\n').map(line => {
                     const fields = line.split('-');  // Split by '-' delimiter without spaces
-                    // Ensure there are at least 3 fields (question number, type, and question text)
-                    if (fields.length >= 3) {
-                        return {
-                            number: fields[0].trim(), // Question number
-                            text: fields[2].trim()    // Question text
-                        };
-                    }
-                    return null; // Ignore lines that don't have enough data
-                }).filter(Boolean); // Remove any null values
-
-                // Get the reference to the <ul> element
-                const questionListElement = document.getElementById('questions-list');
-
-                // Dynamically create list items for each question
-                questions.forEach(question => {
-                    const li = document.createElement('li');
-                    li.classList.add('question-item');
-                    li.innerHTML = `<span class="question-number">${question.number}</span> - ${question.text}`;
-                    questionListElement.appendChild(li);
-                });
-            })
-            .catch(error => console.error('Error fetching questions:', error));
-    </script>
-</body>
-</html>
+                    // Ensure there are at least 3 fields
