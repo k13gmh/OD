@@ -3,34 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz App</title>
+    <title>Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            padding: 20px;
+            margin: 50px;
         }
-        button {
-            display: block;
-            margin: 10px auto;
+        .question {
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .next-button {
             padding: 10px 20px;
             font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
         }
-        #answer {
-            margin-top: 20px;
-            font-weight: bold;
-            color: green;
+        .next-button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h1 id="questionTitle"></h1>
-    <div id="options"></div>
-    <div id="controls">
-        <button id="revealButton" style="display: none;">Reveal Answer</button>
-        <p id="answer" style="display: none;"></p>
-        <button id="continueButton" style="display: none;">Continue</button>
+    <div id="quiz-container">
+        <div class="question" id="question"></div>
+        <button class="next-button" id="next-button">Next</button>
     </div>
-    <script src="quiz.js"></script>
+
+    <script>
+        // Fetch the questions dynamically from the server
+        let questions = [];
+        let currentQuestionIndex = 0;
+
+        async function fetchQuestions() {
+            try {
+                const response = await fetch('/questions.txt'); // Adjust the path if necessary
+                const text = await response.text();
+
+                // Parse questions.txt into an array of objects
+                questions = text.split('\n').filter(line => line).map(line => {
+                    const [number, type, text] = line.split('-');
+                    return { number: parseInt(number), type, text };
+                });
+
+                displayQuestion();
+            } catch (error) {
+                console.error("Error fetching questions:", error);
+                document.getElementById('question').textContent = "Error loading questions.";
+                document.getElementById('next-button').style.display = "none";
+            }
+        }
+
+        function displayQuestion() {
+            const questionContainer = document.getElementById("question");
+            const nextButton = document.getElementById("next-button");
+
+            if (currentQuestionIndex < questions.length) {
+                const question = questions[currentQuestionIndex];
+                questionContainer.textContent = `${question.number}. ${question.text}`;
+            } else {
+                questionContainer.textContent = "The End";
+                nextButton.style.display = "none";
+            }
+        }
+
+        document.getElementById("next-button").addEventListener("click", () => {
+            currentQuestionIndex++;
+            displayQuestion();
+        });
+
+        // Fetch questions on load
+        fetchQuestions();
+    </script>
 </body>
 </html>
