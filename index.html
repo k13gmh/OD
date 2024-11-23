@@ -48,12 +48,12 @@
             .then(data => {
                 // Split the data into lines
                 const questions = data.split('\n').map(line => {
-                    const fields = line.split(' - ');
+                    const fields = line.split('-');  // Split by '-' delimiter without spaces
                     // Ensure there are at least 3 fields (question number, type, and question text)
                     if (fields.length >= 3) {
                         return {
-                            number: fields[0],
-                            text: fields[2]
+                            number: fields[0].trim(), // Question number
+                            text: fields[2].trim()    // Question text
                         };
                     }
                     return null; // Ignore lines that don't have enough data
