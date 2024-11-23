@@ -1,0 +1,32 @@
+1-a-The tyre has been repaired 3 times  
+1-b-Damage driving over a police stinger  
+1-c-A manufacturing defect  
+1-d-Tread depth indicators  
+2-a-Sleep in your car if parked at the side of the road  
+2-b-Sleep in your car if parked in a layby  
+2-c-Sleep in your car if parked in a car park  
+2-d-None of the above  
+3-a-Remove your sun glasses  
+3-b-Drink water  
+3-c-Switch stations on the radio  
+3-d-Use hazzard lights whilst moving  
+4-a-Swear at another driver  
+4-b-Wave at another driver  
+4-c-Flash your lights at another driver  
+4-d- Sound your horn at a pedestrian  
+5-a-A steep ascent  
+5-b-A steep descent  
+5-c-Decrease speed by 20%  
+5-d-Increase speed by 20%  
+6-a-The car windows are closed  
+6-b-The dog has it head out of the window  
+6-c-The dog is secured by a lead  
+6-d-None of the above  
+7-a-you do not have to  
+7-b-at all times  
+7-c-only on a practical driving test  
+7-d-only on an advanced driving test  
+8-a-Do not leave just ask passer-by for change  
+8-b-You must leave and return when you have change  
+8-c-You may not leave a note in the car indicating the meter is broken  
+8-d-None of the above are wrong  
