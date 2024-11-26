@@ -22,6 +22,9 @@
         })
     ])
     .then(([questionsData, answersData]) => {
+        console.log('Questions Data:', questionsData);  // Debugging: log questions data
+        console.log('Answers Data:', answersData);      // Debugging: log answers data
+
         // Parse questions
         questions = questionsData.split('\n').map(line => {
             const fields = line.split('-');
@@ -46,6 +49,9 @@
             }
             return null;
         }).filter(Boolean);
+
+        console.log('Parsed Questions:', questions);  // Debugging: log parsed questions
+        console.log('Parsed Answers:', answers);      // Debugging: log parsed answers
 
         displayQuestion();
     })
@@ -76,4 +82,22 @@
             answerListElement.innerHTML = ''; // Clear previous answers
             filteredAnswers.forEach(answer => {
                 const li = document.createElement('li');
-                li.textContent = `${answer.choice}    ${
+                li.textContent = `${answer.choice}    ${answer.text}`;
+                answerListElement.appendChild(li);
+            });
+
+            nextButton.disabled = false;
+        } else {
+            // No more questions
+            questionTextElement.textContent = 'No more questions!';
+            questionImageElement.style.display = 'none';
+            answerListElement.innerHTML = '';
+            nextButton.disabled = true;
+        }
+    }
+
+    document.getElementById('next-button').addEventListener('click', () => {
+        currentIndex++;
+        displayQuestion();
+    });
+</script>
