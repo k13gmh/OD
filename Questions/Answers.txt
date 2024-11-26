@@ -13,7 +13,7 @@
 4-a-Swear at another driver  
 4-b-Wave at another driver  
 4-c-Flash your lights at another driver  
-4-d- Sound your horn at a pedestrian  
+4-d-Sound your horn at a pedestrian  
 5-a-A steep ascent  
 5-b-A steep descent  
 5-c-Decrease speed by 20%  
