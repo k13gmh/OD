@@ -17,31 +17,48 @@
             margin-top: 20px;
         }
 
-        .question-list {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .question-item {
+        #question-container {
+            text-align: center;
+            margin: 50px auto;
+            padding: 20px;
             background-color: #fff;
             border: 1px solid #ddd;
-            margin: 10px;
-            padding: 15px;
             border-radius: 5px;
+            width: 80%;
+            max-width: 500px;
         }
 
         .question-number {
             font-weight: bold;
         }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
     <h1>Questions</h1>
-    <ul id="questions-list" class="question-list">
-        <!-- Questions will be dynamically inserted here -->
-    </ul>
+    <div id="question-container">
+        <p id="question-text">Loading...</p>
+        <button id="next-button" disabled>Next</button>
+    </div>
 
     <script>
+        let questions = [];
+        let currentIndex = 0;
+
         // Fetch the questions from the 'Questions' subdirectory in your GitHub repository
         fetch('Questions/questions.txt')
             .then(response => {
@@ -51,11 +68,9 @@
                 return response.text();
             })
             .then(data => {
-                console.log('Fetched data:', data); // Debugging: log the data fetched from questions.txt
-
                 // Split the data into lines
-                const questions = data.split('\n').map(line => {
-                    const fields = line.split('-');  // Split by '-' delimiter without spaces
+                questions = data.split('\n').map(line => {
+                    const fields = line.split('-'); // Split by '-' delimiter
                     // Ensure there are at least 3 fields (question number, type, and question text)
                     if (fields.length >= 3) {
                         return {
@@ -64,26 +79,38 @@
                         };
                     }
                     return null; // Ignore lines that don't have enough data
-                }).filter(Boolean); // Remove any null values
+                }).filter(Boolean); // Remove null values
 
-                console.log('Parsed questions:', questions); // Debugging: log the parsed questions
-
-                // Get the reference to the <ul> element
-                const questionListElement = document.getElementById('questions-list');
-
-                // Dynamically create list items for each question
-                questions.forEach(question => {
-                    const li = document.createElement('li');
-                    li.classList.add('question-item');
-                    li.innerHTML = `<span class="question-number">${question.number}</span> - ${question.text}`;
-                    questionListElement.appendChild(li);
-                });
+                // Display the first question
+                displayQuestion();
             })
             .catch(error => {
                 console.error('Error fetching questions:', error); // Log error if fetching fails
-                const questionListElement = document.getElementById('questions-list');
-                questionListElement.innerHTML = `<li>Error loading questions.</li>`;
+                const questionTextElement = document.getElementById('question-text');
+                questionTextElement.textContent = 'Error loading questions.';
             });
+
+        // Function to display the current question
+        function displayQuestion() {
+            const questionTextElement = document.getElementById('question-text');
+            const nextButton = document.getElementById('next-button');
+
+            if (currentIndex < questions.length) {
+                const question = questions[currentIndex];
+                questionTextElement.innerHTML = `<span class="question-number">${question.number}</span> - ${question.text}`;
+                nextButton.disabled = false;
+            } else {
+                // No more questions
+                questionTextElement.textContent = 'No more questions!';
+                nextButton.disabled = true;
+            }
+        }
+
+        // Add event listener for the Next button
+        document.getElementById('next-button').addEventListener('click', () => {
+            currentIndex++;
+            displayQuestion();
+        });
     </script>
 </body>
 </html>
