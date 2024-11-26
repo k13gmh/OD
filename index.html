@@ -87,4 +87,92 @@
     });
 
     function displayQuestion() {
-        const questionTextElement = document.getElementBy
+        const questionTextElement = document.getElementById('question-text');
+        const questionImageElement = document.getElementById('question-image');
+        const answerListElement = document.getElementById('answer-list');
+        const nextButton = document.getElementById('next-button');
+
+        if (currentIndex < questions.length) {
+            const question = questions[currentIndex];
+
+            // Display question text
+            questionTextElement.innerHTML = `<span class="question-number">${question.number}</span> - ${question.text}`;
+
+            // Display question image
+            questionImageElement.src = `Images/${question.number}.jpeg`;
+            questionImageElement.alt = `Image for Question ${question.number}`;
+            questionImageElement.style.display = 'block';
+
+            // Display corresponding answers
+            const filteredAnswers = answers.filter(a => a.questionNumber === question.number);
+            if (filteredAnswers.length === 0) {
+                console.error('No answers found for question:', question.number);
+            }
+            answerListElement.innerHTML = ''; // Clear previous answers
+            filteredAnswers.forEach(answer => {
+                const li = document.createElement('li');
+                const button = document.createElement('button');
+                button.textContent = `${answer.choice}: ${answer.text}`;
+                button.style.padding = '10px 20px';
+                button.style.margin = '5px 0';
+                button.style.width = '100%';
+                button.onclick = () => selectAnswer(button, answer.choice, answer.text);
+                li.appendChild(button);
+                answerListElement.appendChild(li);
+            });
+
+            nextButton.disabled = false;
+        } else {
+            // No more questions
+            questionTextElement.textContent = 'No more questions!';
+            questionImageElement.style.display = 'none';
+            answerListElement.innerHTML = '';
+            nextButton.disabled = true;
+
+            // Display results
+            displayResults();
+        }
+    }
+
+    function selectAnswer(button, choice, text) {
+        // Store the selected answer
+        userChoices[currentIndex] = { choice, text };
+
+        // Change background color of the selected button and reset others
+        const buttons = document.querySelectorAll('#answer-list button');
+        buttons.forEach(btn => btn.style.backgroundColor = 'white');  // Reset background color
+        button.style.backgroundColor = '#ccc';  // Selected button
+
+        document.getElementById('next-button').disabled = false;
+    }
+
+    function displayResults() {
+        const resultsListElement = document.getElementById('results-list');
+        resultsListElement.innerHTML = ''; // Clear previous results
+
+        userChoices.forEach((selection, index) => {
+            const question = questions[index];
+            const solution = solutions.find(sol => sol.questionNumber === question.number);
+            if (!solution) {
+                console.error('Solution not found for question:', question.number);
+                return;
+            }
+            const li = document.createElement('li');
+            
+            // Compare user's answer with the correct answer
+            const isCorrect = selection.choice === solution.correctAnswer;
+            li.innerHTML = `
+                <span style="color: ${isCorrect ? 'green' : 'red'};">Q${question.number}: ${question.text} | Your Answer: ${selection.choice} - ${selection.text}</span><br>
+                <span style="color: black;">${solution.correctAnswer}  ${solution.explanation}</span>
+            `;
+            resultsListElement.appendChild(li);
+        });
+
+        document.getElementById('results').style.display = 'block';
+    }
+
+    document.getElementById('next-button').addEventListener('click', () => {
+        currentIndex++;
+        displayQuestion();
+    });
+</script>
