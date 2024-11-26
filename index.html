@@ -58,13 +58,6 @@
             background-color: #cccccc;
             cursor: not-allowed;
         }
-
-        #score {
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 20px;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
@@ -81,13 +74,10 @@
         <button id="next-button" disabled>Next</button>
     </div>
 
-    <div id="score"></div>
-
     <script>
         let questions = [];
         let currentIndex = 0;
         let selectedAnswers = [];
-        let correctAnswers = 0;
 
         // Fetch questions and answers
         fetch('Questions/questions.txt')
@@ -103,7 +93,6 @@
                     }
                     return null;
                 }).filter(Boolean);
-                console.log('Questions loaded:', questions);
                 displayQuestion();
             })
             .catch(error => {
@@ -139,8 +128,6 @@
                             return null;
                         }).filter(Boolean);
 
-                        console.log('Answers for question', question.number, answers);
-
                         // Add answer buttons dynamically
                         answersContainer.innerHTML = ''; // Clear previous answers
                         answers.forEach(answer => {
@@ -158,7 +145,7 @@
                         console.log('Error fetching answers:', error);
                     });
             } else {
-                showScore();
+                showFinalScreen();
             }
         }
 
@@ -173,7 +160,6 @@
             }
 
             selectedAnswers[currentIndex] = answerLetter;
-            console.log(`Selected answer for question ${currentIndex + 1}: ${answerLetter}`);
         }
 
         // Move to the next question
@@ -182,53 +168,10 @@
             displayQuestion();
         });
 
-        // Show the score at the end
-        function showScore() {
-            const scoreElement = document.getElementById('score');
-            let scoreText = '';
-            let correct = 0;
-
-            selectedAnswers.forEach((answer, index) => {
-                const questionNumber = questions[index].number;
-                const correctAnswer = getCorrectAnswer(questionNumber);
-
-                if (answer === correctAnswer) {
-                    correct++;
-                    scoreText += `<p>Question ${questionNumber}: Correct</p>`;
-                } else {
-                    scoreText += `<p>Question ${questionNumber}: Incorrect (Your answer: ${answer}, Correct answer: ${correctAnswer})</p>`;
-                }
-            });
-
-            const totalQuestions = questions.length;
-            scoreText += `<p>Your score is ${correct} out of ${totalQuestions}</p>`;
-            scoreElement.innerHTML = scoreText;
-        }
-
-        // Get the correct answer for a given question number
-        function getCorrectAnswer(questionNumber) {
-            let correctAnswer = '';
-            fetch('Questions/Solutions.txt')
-                .then(response => response.text())
-                .then(data => {
-                    const solutions = data.split('\n').map(line => {
-                        const fields = line.split('-');
-                        if (fields[0].trim() === questionNumber) {
-                            return {
-                                correctAnswer: fields[2].trim()
-                            };
-                        }
-                        return null;
-                    }).filter(Boolean);
-
-                    if (solutions.length > 0) {
-                        correctAnswer = solutions[0].correctAnswer;
-                    }
-                })
-                .catch(error => {
-                    console.log('Error fetching solutions:', error);
-                });
-            return correctAnswer;
+        // Show the final screen when all questions are answered
+        function showFinalScreen() {
+            const questionContainer = document.getElementById('question-container');
+            questionContainer.innerHTML = '<h2>All questions answered!</h2><p>Thank you for completing the quiz!</p>';
         }
     </script>
 </body>
