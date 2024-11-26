@@ -1,4 +1,10 @@
-<div id="question-container">
+<div id="start-screen">
+    <h1>Just for Fun</h1>
+    <p>Version 1.0</p>
+    <button id="start-button">Start Quiz</button>
+</div>
+
+<div id="question-container" style="display: none;">
     <img id="question-image" src="" alt="Question Image" style="width:100%; max-width:300px; display:block; margin:0 auto 20px; border:1px solid #ddd; border-radius:5px;">
     <div id="question-text" style="margin-left: 8em;">Loading...</div>
     <ul id="answer-list" style="list-style-type: none; padding: 0; margin-top: 20px;"></ul>
@@ -16,6 +22,7 @@
     let solutions = [];
     let userChoices = [];
     let currentIndex = 0;
+    let version = 1.0; // Version number
 
     // Fetch questions, answers, and solutions
     Promise.all([
@@ -79,7 +86,12 @@
         console.log('Parsed Answers:', answers);      // Debugging: log parsed answers
         console.log('Parsed Solutions:', solutions);  // Debugging: log parsed solutions
 
-        displayQuestion();
+        // Start the quiz after the button is clicked
+        document.getElementById('start-button').addEventListener('click', () => {
+            document.getElementById('start-screen').style.display = 'none'; // Hide start screen
+            document.getElementById('question-container').style.display = 'block'; // Show question container
+            displayQuestion();
+        });
     })
     .catch(error => {
         console.error('Error fetching data:', error);
