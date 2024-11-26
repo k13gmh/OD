@@ -26,7 +26,7 @@
 7-b-at all times  
 7-c-only on a practical driving test  
 7-d-only on an advanced driving test  
-8-a-Do not leave just ask passer-by for change  
+8-a-Do not leave just ask passer by for change  
 8-b-You must leave and return when you have change  
 8-c-You may not leave a note in the car indicating the meter is broken  
 8-d-None of the above are wrong  
