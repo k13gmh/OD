@@ -93,6 +93,7 @@
                     }
                     return null;
                 }).filter(Boolean);
+                console.log('Questions loaded:', questions);
                 displayQuestion();
             })
             .catch(error => {
@@ -128,6 +129,8 @@
                             return null;
                         }).filter(Boolean);
 
+                        console.log('Answers for question', question.number, answers);
+
                         // Add answer buttons dynamically
                         answersContainer.innerHTML = ''; // Clear previous answers
                         answers.forEach(answer => {
@@ -145,7 +148,9 @@
                         console.log('Error fetching answers:', error);
                     });
             } else {
-                showFinalScreen();
+                questionTextElement.textContent = 'No more questions!';
+                questionImageElement.style.display = 'none';
+                nextButton.disabled = true;
             }
         }
 
@@ -160,6 +165,7 @@
             }
 
             selectedAnswers[currentIndex] = answerLetter;
+            console.log(`Selected answer for question ${currentIndex + 1}: ${answerLetter}`);
         }
 
         // Move to the next question
@@ -167,12 +173,6 @@
             currentIndex++;
             displayQuestion();
         });
-
-        // Show the final screen when all questions are answered
-        function showFinalScreen() {
-            const questionContainer = document.getElementById('question-container');
-            questionContainer.innerHTML = '<h2>All questions answered!</h2><p>Thank you for completing the quiz!</p>';
-        }
     </script>
 </body>
 </html>
