@@ -5,9 +5,15 @@
     <button id="next-button" disabled>Next</button>
 </div>
 
+<div id="results" style="display: none;">
+    <h2>Your Selections</h2>
+    <ul id="results-list"></ul>
+</div>
+
 <script>
     let questions = [];
     let answers = [];
+    let userChoices = [];
     let currentIndex = 0;
 
     // Fetch questions and answers
@@ -82,7 +88,10 @@
             answerListElement.innerHTML = ''; // Clear previous answers
             filteredAnswers.forEach(answer => {
                 const li = document.createElement('li');
-                li.textContent = `${answer.choice}    ${answer.text}`;
+                const button = document.createElement('button');
+                button.textContent = `${answer.choice}: ${answer.text}`;
+                button.onclick = () => selectAnswer(answer.choice, answer.text);
+                li.appendChild(button);
                 answerListElement.appendChild(li);
             });
 
@@ -93,7 +102,30 @@
             questionImageElement.style.display = 'none';
             answerListElement.innerHTML = '';
             nextButton.disabled = true;
+
+            // Display results
+            displayResults();
         }
+    }
+
+    function selectAnswer(choice, text) {
+        // Store the selected answer
+        userChoices[currentIndex] = { choice, text };
+        document.getElementById('next-button').disabled = false;
+    }
+
+    function displayResults() {
+        const resultsListElement = document.getElementById('results-list');
+        resultsListElement.innerHTML = ''; // Clear previous results
+
+        userChoices.forEach((selection, index) => {
+            const question = questions[index];
+            const li = document.createElement('li');
+            li.textContent = `Q${question.number}: ${question.text} | Your Answer: ${selection.choice} - ${selection.text}`;
+            resultsListElement.appendChild(li);
+        });
+
+        document.getElementById('results').style.display = 'block';
     }
 
     document.getElementById('next-button').addEventListener('click', () => {
