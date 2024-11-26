@@ -1,6 +1,6 @@
 <div id="question-container">
     <img id="question-image" src="" alt="Question Image" style="width:100%; max-width:300px; display:block; margin:0 auto 20px; border:1px solid #ddd; border-radius:5px;">
-    <p id="question-text">Loading...</p>
+    <div id="question-text" style="margin-left: 8em;">Loading...</div>
     <ul id="answer-list" style="list-style-type: none; padding: 0; margin-top: 20px;"></ul>
     <button id="next-button" disabled>Next</button>
 </div>
@@ -90,7 +90,10 @@
                 const li = document.createElement('li');
                 const button = document.createElement('button');
                 button.textContent = `${answer.choice}: ${answer.text}`;
-                button.onclick = () => selectAnswer(answer.choice, answer.text);
+                button.style.padding = '10px 20px';
+                button.style.margin = '5px 0';
+                button.style.width = '100%';
+                button.onclick = () => selectAnswer(button, answer.choice, answer.text);
                 li.appendChild(button);
                 answerListElement.appendChild(li);
             });
@@ -108,9 +111,15 @@
         }
     }
 
-    function selectAnswer(choice, text) {
+    function selectAnswer(button, choice, text) {
         // Store the selected answer
         userChoices[currentIndex] = { choice, text };
+
+        // Change background color of the selected button and reset others
+        const buttons = document.querySelectorAll('#answer-list button');
+        buttons.forEach(btn => btn.style.backgroundColor = 'white');  // Reset background color
+        button.style.backgroundColor = '#ccc';  // Selected button
+
         document.getElementById('next-button').disabled = false;
     }
 
