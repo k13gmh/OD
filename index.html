@@ -13,10 +13,11 @@
 <script>
     let questions = [];
     let answers = [];
+    let solutions = [];
     let userChoices = [];
     let currentIndex = 0;
 
-    // Fetch questions and answers
+    // Fetch questions, answers, and solutions
     Promise.all([
         fetch('Questions/questions.txt').then(res => {
             if (!res.ok) throw new Error('Failed to fetch questions.txt');
@@ -25,11 +26,16 @@
         fetch('Questions/Answers.txt').then(res => {
             if (!res.ok) throw new Error('Failed to fetch Answers.txt');
             return res.text();
+        }),
+        fetch('Questions/Solutions.txt').then(res => {
+            if (!res.ok) throw new Error('Failed to fetch Solutions.txt');
+            return res.text();
         })
     ])
-    .then(([questionsData, answersData]) => {
+    .then(([questionsData, answersData, solutionsData]) => {
         console.log('Questions Data:', questionsData);  // Debugging: log questions data
         console.log('Answers Data:', answersData);      // Debugging: log answers data
+        console.log('Solutions Data:', solutionsData);  // Debugging: log solutions data
 
         // Parse questions
         questions = questionsData.split('\n').map(line => {
@@ -56,8 +62,22 @@
             return null;
         }).filter(Boolean);
 
+        // Parse solutions
+        solutions = solutionsData.split('\n').map(line => {
+            const fields = line.split('-');
+            if (fields.length >= 4) {
+                return {
+                    questionNumber: fields[0].trim(),
+                    correctAnswer: fields[2].trim(),
+                    explanation: fields[3].trim()
+                };
+            }
+            return null;
+        }).filter(Boolean);
+
         console.log('Parsed Questions:', questions);  // Debugging: log parsed questions
         console.log('Parsed Answers:', answers);      // Debugging: log parsed answers
+        console.log('Parsed Solutions:', solutions);  // Debugging: log parsed solutions
 
         displayQuestion();
     })
@@ -67,78 +87,4 @@
     });
 
     function displayQuestion() {
-        const questionTextElement = document.getElementById('question-text');
-        const questionImageElement = document.getElementById('question-image');
-        const answerListElement = document.getElementById('answer-list');
-        const nextButton = document.getElementById('next-button');
-
-        if (currentIndex < questions.length) {
-            const question = questions[currentIndex];
-
-            // Display question text
-            questionTextElement.innerHTML = `<span class="question-number">${question.number}</span> - ${question.text}`;
-
-            // Display question image
-            questionImageElement.src = `Images/${question.number}.jpeg`;
-            questionImageElement.alt = `Image for Question ${question.number}`;
-            questionImageElement.style.display = 'block';
-
-            // Display corresponding answers
-            const filteredAnswers = answers.filter(a => a.questionNumber === question.number);
-            answerListElement.innerHTML = ''; // Clear previous answers
-            filteredAnswers.forEach(answer => {
-                const li = document.createElement('li');
-                const button = document.createElement('button');
-                button.textContent = `${answer.choice}: ${answer.text}`;
-                button.style.padding = '10px 20px';
-                button.style.margin = '5px 0';
-                button.style.width = '100%';
-                button.onclick = () => selectAnswer(button, answer.choice, answer.text);
-                li.appendChild(button);
-                answerListElement.appendChild(li);
-            });
-
-            nextButton.disabled = false;
-        } else {
-            // No more questions
-            questionTextElement.textContent = 'No more questions!';
-            questionImageElement.style.display = 'none';
-            answerListElement.innerHTML = '';
-            nextButton.disabled = true;
-
-            // Display results
-            displayResults();
-        }
-    }
-
-    function selectAnswer(button, choice, text) {
-        // Store the selected answer
-        userChoices[currentIndex] = { choice, text };
-
-        // Change background color of the selected button and reset others
-        const buttons = document.querySelectorAll('#answer-list button');
-        buttons.forEach(btn => btn.style.backgroundColor = 'white');  // Reset background color
-        button.style.backgroundColor = '#ccc';  // Selected button
-
-        document.getElementById('next-button').disabled = false;
-    }
-
-    function displayResults() {
-        const resultsListElement = document.getElementById('results-list');
-        resultsListElement.innerHTML = ''; // Clear previous results
-
-        userChoices.forEach((selection, index) => {
-            const question = questions[index];
-            const li = document.createElement('li');
-            li.textContent = `Q${question.number}: ${question.text} | Your Answer: ${selection.choice} - ${selection.text}`;
-            resultsListElement.appendChild(li);
-        });
-
-        document.getElementById('results').style.display = 'block';
-    }
-
-    document.getElementById('next-button').addEventListener('click', () => {
-        currentIndex++;
-        displayQuestion();
-    });
-</script>
+        const questionTextElement = document.getElementBy
