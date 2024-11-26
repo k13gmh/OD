@@ -1,116 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questions</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+<div id="question-container">
+    <img id="question-image" src="" alt="Question Image" style="width:100%; max-width:300px; display:block; margin:0 auto 20px; border:1px solid #ddd; border-radius:5px;">
+    <p id="question-text">Loading...</p>
+    <button id="next-button" disabled>Next</button>
+</div>
 
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-        }
+<script>
+    let questions = [];
+    let currentIndex = 0;
 
-        #question-container {
-            text-align: center;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            width: 80%;
-            max-width: 500px;
-        }
-
-        .question-number {
-            font-weight: bold;
-        }
-
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-    </style>
-</head>
-<body>
-    <h1>Questions</h1>
-    <div id="question-container">
-        <p id="question-text">Loading...</p>
-        <button id="next-button" disabled>Next</button>
-    </div>
-
-    <script>
-        let questions = [];
-        let currentIndex = 0;
-
-        // Fetch the questions from the 'Questions' subdirectory in your GitHub repository
-        fetch('Questions/questions.txt')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch questions.txt');
-                }
-                return response.text();
-            })
-            .then(data => {
-                // Split the data into lines
-                questions = data.split('\n').map(line => {
-                    const fields = line.split('-'); // Split by '-' delimiter
-                    // Ensure there are at least 3 fields (question number, type, and question text)
-                    if (fields.length >= 3) {
-                        return {
-                            number: fields[0].trim(), // Question number
-                            text: fields[2].trim()    // Question text
-                        };
-                    }
-                    return null; // Ignore lines that don't have enough data
-                }).filter(Boolean); // Remove null values
-
-                // Display the first question
-                displayQuestion();
-            })
-            .catch(error => {
-                console.error('Error fetching questions:', error); // Log error if fetching fails
-                const questionTextElement = document.getElementById('question-text');
-                questionTextElement.textContent = 'Error loading questions.';
-            });
-
-        // Function to display the current question
-        function displayQuestion() {
-            const questionTextElement = document.getElementById('question-text');
-            const nextButton = document.getElementById('next-button');
-
-            if (currentIndex < questions.length) {
-                const question = questions[currentIndex];
-                questionTextElement.innerHTML = `<span class="question-number">${question.number}</span> - ${question.text}`;
-                nextButton.disabled = false;
-            } else {
-                // No more questions
-                questionTextElement.textContent = 'No more questions!';
-                nextButton.disabled = true;
+    fetch('Questions/questions.txt')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch questions.txt');
             }
-        }
-
-        // Add event listener for the Next button
-        document.getElementById('next-button').addEventListener('click', () => {
-            currentIndex++;
+            return response.text();
+        })
+        .then(data => {
+            questions = data.split('\n').map(line => {
+                const fields = line.split('-');
+                if (fields.length >= 3) {
+                    return {
+                        number: fields[0].trim(),
+                        text: fields[2].trim()
+                    };
+                }
+                return null;
+            }).filter(Boolean);
             displayQuestion();
+        })
+        .catch(error => {
+            console.error('Error fetching questions:', error);
+            document.getElementById('question-text').textContent = 'Error loading questions.';
         });
-    </script>
-</body>
-</html>
+
+    function displayQuestion() {
+        const questionTextElement = document.getElementById('question-text');
+        const questionImageElement = document.getElementById('question-image');
+        const nextButton = document.getElementById('next-button');
+
+        if (currentIndex < questions.length) {
+            const question = questions[currentIndex];
+            questionTextElement.innerHTML = `<span class="question-number">${question.number}</span> - ${question.text}`;
+            questionImageElement.src = `images/${question.number}.jpeg`;
+            questionImageElement.alt = `Image for Question ${question.number}`;
+            nextButton.disabled = false;
+        } else {
+            questionTextElement.textContent = 'No more questions!';
+            questionImageElement.style.display = 'none';
+            nextButton.disabled = true;
+        }
+    }
+
+    document.getElementById('next-button').addEventListener('click', () => {
+        currentIndex++;
+        displayQuestion();
+    });
+</script>
