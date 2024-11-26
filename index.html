@@ -10,36 +10,55 @@
     let answers = [];
     let currentIndex = 0;
 
+    console.log('Fetching data...');
+
     // Fetch questions and answers
     Promise.all([
-        fetch('Questions/questions.txt').then(res => res.ok ? res.text() : Promise.reject('Failed to fetch questions.txt')),
-        fetch('Questions/answers.txt').then(res => res.ok ? res.text() : Promise.reject('Failed to fetch answers.txt'))
+        fetch('Questions/questions.txt').then(res => {
+            console.log('Fetching questions.txt:', res.ok ? 'Success' : 'Failed');
+            return res.ok ? res.text() : Promise.reject('Failed to fetch questions.txt');
+        }),
+        fetch('Questions/answers.txt').then(res => {
+            console.log('Fetching answers.txt:', res.ok ? 'Success' : 'Failed');
+            return res.ok ? res.text() : Promise.reject('Failed to fetch answers.txt');
+        })
     ])
     .then(([questionsData, answersData]) => {
+        console.log('Raw questions data:', questionsData);
+        console.log('Raw answers data:', answersData);
+
         // Parse questions
         questions = questionsData.split('\n').map(line => {
             const fields = line.split('-');
             if (fields.length >= 3) {
+                console.log(`Parsed question: ${fields[0].trim()} - ${fields[2].trim()}`);
                 return {
                     number: fields[0].trim(),
                     text: fields[2].trim()
                 };
             }
+            console.log('Skipping malformed question line:', line);
             return null;
         }).filter(Boolean);
+
+        console.log('Parsed questions array:', questions);
 
         // Parse answers
         answers = answersData.split('\n').map(line => {
             const fields = line.split('-');
             if (fields.length >= 3) {
+                console.log(`Parsed answer: Question ${fields[0].trim()}, Choice ${fields[1].trim()} - ${fields[2].trim()}`);
                 return {
                     questionNumber: fields[0].trim(),
                     choice: fields[1].trim(),
                     text: fields[2].trim()
                 };
             }
+            console.log('Skipping malformed answer line:', line);
             return null;
         }).filter(Boolean);
+
+        console.log('Parsed answers array:', answers);
 
         displayQuestion();
     })
@@ -57,16 +76,21 @@
         if (currentIndex < questions.length) {
             const question = questions[currentIndex];
 
+            console.log('Displaying question:', question);
+
             // Display question text
             questionTextElement.innerHTML = `<span class="question-number">${question.number}</span> - ${question.text}`;
             
             // Display question image
-            questionImageElement.src = `Images/${question.number}.jpeg`;
+            const imagePath = `Images/${question.number}.jpeg`;
+            questionImageElement.src = imagePath;
             questionImageElement.alt = `Image for Question ${question.number}`;
             questionImageElement.style.display = 'block';
+            console.log('Displaying image:', imagePath);
 
             // Display corresponding answers
             const filteredAnswers = answers.filter(a => a.questionNumber === question.number);
+            console.log('Filtered answers for question:', question.number, filteredAnswers);
             answerListElement.innerHTML = ''; // Clear previous answers
             filteredAnswers.forEach(answer => {
                 const li = document.createElement('li');
@@ -77,6 +101,7 @@
             nextButton.disabled = false;
         } else {
             // No more questions
+            console.log('No more questions to display.');
             questionTextElement.textContent = 'No more questions!';
             questionImageElement.style.display = 'none';
             answerListElement.innerHTML = '';
@@ -85,6 +110,7 @@
     }
 
     document.getElementById('next-button').addEventListener('click', () => {
+        console.log('Next button clicked.');
         currentIndex++;
         displayQuestion();
     });
