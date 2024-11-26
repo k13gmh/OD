@@ -16,8 +16,8 @@
             if (!res.ok) throw new Error('Failed to fetch questions.txt');
             return res.text();
         }),
-        fetch('Questions/answers.txt').then(res => {
-            if (!res.ok) throw new Error('Failed to fetch answers.txt');
+        fetch('Questions/Answers.txt').then(res => {
+            if (!res.ok) throw new Error('Failed to fetch Answers.txt');
             return res.text();
         })
     ])
@@ -76,22 +76,4 @@
             answerListElement.innerHTML = ''; // Clear previous answers
             filteredAnswers.forEach(answer => {
                 const li = document.createElement('li');
-                li.textContent = `${answer.choice}    ${answer.text}`;
-                answerListElement.appendChild(li);
-            });
-
-            nextButton.disabled = false;
-        } else {
-            // No more questions
-            questionTextElement.textContent = 'No more questions!';
-            questionImageElement.style.display = 'none';
-            answerListElement.innerHTML = '';
-            nextButton.disabled = true;
-        }
-    }
-
-    document.getElementById('next-button').addEventListener('click', () => {
-        currentIndex++;
-        displayQuestion();
-    });
-</script>
+                li.textContent = `${answer.choice}    ${
