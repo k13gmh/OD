@@ -59,11 +59,11 @@
             cursor: not-allowed;
         }
 
-        #score-container {
+        #score {
+            font-size: 20px;
+            font-weight: bold;
             margin-top: 20px;
-            font-size: 18px;
             text-align: center;
-            display: none;
         }
     </style>
 </head>
@@ -81,9 +81,7 @@
         <button id="next-button" disabled>Next</button>
     </div>
 
-    <div id="score-container">
-        <p>Your score is <span id="score"></span> out of <span id="total-questions"></span></p>
-    </div>
+    <div id="score"></div>
 
     <script>
         let questions = [];
@@ -160,10 +158,7 @@
                         console.log('Error fetching answers:', error);
                     });
             } else {
-                questionTextElement.textContent = 'No more questions!';
-                questionImageElement.style.display = 'none';
-                nextButton.disabled = true;
-                displayScore();
+                showScore();
             }
         }
 
@@ -187,47 +182,53 @@
             displayQuestion();
         });
 
-        // Display the score at the end
-        function displayScore() {
+        // Show the score at the end
+        function showScore() {
+            const scoreElement = document.getElementById('score');
+            let scoreText = '';
+            let correct = 0;
+
+            selectedAnswers.forEach((answer, index) => {
+                const questionNumber = questions[index].number;
+                const correctAnswer = getCorrectAnswer(questionNumber);
+
+                if (answer === correctAnswer) {
+                    correct++;
+                    scoreText += `<p>Question ${questionNumber}: Correct</p>`;
+                } else {
+                    scoreText += `<p>Question ${questionNumber}: Incorrect (Your answer: ${answer}, Correct answer: ${correctAnswer})</p>`;
+                }
+            });
+
+            const totalQuestions = questions.length;
+            scoreText += `<p>Your score is ${correct} out of ${totalQuestions}</p>`;
+            scoreElement.innerHTML = scoreText;
+        }
+
+        // Get the correct answer for a given question number
+        function getCorrectAnswer(questionNumber) {
+            let correctAnswer = '';
             fetch('Questions/Solutions.txt')
                 .then(response => response.text())
                 .then(data => {
                     const solutions = data.split('\n').map(line => {
                         const fields = line.split('-');
-                        if (fields.length >= 4) {
+                        if (fields[0].trim() === questionNumber) {
                             return {
-                                questionNumber: fields[0].trim(),
-                                correctAnswer: fields[2].trim(),
-                                explanation: fields[3].trim()
+                                correctAnswer: fields[2].trim()
                             };
                         }
                         return null;
                     }).filter(Boolean);
 
-                    console.log('Solutions loaded:', solutions);
-
-                    // Compare answers and calculate score
-                    correctAnswers = 0;
-                    solutions.forEach(solution => {
-                        const userAnswer = selectedAnswers.find((answer, index) => questions[index].number === solution.questionNumber);
-                        if (userAnswer === solution.correctAnswer) {
-                            correctAnswers++;
-                        }
-                    });
-
-                    // Show score and total questions
-                    const scoreContainer = document.getElementById('score-container');
-                    const scoreElement = document.getElementById('score');
-                    const totalQuestionsElement = document.getElementById('total-questions');
-
-                    scoreElement.textContent = correctAnswers;
-                    totalQuestionsElement.textContent = questions.length;
-
-                    scoreContainer.style.display = 'block';
+                    if (solutions.length > 0) {
+                        correctAnswer = solutions[0].correctAnswer;
+                    }
                 })
                 .catch(error => {
-                    console.error('Error loading solutions:', error);
+                    console.log('Error fetching solutions:', error);
                 });
+            return correctAnswer;
         }
     </script>
 </body>
