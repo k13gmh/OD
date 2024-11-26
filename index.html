@@ -1,52 +1,85 @@
 <div id="question-container">
     <img id="question-image" src="" alt="Question Image" style="width:100%; max-width:300px; display:block; margin:0 auto 20px; border:1px solid #ddd; border-radius:5px;">
     <p id="question-text">Loading...</p>
+    <ul id="answer-list" style="list-style-type: none; padding: 0;"></ul>
     <button id="next-button" disabled>Next</button>
 </div>
 
 <script>
     let questions = [];
+    let answers = [];
     let currentIndex = 0;
 
-    fetch('Questions/questions.txt')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch questions.txt');
+    // Fetch questions and answers
+    Promise.all([
+        fetch('Questions/questions.txt').then(res => res.ok ? res.text() : Promise.reject('Failed to fetch questions.txt')),
+        fetch('Questions/answers.txt').then(res => res.ok ? res.text() : Promise.reject('Failed to fetch answers.txt'))
+    ])
+    .then(([questionsData, answersData]) => {
+        // Parse questions
+        questions = questionsData.split('\n').map(line => {
+            const fields = line.split('-');
+            if (fields.length >= 3) {
+                return {
+                    number: fields[0].trim(),
+                    text: fields[2].trim()
+                };
             }
-            return response.text();
-        })
-        .then(data => {
-            questions = data.split('\n').map(line => {
-                const fields = line.split('-');
-                if (fields.length >= 3) {
-                    return {
-                        number: fields[0].trim(),
-                        text: fields[2].trim()
-                    };
-                }
-                return null;
-            }).filter(Boolean);
-            displayQuestion();
-        })
-        .catch(error => {
-            console.error('Error fetching questions:', error);
-            document.getElementById('question-text').textContent = 'Error loading questions.';
-        });
+            return null;
+        }).filter(Boolean);
+
+        // Parse answers
+        answers = answersData.split('\n').map(line => {
+            const fields = line.split('-');
+            if (fields.length >= 3) {
+                return {
+                    questionNumber: fields[0].trim(),
+                    choice: fields[1].trim(),
+                    text: fields[2].trim()
+                };
+            }
+            return null;
+        }).filter(Boolean);
+
+        displayQuestion();
+    })
+    .catch(error => {
+        console.error('Error loading data:', error);
+        document.getElementById('question-text').textContent = 'Error loading data.';
+    });
 
     function displayQuestion() {
         const questionTextElement = document.getElementById('question-text');
         const questionImageElement = document.getElementById('question-image');
+        const answerListElement = document.getElementById('answer-list');
         const nextButton = document.getElementById('next-button');
 
         if (currentIndex < questions.length) {
             const question = questions[currentIndex];
+
+            // Display question text
             questionTextElement.innerHTML = `<span class="question-number">${question.number}</span> - ${question.text}`;
-            questionImageElement.src = `images/${question.number}.jpeg`;
+            
+            // Display question image
+            questionImageElement.src = `Images/${question.number}.jpeg`;
             questionImageElement.alt = `Image for Question ${question.number}`;
+            questionImageElement.style.display = 'block';
+
+            // Display corresponding answers
+            const filteredAnswers = answers.filter(a => a.questionNumber === question.number);
+            answerListElement.innerHTML = ''; // Clear previous answers
+            filteredAnswers.forEach(answer => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${answer.choice}</strong>: ${answer.text}`;
+                answerListElement.appendChild(li);
+            });
+
             nextButton.disabled = false;
         } else {
+            // No more questions
             questionTextElement.textContent = 'No more questions!';
             questionImageElement.style.display = 'none';
+            answerListElement.innerHTML = '';
             nextButton.disabled = true;
         }
     }
