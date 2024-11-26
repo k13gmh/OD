@@ -34,3 +34,7 @@
 9-b-Moscow
 9-c-San Francisco
 9-d-London
+10-a-A sack of carrots
+10-b-A sack of coffee beans
+10-c-A sack of flour
+10-d-A sack of potatoes
