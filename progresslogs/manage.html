@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Progress Logs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .log-entry {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .log-entry div {
+            flex: 1;
+            text-align: center;
+        }
+        .log-entry button {
+            flex: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage Progress Logs</h1>
+    <div class="container">
+        <div id="logContainer">
+            <!-- Log entries will be dynamically added here -->
+        </div>
+        <button id="clearAllButton">Clear All Logs</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logContainer = document.getElementById('logContainer');
+            const clearAllButton = document.getElementById('clearAllButton');
+            let dataStore = JSON.parse(localStorage.getItem('progressData')) || {};
 
+            function renderLogs() {
+                logContainer.innerHTML = '';
+                const sortedUserIds = Object.keys(dataStore).sort();
+                sortedUserIds.forEach(userId => {
+                    const userLogs = dataStore[userId];
+                    const sortedDates = Object.keys(userLogs).sort();
+                    sortedDates.forEach(date => {
+                        const logEntry = document.createElement('div');
+                        logEntry.className = 'log-entry';
+                        logEntry.innerHTML = `
+                            <div>${userId}</div>
+                            <div>${date}</div>
+                            <div>${userLogs[date].hours} hours</div>
+                            <button data-userid="${userId}" data-date="${date}">Clear</button>
+                        `;
+                        logContainer.appendChild(logEntry);
+                    });
+                });
+            }
+
+            logContainer.addEventListener('click', (event) => {
+                if (event.target.tagName === 'BUTTON') {
+                    const userId = event.target.getAttribute('data-userid');
+                    const date = event.target.getAttribute('data-date');
+                    if (confirm(`Are you sure you want to delete the log for User ID: ${userId} on Date: ${date}?`)) {
+                        delete dataStore[userId][date];
+                        if (Object.keys(dataStore[userId]).length === 0) {
+                            delete dataStore[userId];
+                        }
+                        localStorage.setItem('progressData', JSON.stringify(dataStore));
+                        renderLogs();
+                    }
+                }
+            });
+
+            clearAllButton.addEventListener('click', () => {
+                if (confirm('Are you sure you want to delete all logs?')) {
+                    dataStore = {};
+                    localStorage.setItem('progressData', JSON.stringify(dataStore));
+                    renderLogs();
+                }
+            });
+
+            renderLogs();
+        });
+    </script>
+</body>
+</html>
