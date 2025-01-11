@@ -81,7 +81,7 @@
                 if (/^[0-9]{4}[A-Za-z]{4}$/.test(userId)) {
                     renderLogs(userId);
                 } else {
-                    alert('Invalid User ID format. Please enter 4 numbers followed by 4 letters.');
+                    alert('Invalid User ID format. Please enter 4 digits followed by 4 letters.');
                 }
             });
 
@@ -94,6 +94,7 @@
                         const logEntry = document.createElement('div');
                         logEntry.className = 'log-entry';
                         logEntry.innerHTML = `
+                            <div>${userId}</div>
                             <div>${date}</div>
                             <div>${userLogs[date].hours} hours</div>
                             <button data-userid="${userId}" data-date="${date}">Clear</button>
