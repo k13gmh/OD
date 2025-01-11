@@ -60,6 +60,9 @@
 <body>
     <h1>Manage Progress Logs</h1>
     <div class="container">
+        <label for="userId">Enter User ID:</label>
+        <input type="text" id="userId" pattern="^[0-9]{4}[A-Za-z]{4}$" required>
+        <button id="loadLogsButton">Load Logs</button>
         <div id="logContainer">
             <!-- Log entries will be dynamically added here -->
         </div>
@@ -67,28 +70,39 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const userIdInput = document.getElementById('userId');
+            const loadLogsButton = document.getElementById('loadLogsButton');
             const logContainer = document.getElementById('logContainer');
             const clearAllButton = document.getElementById('clearAllButton');
             let dataStore = JSON.parse(localStorage.getItem('progressData')) || {};
 
-            function renderLogs() {
+            loadLogsButton.addEventListener('click', () => {
+                const userId = userIdInput.value.trim();
+                if (/^[0-9]{4}[A-Za-z]{4}$/.test(userId)) {
+                    renderLogs(userId);
+                } else {
+                    alert('Invalid User ID format. Please enter 4 numbers followed by 4 letters.');
+                }
+            });
+
+            function renderLogs(userId) {
                 logContainer.innerHTML = '';
-                const sortedUserIds = Object.keys(dataStore).sort();
-                sortedUserIds.forEach(userId => {
+                if (dataStore[userId]) {
                     const userLogs = dataStore[userId];
                     const sortedDates = Object.keys(userLogs).sort();
                     sortedDates.forEach(date => {
                         const logEntry = document.createElement('div');
                         logEntry.className = 'log-entry';
                         logEntry.innerHTML = `
-                            <div>${userId}</div>
                             <div>${date}</div>
                             <div>${userLogs[date].hours} hours</div>
                             <button data-userid="${userId}" data-date="${date}">Clear</button>
                         `;
                         logContainer.appendChild(logEntry);
                     });
-                });
+                } else {
+                    logContainer.innerHTML = '<p>No logs found for this User ID.</p>';
+                }
             }
 
             logContainer.addEventListener('click', (event) => {
@@ -101,20 +115,23 @@
                             delete dataStore[userId];
                         }
                         localStorage.setItem('progressData', JSON.stringify(dataStore));
-                        renderLogs();
+                        renderLogs(userId);
                     }
                 }
             });
 
             clearAllButton.addEventListener('click', () => {
-                if (confirm('Are you sure you want to delete all logs?')) {
-                    dataStore = {};
-                    localStorage.setItem('progressData', JSON.stringify(dataStore));
-                    renderLogs();
+                const userId = userIdInput.value.trim();
+                if (dataStore[userId]) {
+                    if (confirm(`Are you sure you want to delete all logs for User ID: ${userId}?`)) {
+                        delete dataStore[userId];
+                        localStorage.setItem('progressData', JSON.stringify(dataStore));
+                        renderLogs(userId);
+                    }
+                } else {
+                    alert('No logs found for this User ID.');
                 }
             });
-
-            renderLogs();
         });
     </script>
 </body>
