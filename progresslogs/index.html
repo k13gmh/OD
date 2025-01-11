@@ -23,7 +23,7 @@
             background-color: #f4f4f4;
         }
         input[type="date"], button {
-            margin: 10px 0;
+            margin: 10px 5px;
         }
         .highlight {
             background-color: #d9f9d9;
@@ -35,6 +35,7 @@
     <label for="dateInput">Enter Date (DD/MM/YY): </label>
     <input type="date" id="dateInput">
     <button onclick="loadSheet()">Load Progress Sheet</button>
+    <button onclick="saveSheet()">Save Progress Sheet</button>
 
     <table id="progressSheet">
         <thead>
@@ -51,7 +52,6 @@
             <!-- Rows will be dynamically generated -->
         </tbody>
     </table>
-    <button onclick="saveSheet()">Save Progress Sheet</button>
 
     <script>
         const progressSheet = document.getElementById("progressSheet").getElementsByTagName("tbody")[0];
@@ -68,6 +68,9 @@
                 for (let j = 0; j < 5; j++) {
                     const cell = document.createElement("td");
                     cell.setAttribute("contenteditable", "true");
+                    cell.addEventListener("click", () => {
+                        cell.textContent = "X";
+                    });
                     row.appendChild(cell);
                 }
                 progressSheet.appendChild(row);
