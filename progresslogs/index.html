@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driving Lesson Progress Sheet 2</title>
+    <title>Driving Lesson Progress Sheet</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@
         th {
             background-color: #f4f4f4;
         }
-        input[type="date"], button {
+        input[type="date"], input[type="text"], button {
             margin: 10px 5px;
         }
         .highlight {
@@ -32,20 +32,37 @@
 </head>
 <body>
     <h1>Driving Lesson Progress Sheet</h1>
+
+    <!-- User ID Input -->
+    <label for="userIdInput">User ID (4 digits followed by 4 letters): </label>
+    <input type="text" id="userIdInput" pattern="^\d{4}[A-Za-z]{4}$" title="Enter 4 digits followed by 4 letters" required>
+    <button onclick="login()">Login</button>
+    <br><br>
+
+    <!-- Hours Input -->
+    <label for="hoursInput">Number of Hours: </label>
+    <input type="number" id="hoursInput" min="0" step="0.1">
+    <br><br>
+
+    <!-- Date Input -->
     <label for="dateInput">Enter Date (DD/MM/YY): </label>
     <input type="date" id="dateInput">
     <button onclick="loadSheet()">Load Progress Sheet</button>
     <button onclick="saveSheet()">Save Progress Sheet</button>
+    <button onclick="clearSheet()">Clear X's</button>
+    <br>
+    <strong>E</strong>xplained <strong>H</strong>elped <strong>P</strong>rompted <strong>I</strong>ndependent <strong>R</strong>eflection
+    <br><br>
 
     <table id="progressSheet">
         <thead>
             <tr>
                 <th>Description</th>
-                <th>Introduced</th>
-                <th>Helped</th>
-                <th>Prompted</th>
-                <th>Independent</th>
-                <th>Reflection</th>
+                <th>E</th>
+                <th>H</th>
+                <th>P</th>
+                <th>I</th>
+                <th>R</th>
             </tr>
         </thead>
         <tbody>
@@ -55,7 +72,19 @@
 
     <script>
         const progressSheet = document.getElementById("progressSheet").getElementsByTagName("tbody")[0];
-        const dataStore = JSON.parse(localStorage.getItem("progressData")) || {};
+        let dataStore = JSON.parse(localStorage.getItem("progressData")) || {};
+        let currentUserId = null;
+
+        function login() {
+            const userIdInput = document.getElementById("userIdInput").value;
+            const userIdPattern = /^\d{4}[A-Za-z]{4}$/;
+            if (userIdPattern.test(userIdInput)) {
+                currentUserId = userIdInput;
+                alert("Login successful.");
+            } else {
+                alert("Invalid User ID. Please enter 4 digits followed by 4 letters.");
+            }
+        }
 
         function generateRows() {
             progressSheet.innerHTML = "";
@@ -78,6 +107,10 @@
         }
 
         function loadSheet() {
+            if (!currentUserId) {
+                alert("Please login with a valid User ID.");
+                return;
+            }
             const date = document.getElementById("dateInput").value;
             if (!date) {
                 alert("Please enter a valid date!");
@@ -85,8 +118,9 @@
             }
 
             generateRows();
-            if (dataStore[date]) {
-                const savedData = dataStore[date];
+            const userLogs = dataStore[currentUserId] || {};
+            if (userLogs[date]) {
+                const savedData = userLogs[date];
                 Array.from(progressSheet.rows).forEach((row, rowIndex) => {
                     const rowData = savedData[rowIndex] || [];
                     Array.from(row.cells).forEach((cell, cellIndex) => {
@@ -102,6 +136,10 @@
         }
 
         function saveSheet() {
+            if (!currentUserId) {
+                alert("Please login with a valid User ID.");
+                return;
+            }
             const date = document.getElementById("dateInput").value;
             if (!date) {
                 alert("Please enter a valid date before saving!");
@@ -111,9 +149,22 @@
             const sheetData = Array.from(progressSheet.rows).map(row =>
                 Array.from(row.cells).slice(1).map(cell => cell.textContent)
             );
-            dataStore[date] = sheetData;
+            if (!dataStore[currentUserId]) {
+                dataStore[currentUserId] = {};
+            }
+            dataStore[currentUserId][date] = sheetData;
             localStorage.setItem("progressData", JSON.stringify(dataStore));
             alert(`Progress sheet for ${date} saved successfully.`);
+        }
+
+        function clearSheet() {
+            Array.from(progressSheet.rows).forEach(row => {
+                Array.from(row.cells).forEach((cell, cellIndex) => {
+                    if (cellIndex > 0) {
+                        cell.textContent = "";
+                    }
+                });
+            });
         }
 
         // Initialize an empty sheet on page load
