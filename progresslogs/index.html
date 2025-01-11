@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driving Lesson Progress Sheet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        input[type="date"], button {
+            margin: 10px 0;
+        }
+        .highlight {
+            background-color: #d9f9d9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Driving Lesson Progress Sheet</h1>
+    <label for="dateInput">Enter Date (DD/MM/YY): </label>
+    <input type="date" id="dateInput">
+    <button onclick="loadSheet()">Load Progress Sheet</button>
+
+    <table id="progressSheet">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Introduced</th>
+                <th>Helped</th>
+                <th>Prompted</th>
+                <th>Independent</th>
+                <th>Reflection</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be dynamically generated -->
+        </tbody>
+    </table>
+    <button onclick="saveSheet()">Save Progress Sheet</button>
+
+    <script>
+        const progressSheet = document.getElementById("progressSheet").getElementsByTagName("tbody")[0];
+        const dataStore = JSON.parse(localStorage.getItem("progressData")) || {};
+
+        function generateRows() {
+            progressSheet.innerHTML = "";
+            for (let i = 1; i <= 27; i++) {
+                const row = document.createElement("tr");
+                const descriptionCell = document.createElement("td");
+                descriptionCell.textContent = `Row ${i.toString().padStart(2, "0")}`;
+                row.appendChild(descriptionCell);
+
+                for (let j = 0; j < 5; j++) {
+                    const cell = document.createElement("td");
+                    cell.setAttribute("contenteditable", "true");
+                    row.appendChild(cell);
+                }
+                progressSheet.appendChild(row);
+            }
+        }
+
+        function loadSheet() {
+            const date = document.getElementById("dateInput").value;
+            if (!date) {
+                alert("Please enter a valid date!");
+                return;
+            }
+
+            generateRows();
+            if (dataStore[date]) {
+                const savedData = dataStore[date];
+                Array.from(progressSheet.rows).forEach((row, rowIndex) => {
+                    const rowData = savedData[rowIndex] || [];
+                    Array.from(row.cells).forEach((cell, cellIndex) => {
+                        if (cellIndex > 0) {
+                            cell.textContent = rowData[cellIndex - 1] || "";
+                        }
+                    });
+                });
+                alert(`Progress sheet for ${date} loaded.`);
+            } else {
+                alert(`No existing data found for ${date}. A new sheet has been created.`);
+            }
+        }
+
+        function saveSheet() {
+            const date = document.getElementById("dateInput").value;
+            if (!date) {
+                alert("Please enter a valid date before saving!");
+                return;
+            }
+
+            const sheetData = Array.from(progressSheet.rows).map(row =>
+                Array.from(row.cells).slice(1).map(cell => cell.textContent)
+            );
+            dataStore[date] = sheetData;
+            localStorage.setItem("progressData", JSON.stringify(dataStore));
+            alert(`Progress sheet for ${date} saved successfully.`);
+        }
+
+        // Initialize an empty sheet on page load
+        generateRows();
+    </script>
+</body>
+</html>
