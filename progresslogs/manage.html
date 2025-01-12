@@ -96,7 +96,7 @@
                 if (Object.keys(dataStore[userId]).length === 0) {
                     delete dataStore[userId];
                 }
-                localStorage.setItem("progressData", JSON.stringify(dataStore));
+                localStorage.setItem("progressData", JSON.stringify(dataStore)); // Update localStorage
                 displayLogs();
             }
         }
@@ -104,7 +104,7 @@
         function clearAllLogs(userId) {
             if (confirm(`Are you sure you want to delete all logs for user ${userId}?`)) {
                 delete dataStore[userId];
-                localStorage.setItem("progressData", JSON.stringify(dataStore));
+                localStorage.setItem("progressData", JSON.stringify(dataStore)); // Update localStorage
                 displayLogs();
             }
         }
