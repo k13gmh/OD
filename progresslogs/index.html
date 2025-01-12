@@ -28,6 +28,10 @@
         .highlight {
             background-color: #d9f9d9;
         }
+        .duplicate-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -70,10 +74,18 @@
         </tbody>
     </table>
 
+    <!-- Duplicate buttons -->
+    <div class="duplicate-buttons">
+        <button onclick="loadSheet()">Load Progress Sheet</button>
+        <button onclick="saveSheet()">Save Progress Sheet</button>
+        <button onclick="clearSheet()">Clear X's</button>
+    </div>
+
     <script>
         const progressSheet = document.getElementById("progressSheet").getElementsByTagName("tbody")[0];
         let dataStore = JSON.parse(localStorage.getItem("progressData")) || {};
         let currentUserId = null;
+        let isHoursLocked = false;
 
         function login() {
             const userIdInput = document.getElementById("userIdInput").value;
@@ -122,6 +134,8 @@
             if (userLogs[date]) {
                 const savedData = userLogs[date];
                 document.getElementById("hoursInput").value = savedData.hours || "";
+                document.getElementById("hoursInput").disabled = true;
+                isHoursLocked = true;
                 Array.from(progressSheet.rows).forEach((row, rowIndex) => {
                     const rowData = savedData.sheet[rowIndex] || [];
                     Array.from(row.cells).forEach((cell, cellIndex) => {
@@ -132,6 +146,8 @@
                 });
                 alert(`Progress sheet for ${date} loaded.`);
             } else {
+                document.getElementById("hoursInput").disabled = false;
+                isHoursLocked = false;
                 alert(`No existing data found for ${date}. A new sheet has been created.`);
             }
         }
@@ -142,12 +158,13 @@
                 return;
             }
             const date = document.getElementById("dateInput").value;
-            const hours = document.getElementById("hoursInput").value;
+            const hoursInput = document.getElementById("hoursInput");
+            const hours = hoursInput.value;
             if (!date) {
                 alert("Please enter a valid date before saving!");
                 return;
             }
-            if (!hours) {
+            if (!hours && !isHoursLocked) {
                 alert("Please enter the number of hours before saving!");
                 return;
             }
@@ -161,6 +178,9 @@
             dataStore[currentUserId][date] = { hours, sheet: sheetData };
             localStorage.setItem("progressData", JSON.stringify(dataStore));
             alert(`Progress sheet for ${date} saved successfully.`);
+
+            hoursInput.disabled = true;
+            isHoursLocked = true;
         }
 
         function clearSheet() {
