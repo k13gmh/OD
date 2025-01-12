@@ -22,7 +22,7 @@
         th {
             background-color: #f4f4f4;
         }
-        input[type="date"], input[type="text"], button {
+        input[type="date"], input[type="text"], input[type="number"], button {
             margin: 10px 5px;
         }
         .highlight {
@@ -121,8 +121,9 @@
             const userLogs = dataStore[currentUserId] || {};
             if (userLogs[date]) {
                 const savedData = userLogs[date];
+                document.getElementById("hoursInput").value = savedData.hours || "";
                 Array.from(progressSheet.rows).forEach((row, rowIndex) => {
-                    const rowData = savedData[rowIndex] || [];
+                    const rowData = savedData.sheet[rowIndex] || [];
                     Array.from(row.cells).forEach((cell, cellIndex) => {
                         if (cellIndex > 0) {
                             cell.textContent = rowData[cellIndex - 1] || "";
@@ -141,8 +142,13 @@
                 return;
             }
             const date = document.getElementById("dateInput").value;
+            const hours = document.getElementById("hoursInput").value;
             if (!date) {
                 alert("Please enter a valid date before saving!");
+                return;
+            }
+            if (!hours) {
+                alert("Please enter the number of hours before saving!");
                 return;
             }
 
@@ -152,7 +158,7 @@
             if (!dataStore[currentUserId]) {
                 dataStore[currentUserId] = {};
             }
-            dataStore[currentUserId][date] = sheetData;
+            dataStore[currentUserId][date] = { hours, sheet: sheetData };
             localStorage.setItem("progressData", JSON.stringify(dataStore));
             alert(`Progress sheet for ${date} saved successfully.`);
         }
