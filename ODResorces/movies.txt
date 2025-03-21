@@ -1,1 +1,1 @@
-menu item 1|https://drive.google.com/file/d/1H3BVoHnt3HGuNm4GfPPdzbhvGWkNBezC/view?usp=share_link
+menu item 1|https://drive.google.com/file/d/1H3BVoHnt3HGuNm4GfPPdzbhvGWkNBezC/view
