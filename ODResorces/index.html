@@ -1,1 +1,114 @@
-rem
+<!DOCTYPE html>
+<html>
+<head>
+<title>ODResources Access</title>
+<style>
+body { font-family: sans-serif; }
+#loginForm { display: block; }
+#menu { display: none; }
+</style>
+</head>
+<body>
+
+<div id="loginForm">
+  <h2>Enter last 6 digits of your phone number</h2>
+  <input type="text" id="phoneDigits" maxlength="6">
+  <button onclick="login()">Login</button>
+  <p id="loginMessage"></p>
+</div>
+
+<div id="menu">
+  <h2>Menu</h2>
+  <ul id="menuItems"></ul>
+</div>
+
+<script>
+async function login() {
+  const phoneDigits = document.getElementById("phoneDigits").value;
+  const loginMessage = document.getElementById("loginMessage");
+
+  try {
+    const response = await fetch("id.text");
+    const idText = await response.text();
+    const ids = idText.split("\n").map(id => id.trim());
+
+    if (ids.includes(phoneDigits)) {
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("menu").style.display = "block";
+      loginMessage.textContent = ""; // Clear any previous error messages
+      loadMenu();
+
+    } else {
+      loginMessage.textContent = "Invalid phone number.";
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    loginMessage.textContent = "An error occurred. Please try again.";
+  }
+}
+
+async function loadMenu() {
+  try {
+    const response = await fetch("menu.txt");
+    const menuText = await response.text();
+    const menuItems = menuText.split("\n").map(item => item.trim());
+    const menuList = document.getElementById("menuItems");
+    menuList.innerHTML = ""; // Clear previous menu items
+
+    for (const item of menuItems) {
+      if (item) { // Avoid adding empty list items
+        const listItem = document.createElement("li");
+        const link = document.createElement("a");
+        link.textContent = item;
+        link.href = "#"; // Placeholder, updated in loadMovieLinks
+        link.addEventListener("click", () => loadMovieLinks(item));
+        listItem.appendChild(link);
+        menuList.appendChild(listItem);
+      }
+    }
+  } catch (error) {
+    console.error("Error loading menu:", error);
+    alert("Error loading menu.");
+  }
+}
+
+async function loadMovieLinks(menuItem) {
+    try {
+        const response = await fetch("movies.txt");
+        const moviesText = await response.text();
+        const moviesLines = moviesText.split("\n");
+        const movieLinks = [];
+
+        for (const line of moviesLines) {
+            const parts = line.split("|");
+            if (parts.length === 2 && parts[0].trim() === menuItem.trim()) {
+                movieLinks.push(parts[1].trim());
+            }
+        }
+        if(movieLinks.length > 0){
+          const menuList = document.getElementById("menuItems");
+          menuList.innerHTML = "";
+          for(const link of movieLinks){
+              const listItem = document.createElement("li");
+              const anchor = document.createElement("a");
+              anchor.href = link;
+              anchor.textContent = link;
+              anchor.target = "_blank";
+              listItem.appendChild(anchor);
+              menuList.appendChild(listItem);
+          }
+        } else {
+          alert("No movies found for " + menuItem);
+        }
+
+    } catch (error) {
+        console.error("Error loading movie links:", error);
+        alert("Error loading movie links.");
+    }
+}
+
+</script>
+
+</body>
+</html>
+
