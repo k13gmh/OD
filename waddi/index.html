@@ -21,10 +21,10 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 500px;
+            max-width: 700px; /* Increased max-width for better display */
             width: 100%;
         }
-        input[type="password"], input[type="text"] {
+        input[type="password"], input[type="text"], select {
             width: calc(100% - 22px);
             padding: 10px;
             margin: 10px 0;
@@ -49,13 +49,23 @@
         }
         .instructor-card {
             border: 1px solid #eee;
-            padding: 15px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
             border-radius: 5px;
             background-color: #f9f9f9;
+            display: flex; /* Use flexbox for horizontal layout */
+            justify-content: space-between; /* Space out items */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            align-items: center;
         }
         .instructor-card p {
-            margin: 5px 0;
+            margin: 0 5px; /* Adjust margin for horizontal display */
+            white-space: nowrap; /* Prevent wrapping for individual items */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Add ellipsis if text is too long */
+        }
+        .instructor-card p strong {
+            margin-right: 5px;
         }
         #password-section, #postcode-section, #results-section {
             display: none;
@@ -66,6 +76,20 @@
         .error-message {
             color: red;
             margin-top: 10px;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .input-group label {
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        .input-group input, .input-group select {
+            flex-grow: 1; /* Allow input/select to take available space */
+            width: auto; /* Override specific width for flex item */
         }
     </style>
 </head>
@@ -81,8 +105,18 @@
         </div>
 
         <div id="postcode-section">
-            <p>Please enter a 3-4 character postcode (e.g., DY10, DY8):</p>
-            <input type="text" id="postcodeInput" placeholder="Enter postcode">
+            <div class="input-group">
+                <label for="postcodeInput">Postcode:</label>
+                <input type="text" id="postcodeInput" placeholder="Enter 3-4 char postcode (e.g., DY10)">
+            </div>
+            <div class="input-group">
+                <label for="gearboxSelect">Gearbox (Optional):</label>
+                <select id="gearboxSelect">
+                    <option value="">Any</option>
+                    <option value="M">Manual</option>
+                    <option value="A">Automatic</option>
+                </select>
+            </div>
             <button onclick="searchInstructors()">Search</button>
             <p id="postcodeError" class="error-message"></p>
         </div>
@@ -114,10 +148,12 @@
         async function searchInstructors() {
             const postcodeInput = document.getElementById('postcodeInput');
             const postcodeError = document.getElementById('postcodeError');
+            const gearboxSelect = document.getElementById('gearboxSelect');
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = ''; // Clear previous results
 
             let postcode = postcodeInput.value.trim().toUpperCase();
+            let desiredGearbox = gearboxSelect.value.toUpperCase(); // M, A, or empty string
 
             if (!/^[A-Z0-9]{3,4}$/.test(postcode)) {
                 postcodeError.textContent = 'Please enter a valid 3-4 character postcode.';
@@ -136,15 +172,26 @@
 
                 let foundInstructors = false;
                 instructors.forEach(instructor => {
-                    // Check if the postcode matches any of the up to 20 postcode fields
                     const matchesPostcode = instructor.postcodes.some(pc => pc.trim().toUpperCase() === postcode);
 
-                    if (matchesPostcode) {
+                    // Check gearbox match
+                    let matchesGearbox = true; // Assume true if no specific gearbox is selected
+                    if (desiredGearbox) { // If a gearbox type is selected
+                        const instructorGearbox = instructor.gearbox.toUpperCase();
+                        if (desiredGearbox === 'M') { // Searching for Manual
+                            matchesGearbox = (instructorGearbox === 'M' || instructorGearbox === 'B');
+                        } else if (desiredGearbox === 'A') { // Searching for Automatic
+                            matchesGearbox = (instructorGearbox === 'A' || instructorGearbox === 'B');
+                        }
+                    }
+
+                    if (matchesPostcode && matchesGearbox) {
                         foundInstructors = true;
                         const card = document.createElement('div');
                         card.classList.add('instructor-card');
                         card.innerHTML = `
-                            <p><strong>Name:</strong> ${instructor.name}</p>
+                            <p><strong>Instructor:</strong> ${instructor.name}</p>
+                            <p><strong>School:</strong> ${instructor.school}</p>
                             <p><strong>Phone:</strong> ${instructor.phone}</p>
                             <p><strong>Gearbox:</strong> ${getGearboxType(instructor.gearbox)}</p>
                         `;
@@ -153,7 +200,7 @@
                 });
 
                 if (!foundInstructors) {
-                    resultsDiv.innerHTML = '<p>No instructors found for this postcode.</p>';
+                    resultsDiv.innerHTML = '<p>No instructors found for this postcode and gearbox type.</p>';
                 }
 
                 document.getElementById('postcode-section').classList.remove('active');
@@ -173,17 +220,15 @@
             lines.forEach(line => {
                 const parts = line.split(',').map(part => part.trim());
 
-                // Ensure at least name, phone number, and gearbox fields exist (3 parts for name, phone, gearbox)
-                // We're checking for parts.length >= 3 because the gearbox is the 3rd field (index 2).
-                // If there's no gearbox, parts[2] would be undefined or empty.
-                // We also specifically check if parts[2] (gearbox) is not empty.
-                if (parts.length >= 3 && parts[2] !== '') {
+                // Now requires at least 4 parts: Instructor Name, Driving School, Phone, Gearbox
+                // And the gearbox field (parts[3]) must not be empty.
+                if (parts.length >= 4 && parts[3] !== '') {
                     instructors.push({
-                        name: parts[0] || 'N/A', // Default to 'N/A' if name is missing
-                        phone: parts[1] || 'N/A', // Default to 'N/A' if phone is missing
-                        gearbox: parts[2],
-                        // Take all subsequent parts as postcodes. filter out any empty strings.
-                        postcodes: parts.slice(3).filter(pc => pc !== '')
+                        name: parts[0].startsWith('*') ? parts[0].substring(1).trim() : parts[0], // Remove leading '*'
+                        school: parts[1] || 'N/A', // Driving school name
+                        phone: parts[2] || 'N/A',
+                        gearbox: parts[3],
+                        postcodes: parts.slice(4).filter(pc => pc !== '') // Postcodes start from the 5th field (index 4)
                     });
                 }
             });
@@ -196,7 +241,7 @@
                 case 'A': return 'Automatic';
                 case 'B': return 'Both (Manual & Automatic)';
                 case '?': return 'Unknown';
-                default: return 'N/A'; // For cases where the gearbox code is unexpected but the field exists
+                default: return 'N/A';
             }
         }
 
@@ -204,6 +249,7 @@
             document.getElementById('postcode-section').classList.add('active');
             document.getElementById('results-section').classList.remove('active');
             document.getElementById('postcodeInput').value = '';
+            document.getElementById('gearboxSelect').value = ''; // Reset gearbox selection
             document.getElementById('results').innerHTML = '';
             document.getElementById('postcodeError').textContent = '';
         }
