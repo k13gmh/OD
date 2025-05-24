@@ -172,12 +172,18 @@
             const instructors = [];
             lines.forEach(line => {
                 const parts = line.split(',').map(part => part.trim());
-                if (parts.length >= 4) { // Ensure at least name, phone, gearbox, and one postcode
+
+                // Ensure at least name, phone number, and gearbox fields exist (3 parts for name, phone, gearbox)
+                // We're checking for parts.length >= 3 because the gearbox is the 3rd field (index 2).
+                // If there's no gearbox, parts[2] would be undefined or empty.
+                // We also specifically check if parts[2] (gearbox) is not empty.
+                if (parts.length >= 3 && parts[2] !== '') {
                     instructors.push({
-                        name: parts[0],
-                        phone: parts[1],
+                        name: parts[0] || 'N/A', // Default to 'N/A' if name is missing
+                        phone: parts[1] || 'N/A', // Default to 'N/A' if phone is missing
                         gearbox: parts[2],
-                        postcodes: parts.slice(3).filter(pc => pc !== '') // Take all subsequent parts as postcodes
+                        // Take all subsequent parts as postcodes. filter out any empty strings.
+                        postcodes: parts.slice(3).filter(pc => pc !== '')
                     });
                 }
             });
@@ -190,7 +196,7 @@
                 case 'A': return 'Automatic';
                 case 'B': return 'Both (Manual & Automatic)';
                 case '?': return 'Unknown';
-                default: return 'N/A';
+                default: return 'N/A'; // For cases where the gearbox code is unexpected but the field exists
             }
         }
 
@@ -204,4 +210,3 @@
     </script>
 </body>
 </html>
-
