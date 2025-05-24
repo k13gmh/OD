@@ -1,1 +1,207 @@
-rem
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        input[type="password"], input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #results {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .instructor-card {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .instructor-card p {
+            margin: 5px 0;
+        }
+        #password-section, #postcode-section, #results-section {
+            display: none;
+        }
+        #password-section.active, #postcode-section.active, #results-section.active {
+            display: block;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Instructor Search</h1>
+
+        <div id="password-section" class="active">
+            <p>Please enter the password to continue:</p>
+            <input type="password" id="passwordInput" placeholder="Enter password">
+            <button onclick="checkPassword()">Submit</button>
+            <p id="passwordError" class="error-message"></p>
+        </div>
+
+        <div id="postcode-section">
+            <p>Please enter a 3-4 character postcode (e.g., DY10, DY8):</p>
+            <input type="text" id="postcodeInput" placeholder="Enter postcode">
+            <button onclick="searchInstructors()">Search</button>
+            <p id="postcodeError" class="error-message"></p>
+        </div>
+
+        <div id="results-section">
+            <h2>Matching Instructors:</h2>
+            <div id="results"></div>
+            <button onclick="resetSearch()">New Search</button>
+        </div>
+    </div>
+
+    <script>
+        const correctPassword = "WADDI";
+        const instructorsFile = 'instructors.csv';
+
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordError = document.getElementById('passwordError');
+            if (passwordInput.value === correctPassword) {
+                document.getElementById('password-section').classList.remove('active');
+                document.getElementById('postcode-section').classList.add('active');
+                passwordError.textContent = '';
+                passwordInput.value = ''; // Clear password field
+            } else {
+                passwordError.textContent = 'Incorrect password. Please try again.';
+            }
+        }
+
+        async function searchInstructors() {
+            const postcodeInput = document.getElementById('postcodeInput');
+            const postcodeError = document.getElementById('postcodeError');
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; // Clear previous results
+
+            let postcode = postcodeInput.value.trim().toUpperCase();
+
+            if (!/^[A-Z0-9]{3,4}$/.test(postcode)) {
+                postcodeError.textContent = 'Please enter a valid 3-4 character postcode.';
+                return;
+            } else {
+                postcodeError.textContent = '';
+            }
+
+            try {
+                const response = await fetch(instructorsFile);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const csvText = await response.text();
+                const instructors = parseCSV(csvText);
+
+                let foundInstructors = false;
+                instructors.forEach(instructor => {
+                    // Check if the postcode matches any of the up to 20 postcode fields
+                    const matchesPostcode = instructor.postcodes.some(pc => pc.trim().toUpperCase() === postcode);
+
+                    if (matchesPostcode) {
+                        foundInstructors = true;
+                        const card = document.createElement('div');
+                        card.classList.add('instructor-card');
+                        card.innerHTML = `
+                            <p><strong>Name:</strong> ${instructor.name}</p>
+                            <p><strong>Phone:</strong> ${instructor.phone}</p>
+                            <p><strong>Gearbox:</strong> ${getGearboxType(instructor.gearbox)}</p>
+                        `;
+                        resultsDiv.appendChild(card);
+                    }
+                });
+
+                if (!foundInstructors) {
+                    resultsDiv.innerHTML = '<p>No instructors found for this postcode.</p>';
+                }
+
+                document.getElementById('postcode-section').classList.remove('active');
+                document.getElementById('results-section').classList.add('active');
+
+            } catch (error) {
+                resultsDiv.innerHTML = `<p style="color: red;">Error loading or processing instructor data: ${error.message}</p>`;
+                console.error("Error fetching instructors:", error);
+                document.getElementById('postcode-section').classList.remove('active');
+                document.getElementById('results-section').classList.add('active');
+            }
+        }
+
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n').filter(line => line.trim() !== '');
+            const instructors = [];
+            lines.forEach(line => {
+                const parts = line.split(',').map(part => part.trim());
+                if (parts.length >= 4) { // Ensure at least name, phone, gearbox, and one postcode
+                    instructors.push({
+                        name: parts[0],
+                        phone: parts[1],
+                        gearbox: parts[2],
+                        postcodes: parts.slice(3).filter(pc => pc !== '') // Take all subsequent parts as postcodes
+                    });
+                }
+            });
+            return instructors;
+        }
+
+        function getGearboxType(code) {
+            switch (code.toUpperCase()) {
+                case 'M': return 'Manual';
+                case 'A': return 'Automatic';
+                case 'B': return 'Both (Manual & Automatic)';
+                case '?': return 'Unknown';
+                default: return 'N/A';
+            }
+        }
+
+        function resetSearch() {
+            document.getElementById('postcode-section').classList.add('active');
+            document.getElementById('results-section').classList.remove('active');
+            document.getElementById('postcodeInput').value = '';
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('postcodeError').textContent = '';
+        }
+    </script>
+</body>
+</html>
+
