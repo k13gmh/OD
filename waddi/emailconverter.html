@@ -33,7 +33,7 @@
             Paste the content of the Formspree email notification into the box below.
             This tool will extract the details and format them into a single CSV line for your <code>instructors.csv</code> file.
             <br>
-            **Note:** This tool currently extracts Instructor Name, Driving School Name, Gearbox, and Postcode Coverage. If your CSV includes other fields (like phone number or the '?' field), you'll need to add those manually or update your form to collect them.
+            **Important:** Ensure your instructor submission form is updated to collect the phone number and send the gearbox as M, A, or B.
         </p>
 
         <div class="space-y-6">
@@ -41,15 +41,18 @@
                 <label for="emailContent" class="block text-sm font-medium text-gray-700 mb-1">Paste Email Content Here:</label>
                 <textarea id="emailContent" rows="10"
                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition duration-150 ease-in-out"
-                          placeholder="Example:
+                          placeholder="Example of expected email format:
 Instructorname
 John Doe
 
 Drivingschoolname
 Doe Driving School
 
+Phonenumber
+07123456789
+
 Gearbox
-Manual
+B
 
 Postcodecoverage
 B60, DY10, WR9, WR14, ..."></textarea>
@@ -72,7 +75,7 @@ B60, DY10, WR9, WR14, ..."></textarea>
 
             <div id="errorMessage" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md hidden" role="alert">
                 <p class="font-bold">Conversion Error:</p>
-                <p class="text-sm">Could not parse the email content. Please ensure you've copied the full and correct format from the Formspree email.</p>
+                <p class="text-sm">Could not parse the email content. Please ensure you've copied the full and correct format from the Formspree email, including the phone number and abbreviated gearbox.</p>
             </div>
         </div>
     </div>
@@ -91,21 +94,21 @@ B60, DY10, WR9, WR14, ..."></textarea>
             resultArea.classList.add('hidden'); // Hide previous results
 
             // Regular expressions to extract data
-            // Corrected: Now simply captures the name after "Instructorname\n"
             const instructorNameMatch = emailText.match(/Instructorname\n([^\n]+)/i);
             const drivingSchoolNameMatch = emailText.match(/Drivingschoolname\n([^\n]+)/i);
+            const phoneNumberMatch = emailText.match(/Phonenumber\n([^\n]+)/i); // New regex for phone number
             const gearboxMatch = emailText.match(/Gearbox\n([^\n]+)/i);
             const postcodeCoverageMatch = emailText.match(/Postcodecoverage\n([^\n]+)/i);
 
-            if (instructorNameMatch && drivingSchoolNameMatch && gearboxMatch && postcodeCoverageMatch) {
+            if (instructorNameMatch && drivingSchoolNameMatch && phoneNumberMatch && gearboxMatch && postcodeCoverageMatch) {
                 const instructorName = instructorNameMatch[1].trim();
                 const drivingSchoolName = drivingSchoolNameMatch[1].trim();
-                const gearbox = gearboxMatch[1].trim();
-                const postcodeCoverage = postcodeCoverageMatch[1].trim(); // This should already be comma-separated
+                const phoneNumber = phoneNumberMatch[1].trim(); // Extracted phone number
+                const gearbox = gearboxMatch[1].trim(); // This will now be M, A, B, or ?
+                const postcodeCoverage = postcodeCoverageMatch[1].trim();
 
-                // Format into CSV line: * Instructor Name,Driving School Name,Gearbox,Postcode1,Postcode2,...
-                // Explicitly add '* ' to the instructor's name at the beginning of the line
-                const csvLine = `* ${instructorName},${drivingSchoolName},${gearbox},${postcodeCoverage}`;
+                // Format into CSV line: * Instructor Name,Driving School Name,Phone Number,Gearbox Code,Postcode1,Postcode2,...
+                const csvLine = `* ${instructorName},${drivingSchoolName},${phoneNumber},${gearbox},${postcodeCoverage}`;
 
                 csvOutputInput.value = csvLine;
                 resultArea.classList.remove('hidden');
