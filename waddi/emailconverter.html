@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email to CSV Line Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Apply Inter font globally */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ensure it takes full viewport height */
+            margin: 0;
+            padding: 20px; /* Add some padding for smaller screens */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+        /* Custom styles for focus states to ensure consistency */
+        textarea:focus, input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Tailwind blue-500 with opacity */
+            border-color: #3b82f6; /* Tailwind blue-500 */
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-2xl bg-white shadow-lg rounded-xl">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Email to CSV Line Converter</h1>
+        <p class="text-center text-gray-600 mb-8">
+            Paste the content of the Formspree email notification into the box below.
+            This tool will extract the details and format them into a single CSV line for your <code>instructors.csv</code> file.
+            <br>
+            **Note:** This tool currently extracts Instructor Name, Driving School Name, Gearbox, and Postcode Coverage. If your CSV includes other fields (like phone number or the '?' field), you'll need to add those manually or update your form to collect them.
+        </p>
+
+        <div class="space-y-6">
+            <div>
+                <label for="emailContent" class="block text-sm font-medium text-gray-700 mb-1">Paste Email Content Here:</label>
+                <textarea id="emailContent" rows="10"
+                          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition duration-150 ease-in-out"
+                          placeholder="Example:
+Instructorname
+John Doe
+
+Drivingschoolname
+Doe Driving School
+
+Gearbox
+Manual
+
+Postcodecoverage
+B60, DY10, WR9, WR14, ..."></textarea>
+            </div>
+
+            <button id="convertButton"
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out transform hover:scale-105">
+                Convert to CSV
+            </button>
+
+            <div id="resultArea" class="hidden">
+                <label for="csvOutput" class="block text-sm font-medium text-gray-700 mb-1">CSV Output:</label>
+                <input type="text" id="csvOutput" readonly
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 text-gray-800 sm:text-sm">
+                <button id="copyButton"
+                        class="mt-4 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out transform hover:scale-105">
+                    Copy to Clipboard
+                </button>
+            </div>
+
+            <div id="errorMessage" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md hidden" role="alert">
+                <p class="font-bold">Conversion Error:</p>
+                <p class="text-sm">Could not parse the email content. Please ensure you've copied the full and correct format from the Formspree email.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const emailContentInput = document.getElementById('emailContent');
+        const convertButton = document.getElementById('convertButton');
+        const resultArea = document.getElementById('resultArea');
+        const csvOutputInput = document.getElementById('csvOutput');
+        const copyButton = document.getElementById('copyButton');
+        const errorMessage = document.getElementById('errorMessage');
+
+        convertButton.addEventListener('click', () => {
+            const emailText = emailContentInput.value;
+            errorMessage.classList.add('hidden'); // Hide any previous error messages
+            resultArea.classList.add('hidden'); // Hide previous results
+
+            // Regular expressions to extract data
+            // Corrected: Now simply captures the name after "Instructorname\n"
+            const instructorNameMatch = emailText.match(/Instructorname\n([^\n]+)/i);
+            const drivingSchoolNameMatch = emailText.match(/Drivingschoolname\n([^\n]+)/i);
+            const gearboxMatch = emailText.match(/Gearbox\n([^\n]+)/i);
+            const postcodeCoverageMatch = emailText.match(/Postcodecoverage\n([^\n]+)/i);
+
+            if (instructorNameMatch && drivingSchoolNameMatch && gearboxMatch && postcodeCoverageMatch) {
+                const instructorName = instructorNameMatch[1].trim();
+                const drivingSchoolName = drivingSchoolNameMatch[1].trim();
+                const gearbox = gearboxMatch[1].trim();
+                const postcodeCoverage = postcodeCoverageMatch[1].trim(); // This should already be comma-separated
+
+                // Format into CSV line: * Instructor Name,Driving School Name,Gearbox,Postcode1,Postcode2,...
+                // Explicitly add '* ' to the instructor's name at the beginning of the line
+                const csvLine = `* ${instructorName},${drivingSchoolName},${gearbox},${postcodeCoverage}`;
+
+                csvOutputInput.value = csvLine;
+                resultArea.classList.remove('hidden');
+            } else {
+                errorMessage.classList.remove('hidden');
+            }
+        });
+
+        copyButton.addEventListener('click', () => {
+            csvOutputInput.select(); // Select the text in the input field
+            csvOutputInput.setSelectionRange(0, 99999); // For mobile devices
+            try {
+                document.execCommand('copy'); // Copy the selected text to the clipboard
+                // Optional: Provide visual feedback that it was copied
+                copyButton.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyButton.textContent = 'Copy to Clipboard';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                alert('Failed to copy to clipboard. Please manually select and copy the text.');
+            }
+        });
+    </script>
+</body>
+</html>
