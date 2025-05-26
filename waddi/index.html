@@ -39,6 +39,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
+            margin: 5px; /* Add some margin around buttons */
         }
         button:hover {
             background-color: #0056b3;
@@ -91,6 +92,17 @@
             flex-grow: 1;
             width: auto;
         }
+        #copyFeedback {
+            color: green;
+            margin-left: 10px;
+            visibility: hidden; /* Hidden by default */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        #copyFeedback.show {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -124,13 +136,28 @@
         <div id="results-section">
             <h2>Matching Instructors:</h2>
             <div id="results"></div>
-            <button onclick="resetSearch()">New Search</button>
+            <div style="margin-top: 15px;">
+                <button onclick="resetSearch()">New Search</button>
+                <button id="copyButton" onclick="copyResultsToClipboard()">Copy to Clipboard</button>
+                <span id="copyFeedback">Copied!</span>
+            </div>
         </div>
     </div>
 
     <script>
         const correctPassword = "WADDI";
         const instructorsFile = 'instructors.csv';
+
+        // Reset search on page load to prevent cached results from browser history
+        document.addEventListener('DOMContentLoaded', () => {
+            // Only reset if we are on the postcode or results section
+            // This prevents clearing the password prompt if user just opens the page
+            const passwordSection = document.getElementById('password-section');
+            if (!passwordSection.classList.contains('active')) {
+                resetSearch();
+            }
+        });
+
 
         function checkPassword() {
             const passwordInput = document.getElementById('passwordInput');
@@ -226,12 +253,15 @@
 
                 document.getElementById('postcode-section').classList.remove('active');
                 document.getElementById('results-section').classList.add('active');
+                document.getElementById('copyButton').style.display = matchingInstructors.length > 0 ? 'inline-block' : 'none';
+
 
             } catch (error) {
                 resultsDiv.innerHTML = `<p style="color: red;">Error loading or processing instructor data: ${error.message}</p>`;
                 console.error("Error fetching instructors:", error);
                 document.getElementById('postcode-section').classList.remove('active');
                 document.getElementById('results-section').classList.add('active');
+                document.getElementById('copyButton').style.display = 'none'; // Hide copy button on error
             }
         }
 
@@ -258,7 +288,7 @@
             switch (code.toUpperCase()) {
                 case 'M': return 'Manual';
                 case 'A': return 'Automatic';
-                case 'B': return 'Both'; // Simplified for table heading
+                case 'B': return 'Both';
                 case '?': return 'Unknown';
                 default: return 'N/A';
             }
@@ -271,6 +301,49 @@
             document.getElementById('gearboxSelect').value = '';
             document.getElementById('results').innerHTML = '';
             document.getElementById('postcodeError').textContent = '';
+            document.getElementById('copyButton').style.display = 'none'; // Hide copy button
+            const feedbackSpan = document.getElementById('copyFeedback');
+            feedbackSpan.classList.remove('show'); // Hide feedback
+        }
+
+        async function copyResultsToClipboard() {
+            const resultsTable = document.querySelector('#results table');
+            const feedbackSpan = document.getElementById('copyFeedback');
+
+            if (!resultsTable) {
+                alert('No results to copy!');
+                return;
+            }
+
+            let textToCopy = '';
+            // Get table headers
+            const headers = Array.from(resultsTable.querySelectorAll('th')).map(th => th.textContent.trim());
+            textToCopy += headers.join('\t') + '\n'; // Tab-separated headers
+
+            // Get table rows
+            const rows = resultsTable.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cells = Array.from(row.querySelectorAll('td')).map(td => td.textContent.trim());
+                textToCopy += cells.join('\t') + '\n'; // Tab-separated values
+            });
+
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+                feedbackSpan.textContent = 'Copied!';
+                feedbackSpan.classList.add('show');
+                setTimeout(() => {
+                    feedbackSpan.classList.remove('show');
+                }, 2000); // Hide after 2 seconds
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                feedbackSpan.textContent = 'Failed to copy!';
+                feedbackSpan.style.color = 'red';
+                feedbackSpan.classList.add('show');
+                setTimeout(() => {
+                    feedbackSpan.classList.remove('show');
+                    feedbackSpan.style.color = 'green'; // Reset color
+                }, 2000);
+            }
         }
     </script>
 </body>
