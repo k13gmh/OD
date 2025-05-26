@@ -21,7 +21,7 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 900px; /* Increased max-width for table */
+            max-width: 900px;
             width: 100%;
         }
         input[type="password"], input[type="text"], select {
@@ -39,7 +39,7 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
-            margin: 5px; /* Add some margin around buttons */
+            margin: 5px;
         }
         button:hover {
             background-color: #0056b3;
@@ -57,9 +57,9 @@
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
-            white-space: nowrap; /* Keep content on one line */
-            overflow: hidden; /* Hide overflow */
-            text-overflow: ellipsis; /* Add ellipsis for overflow */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         th {
             background-color: #e2e2e2;
@@ -95,7 +95,7 @@
         #copyFeedback {
             color: green;
             margin-left: 10px;
-            visibility: hidden; /* Hidden by default */
+            visibility: hidden;
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
         }
@@ -103,7 +103,6 @@
             visibility: visible;
             opacity: 1;
         }
-        /* No initial display: none for #copyButton here */
     </style>
 </head>
 <body>
@@ -135,7 +134,7 @@
         </div>
 
         <div id="results-section">
-            <h2>Matching Instructors:</h2>
+            <h2 id="resultsHeading">Matching Instructors:</h2>
             <div id="results"></div>
             <div style="margin-top: 15px;">
                 <button onclick="resetSearch()">New Search</button>
@@ -149,19 +148,12 @@
         const correctPassword = "WADDI";
         const instructorsFile = 'instructors.csv';
 
-        // Reset search on page load to prevent cached results from browser history
         document.addEventListener('DOMContentLoaded', () => {
-            // Only reset if we are on the postcode or results section
-            // This prevents clearing the password prompt if user just opens the page
-            const passwordSection = document.getElementById('password-section');
-            if (!passwordSection.classList.contains('active')) {
-                resetSearch();
-            } else {
-                // If on password screen, ensure copy button is hidden
-                document.getElementById('copyButton').style.display = 'none';
-            }
+            resetSearch();
+            document.getElementById('password-section').classList.add('active');
+            document.getElementById('postcode-section').classList.remove('active');
+            document.getElementById('results-section').classList.remove('active');
         });
-
 
         function checkPassword() {
             const passwordInput = document.getElementById('passwordInput');
@@ -170,7 +162,9 @@
                 document.getElementById('password-section').classList.remove('active');
                 document.getElementById('postcode-section').classList.add('active');
                 passwordError.textContent = '';
-                passwordInput.value = ''; // Clear password field
+                passwordInput.value = '';
+                document.getElementById('copyButton').style.display = 'none';
+                document.getElementById('resultsHeading').textContent = 'Matching Instructors:'; // Reset heading
             } else {
                 passwordError.textContent = 'Incorrect password. Please try again.';
             }
@@ -181,17 +175,22 @@
             const postcodeError = document.getElementById('postcodeError');
             const gearboxSelect = document.getElementById('gearboxSelect');
             const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = ''; // Clear previous results
+            const resultsHeading = document.getElementById('resultsHeading');
+            resultsDiv.innerHTML = '';
 
             let postcode = postcodeInput.value.trim().toUpperCase();
-            let desiredGearbox = gearboxSelect.value.toUpperCase(); // M, A, or empty string
+            let desiredGearbox = gearboxSelect.value.toUpperCase();
 
             if (!/^[A-Z0-9]{3,4}$/.test(postcode)) {
                 postcodeError.textContent = 'Please enter a valid 3-4 character postcode.';
+                document.getElementById('copyButton').style.display = 'none';
+                resultsHeading.textContent = 'Matching Instructors:'; // Reset heading on validation fail
                 return;
             } else {
                 postcodeError.textContent = '';
             }
+
+            resultsHeading.textContent = `Matching Instructors: ${postcode}`; // Set heading with postcode
 
             try {
                 const response = await fetch(instructorsFile);
@@ -221,7 +220,6 @@
                     }
                 });
 
-                // Sort instructors by name
                 matchingInstructors.sort((a, b) => a.name.localeCompare(b.name));
 
                 if (matchingInstructors.length > 0) {
@@ -251,22 +249,22 @@
                         tbody.appendChild(row);
                     });
                     resultsDiv.appendChild(table);
-                    document.getElementById('copyButton').style.display = 'inline-block'; // Show copy button
+                    document.getElementById('copyButton').style.display = 'inline-block';
                 } else {
                     resultsDiv.innerHTML = '<p>No instructors found for this postcode and gearbox type.</p>';
-                    document.getElementById('copyButton').style.display = 'none'; // Hide copy button
+                    document.getElementById('copyButton').style.display = 'none';
                 }
 
                 document.getElementById('postcode-section').classList.remove('active');
                 document.getElementById('results-section').classList.add('active');
-
 
             } catch (error) {
                 resultsDiv.innerHTML = `<p style="color: red;">Error loading or processing instructor data: ${error.message}</p>`;
                 console.error("Error fetching instructors:", error);
                 document.getElementById('postcode-section').classList.remove('active');
                 document.getElementById('results-section').classList.add('active');
-                document.getElementById('copyButton').style.display = 'none'; // Hide copy button on error
+                document.getElementById('copyButton').style.display = 'none';
+                resultsHeading.textContent = 'Matching Instructors: Error'; // Indicate error in heading
             }
         }
 
@@ -306,9 +304,11 @@
             document.getElementById('gearboxSelect').value = '';
             document.getElementById('results').innerHTML = '';
             document.getElementById('postcodeError').textContent = '';
-            document.getElementById('copyButton').style.display = 'none'; // Ensure copy button is hidden on reset
+            document.getElementById('copyButton').style.display = 'none';
             const feedbackSpan = document.getElementById('copyFeedback');
-            feedbackSpan.classList.remove('show'); // Hide feedback
+            feedbackSpan.classList.remove('show');
+            feedbackSpan.style.color = 'green'; // Reset color
+            document.getElementById('resultsHeading').textContent = 'Matching Instructors:'; // Reset heading
         }
 
         async function copyResultsToClipboard() {
@@ -321,15 +321,13 @@
             }
 
             let textToCopy = '';
-            // Get table headers
             const headers = Array.from(resultsTable.querySelectorAll('th')).map(th => th.textContent.trim());
-            textToCopy += headers.join('\t') + '\n'; // Tab-separated headers
+            textToCopy += headers.join('\t') + '\n';
 
-            // Get table rows
             const rows = resultsTable.querySelectorAll('tbody tr');
             rows.forEach(row => {
                 const cells = Array.from(row.querySelectorAll('td')).map(td => td.textContent.trim());
-                textToCopy += cells.join('\t') + '\n'; // Tab-separated values
+                textToCopy += cells.join('\t') + '\n';
             });
 
             try {
@@ -339,7 +337,7 @@
                 feedbackSpan.classList.add('show');
                 setTimeout(() => {
                     feedbackSpan.classList.remove('show');
-                }, 2000); // Hide after 2 seconds
+                }, 2000);
             } catch (err) {
                 console.error('Failed to copy text: ', err);
                 feedbackSpan.textContent = 'Failed to copy!';
@@ -347,7 +345,7 @@
                 feedbackSpan.classList.add('show');
                 setTimeout(() => {
                     feedbackSpan.classList.remove('show');
-                    feedbackSpan.style.color = 'green'; // Reset color
+                    feedbackSpan.style.color = 'green';
                 }, 2000);
             }
         }
