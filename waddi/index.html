@@ -103,6 +103,7 @@
             visibility: visible;
             opacity: 1;
         }
+        /* No initial display: none for #copyButton here */
     </style>
 </head>
 <body>
@@ -155,6 +156,9 @@
             const passwordSection = document.getElementById('password-section');
             if (!passwordSection.classList.contains('active')) {
                 resetSearch();
+            } else {
+                // If on password screen, ensure copy button is hidden
+                document.getElementById('copyButton').style.display = 'none';
             }
         });
 
@@ -247,13 +251,14 @@
                         tbody.appendChild(row);
                     });
                     resultsDiv.appendChild(table);
+                    document.getElementById('copyButton').style.display = 'inline-block'; // Show copy button
                 } else {
                     resultsDiv.innerHTML = '<p>No instructors found for this postcode and gearbox type.</p>';
+                    document.getElementById('copyButton').style.display = 'none'; // Hide copy button
                 }
 
                 document.getElementById('postcode-section').classList.remove('active');
                 document.getElementById('results-section').classList.add('active');
-                document.getElementById('copyButton').style.display = matchingInstructors.length > 0 ? 'inline-block' : 'none';
 
 
             } catch (error) {
@@ -301,7 +306,7 @@
             document.getElementById('gearboxSelect').value = '';
             document.getElementById('results').innerHTML = '';
             document.getElementById('postcodeError').textContent = '';
-            document.getElementById('copyButton').style.display = 'none'; // Hide copy button
+            document.getElementById('copyButton').style.display = 'none'; // Ensure copy button is hidden on reset
             const feedbackSpan = document.getElementById('copyFeedback');
             feedbackSpan.classList.remove('show'); // Hide feedback
         }
@@ -330,6 +335,7 @@
             try {
                 await navigator.clipboard.writeText(textToCopy);
                 feedbackSpan.textContent = 'Copied!';
+                feedbackSpan.style.color = 'green';
                 feedbackSpan.classList.add('show');
                 setTimeout(() => {
                     feedbackSpan.classList.remove('show');
