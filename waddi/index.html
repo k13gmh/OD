@@ -127,6 +127,7 @@
                     <option value="">Any</option>
                     <option value="M">Manual</option>
                     <option value="A">Automatic</option>
+                    <option value="B">Both (Manual & Automatic)</option>
                 </select>
             </div>
             <button onclick="searchInstructors()">Search</button>
@@ -164,7 +165,7 @@
                 passwordError.textContent = '';
                 passwordInput.value = '';
                 document.getElementById('copyButton').style.display = 'none';
-                document.getElementById('resultsHeading').textContent = 'Matching Instructors:'; // Reset heading
+                document.getElementById('resultsHeading').textContent = 'Matching Instructors:';
             } else {
                 passwordError.textContent = 'Incorrect password. Please try again.';
             }
@@ -184,13 +185,13 @@
             if (!/^[A-Z0-9]{3,4}$/.test(postcode)) {
                 postcodeError.textContent = 'Please enter a valid 3-4 character postcode.';
                 document.getElementById('copyButton').style.display = 'none';
-                resultsHeading.textContent = 'Matching Instructors:'; // Reset heading on validation fail
+                resultsHeading.textContent = 'Matching Instructors:';
                 return;
             } else {
                 postcodeError.textContent = '';
             }
 
-            resultsHeading.textContent = `Matching Instructors: ${postcode}`; // Set heading with postcode
+            resultsHeading.textContent = `Matching Instructors: ${postcode}`;
 
             try {
                 const response = await fetch(instructorsFile);
@@ -205,15 +206,18 @@
                 instructors.forEach(instructor => {
                     const matchesPostcode = instructor.postcodes.some(pc => pc.trim().toUpperCase() === postcode);
 
-                    let matchesGearbox = true;
-                    if (desiredGearbox) {
-                        const instructorGearbox = instructor.gearbox.toUpperCase();
-                        if (desiredGearbox === 'M') {
-                            matchesGearbox = (instructorGearbox === 'M' || instructorGearbox === 'B' || instructorGearbox === '?');
-                        } else if (desiredGearbox === 'A') {
-                            matchesGearbox = (instructorGearbox === 'A' || instructorGearbox === 'B' || instructorGearbox === '?');
-                        }
+                    let matchesGearbox = false; // Changed initial state to false
+
+                    if (desiredGearbox === '') { // "Any" option selected
+                        matchesGearbox = true; // All gearbox types match
+                    } else if (desiredGearbox === 'M') { // Searching for Manual
+                        matchesGearbox = (instructor.gearbox.toUpperCase() === 'M' || instructor.gearbox.toUpperCase() === 'B');
+                    } else if (desiredGearbox === 'A') { // Searching for Automatic
+                        matchesGearbox = (instructor.gearbox.toUpperCase() === 'A' || instructor.gearbox.toUpperCase() === 'B');
+                    } else if (desiredGearbox === 'B') { // Searching for Both (Manual & Automatic)
+                        matchesGearbox = (instructor.gearbox.toUpperCase() === 'M' || instructor.gearbox.toUpperCase() === 'A' || instructor.gearbox.toUpperCase() === 'B' || instructor.gearbox.toUpperCase() === '?');
                     }
+
 
                     if (matchesPostcode && matchesGearbox) {
                         matchingInstructors.push(instructor);
@@ -264,7 +268,7 @@
                 document.getElementById('postcode-section').classList.remove('active');
                 document.getElementById('results-section').classList.add('active');
                 document.getElementById('copyButton').style.display = 'none';
-                resultsHeading.textContent = 'Matching Instructors: Error'; // Indicate error in heading
+                resultsHeading.textContent = `Matching Instructors: ${postcode} (Error)`; // Indicate error in heading
             }
         }
 
@@ -277,7 +281,7 @@
                 if (parts.length >= 4 && parts[3] !== '') {
                     instructors.push({
                         name: parts[0].startsWith('*') ? parts[0].substring(1).trim() : parts[0],
-                        school: parts[1] || 'N/A',
+                        school: parts[1] || '-', // Change N/A to - for school
                         phone: parts[2] || 'N/A',
                         gearbox: parts[3],
                         postcodes: parts.slice(4).filter(pc => pc !== '')
@@ -307,8 +311,8 @@
             document.getElementById('copyButton').style.display = 'none';
             const feedbackSpan = document.getElementById('copyFeedback');
             feedbackSpan.classList.remove('show');
-            feedbackSpan.style.color = 'green'; // Reset color
-            document.getElementById('resultsHeading').textContent = 'Matching Instructors:'; // Reset heading
+            feedbackSpan.style.color = 'green';
+            document.getElementById('resultsHeading').textContent = 'Matching Instructors:';
         }
 
         async function copyResultsToClipboard() {
