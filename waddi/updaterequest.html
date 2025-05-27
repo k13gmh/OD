@@ -62,7 +62,10 @@
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Postcode Coverage (enter up to 20 postcodes)</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Postcode Coverage (enter up to 20 postcodes)
+                </label>
+                <span class="text-gray-500 text-xs block mb-2">(Enter the areas you teach in e.g. WR1 WR2 WR3 etc)</span>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3" id="postcodeInputsContainer">
                     </div>
             </div>
@@ -96,6 +99,7 @@
                 input.id = `postcode${i + 1}`; // Unique ID for each input
                 input.name = `postcode${i + 1}`; // Unique name for each input
                 input.placeholder = `Postcode ${i + 1}`;
+                input.maxLength = 4; // Set maximum length to 4 characters
                 // Apply Tailwind classes for styling
                 input.className = 'block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition duration-150 ease-in-out';
                 // Add an event listener to convert input to uppercase as user types
@@ -140,8 +144,8 @@
             const formData = {
                 instructorName: document.getElementById('instructorName').value,
                 drivingSchoolName: document.getElementById('drivingSchoolName').value,
-                phoneNumber: document.getElementById('phoneNumber').value, // New: Phone number
-                gearbox: gearboxCode, // New: Abbreviated gearbox code
+                phoneNumber: document.getElementById('phoneNumber').value,
+                gearbox: gearboxCode,
                 postcodeCoverage: postcodeCoverage.join(', ') // Join postcodes into a single string for email readability
             };
 
