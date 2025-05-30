@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instructor Search</title>
+    <title>Driving Instructor Search</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -68,10 +68,11 @@
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-        #password-section, #postcode-section, #results-section {
-            display: none;
+        /* No password-section active/display rules needed as it's removed */
+        #postcode-section, #results-section {
+            display: none; /* Will be managed by JS based on initial load */
         }
-        #password-section.active, #postcode-section.active, #results-section.active {
+        #postcode-section.active, #results-section.active {
             display: block;
         }
         .error-message {
@@ -103,18 +104,69 @@
             visibility: visible;
             opacity: 1;
         }
+
+        /* Cookie Consent Banner Styling */
+        #cookieConsentBanner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none; /* Hidden by default, shown by JS */
+        }
+        #cookieConsentBanner button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 10px 5px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        #cookieConsentBanner button#declineCookies {
+            background-color: #f44336;
+        }
+        #cookieConsentBanner a {
+            color: lightblue;
+            text-decoration: underline;
+        }
+
+        /* Footer styling */
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+            width: 100%; /* Ensure footer spans full width */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Instructor Search</h1>
 
-        <div id="password-section" class="active">
-            <p>Please enter the password to continue:</p>
-            <input type="password" id="passwordInput" placeholder="Enter password">
-            <button onclick="checkPassword()">Submit</button>
-            <p id="passwordError" class="error-message"></p>
-        </div>
+    <div id="cookieConsentBanner">
+        <p style="margin: 0;">
+            We use a visitor counter to see how many people visit our page. This helps us understand engagement.
+            While it does not store personal data like IP addresses, it may use local browser storage to distinguish unique visitors.
+            By clicking "Accept", you consent to this.
+        </p>
+        <button id="acceptCookies">Accept</button>
+        <button id="declineCookies">Decline</button>
+        <a href="cookies.html" target="_blank" rel="noopener noreferrer">Learn more about our visitor counter</a>
+    </div>
+    <div class="container">
+        <h1>Driving Instructor Search</h1>
 
         <div id="postcode-section">
             <div class="input-group">
@@ -145,32 +197,86 @@
         </div>
     </div>
 
+    <footer>
+        <p>
+            <a href="https://hits.sh/k13gmh.github.io/OD/waddi/index.html/">
+                <img alt="Visitor Count" src="https://hits.sh/k13gmh.github.io/OD/waddi/index.html.svg?label=visitor&extraCount=700&color=9f9f9f" style="display:none;"/>
+            </a>
+            </p>
+        <p><small>View our full <a href="cookies.html" target="_blank" rel="noopener noreferrer">Cookie and Visitor Counter Policy</a>.</small></p>
+    </footer>
+
     <script>
-        const correctPassword = "WADDI";
-        const instructorsFile = 'instructors.csv';
+        // Removed: const correctPassword = "WADDI";
+        const instructorsFile = 'instructors.csv'; // Your CSV file
 
         document.addEventListener('DOMContentLoaded', () => {
-            resetSearch();
-            document.getElementById('password-section').classList.add('active');
-            document.getElementById('postcode-section').classList.remove('active');
+            // Directly activate postcode section on load, as there's no password
+            document.getElementById('postcode-section').classList.add('active');
             document.getElementById('results-section').classList.remove('active');
+            document.getElementById('copyButton').style.display = 'none'; // Ensure copy button is hidden initially
+            document.getElementById('resultsHeading').textContent = 'Matching Instructors:';
+
+            // --- Cookie Consent & Counter Logic ---
+            const banner = document.getElementById('cookieConsentBanner');
+            const acceptBtn = document.getElementById('acceptCookies');
+            const declineBtn = document.getElementById('declineCookies');
+            const counterImage = document.querySelector('img[src*="hits.sh"]'); // Select the hits.sh counter image
+
+            const consentGiven = localStorage.getItem('cookieConsent') === 'accepted';
+            const consentDeclined = localStorage.getItem('cookieConsent') === 'declined';
+
+            function showBanner() {
+                banner.style.display = 'block';
+            }
+
+            function hideBanner() {
+                banner.style.display = 'none';
+            }
+
+            function enableCounter() {
+                if (counterImage) {
+                    counterImage.style.display = 'inline'; // Make it visible
+                }
+            }
+
+            function disableCounter() {
+                if (counterImage) {
+                    counterImage.style.display = 'none';
+                }
+            }
+
+            // Initial state based on consent
+            if (consentGiven) {
+                enableCounter();
+                hideBanner();
+            } else if (consentDeclined) {
+                disableCounter();
+                hideBanner();
+            } else {
+                // No consent yet, show banner and hide counter initially
+                disableCounter(); // Ensure counter is hidden initially
+                showBanner();
+            }
+
+            // Event Listeners for consent buttons
+            acceptBtn.addEventListener('click', function() {
+                localStorage.setItem('cookieConsent', 'accepted');
+                enableCounter();
+                hideBanner();
+            });
+
+            declineBtn.addEventListener('click', function() {
+                localStorage.setItem('cookieConsent', 'declined');
+                disableCounter();
+                hideBanner();
+            });
+            // --- End Cookie Consent & Counter Logic ---
         });
 
-        function checkPassword() {
-            const passwordInput = document.getElementById('passwordInput');
-            const passwordError = document.getElementById('passwordError');
-            if (passwordInput.value === correctPassword) {
-                document.getElementById('password-section').classList.remove('active');
-                document.getElementById('postcode-section').classList.add('active');
-                passwordError.textContent = '';
-                passwordInput.value = '';
-                document.getElementById('copyButton').style.display = 'none';
-                document.getElementById('resultsHeading').textContent = 'Matching Instructors:';
-            } else {
-                passwordError.textContent = 'Incorrect password. Please try again.';
-            }
-        }
+        // Removed: checkPassword function as it's no longer needed.
 
+        // Your original search instructors function
         async function searchInstructors() {
             const postcodeInput = document.getElementById('postcodeInput');
             const postcodeError = document.getElementById('postcodeError');
@@ -206,15 +312,14 @@
                 instructors.forEach(instructor => {
                     const matchesPostcode = instructor.postcodes.some(pc => pc.trim().toUpperCase() === postcode);
 
-                    let matchesGearbox = false; // Changed initial state to false
-
-                    if (desiredGearbox === '') { // "Any" option selected
-                        matchesGearbox = true; // All gearbox types match
-                    } else if (desiredGearbox === 'M') { // Searching for Manual
+                    let matchesGearbox = false;
+                    if (desiredGearbox === '') {
+                        matchesGearbox = true;
+                    } else if (desiredGearbox === 'M') {
                         matchesGearbox = (instructor.gearbox.toUpperCase() === 'M' || instructor.gearbox.toUpperCase() === 'B');
-                    } else if (desiredGearbox === 'A') { // Searching for Automatic
+                    } else if (desiredGearbox === 'A') {
                         matchesGearbox = (instructor.gearbox.toUpperCase() === 'A' || instructor.gearbox.toUpperCase() === 'B');
-                    } else if (desiredGearbox === 'B') { // Searching for Both (Manual & Automatic)
+                    } else if (desiredGearbox === 'B') {
                         matchesGearbox = (instructor.gearbox.toUpperCase() === 'M' || instructor.gearbox.toUpperCase() === 'A' || instructor.gearbox.toUpperCase() === 'B' || instructor.gearbox.toUpperCase() === '?');
                     }
 
@@ -268,10 +373,11 @@
                 document.getElementById('postcode-section').classList.remove('active');
                 document.getElementById('results-section').classList.add('active');
                 document.getElementById('copyButton').style.display = 'none';
-                resultsHeading.textContent = `Matching Instructors: ${postcode} (Error)`; // Indicate error in heading
+                resultsHeading.textContent = `Matching Instructors: ${postcode} (Error)`;
             }
         }
 
+        // Your original CSV parsing function
         function parseCSV(csvText) {
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             const instructors = [];
@@ -281,7 +387,7 @@
                 if (parts.length >= 4 && parts[3] !== '') {
                     instructors.push({
                         name: parts[0].startsWith('*') ? parts[0].substring(1).trim() : parts[0],
-                        school: parts[1] || '-', // Change N/A to - for school
+                        school: parts[1] || '-',
                         phone: parts[2] || 'N/A',
                         gearbox: parts[3],
                         postcodes: parts.slice(4).filter(pc => pc !== '')
@@ -291,6 +397,7 @@
             return instructors;
         }
 
+        // Your original getGearboxType function
         function getGearboxType(code) {
             switch (code.toUpperCase()) {
                 case 'M': return 'Manual';
@@ -301,6 +408,7 @@
             }
         }
 
+        // Your original resetSearch function
         function resetSearch() {
             document.getElementById('postcode-section').classList.add('active');
             document.getElementById('results-section').classList.remove('active');
@@ -315,6 +423,7 @@
             document.getElementById('resultsHeading').textContent = 'Matching Instructors:';
         }
 
+        // Your original copyResultsToClipboard function
         async function copyResultsToClipboard() {
             const resultsTable = document.querySelector('#results table');
             const feedbackSpan = document.getElementById('copyFeedback');
