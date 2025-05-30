@@ -3,36 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookie and Visitor Counter Policy - Driving Instructor Search</title>
+    <title>Driving Instructor Search</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+            flex-direction: column;
         }
-        h1, h2, h3 {
-            color: #2c3e50;
-        }
-        ul {
-            list-style-type: disc;
-            margin-left: 20px;
-        }
-        a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .return-link-container {
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            margin-bottom: 20px;
+            max-width: 900px;
+            width: 100%;
         }
-        .return-link-container button {
+        input[type="password"], input[type="text"], select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
             background-color: #007bff;
             color: white;
             padding: 10px 15px;
@@ -42,118 +41,448 @@
             font-size: 16px;
             margin: 5px;
         }
-        .return-link-container button:hover {
+        button:hover {
             background-color: #0056b3;
+        }
+        #results {
+            margin-top: 20px;
+            text-align: left;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        th {
+            background-color: #e2e2e2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        #password-section, #postcode-section, #results-section {
+            display: none;
+        }
+        #password-section.active, #postcode-section.active, #results-section.active {
+            display: block;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .input-group label {
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        .input-group input, .input-group select {
+            flex-grow: 1;
+            width: auto;
+        }
+        #copyFeedback {
+            color: green;
+            margin-left: 10px;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        #copyFeedback.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Cookie Consent Banner Styling */
+        #cookieConsentBanner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none; /* Hidden by default, shown by JS */
+        }
+        #cookieConsentBanner button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 10px 5px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        #cookieConsentBanner button#declineCookies {
+            background-color: #f44336;
+        }
+        #cookieConsentBanner a {
+            color: lightblue;
+            text-decoration: underline;
+        }
+
+        /* Footer styling */
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+            width: 100%; /* Ensure footer spans full width */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
         }
     </style>
 </head>
 <body>
 
-    <div class="return-link-container">
-        <a href="index.html"><button>← Return to Search</button></a>
+    <div id="cookieConsentBanner">
+        <p style="margin: 0;">
+            We use a visitor counter to see how many people visit our page. This helps us understand engagement.
+            While it does not store personal data like IP addresses, it may use local browser storage to distinguish unique visitors.
+            By clicking "Accept", you consent to this.
+        </p>
+        <button id="acceptCookies">Accept</button>
+        <button id="declineCookies">Decline</button>
+        <a href="cookies.html" target="_blank" rel="noopener noreferrer">Learn more about our visitor counter</a>
+    </div>
+    <div class="container">
+        <h1>Driving Instructor Search</h1>
+
+        <div id="password-section" class="active">
+            <p>Please enter the password to continue:</p>
+            <input type="password" id="passwordInput" placeholder="Enter password">
+            <button onclick="checkPassword()">Submit</button>
+            <p id="passwordError" class="error-message"></p>
+        </div>
+
+        <div id="postcode-section">
+            <div class="input-group">
+                <label for="postcodeInput">Postcode:</label>
+                <input type="text" id="postcodeInput" placeholder="Enter 3-4 char postcode (e.g., DY10)">
+            </div>
+            <div class="input-group">
+                <label for="gearboxSelect">Gearbox (Optional):</label>
+                <select id="gearboxSelect">
+                    <option value="">Any</option>
+                    <option value="M">Manual</option>
+                    <option value="A">Automatic</option>
+                    <option value="B">Both (Manual & Automatic)</option>
+                </select>
+            </div>
+            <button onclick="searchInstructors()">Search</button>
+            <p id="postcodeError" class="error-message"></p>
+        </div>
+
+        <div id="results-section">
+            <h2 id="resultsHeading">Matching Instructors:</h2>
+            <div id="results"></div>
+            <div style="margin-top: 15px;">
+                <button onclick="resetSearch()">New Search</button>
+                <button id="copyButton" onclick="copyResultsToClipboard()">Copy to Clipboard</button>
+                <span id="copyFeedback">Copied!</span>
+            </div>
+        </div>
     </div>
 
-    <h1>Cookie and Visitor Counter Policy</h1>
-    <p>Last updated: 30 May 2025</p>
+    <footer>
+        <p>
+            <a href="https://hits.sh/k13gmh.github.io/OD/waddi/index.html/">
+                <img alt="Visitor Count" src="https://hits.sh/k13gmh.github.io/OD/waddi/index.html.svg?label=visitor&extraCount=700&color=9f9f9f" style="display:none;"/>
+            </a>
+            </p>
+        <p><small>View our full <a href="cookies.html" target="_blank" rel="noopener noreferrer">Cookie and Visitor Counter Policy</a>.</small></p>
+    </footer>
 
-    <p>
-        This policy explains how our GitHub Pages site, **Driving Instructor Search** (https://k13gmh.github.io/OD/waddi/index.html), uses certain technologies, specifically a visitor counter, to understand how our content is accessed and to enhance your experience. We are committed to protecting your privacy and complying with relevant data protection laws, including the UK General Data Protection Regulation (UK GDPR) and the ePrivacy Directive (also known as the "Cookie Law").
-    </p>
+    <script>
+        const correctPassword = "WADDI"; // Your password
+        const instructorsFile = 'instructors.csv'; // Your CSV file
 
-    <h2>1. What are Cookies and Similar Technologies?</h2>
-    <p>
-        Cookies are small text files placed on your computer or mobile device when you visit a website. They're used to make websites work more efficiently and to provide information to site owners.
-    </p>
-    <p>
-        Similar technologies include "local storage" or "session storage" in your browser. These work like cookies by letting websites store or access information directly in your browser. Even if not strictly "cookies," they fall under the same legal requirements for informing users and getting consent in many places, including the UK and EU.
-    </p>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Your original password handling logic
+            resetSearch();
+            document.getElementById('password-section').classList.add('active');
+            document.getElementById('postcode-section').classList.remove('active');
+            document.getElementById('results-section').classList.remove('active');
 
-    <h2>2. Technologies We Use on This Page</h2>
-    <p>
-        On this `index.html` page, which helps you search for instructors, we use two categories of technologies:
-    </p>
+            // --- Cookie Consent & Counter Logic ---
+            const banner = document.getElementById('cookieConsentBanner');
+            const acceptBtn = document.getElementById('acceptCookies');
+            const declineBtn = document.getElementById('declineCookies');
+            const counterImage = document.querySelector('img[src*="hits.sh"]'); // Select the hits.sh counter image
 
-    <h3>a. Strictly Necessary Technologies (No Consent Required)</h3>
-    <p>
-        These are essential for the core functionality of our page. They enable you to search for instructors and display results. Without them, the page simply wouldn't work as intended. We don't need your consent for these, but we want you to be aware of them. These typically include:
-    </p>
-    <ul>
-        <li>Technologies that remember your search queries during a session.</li>
-        <li>Technologies that help the search interface function smoothly.</li>
-    </ul>
-    <p>
-        These do not collect any personal data and are deleted when you close your browser session.
-    </p>
+            const consentGiven = localStorage.getItem('cookieConsent') === 'accepted';
+            const consentDeclined = localStorage.getItem('cookieConsent') === 'declined';
 
-    <h3>b. Non-Essential Technologies (Consent Required: The `hits.sh` Visitor Counter)</h3>
-    <p>
-        We also use a simple, free visitor counter provided by **`hits.sh`**. This tool helps us understand how many people visit this specific page and estimate how many unique individuals have used it.
-    </p>
-    <h4>Purpose of the Counter:</h4>
-    <ul>
-        <li>To track the total number of times our instructor search page has been viewed.</li>
-        <li>To estimate the number of unique individuals who have visited this specific page.</li>
-        <li>To provide us with basic, anonymized statistics to understand the general popularity and reach of our content.</li>
-        <li>The counter has been configured to **start counting from 700** for display purposes.</li>
-    </ul>
+            function showBanner() {
+                banner.style.display = 'block';
+            }
 
-    <h4>How `hits.sh` Works (and its use of technologies):</h4>
-    <p>
-        When you visit our page, a request is made to the `hits.sh` service to update the counter. According to their documentation, this service:
-    </p>
-    <ul>
-        <li>Counts every page hit.</li>
-        <li>**Does not store sensitive personal information** such as your full IP address, specific browser headers, or any other data that could directly identify you.</li>
-        <li>To help distinguish between repeat visits from the same user and new unique visitors, the service may process parts of request information into hashed (anonymized) data. This hashed data might be stored in your browser's local cache or local storage. This allows the counter to increment the "unique visitor" count without creating a personal profile of you.</li>
-    </ul>
-    <p>
-        Because this process involves storing or accessing information (even hashed data for uniqueness) in your browser's local storage, it falls under the scope of the ePrivacy Directive. Therefore, we ask for your explicit consent to use this technology.
-    </p>
-    <p>
-        We do not use this visitor counter for targeted advertising, behavioral profiling, or share its data with third parties for their marketing purposes. The information is used solely for our internal understanding of website engagement.
-    </p>
+            function hideBanner() {
+                banner.style.display = 'none';
+            }
 
-    ---
+            function enableCounter() {
+                if (counterImage) {
+                    counterImage.style.display = 'inline'; // Make it visible
+                }
+            }
 
-    <h2>3. Your Choices and Consent</h2>
-    <p>
-        Your privacy matters to us. When you first visit our site, a cookie consent banner will appear. This banner lets you make informed choices about our use of the visitor counter.
-    </p>
-    <ul>
-        <li><strong>Accepting the counter:</strong> By clicking "Accept" on the banner, you explicitly consent to the use of the `hits.sh` visitor counter as described in this policy.</li>
-        <li><strong>Declining the counter:</strong> By clicking "Decline" or equivalent on the banner, we will try our best not to load the `hits.sh` counter on your device. Please note that for static GitHub Pages sites, fully preventing all initial loading might require client-side scripting and may not be immediate, but we will respect your choice as effectively as possible. Declining won't affect the core functionality (like searching for instructors) or content of this page.</li>
-    </ul>
-    <h3>Managing Browser Settings:</h3>
-    <p>
-        You can also manage or delete information stored in your browser's local storage or cache, and control cookie settings, directly through your web browser's preferences. Check your browser's help documentation for instructions:
-        <ul>
-            <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Google Chrome</a></li>
-            <li><a href="https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop" target="_blank" rel="noopener noreferrer">Mozilla Firefox</a></li>
-            <li><a href="https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-5791-ad5d1fe76495" target="_blank" rel="noopener noreferrer">Microsoft Edge</a></li>
-            <li><a href="https://support.apple.com/en-gb/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">Apple Safari</a></li>
-            <li>(And for other browsers, check their support pages)</li>
-        </ul>
-        Be aware that disabling certain types of storage technologies might impact the functionality of some websites.
-    </p>
+            function disableCounter() {
+                if (counterImage) {
+                    counterImage.style.display = 'none';
+                }
+            }
 
-    ---
+            // Initial state based on consent
+            if (consentGiven) {
+                enableCounter();
+                hideBanner();
+            } else if (consentDeclined) {
+                disableCounter();
+                hideBanner();
+            } else {
+                // No consent yet, show banner and hide counter initially
+                disableCounter(); // Ensure counter is hidden initially
+                showBanner();
+            }
 
-    <h2>4. Changes to This Policy</h2>
-    <p>
-        We may update this Cookie and Visitor Counter Policy from time to time to reflect changes in our practices or relevant laws. We encourage you to review this page periodically for the latest information. Any changes will be effective immediately upon posting the revised policy on this page.
-    </p>
+            // Event Listeners for consent buttons
+            acceptBtn.addEventListener('click', function() {
+                localStorage.setItem('cookieConsent', 'accepted');
+                enableCounter();
+                hideBanner();
+            });
 
-    <h2>5. Contact Us</h2>
-    <p>
-        If you have any questions or concerns about our use of the visitor counter or this policy, please feel free to contact us:
-    </p>
-    <p>
-        Email: <a href="mailto:k13gmh@hotmail.com">k13gmh@hotmail.com</a>
-    </p>
+            declineBtn.addEventListener('click', function() {
+                localStorage.setItem('cookieConsent', 'declined');
+                disableCounter();
+                hideBanner();
+            });
+            // --- End Cookie Consent & Counter Logic ---
+        });
 
-    <div class="return-link-container">
-        <a href="index.html"><button>← Return to Search</button></a>
-    </div>
 
+        // Your original password checking function
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordError = document.getElementById('passwordError');
+            if (passwordInput.value === correctPassword) {
+                document.getElementById('password-section').classList.remove('active');
+                document.getElementById('postcode-section').classList.add('active');
+                passwordError.textContent = '';
+                passwordInput.value = '';
+                document.getElementById('copyButton').style.display = 'none';
+                document.getElementById('resultsHeading').textContent = 'Matching Instructors:';
+            } else {
+                passwordError.textContent = 'Incorrect password. Please try again.';
+            }
+        }
+
+        // Your original search instructors function
+        async function searchInstructors() {
+            const postcodeInput = document.getElementById('postcodeInput');
+            const postcodeError = document.getElementById('postcodeError');
+            const gearboxSelect = document.getElementById('gearboxSelect');
+            const resultsDiv = document.getElementById('results');
+            const resultsHeading = document.getElementById('resultsHeading');
+            resultsDiv.innerHTML = '';
+
+            let postcode = postcodeInput.value.trim().toUpperCase();
+            let desiredGearbox = gearboxSelect.value.toUpperCase();
+
+            if (!/^[A-Z0-9]{3,4}$/.test(postcode)) {
+                postcodeError.textContent = 'Please enter a valid 3-4 character postcode.';
+                document.getElementById('copyButton').style.display = 'none';
+                resultsHeading.textContent = 'Matching Instructors:';
+                return;
+            } else {
+                postcodeError.textContent = '';
+            }
+
+            resultsHeading.textContent = `Matching Instructors: ${postcode}`;
+
+            try {
+                const response = await fetch(instructorsFile);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const csvText = await response.text();
+                const instructors = parseCSV(csvText);
+
+                let matchingInstructors = [];
+
+                instructors.forEach(instructor => {
+                    const matchesPostcode = instructor.postcodes.some(pc => pc.trim().toUpperCase() === postcode);
+
+                    let matchesGearbox = false;
+                    if (desiredGearbox === '') {
+                        matchesGearbox = true;
+                    } else if (desiredGearbox === 'M') {
+                        matchesGearbox = (instructor.gearbox.toUpperCase() === 'M' || instructor.gearbox.toUpperCase() === 'B');
+                    } else if (desiredGearbox === 'A') {
+                        matchesGearbox = (instructor.gearbox.toUpperCase() === 'A' || instructor.gearbox.toUpperCase() === 'B');
+                    } else if (desiredGearbox === 'B') {
+                        matchesGearbox = (instructor.gearbox.toUpperCase() === 'M' || instructor.gearbox.toUpperCase() === 'A' || instructor.gearbox.toUpperCase() === 'B' || instructor.gearbox.toUpperCase() === '?');
+                    }
+
+
+                    if (matchesPostcode && matchesGearbox) {
+                        matchingInstructors.push(instructor);
+                    }
+                });
+
+                matchingInstructors.sort((a, b) => a.name.localeCompare(b.name));
+
+                if (matchingInstructors.length > 0) {
+                    const table = document.createElement('table');
+                    table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>School</th>
+                                <th>Phone</th>
+                                <th>Gearbox</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    `;
+                    const tbody = table.querySelector('tbody');
+
+                    matchingInstructors.forEach(instructor => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${instructor.name}</td>
+                            <td>${instructor.school}</td>
+                            <td>${instructor.phone}</td>
+                            <td>${getGearboxType(instructor.gearbox)}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                    resultsDiv.appendChild(table);
+                    document.getElementById('copyButton').style.display = 'inline-block';
+                } else {
+                    resultsDiv.innerHTML = '<p>No instructors found for this postcode and gearbox type.</p>';
+                    document.getElementById('copyButton').style.display = 'none';
+                }
+
+                document.getElementById('postcode-section').classList.remove('active');
+                document.getElementById('results-section').classList.add('active');
+
+            } catch (error) {
+                resultsDiv.innerHTML = `<p style="color: red;">Error loading or processing instructor data: ${error.message}</p>`;
+                console.error("Error fetching instructors:", error);
+                document.getElementById('postcode-section').classList.remove('active');
+                document.getElementById('results-section').classList.add('active');
+                document.getElementById('copyButton').style.display = 'none';
+                resultsHeading.textContent = `Matching Instructors: ${postcode} (Error)`;
+            }
+        }
+
+        // Your original CSV parsing function
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n').filter(line => line.trim() !== '');
+            const instructors = [];
+            lines.forEach(line => {
+                const parts = line.split(',').map(part => part.trim());
+
+                if (parts.length >= 4 && parts[3] !== '') {
+                    instructors.push({
+                        name: parts[0].startsWith('*') ? parts[0].substring(1).trim() : parts[0],
+                        school: parts[1] || '-',
+                        phone: parts[2] || 'N/A',
+                        gearbox: parts[3],
+                        postcodes: parts.slice(4).filter(pc => pc !== '')
+                    });
+                }
+            });
+            return instructors;
+        }
+
+        // Your original getGearboxType function
+        function getGearboxType(code) {
+            switch (code.toUpperCase()) {
+                case 'M': return 'Manual';
+                case 'A': return 'Automatic';
+                case 'B': return 'Both';
+                case '?': return 'Unknown';
+                default: return 'N/A';
+            }
+        }
+
+        // Your original resetSearch function
+        function resetSearch() {
+            document.getElementById('postcode-section').classList.add('active');
+            document.getElementById('results-section').classList.remove('active');
+            document.getElementById('postcodeInput').value = '';
+            document.getElementById('gearboxSelect').value = '';
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('postcodeError').textContent = '';
+            document.getElementById('copyButton').style.display = 'none';
+            const feedbackSpan = document.getElementById('copyFeedback');
+            feedbackSpan.classList.remove('show');
+            feedbackSpan.style.color = 'green';
+            document.getElementById('resultsHeading').textContent = 'Matching Instructors:';
+        }
+
+        // Your original copyResultsToClipboard function
+        async function copyResultsToClipboard() {
+            const resultsTable = document.querySelector('#results table');
+            const feedbackSpan = document.getElementById('copyFeedback');
+
+            if (!resultsTable) {
+                alert('No results to copy!');
+                return;
+            }
+
+            let textToCopy = '';
+            const headers = Array.from(resultsTable.querySelectorAll('th')).map(th => th.textContent.trim());
+            textToCopy += headers.join('\t') + '\n';
+
+            const rows = resultsTable.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cells = Array.from(row.querySelectorAll('td')).map(td => td.textContent.trim());
+                textToCopy += cells.join('\t') + '\n';
+            });
+
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+                feedbackSpan.textContent = 'Copied!';
+                feedbackSpan.style.color = 'green';
+                feedbackSpan.classList.add('show');
+                setTimeout(() => {
+                    feedbackSpan.classList.remove('show');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                feedbackSpan.textContent = 'Failed to copy!';
+                feedbackSpan.style.color = 'red';
+                feedbackSpan.classList.add('show');
+                setTimeout(() => {
+                    feedbackSpan.classList.remove('show');
+                    feedbackSpan.style.color = 'green';
+                }, 2000);
+            }
+        }
+    </script>
 </body>
 </html>
