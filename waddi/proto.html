@@ -68,10 +68,11 @@
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-        #password-section, #postcode-section, #results-section {
-            display: none;
+        /* No password-section active/display rules needed as it's removed */
+        #postcode-section, #results-section {
+            display: none; /* Will be managed by JS based on initial load */
         }
-        #password-section.active, #postcode-section.active, #results-section.active {
+        #postcode-section.active, #results-section.active {
             display: block;
         }
         .error-message {
@@ -167,13 +168,6 @@
     <div class="container">
         <h1>Driving Instructor Search</h1>
 
-        <div id="password-section" class="active">
-            <p>Please enter the password to continue:</p>
-            <input type="password" id="passwordInput" placeholder="Enter password">
-            <button onclick="checkPassword()">Submit</button>
-            <p id="passwordError" class="error-message"></p>
-        </div>
-
         <div id="postcode-section">
             <div class="input-group">
                 <label for="postcodeInput">Postcode:</label>
@@ -213,15 +207,15 @@
     </footer>
 
     <script>
-        const correctPassword = "WADDI"; // Your password
+        // Removed: const correctPassword = "WADDI";
         const instructorsFile = 'instructors.csv'; // Your CSV file
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Your original password handling logic
-            resetSearch();
-            document.getElementById('password-section').classList.add('active');
-            document.getElementById('postcode-section').classList.remove('active');
+            // Directly activate postcode section on load, as there's no password
+            document.getElementById('postcode-section').classList.add('active');
             document.getElementById('results-section').classList.remove('active');
+            document.getElementById('copyButton').style.display = 'none'; // Ensure copy button is hidden initially
+            document.getElementById('resultsHeading').textContent = 'Matching Instructors:';
 
             // --- Cookie Consent & Counter Logic ---
             const banner = document.getElementById('cookieConsentBanner');
@@ -280,22 +274,7 @@
             // --- End Cookie Consent & Counter Logic ---
         });
 
-
-        // Your original password checking function
-        function checkPassword() {
-            const passwordInput = document.getElementById('passwordInput');
-            const passwordError = document.getElementById('passwordError');
-            if (passwordInput.value === correctPassword) {
-                document.getElementById('password-section').classList.remove('active');
-                document.getElementById('postcode-section').classList.add('active');
-                passwordError.textContent = '';
-                passwordInput.value = '';
-                document.getElementById('copyButton').style.display = 'none';
-                document.getElementById('resultsHeading').textContent = 'Matching Instructors:';
-            } else {
-                passwordError.textContent = 'Incorrect password. Please try again.';
-            }
-        }
+        // Removed: checkPassword function as it's no longer needed.
 
         // Your original search instructors function
         async function searchInstructors() {
