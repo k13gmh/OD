@@ -5,7 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driving Instructor Search</title>
     <style>
-        /* Basic styling for the banner - customize as needed */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+        }
+        input[type="password"], input[type="text"], select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #results {
+            margin-top: 20px;
+            text-align: left;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        th {
+            background-color: #e2e2e2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        #password-section, #postcode-section, #results-section {
+            display: none;
+        }
+        #password-section.active, #postcode-section.active, #results-section.active {
+            display: block;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .input-group label {
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        .input-group input, .input-group select {
+            flex-grow: 1;
+            width: auto;
+        }
+        #copyFeedback {
+            color: green;
+            margin-left: 10px;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        #copyFeedback.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Cookie Consent Banner Styling */
         #cookieConsentBanner {
             position: fixed;
             bottom: 0;
@@ -40,19 +139,7 @@
             text-decoration: underline;
         }
 
-        /* Basic styling for readability of your page content - customize as needed */
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-            max-width: 960px;
-            margin-left: auto;
-            margin-right: auto;
-            color: #333;
-        }
-        h1, h2 {
-            color: #2c3e50;
-        }
+        /* Footer styling */
         footer {
             margin-top: 50px;
             padding-top: 20px;
@@ -60,6 +147,8 @@
             text-align: center;
             font-size: 0.9em;
             color: #666;
+            width: 100%; /* Ensure footer spans full width */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
         }
     </style>
 </head>
@@ -75,23 +164,46 @@
         <button id="declineCookies">Decline</button>
         <a href="cookie-policy.html">Learn more about our visitor counter</a>
     </div>
-    <h1>Driving Instructor Search</h1>
+    <div class="container">
+        <h1>Driving Instructor Search</h1>
 
-    <section id="instructor-search-section">
-        <h2>Find an Instructor</h2>
-        <p>This is where your search form, input fields, and results for driving instructors will appear.</p>
-        <p>For example:</p>
-        <form>
-            <label for="location">Location:</label>
-            <input type="text" id="location" name="location" placeholder="Enter town or postcode">
-            <button type="submit">Search</button>
-        </form>
-        <div id="search-results">
-            <p>Your search results will be displayed here.</p>
+        <div id="password-section" class="active">
+            <p>Please enter the password to continue:</p>
+            <input type="password" id="passwordInput" placeholder="Enter password">
+            <button onclick="checkPassword()">Submit</button>
+            <p id="passwordError" class="error-message"></p>
         </div>
-    </section>
+
+        <div id="postcode-section">
+            <div class="input-group">
+                <label for="postcodeInput">Postcode:</label>
+                <input type="text" id="postcodeInput" placeholder="Enter 3-4 char postcode (e.g., DY10)">
+            </div>
+            <div class="input-group">
+                <label for="gearboxSelect">Gearbox (Optional):</label>
+                <select id="gearboxSelect">
+                    <option value="">Any</option>
+                    <option value="M">Manual</option>
+                    <option value="A">Automatic</option>
+                    <option value="B">Both (Manual & Automatic)</option>
+                </select>
+            </div>
+            <button onclick="searchInstructors()">Search</button>
+            <p id="postcodeError" class="error-message"></p>
+        </div>
+
+        <div id="results-section">
+            <h2 id="resultsHeading">Matching Instructors:</h2>
+            <div id="results"></div>
+            <div style="margin-top: 15px;">
+                <button onclick="resetSearch()">New Search</button>
+                <button id="copyButton" onclick="copyResultsToClipboard()">Copy to Clipboard</button>
+                <span id="copyFeedback">Copied!</span>
+            </div>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; [Your Name/Organisation] 2025</p>
         <p>
             <a href="https://hits.sh/k13gmh.github.io/OD/waddi/index.html/">
                 <img alt="Visitor Count" src="https://hits.sh/k13gmh.github.io/OD/waddi/index.html.svg?label=visitor&extraCount=700&color=9f9f9f" style="display:none;"/>
@@ -101,35 +213,39 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        const correctPassword = "WADDI"; // Your password
+        const instructorsFile = 'instructors.csv'; // Your CSV file
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Your original password handling logic
+            resetSearch();
+            document.getElementById('password-section').classList.add('active');
+            document.getElementById('postcode-section').classList.remove('active');
+            document.getElementById('results-section').classList.remove('active');
+
+            // --- Cookie Consent & Counter Logic ---
             const banner = document.getElementById('cookieConsentBanner');
             const acceptBtn = document.getElementById('acceptCookies');
             const declineBtn = document.getElementById('declineCookies');
-            // Select the counter image using its part of the src URL
-            const counterImage = document.querySelector('img[src*="hits.sh"]');
+            const counterImage = document.querySelector('img[src*="hits.sh"]'); // Select the hits.sh counter image
 
-            // Check if consent has been given or declined
             const consentGiven = localStorage.getItem('cookieConsent') === 'accepted';
             const consentDeclined = localStorage.getItem('cookieConsent') === 'declined';
 
-            // Function to show the banner
             function showBanner() {
                 banner.style.display = 'block';
             }
 
-            // Function to hide the banner
             function hideBanner() {
                 banner.style.display = 'none';
             }
 
-            // Function to enable the counter
             function enableCounter() {
                 if (counterImage) {
                     counterImage.style.display = 'inline'; // Make it visible
                 }
             }
 
-            // Function to disable (hide) the counter
             function disableCounter() {
                 if (counterImage) {
                     counterImage.style.display = 'none';
@@ -149,7 +265,7 @@
                 showBanner();
             }
 
-            // Event Listeners for buttons
+            // Event Listeners for consent buttons
             acceptBtn.addEventListener('click', function() {
                 localStorage.setItem('cookieConsent', 'accepted');
                 enableCounter();
@@ -161,8 +277,212 @@
                 disableCounter();
                 hideBanner();
             });
+            // --- End Cookie Consent & Counter Logic ---
         });
-    </script>
 
+
+        // Your original password checking function
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordError = document.getElementById('passwordError');
+            if (passwordInput.value === correctPassword) {
+                document.getElementById('password-section').classList.remove('active');
+                document.getElementById('postcode-section').classList.add('active');
+                passwordError.textContent = '';
+                passwordInput.value = '';
+                document.getElementById('copyButton').style.display = 'none';
+                document.getElementById('resultsHeading').textContent = 'Matching Instructors:';
+            } else {
+                passwordError.textContent = 'Incorrect password. Please try again.';
+            }
+        }
+
+        // Your original search instructors function
+        async function searchInstructors() {
+            const postcodeInput = document.getElementById('postcodeInput');
+            const postcodeError = document.getElementById('postcodeError');
+            const gearboxSelect = document.getElementById('gearboxSelect');
+            const resultsDiv = document.getElementById('results');
+            const resultsHeading = document.getElementById('resultsHeading');
+            resultsDiv.innerHTML = '';
+
+            let postcode = postcodeInput.value.trim().toUpperCase();
+            let desiredGearbox = gearboxSelect.value.toUpperCase();
+
+            if (!/^[A-Z0-9]{3,4}$/.test(postcode)) {
+                postcodeError.textContent = 'Please enter a valid 3-4 character postcode.';
+                document.getElementById('copyButton').style.display = 'none';
+                resultsHeading.textContent = 'Matching Instructors:';
+                return;
+            } else {
+                postcodeError.textContent = '';
+            }
+
+            resultsHeading.textContent = `Matching Instructors: ${postcode}`;
+
+            try {
+                const response = await fetch(instructorsFile);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const csvText = await response.text();
+                const instructors = parseCSV(csvText);
+
+                let matchingInstructors = [];
+
+                instructors.forEach(instructor => {
+                    const matchesPostcode = instructor.postcodes.some(pc => pc.trim().toUpperCase() === postcode);
+
+                    let matchesGearbox = false;
+                    if (desiredGearbox === '') {
+                        matchesGearbox = true;
+                    } else if (desiredGearbox === 'M') {
+                        matchesGearbox = (instructor.gearbox.toUpperCase() === 'M' || instructor.gearbox.toUpperCase() === 'B');
+                    } else if (desiredGearbox === 'A') {
+                        matchesGearbox = (instructor.gearbox.toUpperCase() === 'A' || instructor.gearbox.toUpperCase() === 'B');
+                    } else if (desiredGearbox === 'B') {
+                        matchesGearbox = (instructor.gearbox.toUpperCase() === 'M' || instructor.gearbox.toUpperCase() === 'A' || instructor.gearbox.toUpperCase() === 'B' || instructor.gearbox.toUpperCase() === '?');
+                    }
+
+
+                    if (matchesPostcode && matchesGearbox) {
+                        matchingInstructors.push(instructor);
+                    }
+                });
+
+                matchingInstructors.sort((a, b) => a.name.localeCompare(b.name));
+
+                if (matchingInstructors.length > 0) {
+                    const table = document.createElement('table');
+                    table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>School</th>
+                                <th>Phone</th>
+                                <th>Gearbox</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    `;
+                    const tbody = table.querySelector('tbody');
+
+                    matchingInstructors.forEach(instructor => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${instructor.name}</td>
+                            <td>${instructor.school}</td>
+                            <td>${instructor.phone}</td>
+                            <td>${getGearboxType(instructor.gearbox)}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                    resultsDiv.appendChild(table);
+                    document.getElementById('copyButton').style.display = 'inline-block';
+                } else {
+                    resultsDiv.innerHTML = '<p>No instructors found for this postcode and gearbox type.</p>';
+                    document.getElementById('copyButton').style.display = 'none';
+                }
+
+                document.getElementById('postcode-section').classList.remove('active');
+                document.getElementById('results-section').classList.add('active');
+
+            } catch (error) {
+                resultsDiv.innerHTML = `<p style="color: red;">Error loading or processing instructor data: ${error.message}</p>`;
+                console.error("Error fetching instructors:", error);
+                document.getElementById('postcode-section').classList.remove('active');
+                document.getElementById('results-section').classList.add('active');
+                document.getElementById('copyButton').style.display = 'none';
+                resultsHeading.textContent = `Matching Instructors: ${postcode} (Error)`;
+            }
+        }
+
+        // Your original CSV parsing function
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n').filter(line => line.trim() !== '');
+            const instructors = [];
+            lines.forEach(line => {
+                const parts = line.split(',').map(part => part.trim());
+
+                if (parts.length >= 4 && parts[3] !== '') {
+                    instructors.push({
+                        name: parts[0].startsWith('*') ? parts[0].substring(1).trim() : parts[0],
+                        school: parts[1] || '-',
+                        phone: parts[2] || 'N/A',
+                        gearbox: parts[3],
+                        postcodes: parts.slice(4).filter(pc => pc !== '')
+                    });
+                }
+            });
+            return instructors;
+        }
+
+        // Your original getGearboxType function
+        function getGearboxType(code) {
+            switch (code.toUpperCase()) {
+                case 'M': return 'Manual';
+                case 'A': return 'Automatic';
+                case 'B': return 'Both';
+                case '?': return 'Unknown';
+                default: return 'N/A';
+            }
+        }
+
+        // Your original resetSearch function
+        function resetSearch() {
+            document.getElementById('postcode-section').classList.add('active');
+            document.getElementById('results-section').classList.remove('active');
+            document.getElementById('postcodeInput').value = '';
+            document.getElementById('gearboxSelect').value = '';
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('postcodeError').textContent = '';
+            document.getElementById('copyButton').style.display = 'none';
+            const feedbackSpan = document.getElementById('copyFeedback');
+            feedbackSpan.classList.remove('show');
+            feedbackSpan.style.color = 'green';
+            document.getElementById('resultsHeading').textContent = 'Matching Instructors:';
+        }
+
+        // Your original copyResultsToClipboard function
+        async function copyResultsToClipboard() {
+            const resultsTable = document.querySelector('#results table');
+            const feedbackSpan = document.getElementById('copyFeedback');
+
+            if (!resultsTable) {
+                alert('No results to copy!');
+                return;
+            }
+
+            let textToCopy = '';
+            const headers = Array.from(resultsTable.querySelectorAll('th')).map(th => th.textContent.trim());
+            textToCopy += headers.join('\t') + '\n';
+
+            const rows = resultsTable.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cells = Array.from(row.querySelectorAll('td')).map(td => td.textContent.trim());
+                textToCopy += cells.join('\t') + '\n';
+            });
+
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+                feedbackSpan.textContent = 'Copied!';
+                feedbackSpan.style.color = 'green';
+                feedbackSpan.classList.add('show');
+                setTimeout(() => {
+                    feedbackSpan.classList.remove('show');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                feedbackSpan.textContent = 'Failed to copy!';
+                feedbackSpan.style.color = 'red';
+                feedbackSpan.classList.add('show');
+                setTimeout(() => {
+                    feedbackSpan.classList.remove('show');
+                    feedbackSpan.style.color = 'green';
+                }, 2000);
+            }
+        }
+    </script>
 </body>
 </html>
