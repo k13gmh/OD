@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Notice</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+        }
+        #continue-btn {
+            background-color: #27ae60;
+        }
+        #continue-btn:hover {
+            background-color: #229954;
+        }
+        #cancel-btn {
+            background-color: #c0392b;
+        }
+        #cancel-btn:hover {
+            background-color: #a93226;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Privacy Notice</h1>
+    <p>We use cookies and collect your **IP address** for legitimate business purposes, including website security and to protect against spam and abuse. This helps us ensure the integrity of our services.</p>
+    <p>By clicking "Continue," you consent to this data collection and will be redirected to our enquiry form. Your personal data will be handled in accordance with GDPR and our Privacy Policy.</p>
+    
+    <div class="buttons">
+        <a href="#" id="continue-btn" class="button">Continue</a>
+        <a href="https://www.google.co.uk" id="cancel-btn" class="button">Cancel</a>
+    </div>
+</div>
+
+<script>
+    const continueBtn = document.getElementById('continue-btn');
+    const enquiryFormURL = "https://www.bbc.co.uk";
+    
+    continueBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        // This function sends a request to a simple logging service and then redirects.
+        function logIPAddressAndRedirect() {
+            // NOTE: For testing purposes, this URL is a placeholder.
+            // When you're ready to implement, replace it with your actual logging script.
+            const logServiceURL = "https://your-server-side-ip-logger.com/log.php";
+            
+            // We use fetch() to send a request to log the IP without a redirect.
+            fetch(logServiceURL, {
+                method: 'POST',
+                body: JSON.stringify({ referrer: document.referrer }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(() => {
+                // Once the logging request is complete, redirect the user.
+                window.location.href = enquiryFormURL;
+            })
+            .catch(error => {
+                console.error('Logging failed, but redirecting anyway:', error);
+                // Redirect even if logging fails to not break the user experience.
+                window.location.href = enquiryFormURL;
+            });
+        }
+        
+        logIPAddressAndRedirect();
+    });
+</script>
+
+</body>
+</html>
