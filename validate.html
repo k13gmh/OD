@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Calculation</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; }
+        .code-display { font-size: 2em; margin-bottom: 20px; }
+        .button-container { margin-top: 20px; }
+        .mid-screen-buttons { 
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculated Code</h1>
+    <p>The calculated number is:</p>
+    <div class="code-display" id="calculatedCode"></div>
+
+    <div class="button-container">
+        <button onclick="window.location.href='https://www.oriondrive.co.uk'">Cancel</button>
+        <button onclick="window.location.href='https://www.totaldrive.app/a/enquiry_form.php?16937558681006'">Proceed</button>
+    </div>
+
+    <div class="mid-screen-buttons">
+        <button onclick="window.location.href='https://www.oriondrive.co.uk'">1</button>
+        <button onclick="window.location.href='https://www.oriondrive.co.uk'">2</button>
+        <button onclick="window.location.href='https://www.oriondrive.co.uk'">3</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get current date
+            const now = new Date();
+            const year = now.getFullYear().toString().substr(-2);
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const hour = now.getHours();
+
+            // Format date as YYMMDD
+            const yymmdd = parseInt(`${year}${month}${day}`);
+
+            // Perform the calculation
+            const calculatedNumber = (yymmdd * 11) + hour;
+
+            // Display the number
+            document.getElementById('calculatedCode').innerText = calculatedNumber;
+        });
+    </script>
+</body>
+</html>
