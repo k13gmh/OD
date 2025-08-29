@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enquiry Form</title>
+    <title>Enquiry Introduction</title>
     <style>
         body {
             font-family: sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #f0f2f5;
             margin: 0;
+            padding: 20px;
         }
         .form-container {
             background-color: #fff;
@@ -21,7 +22,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 90%;
-            max-width: 400px;
+            max-width: 450px;
         }
         h1 {
             color: #333;
@@ -32,6 +33,12 @@
             color: #666;
             margin-bottom: 20px;
             font-size: 16px;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
         input[type="email"] {
             width: 100%;
@@ -55,21 +62,50 @@
         button:hover {
             background-color: #0056b3;
         }
+        .error-message {
+            color: red;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
 <div class="form-container">
-    <h1>Enquiry Form</h1>
-    <p>Please enter your email address to submit your enquiry.</p>
+    <h1>Learn to drive with Orion Drive</h1>
+    <p>Please provide an email address to start your enquiry. At least one is required.</p>
     
-    <form name="enquiry" netlify>
-        <input type="hidden" name="form-name" value="enquiry" />
-        <input type="hidden" name="redirectTo" value="/validate.html" />
-        <input type="email" name="email" placeholder="Your Email Address" required>
-        <button type="submit">Submit</button>
+    <form name="initial-enquiry" netlify>
+        <input type="hidden" name="redirectTo" value="https://www.totaldrive.app/a/enquiry_form.php?16937558681006">
+
+        <label for="student-email">Student's Email Address:</label>
+        <input type="email" id="student-email" name="student-email">
+
+        <label for="parent-email">Second Email (e.g., Parent/Guardian):</label>
+        <input type="email" id="parent-email" name="parent-email">
+        
+        <p class="error-message" id="validation-error">Please enter at least one email address.</p>
+
+        <button type="submit">Start Enquiry</button>
     </form>
 </div>
+
+<script>
+    const form = document.querySelector('form[name="initial-enquiry"]');
+    const studentEmail = document.getElementById('student-email');
+    const parentEmail = document.getElementById('parent-email');
+    const errorMsg = document.getElementById('validation-error');
+
+    form.addEventListener('submit', function(event) {
+        if (!studentEmail.value && !parentEmail.value) {
+            event.preventDefault();
+            errorMsg.style.display = 'block';
+        } else {
+            errorMsg.style.display = 'none';
+        }
+    });
+</script>
 
 </body>
 </html>
