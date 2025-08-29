@@ -3,58 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enquiry Introduction</title>
+    <title>Enquiry Form</title>
     <style>
         body {
             font-family: sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
             background-color: #f0f2f5;
             margin: 0;
-            padding: 20px;
         }
         .form-container {
             background-color: #fff;
+            padding: 40px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
             width: 90%;
-            max-width: 450px;
-            overflow: hidden; /* Ensures rounded corners apply to children */
+            max-width: 400px;
         }
-        .header-banner {
-            background-color: #222; /* Dark background for the banner */
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        .header-banner h1 {
-            margin: 0;
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
             font-size: 24px;
-            font-weight: normal; /* To match the look in your images */
         }
-        .header-banner p {
-            margin: 5px 0 0;
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-        }
-        .form-content {
-            padding: 30px; /* Padding for the actual form elements */
-            text-align: center;
-        }
-        .form-content p {
+        p {
             color: #666;
             margin-bottom: 20px;
             font-size: 16px;
-        }
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
         }
         input[type="email"] {
             width: 100%;
@@ -66,7 +43,7 @@
             font-size: 16px;
         }
         button {
-            background-color: #222; /* Black button */
+            background-color: #007bff;
             color: #fff;
             padding: 12px 20px;
             border: none;
@@ -74,67 +51,23 @@
             cursor: pointer;
             font-size: 18px;
             width: 100%;
-            margin-top: 10px; /* Space above button */
         }
         button:hover {
-            background-color: #000; /* Darker black on hover */
-        }
-        .error-message {
-            color: red;
-            margin-top: -10px;
-            margin-bottom: 10px;
-            display: none;
-            text-align: left; /* Align error message to left */
-            font-size: 0.9em;
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
 
 <div class="form-container">
-    <div class="header-banner">
-        <p>Learn to drive with</p>
-        <h1>Orion Drive</h1>
-    </div>
+    <h1>Enquiry Form.</h1>
+    <p>Please enter your email address to submit your enquiry.</p>
     
-    <div class="form-content">
-        <p>Please provide an email address to start your enquiry. At least one is required.</p>
-        
-        <form name="initial-enquiry" netlify>
-            <input type="hidden" name="redirectTo" value="https://www.totaldrive.app/a/enquiry_form.php?16937558681006">
-
-            <label for="student-email">Student's Email Address:</label>
-            <input type="email" id="student-email" name="student-email" placeholder="e.g., yourname@example.com">
-
-            <label for="parent-email">Second Email (e.g., Parent/Guardian):</label>
-            <input type="email" id="parent-email" name="parent-email" placeholder="Optional">
-            
-            <p class="error-message" id="validation-error">Please enter at least one email address.</p>
-
-            <button type="submit">Start Enquiry</button>
-        </form>
-    </div>
+    <form name="enquiry" netlify action="/">
+        <input type="email" name="email" placeholder="Your Email Address" required>
+        <button type="submit">Submit</button>
+    </form>
 </div>
-
-<script>
-    const form = document.querySelector('form[name="initial-enquiry"]');
-    const studentEmail = document.getElementById('student-email');
-    const parentEmail = document.getElementById('parent-email');
-    const errorMsg = document.getElementById('validation-error');
-
-    form.addEventListener('submit', function(event) {
-        // Trim values to ensure empty spaces don't count as input
-        const studentEmailValue = studentEmail.value.trim();
-        const parentEmailValue = parentEmail.value.trim();
-
-        if (!studentEmailValue && !parentEmailValue) {
-            event.preventDefault(); // Stop form from submitting
-            errorMsg.style.display = 'block'; // Show error message
-        } else {
-            errorMsg.style.display = 'none'; // Hide error message if valid
-        }
-    });
-</script>
 
 </body>
 </html>
