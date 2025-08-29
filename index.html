@@ -17,19 +17,34 @@
         }
         .form-container {
             background-color: #fff;
-            padding: 40px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
             width: 90%;
             max-width: 450px;
+            overflow: hidden; /* Ensures rounded corners apply to children */
         }
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
+        .header-banner {
+            background-color: #222; /* Dark background for the banner */
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header-banner h1 {
+            margin: 0;
             font-size: 24px;
+            font-weight: normal; /* To match the look in your images */
         }
-        p {
+        .header-banner p {
+            margin: 5px 0 0;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .form-content {
+            padding: 30px; /* Padding for the actual form elements */
+            text-align: center;
+        }
+        .form-content p {
             color: #666;
             margin-bottom: 20px;
             font-size: 16px;
@@ -39,6 +54,7 @@
             text-align: left;
             margin-bottom: 5px;
             font-weight: bold;
+            color: #333;
         }
         input[type="email"] {
             width: 100%;
@@ -50,7 +66,7 @@
             font-size: 16px;
         }
         button {
-            background-color: #007bff;
+            background-color: #222; /* Black button */
             color: #fff;
             padding: 12px 20px;
             border: none;
@@ -58,37 +74,46 @@
             cursor: pointer;
             font-size: 18px;
             width: 100%;
+            margin-top: 10px; /* Space above button */
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #000; /* Darker black on hover */
         }
         .error-message {
             color: red;
             margin-top: -10px;
             margin-bottom: 10px;
             display: none;
+            text-align: left; /* Align error message to left */
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
 
 <div class="form-container">
-    <h1>Learn to drive with Orion Drive</h1>
-    <p>Please provide an email address to start your enquiry. At least one is required.</p>
+    <div class="header-banner">
+        <p>Learn to drive with</p>
+        <h1>Orion Drive</h1>
+    </div>
     
-    <form name="initial-enquiry" netlify>
-        <input type="hidden" name="redirectTo" value="https://www.totaldrive.app/a/enquiry_form.php?16937558681006">
-
-        <label for="student-email">Student's Email Address:</label>
-        <input type="email" id="student-email" name="student-email">
-
-        <label for="parent-email">Second Email (e.g., Parent/Guardian):</label>
-        <input type="email" id="parent-email" name="parent-email">
+    <div class="form-content">
+        <p>Please provide an email address to start your enquiry. At least one is required.</p>
         
-        <p class="error-message" id="validation-error">Please enter at least one email address.</p>
+        <form name="initial-enquiry" netlify>
+            <input type="hidden" name="redirectTo" value="https://www.totaldrive.app/a/enquiry_form.php?16937558681006">
 
-        <button type="submit">Start Enquiry</button>
-    </form>
+            <label for="student-email">Student's Email Address:</label>
+            <input type="email" id="student-email" name="student-email" placeholder="e.g., yourname@example.com">
+
+            <label for="parent-email">Second Email (e.g., Parent/Guardian):</label>
+            <input type="email" id="parent-email" name="parent-email" placeholder="Optional">
+            
+            <p class="error-message" id="validation-error">Please enter at least one email address.</p>
+
+            <button type="submit">Start Enquiry</button>
+        </form>
+    </div>
 </div>
 
 <script>
@@ -98,11 +123,15 @@
     const errorMsg = document.getElementById('validation-error');
 
     form.addEventListener('submit', function(event) {
-        if (!studentEmail.value && !parentEmail.value) {
-            event.preventDefault();
-            errorMsg.style.display = 'block';
+        // Trim values to ensure empty spaces don't count as input
+        const studentEmailValue = studentEmail.value.trim();
+        const parentEmailValue = parentEmail.value.trim();
+
+        if (!studentEmailValue && !parentEmailValue) {
+            event.preventDefault(); // Stop form from submitting
+            errorMsg.style.display = 'block'; // Show error message
         } else {
-            errorMsg.style.display = 'none';
+            errorMsg.style.display = 'none'; // Hide error message if valid
         }
     });
 </script>
