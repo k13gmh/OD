@@ -3,35 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enquiry Form</title>
+    <title>Enquiry Introduction</title>
     <style>
         body {
             font-family: sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #f0f2f5;
             margin: 0;
+            padding: 20px;
         }
         .form-container {
             background-color: #fff;
-            padding: 40px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
             width: 90%;
-            max-width: 400px;
+            max-width: 450px;
+            overflow: hidden;
         }
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
+        .header-banner {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header-banner h1 {
+            margin: 0;
             font-size: 24px;
+            font-weight: normal;
         }
-        p {
+        .header-banner p {
+            margin: 5px 0 0;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .form-content {
+            padding: 30px;
+            text-align: center;
+        }
+        .form-content p {
             color: #666;
             margin-bottom: 20px;
             font-size: 16px;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
         }
         input[type="email"] {
             width: 100%;
@@ -43,7 +66,7 @@
             font-size: 16px;
         }
         button {
-            background-color: #007bff;
+            background-color: #222;
             color: #fff;
             padding: 12px 20px;
             border: none;
@@ -51,23 +74,61 @@
             cursor: pointer;
             font-size: 18px;
             width: 100%;
+            margin-top: 10px;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #000;
+        }
+        .error-message {
+            color: red;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none;
+            text-align: left;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
 
 <div class="form-container">
-    <h1>Enquiry Form.</h1>
-    <p>Please enter your email address to submit your enquiry.</p>
+    <div class="header-banner">
+        <p>Learn to drive with</p>
+        <h1>Orion Drive</h1>
+    </div>
     
-    <form name="enquiry" netlify action="/">
-        <input type="email" name="email" placeholder="Your Email Address" required>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="form-content">
+        <p>Please provide an email address to start your enquiry. At least one is required.</p>
+        
+        <form name="initial-enquiry" netlify action="/">
+            <input type="email" id="student-email" name="student-email" placeholder="e.g., yourname@example.com">
+            <input type="email" id="parent-email" name="parent-email" placeholder="Optional">
+            
+            <p class="error-message" id="validation-error">Please enter at least one email address.</p>
+
+            <button type="submit">Start Enquiry</button>
+        </form>
+    </div>
 </div>
+
+<script>
+    const form = document.querySelector('form[name="initial-enquiry"]');
+    const studentEmail = document.getElementById('student-email');
+    const parentEmail = document.getElementById('parent-email');
+    const errorMsg = document.getElementById('validation-error');
+
+    form.addEventListener('submit', function(event) {
+        const studentEmailValue = studentEmail.value.trim();
+        const parentEmailValue = parentEmail.value.trim();
+
+        if (!studentEmailValue && !parentEmailValue) {
+            event.preventDefault();
+            errorMsg.style.display = 'block';
+        } else {
+            errorMsg.style.display = 'none';
+        }
+    });
+</script>
 
 </body>
 </html>
