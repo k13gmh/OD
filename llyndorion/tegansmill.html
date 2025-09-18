@@ -40,6 +40,24 @@
       border-radius: 6px;
       white-space: pre-wrap;
       font-family: monospace;
+      margin-bottom: 1em;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+    }
+    button {
+      padding: 0.6em 1.2em;
+      font-size: 1em;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background-color: #444;
+      color: white;
+    }
+    button:hover {
+      background-color: #666;
     }
   </style>
 </head>
@@ -48,6 +66,11 @@
   <h2>Codex Encoder</h2>
   <textarea id="inputText" rows="4" placeholder="Enter your message here..."></textarea>
   <div class="output" id="outputBox"></div>
+
+  <div class="buttons">
+    <button onclick="clearFields()">Clear</button>
+    <button onclick="copyToClipboard()">Copy</button>
+  </div>
 
   <script>
     const rawTitles = {
@@ -114,6 +137,18 @@
       const encoded = encodeText(input);
       document.getElementById('outputBox').textContent = encoded;
     });
+
+    function clearFields() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('outputBox').textContent = '';
+    }
+
+    function copyToClipboard() {
+      const output = document.getElementById('outputBox').textContent;
+      navigator.clipboard.writeText(output).then(() => {
+        alert('Coded message copied to clipboard!');
+      });
+    }
   </script>
 </body>
 </html>
