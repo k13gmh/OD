@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Codex Encoder</title>
+  <style>
+    body { font-family: sans-serif; margin: 0; padding: 0; }
+    textarea, #output {
+      width: 100%; height: 50vh;
+      box-sizing: border-box;
+      padding: 20px;
+      font-size: 1.2em;
+      border: none;
+      outline: none;
+    }
+    textarea { background: #eef; }
+    #output { background: #ffe; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+
+  <textarea id="input" placeholder="Type your message here..."></textarea>
+  <div id="output"></div>
+
+  <script>
+    const table = {
+      A: ["A2", "X4", "N2"], B: ["N3", "O2"], C: ["B9", "D13"],
+      D: ["X7", "Z17"], E: ["X9", "Z11", "C10"], F: ["F14", "B11"],
+      G: ["C7", "N1"], H: ["E2", "J2", "C2"], I: ["M10", "X5", "I9"],
+      K: ["G2", "P2"], L: ["M11", "Z12", "X10"], M: ["C20", "P3"],
+      N: ["A9", "C12"], O: ["Y9", "O6", "C9"], P: ["G13", "U21"],
+      R: ["F14", "O6", "X6"], S: ["C15", "H11"], T: ["A2", "B2", "C2"],
+      U: ["K4", "V6"], V: ["C10", "L10"], W: ["C19", "L4"], Y: ["Z15", "Z16"]
+    };
+
+    document.getElementById('input').addEventListener('input', () => {
+      const used = new Set();
+      const text = document.getElementById('input').value.toUpperCase();
+      let result = '';
+
+      for (let char of text) {
+        if (/[A-Z]/.test(char)) {
+          if (table[char]) {
+            const code = table[char].find(c => !used.has(c)) || table[char][0];
+            used.add(code);
+            result += code;
+          } else {
+            result += char; // Use the letter itself if not in table
+          }
+        } else {
+          result += char; // Preserve punctuation, spaces, etc.
+        }
+      }
+
+      document.getElementById('output').textContent = result;
+    });
+  </script>
+
+</body>
+</html>
