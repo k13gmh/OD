@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tegan’s Mill Codex Encoder v1.5</title>
+  <title>Tegan’s Mill Codex Encoder v1.7</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -67,7 +67,7 @@
   </style>
 </head>
 <body>
-  <h1>Tegan’s Mill <span>v1.5</span></h1>
+  <h1>Tegan’s Mill <span>v1.7</span></h1>
   <h2>Codex Encoder</h2>
   <textarea id="inputText" rows="4" placeholder="Enter your message here..."></textarea>
   <div class="output" id="outputBox"></div>
@@ -113,6 +113,7 @@
       const result = [];
       const rows = Object.keys(rawTitles);
       let searchStartIndex = 0;
+      let previousChar = null;
 
       for (let char of text) {
         const upperChar = char.toUpperCase();
@@ -120,15 +121,18 @@
         // Handle punctuation directly
         if (!/[A-Z ]/.test(upperChar)) {
           result.push(char);
+          previousChar = null;
           continue;
         }
 
-        let found = false;
-        let totalRows = rows.length;
-        let attempts = 0;
+        // Determine starting point
+        if (upperChar !== previousChar) {
+          searchStartIndex = 0;
+        }
 
-        while (!found && attempts < totalRows) {
-          const rowIndex = (searchStartIndex + attempts) % totalRows;
+        let found = false;
+        for (let i = 0; i < rows.length; i++) {
+          const rowIndex = (searchStartIndex + i) % rows.length;
           const row = rows[rowIndex];
           const title = rawTitles[row];
 
@@ -138,16 +142,16 @@
               if (!usedCoords.has(coord)) {
                 usedCoords.add(coord);
                 result.push(coord);
-                searchStartIndex = (rowIndex + 1) % totalRows;
+                searchStartIndex = (rowIndex + 1) % rows.length;
                 found = true;
                 break;
               }
             }
           }
-          attempts++;
+          if (found) break;
         }
 
-        // Guaranteed to find a match for letters and spaces
+        previousChar = upperChar;
       }
 
       return result.join(' ');
