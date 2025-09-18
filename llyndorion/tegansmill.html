@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tegan’s Mill Codex Encoder v1.4</title>
+  <title>Tegan’s Mill Codex Encoder v1.5</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -67,7 +67,7 @@
   </style>
 </head>
 <body>
-  <h1>Tegan’s Mill <span>v1.4</span></h1>
+  <h1>Tegan’s Mill <span>v1.5</span></h1>
   <h2>Codex Encoder</h2>
   <textarea id="inputText" rows="4" placeholder="Enter your message here..."></textarea>
   <div class="output" id="outputBox"></div>
@@ -117,9 +117,6 @@
       for (let char of text) {
         const upperChar = char.toUpperCase();
 
-        // Skip empty characters
-        if (upperChar === '') continue;
-
         // Handle punctuation directly
         if (!/[A-Z ]/.test(upperChar)) {
           result.push(char);
@@ -127,10 +124,11 @@
         }
 
         let found = false;
+        let totalRows = rows.length;
         let attempts = 0;
 
-        while (!found && attempts < rows.length) {
-          const rowIndex = (searchStartIndex + attempts) % rows.length;
+        while (!found && attempts < totalRows) {
+          const rowIndex = (searchStartIndex + attempts) % totalRows;
           const row = rows[rowIndex];
           const title = rawTitles[row];
 
@@ -140,7 +138,7 @@
               if (!usedCoords.has(coord)) {
                 usedCoords.add(coord);
                 result.push(coord);
-                searchStartIndex = (rowIndex + 1) % rows.length;
+                searchStartIndex = (rowIndex + 1) % totalRows;
                 found = true;
                 break;
               }
@@ -149,7 +147,7 @@
           attempts++;
         }
 
-        // Guaranteed to find a match, so no fallback needed
+        // Guaranteed to find a match for letters and spaces
       }
 
       return result.join(' ');
