@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tegan’s Mill Codex Encoder v1.1</title>
+  <title>Tegan’s Mill Codex Encoder v1.4</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -67,7 +67,7 @@
   </style>
 </head>
 <body>
-  <h1>Tegan’s Mill <span>v1.1</span></h1>
+  <h1>Tegan’s Mill <span>v1.4</span></h1>
   <h2>Codex Encoder</h2>
   <textarea id="inputText" rows="4" placeholder="Enter your message here..."></textarea>
   <div class="output" id="outputBox"></div>
@@ -116,11 +116,21 @@
 
       for (let char of text) {
         const upperChar = char.toUpperCase();
-        let found = false;
 
-        // First pass: search from current position
-        for (let i = 0; i < rows.length; i++) {
-          const rowIndex = (searchStartIndex + i) % rows.length;
+        // Skip empty characters
+        if (upperChar === '') continue;
+
+        // Handle punctuation directly
+        if (!/[A-Z ]/.test(upperChar)) {
+          result.push(char);
+          continue;
+        }
+
+        let found = false;
+        let attempts = 0;
+
+        while (!found && attempts < rows.length) {
+          const rowIndex = (searchStartIndex + attempts) % rows.length;
           const row = rows[rowIndex];
           const title = rawTitles[row];
 
@@ -136,13 +146,10 @@
               }
             }
           }
-          if (found) break;
+          attempts++;
         }
 
-        // If not found, output raw character (no reset)
-        if (!found) {
-          result.push(char);
-        }
+        // Guaranteed to find a match, so no fallback needed
       }
 
       return result.join(' ');
