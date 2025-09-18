@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tegan’s Mill Codex Encoder v1.0</title>
+  <title>Tegan’s Mill Codex Encoder v1.1</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -67,7 +67,7 @@
   </style>
 </head>
 <body>
-  <h1>Tegan’s Mill <span>v1.0</span></h1>
+  <h1>Tegan’s Mill <span>v1.1</span></h1>
   <h2>Codex Encoder</h2>
   <textarea id="inputText" rows="4" placeholder="Enter your message here..."></textarea>
   <div class="output" id="outputBox"></div>
@@ -118,7 +118,7 @@
         const upperChar = char.toUpperCase();
         let found = false;
 
-        // Search from current position to end
+        // First pass: search from current position
         for (let i = 0; i < rows.length; i++) {
           const rowIndex = (searchStartIndex + i) % rows.length;
           const row = rows[rowIndex];
@@ -139,10 +139,9 @@
           if (found) break;
         }
 
-        // If not found (e.g. space or punctuation), output raw and reset search
+        // If not found, output raw character (no reset)
         if (!found) {
           result.push(char);
-          searchStartIndex = 0;
         }
       }
 
