@@ -107,14 +107,15 @@
       const usedCoords = new Set();
       const result = [];
       const rows = Object.keys(rawTitles);
-      let startIndex = 0;
+      let lastRowIndex = 0;
 
       for (let char of text) {
         const upperChar = char.toUpperCase();
         let found = false;
 
+        // First pass: start from lastRowIndex
         for (let i = 0; i < rows.length; i++) {
-          const rowIndex = (startIndex + i) % rows.length;
+          const rowIndex = (lastRowIndex + i) % rows.length;
           const row = rows[rowIndex];
           const title = rawTitles[row];
 
@@ -124,7 +125,7 @@
               if (!usedCoords.has(coord)) {
                 usedCoords.add(coord);
                 result.push(coord);
-                startIndex = (rowIndex + 1) % rows.length;
+                lastRowIndex = (rowIndex + 1) % rows.length;
                 found = true;
                 break;
               }
@@ -133,8 +134,30 @@
           if (found) break;
         }
 
+        // Second pass: wrap once if needed
+        if (!found) {
+          for (let i = 0; i < lastRowIndex; i++) {
+            const row = rows[i];
+            const title = rawTitles[row];
+
+            for (let col = 0; col < title.length; col++) {
+              if (title[col].toUpperCase() === upperChar) {
+                const coord = `${row}${col + 1}`;
+                if (!usedCoords.has(coord)) {
+                  usedCoords.add(coord);
+                  result.push(coord);
+                  lastRowIndex = (i + 1) % rows.length;
+                  found = true;
+                  break;
+                }
+              }
+            }
+            if (found) break;
+          }
+        }
+
         if (!found && char.trim() !== '') {
-          result.push(char); // optional: flag with [char] or skip entirely
+          result.push(char); // fallback: raw character
         }
       }
 
