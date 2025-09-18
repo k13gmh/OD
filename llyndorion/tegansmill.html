@@ -1,60 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Codex Encoder</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tegan’s Mill Codex Encoder</title>
   <style>
-    body { font-family: sans-serif; margin: 0; padding: 0; }
-    textarea, #output {
-      width: 100%; height: 50vh;
-      box-sizing: border-box;
-      padding: 20px;
-      font-size: 1.2em;
-      border: none;
-      outline: none;
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f9;
+      padding: 2em;
+      max-width: 700px;
+      margin: auto;
     }
-    textarea { background: #eef; }
-    #output { background: #ffe; white-space: pre-wrap; }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    textarea {
+      width: 100%;
+      padding: 1em;
+      font-size: 1em;
+      margin-bottom: 1em;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical;
+    }
+    .output {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 1em;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
   </style>
 </head>
 <body>
-
-  <textarea id="input" placeholder="Type your message here..."></textarea>
-  <div id="output"></div>
+  <h1>Tegan’s Mill Codex Encoder</h1>
+  <textarea id="inputText" rows="4" placeholder="Enter your message here..."></textarea>
+  <div class="output" id="outputBox"></div>
 
   <script>
-    const table = {
-      A: ["A2", "X4", "N2"], B: ["N3", "O2"], C: ["B9", "D13"],
-      D: ["X7", "Z17"], E: ["X9", "Z11", "C10"], F: ["F14", "B11"],
-      G: ["C7", "N1"], H: ["E2", "J2", "C2"], I: ["M10", "X5", "I9"],
-      K: ["G2", "P2"], L: ["M11", "Z12", "X10"], M: ["C20", "P3"],
-      N: ["A9", "C12"], O: ["Y9", "O6", "C9"], P: ["G13", "U21"],
-      R: ["F14", "O6", "X6"], S: ["C15", "H11"], T: ["A2", "B2", "C2"],
-      U: ["K4", "V6"], V: ["C10", "L10"], W: ["C19", "L4"], Y: ["Z15", "Z16"]
+    const rawTitles = {
+      A: "THE BEGINNING",
+      B: "THE SEARCH FOR A TREE",
+      C: "THE WHISPERING SWAMP",
+      D: "THE GATHERING SHADOWS",
+      E: "THE HARVEST DISPUTES",
+      F: "THE ROWAN GLADE",
+      G: "THE SILENT PINES",
+      H: "THE KEEPERS OF THE ACORNS",
+      I: "A FREE SPIRIT",
+      J: "THE HOLLOW ONE",
+      K: "THE UNRAVELING",
+      L: "THE WOLVES",
+      M: "TEGAN’S MILL",
+      N: "GOBLIN TALES",
+      O: "STORMRUNNER",
+      P: "THE BLACK PARROT INN",
+      Q: "THE MAP",
+      R: "LOST AND FOUND",
+      S: "PARADISE",
+      T: "THINK TWICE",
+      U: "THE PYRAMID OF BLADES",
+      V: "THE U-BEND DILEMMA",
+      W: "PLUMBING THE DEPTHS",
+      X: "A FAIR DEAL",
+      Y: "A DANGEROUS WAGER",
+      Z: "AND THEY ALL LIVED HAPPILY EVER AFTER"
     };
 
-    document.getElementById('input').addEventListener('input', () => {
-      const used = new Set();
-      const text = document.getElementById('input').value.toUpperCase();
-      let result = '';
+    function encodeText(text) {
+      const usedCoords = new Set();
+      const result = [];
 
       for (let char of text) {
-        if (/[A-Z]/.test(char)) {
-          if (table[char]) {
-            const code = table[char].find(c => !used.has(c)) || table[char][0];
-            used.add(code);
-            result += code;
-          } else {
-            result += char; // Use the letter itself if not in table
+        const upperChar = char.toUpperCase();
+        let found = false;
+
+        for (let row in rawTitles) {
+          const title = rawTitles[row];
+          for (let col = 0; col < title.length; col++) {
+            if (title[col].toUpperCase() === upperChar) {
+              const coord = `${row}${col + 1}`;
+              if (!usedCoords.has(coord)) {
+                usedCoords.add(coord);
+                result.push(coord);
+                found = true;
+                break;
+              }
+            }
           }
-        } else {
-          result += char; // Preserve punctuation, spaces, etc.
+          if (found) break;
         }
+
+        if (!found) result.push(char); // output raw if not found
       }
 
-      document.getElementById('output').textContent = result;
+      return result.join(' ');
+    }
+
+    document.getElementById('inputText').addEventListener('input', function () {
+      const input = this.value;
+      const encoded = encodeText(input);
+      document.getElementById('outputBox').textContent = encoded;
     });
   </script>
-
 </body>
 </html>
