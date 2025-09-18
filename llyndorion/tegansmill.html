@@ -103,6 +103,8 @@
       Z: "AND THEY ALL LIVED HAPPILY EVER AFTER"
     };
 
+    const skipLetters = "JQXZ";
+
     function encodeText(text) {
       const usedCoords = new Set();
       const result = [];
@@ -110,8 +112,16 @@
 
       for (let char of text) {
         const upperChar = char.toUpperCase();
+
+        // Skip encoding for J, Q, X, Z
+        if (skipLetters.includes(upperChar)) {
+          result.push(char);
+          continue;
+        }
+
         let found = false;
 
+        // First pass: A to Z
         for (let row of rows) {
           const title = rawTitles[row];
           for (let col = 0; col < title.length; col++) {
@@ -128,8 +138,28 @@
           if (found) break;
         }
 
+        // Second pass: restart from A if not found
+        if (!found) {
+          for (let row of rows) {
+            const title = rawTitles[row];
+            for (let col = 0; col < title.length; col++) {
+              if (title[col].toUpperCase() === upperChar) {
+                const coord = `${row}${col + 1}`;
+                if (!usedCoords.has(coord)) {
+                  usedCoords.add(coord);
+                  result.push(coord);
+                  found = true;
+                  break;
+                }
+              }
+            }
+            if (found) break;
+          }
+        }
+
+        // If still not found, output raw character
         if (!found && char.trim() !== '') {
-          result.push(char); // fallback: raw character
+          result.push(char);
         }
       }
 
