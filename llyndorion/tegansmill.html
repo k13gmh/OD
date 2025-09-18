@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tegan’s Mill Codex Encoder</title>
+  <title>Tegan’s Mill Codex Encoder v1.0</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -19,6 +19,10 @@
     h1 {
       font-size: 2em;
       margin-bottom: 0.2em;
+    }
+    h1 span {
+      font-size: 0.6em;
+      color: #666;
     }
     h2 {
       font-size: 1.2em;
@@ -63,7 +67,7 @@
   </style>
 </head>
 <body>
-  <h1>Tegan’s Mill</h1>
+  <h1>Tegan’s Mill <span>v1.0</span></h1>
   <h2>Codex Encoder</h2>
   <textarea id="inputText" rows="4" placeholder="Enter your message here..."></textarea>
   <div class="output" id="outputBox"></div>
@@ -135,7 +139,7 @@
           if (found) break;
         }
 
-        // If not found, output raw character and reset search
+        // If not found (e.g. space or punctuation), output raw and reset search
         if (!found) {
           result.push(char);
           searchStartIndex = 0;
