@@ -108,20 +108,25 @@
       const usedCoords = new Set();
       const result = [];
       const rows = Object.keys(rawTitles);
+      let searchStartIndex = 0;
 
       for (let char of text) {
         const upperChar = char.toUpperCase();
         let found = false;
 
-        // First full pass: A to Z and _
-        for (let row of rows) {
+        // Search from current position to end
+        for (let i = 0; i < rows.length; i++) {
+          const rowIndex = (searchStartIndex + i) % rows.length;
+          const row = rows[rowIndex];
           const title = rawTitles[row];
+
           for (let col = 0; col < title.length; col++) {
             if (title[col].toUpperCase() === upperChar) {
               const coord = `${row}${col + 1}`;
               if (!usedCoords.has(coord)) {
                 usedCoords.add(coord);
                 result.push(coord);
+                searchStartIndex = (rowIndex + 1) % rows.length;
                 found = true;
                 break;
               }
@@ -130,28 +135,10 @@
           if (found) break;
         }
 
-        // Second full pass: restart from A if not found
-        if (!found) {
-          for (let row of rows) {
-            const title = rawTitles[row];
-            for (let col = 0; col < title.length; col++) {
-              if (title[col].toUpperCase() === upperChar) {
-                const coord = `${row}${col + 1}`;
-                if (!usedCoords.has(coord)) {
-                  usedCoords.add(coord);
-                  result.push(coord);
-                  found = true;
-                  break;
-                }
-              }
-            }
-            if (found) break;
-          }
-        }
-
-        // If still not found, output raw character
+        // If not found, output raw character and reset search
         if (!found) {
           result.push(char);
+          searchStartIndex = 0;
         }
       }
 
