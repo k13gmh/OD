@@ -100,10 +100,9 @@
       W: "PLUMBING THE DEPTHS",
       X: "A FAIR DEAL",
       Y: "A DANGEROUS WAGER",
-      Z: "AND THEY ALL LIVED HAPPILY EVER AFTER"
+      Z: "AND THEY ALL LIVED HAPPILY EVER AFTER",
+      _: "JQXZ"
     };
-
-    const skipLetters = "JQXZ";
 
     function encodeText(text) {
       const usedCoords = new Set();
@@ -112,16 +111,9 @@
 
       for (let char of text) {
         const upperChar = char.toUpperCase();
-
-        // Skip encoding for J, Q, X, Z
-        if (skipLetters.includes(upperChar)) {
-          result.push(char);
-          continue;
-        }
-
         let found = false;
 
-        // First pass: A to Z
+        // First full pass: A to Z and _
         for (let row of rows) {
           const title = rawTitles[row];
           for (let col = 0; col < title.length; col++) {
@@ -138,7 +130,7 @@
           if (found) break;
         }
 
-        // Second pass: restart from A if not found
+        // Second full pass: restart from A if not found
         if (!found) {
           for (let row of rows) {
             const title = rawTitles[row];
@@ -158,7 +150,7 @@
         }
 
         // If still not found, output raw character
-        if (!found && char.trim() !== '') {
+        if (!found) {
           result.push(char);
         }
       }
