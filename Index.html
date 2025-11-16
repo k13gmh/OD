@@ -56,7 +56,10 @@
             font-weight: bold;
             color: #333;
         }
-        input[type="email"] {
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        textarea {
             width: 100%;
             padding: 12px;
             margin-bottom: 20px;
@@ -64,6 +67,10 @@
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 16px;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
         }
         button {
             background-color: #222;
@@ -87,6 +94,15 @@
             text-align: left;
             font-size: 0.9em;
         }
+        /* Optional: Style for the image container you plan to add */
+        .image-placeholder {
+            margin-bottom: 20px;
+        }
+        .image-placeholder img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -98,37 +114,29 @@
     </div>
     
     <div class="form-content">
-        <p>Please provide an email address to start your enquiry. At least one is required.</p>
-        
-        <form name="initial-enquiry" method="POST" data-netlify="true" action="/success-page">
-            <input type="email" id="student-email" name="student-email" placeholder="Student's Email (required)">
-            <input type="email" id="parent-email" name="parent-email" placeholder="Parent/Bill Payer's Email (optional)">
-            
-            <p class="error-message" id="validation-error">Please enter at least one email address.</p>
+        <div class="image-placeholder">
+             [attachment_0](attachment) 
+        </div>
 
-            <button type="submit">Next</button>
+        <p>Get in touch with us to start your driving journey.</p>
+        
+        <form name="enquiry-form" method="POST" data-netlify="true">
+            <label for="name">Your Full Name (required)</label>
+            <input type="text" id="name" name="name" placeholder="e.g., Jane Smith" required>
+
+            <label for="phone">Phone Number (required)</label>
+            <input type="tel" id="phone" name="phone" placeholder="e.g., 07123 456789" required>
+            
+            <label for="email">Email Address (required)</label>
+            <input type="email" id="email" name="email" placeholder="e.g., yourname@example.com" required>
+
+            <label for="availability">Availability and Message (required)</label>
+            <textarea id="availability" name="availability" placeholder="Tell us your general availability and any questions you have." required></textarea>
+            
+            <button type="submit">Submit Enquiry</button>
         </form>
     </div>
 </div>
-
-<script>
-    const form = document.querySelector('form[name="initial-enquiry"]');
-    const studentEmail = document.getElementById('student-email');
-    const parentEmail = document.getElementById('parent-email');
-    const errorMsg = document.getElementById('validation-error');
-
-    form.addEventListener('submit', function(event) {
-        const studentEmailValue = studentEmail.value.trim();
-        const parentEmailValue = parentEmail.value.trim();
-
-        if (!studentEmailValue && !parentEmailValue) {
-            event.preventDefault();
-            errorMsg.style.display = 'block';
-        } else {
-            errorMsg.style.display = 'none';
-        }
-    });
-</script>
 
 </body>
 </html>
