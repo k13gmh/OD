@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enquiry Introduction</title>
+    <title>Orion Drive Enquiry</title>
     <style>
+        /* --- General Layout and Body Styling --- */
         body {
             font-family: sans-serif;
             display: flex;
@@ -23,23 +24,22 @@
             max-width: 450px;
             overflow: hidden;
         }
-        .header-banner {
-            background-color: #222;
-            color: #fff;
-            padding: 20px;
+        
+        /* --- New Image Banner Styling --- */
+        .image-banner {
+            background-color: #222; /* Black background for the banner */
+            padding: 10px 0; /* Vertical space around the image */
             text-align: center;
         }
-        .header-banner h1 {
-            margin: 0;
-            font-size: 24px;
-            font-weight: normal;
+        .image-banner img {
+            max-width: 90%; /* Ensure it fits nicely on mobile */
+            height: auto;
+            display: block; 
+            margin: 0 auto; /* Center the image */
+            border-radius: 4px; /* Optional: Slight rounding on the image corners */
         }
-        .header-banner p {
-            margin: 5px 0 0;
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-        }
+        
+        /* --- Form Content Styling --- */
         .form-content {
             padding: 30px;
             text-align: center;
@@ -49,6 +49,8 @@
             margin-bottom: 20px;
             font-size: 16px;
         }
+        
+        /* --- Input and Label Styling --- */
         label {
             display: block;
             text-align: left;
@@ -72,6 +74,8 @@
             resize: vertical;
             min-height: 80px;
         }
+        
+        /* --- Button Styling --- */
         button {
             background-color: #222;
             color: #fff;
@@ -86,41 +90,21 @@
         button:hover {
             background-color: #000;
         }
-        .error-message {
-            color: red;
-            margin-top: -10px;
-            margin-bottom: 10px;
-            display: none;
-            text-align: left;
-            font-size: 0.9em;
-        }
-        /* Optional: Style for the image container you plan to add */
-        .image-placeholder {
-            margin-bottom: 20px;
-        }
-        .image-placeholder img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
     </style>
 </head>
 <body>
 
 <div class="form-container">
-    <div class="header-banner">
-        <p>Learn to drive with</p>
-        <h1>Orion Drive</h1>
-    </div>
     
-    <div class="form-content">
-        <div class="image-placeholder">
-             [attachment_0](attachment) 
-        </div>
+    <div class="image-banner">
+        <img src="IMG_0999.jpeg" alt="Orion Drive Learner Car Banner">
+    </div>
 
+    <div class="form-content">
         <p>Get in touch with us to start your driving journey.</p>
         
         <form name="enquiry-form" method="POST" data-netlify="true">
+            
             <label for="name">Your Full Name (required)</label>
             <input type="text" id="name" name="name" placeholder="e.g., Jane Smith" required>
 
