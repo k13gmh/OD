@@ -60,8 +60,9 @@
         }
         input[type="text"],
         input[type="tel"],
-        input[type="email"],
-        textarea {
+        textarea,
+        /* New: Targeting the select dropdown */
+        select { 
             width: 100%;
             padding: 12px;
             margin-bottom: 20px;
@@ -111,9 +112,12 @@
             <label for="phone">Phone Number (required)</label>
             <input type="tel" id="phone" name="phone" placeholder="e.g., 07123 456789" required>
             
-            <label for="email">Email Address (required)</label>
-            <input type="email" id="email" name="email" placeholder="e.g., yourname@example.com" required>
-
+            <label for="transmission">Transmission Preference (required)</label>
+            <select id="transmission" name="transmission" required>
+                <option value="" disabled selected>Select Manual or Automatic</option>
+                <option value="Manual">Manual</option>
+                <option value="Automatic">Automatic</option>
+            </select>
             <label for="availability">Availability and Message (required)</label>
             <textarea id="availability" name="availability" placeholder="Tell us your general availability and any questions you have." required></textarea>
             
