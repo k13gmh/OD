@@ -1,1 +1,53 @@
-rrrr
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gary's Driving School Hub</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f4f4f9; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        h1 { color: #333; margin-bottom: 30px; }
+        .menu-container { width: 100%; max-width: 400px; }
+        .menu-item { 
+            background: white; padding: 20px; margin-bottom: 15px; border-radius: 12px; 
+            text-decoration: none; color: #333; display: flex; align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 6px solid #007bff;
+            transition: transform 0.2s;
+        }
+        .menu-item:active { transform: scale(0.98); }
+        .menu-item h2 { margin: 0; font-size: 18px; }
+        .menu-item p { margin: 5px 0 0; font-size: 14px; color: #666; }
+        .status-badge { margin-left: auto; font-size: 12px; background: #d4edda; color: #155724; padding: 4px 8px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>Gary's Learning Hub</h1>
+
+    <div class="menu-container">
+        <a href="theory-test.html" class="menu-item">
+            <div>
+                <h2>Theory Test Pro</h2>
+                <p>797 Questions with Gary's Tips</p>
+            </div>
+            <span class="status-badge">Live</span>
+        </a>
+
+        <div class="menu-item" style="opacity: 0.6; border-left-color: #ccc;">
+            <div>
+                <h2>Hazard Perception</h2>
+                <p>Coming Soon...</p>
+            </div>
+        </div>
+
+        <div class="menu-item" style="opacity: 0.6; border-left-color: #ccc;">
+            <div>
+                <h2>Progress Tracker</h2>
+                <p>Coming Soon...</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
