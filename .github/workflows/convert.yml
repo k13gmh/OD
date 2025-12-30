@@ -1,47 +1,32 @@
-name: Convert TEXT to JSON
+name: Convert
 on:
-  workflow_dispatch: # This allows you to run it manually
-
+  workflow_dispatch:
 jobs:
-  convert:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: TheoryTest # This forces it to ignore 'main' and go to your branch
 
-      - name: Run Conversion Script
+      - name: Run
         shell: python
         run: |
-          import json
-          import csv
-          import io
-
-          questions = []
-          # Open the text file you uploaded
+          import json, csv
+          qs = []
+          # The script will now look into TheoryTest branch for this file
           with open('questions.txt', 'r', encoding='utf-8') as f:
-              # We use CSV reader because your file uses commas to separate fields
-              reader = csv.reader(f)
-              for row in reader:
-                  if len(row) < 9: continue
-                  q_id, cat, q_text, cA, cB, cC, cD, correct, expl = row[:9]
-                  questions.append({
-                      "id": int(q_id.strip()),
-                      "category": cat.strip(),
-                      "question": q_text.strip(),
-                      "choices": {"A": cA.strip(), "B": cB.strip(), "C": cC.strip(), "D": cD.strip()},
-                      "correct": correct.strip(),
-                      "explanation": expl.strip(),
-                      "gary_tip": f"Gary says: {expl.strip()}",
-                      "metadata": {"priority": "high", "wallOfShame": False, "correctStreak": 0, "unseen": True}
-                  })
-
+              for r in csv.reader(f):
+                  if len(r) < 9: continue
+                  qs.append({"id":r[0],"cat":r[1],"q":r[2],"choices":{"A":r[3],"B":r[4],"C":r[5],"D":r[6]},"correct":r[7],"expl":r[8]})
           with open('questions.json', 'w', encoding='utf-8') as f:
-              json.dump(questions, f, indent=2)
+              json.dump(qs, f, indent=2)
 
-            - name: Commit and Push JSON
+      - name: Push
         run: |
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'action@github.com'
+          git config user.name "Action"
+          git config user.email "action@github.com"
           git add questions.json
-          git commit -m "Auto-generated questions.json from txt"
+          git commit -m "update"
           git push origin TheoryTest
