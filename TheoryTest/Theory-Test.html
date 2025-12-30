@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gary's Theory Test Pro</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f4f4f9; padding: 20px; display: flex; justify-content: center; }
+        #quiz-container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 500px; width: 100%; }
+        .choice-btn { display: block; width: 100%; margin: 10px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px; background: white; text-align: left; font-size: 16px; cursor: pointer; }
+        .choice-btn:hover { background: #f0f7ff; }
+        .correct { background: #d4edda !important; border-color: #28a745; }
+        .wrong { background: #f8d7da !important; border-color: #dc3545; }
+        #explanation { margin-top: 20px; padding: 15px; background: #e7f3ff; border-radius: 8px; display: none; border-left: 5px solid #007bff; }
+        #next-btn { margin-top: 20px; width: 100%; padding: 15px; background: #007bff; color: white; border: none; border-radius: 8px; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h2 id="category" style="color: #666; font-size: 14px; text-transform: uppercase;">Loading...</h2>
+    <h3 id="question">Loading your questions, please wait...</h3>
+    <div id="choices"></div>
+    <div id="explanation"></div>
+    <button id="next-btn" onclick="nextQuestion()">Next Question</button>
+</div>
+
+<script>
+    let questions = [];
+    let currentIdx = 0;
+
+    async function loadQuestions() {
+        const response = await fetch('questions.json');
+        questions = await response.json();
+        showQuestion();
+    }
+
+    function showQuestion() {
+        const q = questions[currentIdx];
+        document.getElementById('category').innerText = q.category;
+        document.getElementById('question').innerText = q.question;
+        document.getElementById('explanation').style.display = 'none';
+        document.getElementById('next-btn').style.display = 'none';
+        
+        const choicesDiv = document.getElementById('choices');
+        choicesDiv.innerHTML = '';
+        
+        Object.keys(q.choices).forEach(key => {
+            const btn = document.createElement('button');
+            btn.className = 'choice-btn';
+            btn.innerText = key + ": " + q.choices[key];
+            btn.onclick = () => checkAnswer(btn, key, q.correct, q.explanation);
+            choicesDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(btn, choice, correct, expl) {
+        if (choice === correct) {
+            btn.classList.add('correct');
+        } else {
+            btn.classList.add('wrong');
+            // Highlight the correct one
+            Array.from(document.getElementsByClassName('choice-btn')).forEach(b => {
+                if (b.innerText.startsWith(correct)) b.classList.add('correct');
+            });
+        }
+        document.getElementById('explanation').innerHTML = "<strong>Gary's Tip:</strong> " + expl;
+        document.getElementById('explanation').style.display = 'block';
+        document.getElementById('next-btn').style.display = 'block';
+        // Disable buttons
+        Array.from(document.getElementsByClassName('choice-btn')).forEach(b => b.disabled = true);
+    }
+
+    function nextQuestion() {
+        currentIdx = (currentIdx + 1) % questions.length;
+        showQuestion();
+    }
+
+    loadQuestions();
+</script>
+
+</body>
+</html>
