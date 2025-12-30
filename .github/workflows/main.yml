@@ -1,0 +1,54 @@
+name: Convert TXT to JSON
+on:
+  workflow_dispatch: # This allows you to run it manually
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Conversion Script
+        shell: python
+        run: |
+          import json
+          import csv
+          import io
+
+          questions = []
+          # Open the text file you uploaded
+          with open('questions.txt', 'r', encoding='utf-8') as f:
+              # We use CSV reader because your file uses commas to separate fields
+              reader = csv.reader(f)
+              for row in reader:
+                  if len(row) < 9: continue
+                  q_id, cat, q_text, cA, cB, cC, cD, correct, expl = row[:9]
+                  questions.append({
+                      "id": int(q_id.strip()),
+                      "category": cat.strip(),
+                      "question": q_text.strip(),
+                      "choices": {"A": cA.strip(), "B": cB.strip(), "C": cC.strip(), "D": cD.strip()},
+                      "correct": correct.strip(),
+                      "explanation": expl.strip(),
+                      "gary_tip": f"Gary says: {expl.strip()}",
+                      "metadata": {"priority": "high", "wallOfShame": False, "correctStreak": 0, "unseen": True}
+                  })
+
+          with open('questions.json', 'w', encoding='utf-8') as f:
+              json.dump(questions, f, indent=2)
+
+      - name: Commit and Push JSON
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add questions.json
+          git commit -m "Auto-generated questions.json from txt"
+          git push
+      - name: Commit and Push JSON
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add questions.json
+          git commit -m "Auto-generated questions.json from txt"
+          git push origin TheoryTest
