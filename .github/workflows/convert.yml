@@ -1,4 +1,4 @@
-name: Convert TXT to JSON
+name: Convert TEXT to JSON
 on:
   workflow_dispatch: # This allows you to run it manually
 
