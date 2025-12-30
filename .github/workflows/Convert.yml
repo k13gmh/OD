@@ -39,9 +39,11 @@ jobs:
               json.dump(questions, f, indent=2)
 
       - name: Commit and Push JSON
+    
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
           git add questions.json
           git commit -m "Auto-generated questions.json from txt"
-          git push
+  
+          git push origin TheoryTest
