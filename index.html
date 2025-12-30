@@ -1,183 +1,52 @@
-<div id="start-screen">
-    <h1>Just for Fun</h1>
-    <p>Version 1.0</p>
-    <button id="start-button">Start Quiz</button>
-</div>
-
-<div id="question-container" style="display: none;">
-    <img id="question-image" src="" alt="Question Image" style="width:100%; max-width:300px; display:block; margin:0 auto 20px; border:1px solid #ddd; border-radius:5px;">
-    <div id="question-text" style="margin-left: 8em;">Loading...</div>
-    <ul id="answer-list" style="list-style-type: none; padding: 0; margin-top: 20px;"></ul>
-    <button id="next-button" disabled>Next</button>
-</div>
-
-<div id="results" style="display: none;">
-    <h2>Your Selections</h2>
-    <ul id="results-list"></ul>
-</div>
-
-<script>
-    let questions = [];
-    let answers = [];
-    let solutions = [];
-    let userChoices = [];
-    let currentIndex = 0;
-    let version = 1.0; // Version number
-
-    // Fetch questions, answers, and solutions
-    Promise.all([
-        fetch('Questions/questions.txt').then(res => {
-            if (!res.ok) throw new Error('Failed to fetch questions.txt');
-            return res.text();
-        }),
-        fetch('Questions/Answers.txt').then(res => {
-            if (!res.ok) throw new Error('Failed to fetch Answers.txt');
-            return res.text();
-        }),
-        fetch('Questions/Solutions.txt').then(res => {
-            if (!res.ok) throw new Error('Failed to fetch Solutions.txt');
-            return res.text();
-        })
-    ])
-    .then(([questionsData, answersData, solutionsData]) => {
-        console.log('Questions Data:', questionsData);  // Debugging: log questions data
-        console.log('Answers Data:', answersData);      // Debugging: log answers data
-        console.log('Solutions Data:', solutionsData);  // Debugging: log solutions data
-
-        // Parse questions
-        questions = questionsData.split('\n').map(line => {
-            const fields = line.split('-');
-            if (fields.length >= 3) {
-                return {
-                    number: fields[0].trim(),
-                    text: fields[2].trim()
-                };
-            }
-            return null;
-        }).filter(Boolean);
-
-        // Parse answers
-        answers = answersData.split('\n').map(line => {
-            const fields = line.split('-');
-            if (fields.length >= 3) {
-                return {
-                    questionNumber: fields[0].trim(),
-                    choice: fields[1].trim(),
-                    text: fields[2].trim()
-                };
-            }
-            return null;
-        }).filter(Boolean);
-
-        // Parse solutions
-        solutions = solutionsData.split('\n').map(line => {
-            const fields = line.split('-');
-            if (fields.length >= 4) {
-                return {
-                    questionNumber: fields[0].trim(),
-                    correctAnswer: fields[2].trim(),
-                    explanation: fields[3].trim()
-                };
-            }
-            return null;
-        }).filter(Boolean);
-
-        console.log('Parsed Questions:', questions);  // Debugging: log parsed questions
-        console.log('Parsed Answers:', answers);      // Debugging: log parsed answers
-        console.log('Parsed Solutions:', solutions);  // Debugging: log parsed solutions
-
-        // Start the quiz after the button is clicked
-        document.getElementById('start-button').addEventListener('click', () => {
-            document.getElementById('start-screen').style.display = 'none'; // Hide start screen
-            document.getElementById('question-container').style.display = 'block'; // Show question container
-            displayQuestion();
-        });
-    })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-        document.getElementById('question-text').textContent = 'Error loading questions.';
-    });
-
-    function displayQuestion() {
-        const questionTextElement = document.getElementById('question-text');
-        const questionImageElement = document.getElementById('question-image');
-        const answerListElement = document.getElementById('answer-list');
-        const nextButton = document.getElementById('next-button');
-
-        if (currentIndex < questions.length) {
-            const question = questions[currentIndex];
-
-            // Display question text
-            questionTextElement.innerHTML = `<span class="question-number">${question.number}</span> - ${question.text}`;
-
-            // Display question image
-            questionImageElement.src = `Images/${question.number}.jpeg`;
-            questionImageElement.alt = `Image for Question ${question.number}`;
-            questionImageElement.style.display = 'block';
-
-            // Display corresponding answers
-            const filteredAnswers = answers.filter(a => a.questionNumber === question.number);
-            answerListElement.innerHTML = ''; // Clear previous answers
-            filteredAnswers.forEach(answer => {
-                const li = document.createElement('li');
-                const button = document.createElement('button');
-                button.textContent = `${answer.choice}: ${answer.text}`;
-                button.style.padding = '10px 20px';
-                button.style.margin = '5px 0';
-                button.style.width = '100%';
-                button.onclick = () => selectAnswer(button, answer.choice, answer.text);
-                li.appendChild(button);
-                answerListElement.appendChild(li);
-            });
-
-            nextButton.disabled = false;
-        } else {
-            // No more questions
-            questionTextElement.textContent = 'No more questions!';
-            questionImageElement.style.display = 'none';
-            answerListElement.innerHTML = '';
-            nextButton.disabled = true;
-
-            // Display results
-            displayResults();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gary's Driving School Hub</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f4f4f9; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        h1 { color: #333; margin-bottom: 30px; }
+        .menu-container { width: 100%; max-width: 400px; }
+        .menu-item { 
+            background: white; padding: 20px; margin-bottom: 15px; border-radius: 12px; 
+            text-decoration: none; color: #333; display: flex; align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 6px solid #007bff;
+            transition: transform 0.2s;
         }
-    }
+        .menu-item:active { transform: scale(0.98); }
+        .menu-item h2 { margin: 0; font-size: 18px; }
+        .menu-item p { margin: 5px 0 0; font-size: 14px; color: #666; }
+        .status-badge { margin-left: auto; font-size: 12px; background: #d4edda; color: #155724; padding: 4px 8px; border-radius: 10px; }
+    </style>
+</head>
+<body>
 
-    function selectAnswer(button, choice, text) {
-        // Store the selected answer
-        userChoices[currentIndex] = { choice, text };
+    <h1>Gary's Learning Hub</h1>
 
-        // Change background color of the selected button and reset others
-        const buttons = document.querySelectorAll('#answer-list button');
-        buttons.forEach(btn => btn.style.backgroundColor = 'white');  // Reset background color
-        button.style.backgroundColor = '#ccc';  // Selected button
+    <div class="menu-container">
+        <a href="theory-test.html" class="menu-item">
+            <div>
+                <h2>Theory Test Pro</h2>
+                <p>797 Questions with Gary's Tips</p>
+            </div>
+            <span class="status-badge">Live</span>
+        </a>
 
-        document.getElementById('next-button').disabled = false;
-    }
+        <div class="menu-item" style="opacity: 0.6; border-left-color: #ccc;">
+            <div>
+                <h2>Hazard Perception</h2>
+                <p>Coming Soon...</p>
+            </div>
+        </div>
 
-    function displayResults() {
-        const resultsListElement = document.getElementById('results-list');
-        resultsListElement.innerHTML = ''; // Clear previous results
+        <div class="menu-item" style="opacity: 0.6; border-left-color: #ccc;">
+            <div>
+                <h2>Progress Tracker</h2>
+                <p>Coming Soon...</p>
+            </div>
+        </div>
+    </div>
 
-        userChoices.forEach((selection, index) => {
-            const question = questions[index];
-            const solution = solutions.find(sol => sol.questionNumber === question.number);
-            const li = document.createElement('li');
-            
-            // Compare user's answer with the correct answer
-            const isCorrect = selection.choice === solution.correctAnswer;
-            li.innerHTML = `
-                <span style="color: ${isCorrect ? 'green' : 'red'};">Q${question.number}: ${question.text} | Your Answer: ${selection.choice} - ${selection.text}</span><br>
-                <span style="color: black;">${solution.correctAnswer}  ${solution.explanation}</span>
-            `;
-            resultsListElement.appendChild(li);
-        });
-
-        document.getElementById('results').style.display = 'block';
-    }
-
-    document.getElementById('next-button').addEventListener('click', () => {
-        currentIndex++;
-        displayQuestion();
-    });
-</script>
+</body>
+</html>
