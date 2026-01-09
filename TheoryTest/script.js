@@ -1,80 +1,112 @@
-// 1. Your Questions Array
-const questions = [
-    {
-        question: "What should you do before moving off from a parked position?",
-        options: ["Check all mirrors", "Check your blind spot", "Signal if necessary", "All of the above"],
-        answer: 3 // This is the index of the correct answer (starts at 0)
-    },
-    {
-        question: "What does a circular road sign with a red border mean?",
-        options: ["A warning", "A command", "A prohibition", "An information sign"],
-        answer: 2
-    },
-    {
-        question: "When should you use your hazard warning lights?",
-        options: ["When parked on a double yellow line", "When being towed", "When slowing down on a motorway due to a hazard ahead", "To thank another driver"],
-        answer: 2
-    }
-    // PASTE YOUR REMAINING 47 QUESTIONS HERE FOLLOWING THE SAME FORMAT
-];
-
-let currentQuestionIndex = 0;
+let allQuestions = [];
+let testQuestions = [];
+let currentIndex = 0;
 let score = 0;
+let incorrectIDs = [];
 
-// 2. Elements from start.html
-const questionCounter = document.getElementById('question-counter');
-const questionText = document.getElementById('question-text');
-const optionsContainer = document.getElementById('options-container');
-const quizContent = document.getElementById('quiz-content');
-const resultContainer = document.getElementById('result-container');
-const finalScore = document.getElementById('final-score');
+// 1. Download the JSON file
+async function loadTestData() {
+    try {
+        const response = await fetch('questions.json');
+        allQuestions = await response.json();
+        
+        // Once downloaded, pick the 50 balanced questions
+        prepareBalancedTest(50);
+        
+        // Show the first question
+        displayQuestion();
+    } catch (error) {
+        document.getElementById('counter').innerText = "Error loading questions.json";
+        console.error(error);
+    }
+}
 
-// 3. Function to load a question
-function loadQuestion() {
-    const currentQuestion = questions[currentQuestionIndex];
+// 2. The Logic: Equal questions per category
+function prepareBalancedTest(totalLimit) {
+    const categories = {};
     
-    // Update the Counter
-    questionCounter.innerText = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+    // Sort all questions into buckets by category
+    allQuestions.forEach(q => {
+        if (!categories[q.category]) categories[q.category] = [];
+        categories[q.category].push(q);
+    });
+
+    const catNames = Object.keys(categories);
+    const amountPerCat = Math.floor(totalLimit / catNames.length);
+    
+    testQuestions = [];
+
+    // Pull equal amounts from each bucket
+    catNames.forEach(name => {
+        let shuffledCat = categories[name].sort(() => 0.5 - Math.random());
+        testQuestions.push(...shuffledCat.slice(0, amountPerCat));
+    });
+
+    // If we are short a few due to rounding, grab random ones to hit totalLimit
+    while (testQuestions.length < totalLimit) {
+        let randomQ = allQuestions[Math.floor(Math.random() * allQuestions.length)];
+        if (!testQuestions.includes(randomQ)) testQuestions.push(randomQ);
+    }
+
+    // Final shuffle so categories are mixed up during the test
+    testQuestions.sort(() => 0.5 - Math.random());
+}
+
+// 3. Put the question on the screen
+function displayQuestion() {
+    const q = testQuestions[currentIndex];
+    
+    // Update Counter
+    document.getElementById('counter').innerText = `Question ${currentIndex + 1} of ${testQuestions.length}`;
     
     // Update Question Text
-    questionText.innerText = currentQuestion.question;
+    document.getElementById('question-text').innerText = q.question;
     
-    // Clear old buttons
-    optionsContainer.innerHTML = '';
-    
-    // Create new buttons for each option
-    currentQuestion.options.forEach((option, index) => {
-        const button = document.createElement('button');
-        button.innerText = option;
-        button.classList.add('option-btn');
-        button.onclick = () => selectAnswer(index);
-        optionsContainer.appendChild(button);
-    });
+    // Clear old buttons and create new ones for choices A, B, C, D
+    const optionsDiv = document.getElementById('options');
+    optionsDiv.innerHTML = '';
+
+    for (const [letter, text] of Object.entries(q.choices)) {
+        const btn = document.createElement('button');
+        btn.innerText = `${letter}: ${text}`;
+        btn.className = "btn"; // Uses your style
+        btn.onclick = () => handleSubmission(letter, q.correct, q.id);
+        optionsDiv.appendChild(btn);
+    }
 }
 
-// 4. Function to handle answer selection
-function selectAnswer(selectedIndex) {
-    const correctIndex = questions[currentQuestionIndex].answer;
-    
-    if (selectedIndex === correctIndex) {
+// 4. Check answer and move forward
+function handleSubmission(selectedLetter, correctLetter, questionID) {
+    if (selectedLetter === correctLetter) {
         score++;
-    }
-
-    currentQuestionIndex++;
-
-    if (currentQuestionIndex < questions.length) {
-        loadQuestion();
     } else {
-        showResults();
+        // Track the ID of the wrong answer as requested
+        incorrectIDs.push(questionID);
+    }
+    
+    currentIndex++;
+    
+    if (currentIndex < testQuestions.length) {
+        displayQuestion();
+    } else {
+        finishTest();
     }
 }
 
-// 5. Function to show the final score
-function showResults() {
-    quizContent.style.display = 'none';
-    resultContainer.style.display = 'block';
-    finalScore.innerText = `You scored ${score} out of ${questions.length}`;
+// 5. Final Screen
+function finishTest() {
+    document.getElementById('quiz-ui').style.display = 'none';
+    document.getElementById('result-ui').style.display = 'block';
+    
+    document.getElementById('final-score').innerText = `You scored ${score} out of ${testQuestions.length}`;
+    
+    // Show the IDs of the ones that were wrong
+    if (incorrectIDs.length > 0) {
+        document.getElementById('wrong-ids').innerText = incorrectIDs.join(', ');
+    } else {
+        document.getElementById('wrong-ids').innerText = "None! Perfect score.";
+    }
 }
 
-// Start the quiz for the first time
-loadQuestion();
+// Run the loader when the page opens
+loadTestData();
