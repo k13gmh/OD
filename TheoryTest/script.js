@@ -6,13 +6,10 @@ let isReviewingSkipped = false;
 
 async function loadTestData() {
     try {
-        // Fetch from current folder
         const response = await fetch('questions.json');
         if (!response.ok) throw new Error('Could not find questions.json');
-        
         allQuestions = await response.json();
         
-        // Setup 50 questions
         const categories = {};
         allQuestions.forEach(q => {
             if (!categories[q.category]) categories[q.category] = [];
@@ -33,7 +30,6 @@ async function loadTestData() {
             if (!testQuestions.includes(rand)) testQuestions.push(rand);
         }
         testQuestions.sort(() => 0.5 - Math.random());
-
         displayQuestion();
     } catch (err) {
         document.getElementById('question-text').innerText = "Error: questions.json not found.";
@@ -143,10 +139,23 @@ function finishTest() {
 
         const item = document.createElement('div');
         item.className = "review-item";
-        let status = userChoice ? (isCorrect ? "✅ Correct" : "❌ Incorrect") : "⚪ Skipped";
+        
+        // Build choice display with red X or green Check
+        let choiceDisplay = "";
+        if (!userChoice) {
+            choiceDisplay = `<span style="color:gray;">⚪ Skipped</span>`;
+        } else if (isCorrect) {
+            choiceDisplay = `<span style="color:green; font-weight:bold;">${userChoice} <span class="status-icon">✅</span></span>`;
+        } else {
+            choiceDisplay = `<span style="color:red; font-weight:bold;">${userChoice} <span class="status-icon">❌</span></span>`;
+        }
+
         item.innerHTML = `
             <div><strong>Q${index + 1}: ${q.question}</strong></div>
-            <div style="font-size:0.9em;">Correct: ${q.correct} | Yours: ${userChoice || 'None'} (${status})</div>
+            <div style="font-size:0.95em; margin: 10px 0;">
+                Your Choice: ${choiceDisplay} <br>
+                <strong>Correct ${q.correct}:</strong> ${q.choices[q.correct]}
+            </div>
             <div class="explanation-box">${q.explanation}</div>
         `;
         reviewList.appendChild(item);
