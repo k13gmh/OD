@@ -41,10 +41,8 @@ function displayQuestion() {
     document.getElementById('counter').innerText = `Question ${currentIndex + 1} of ${testQuestions.length}`;
     document.getElementById('category-display').innerText = q.category;
     document.getElementById('question-text').innerText = q.question;
-    
     const optionsDiv = document.getElementById('options');
     optionsDiv.innerHTML = '';
-
     for (const [letter, text] of Object.entries(q.choices)) {
         const btn = document.createElement('button');
         btn.innerText = `${letter}: ${text}`;
@@ -53,10 +51,7 @@ function displayQuestion() {
             btn.style.background = "#e3f2fd";
             btn.style.borderColor = "#2196f3";
         }
-        btn.onclick = () => {
-            userAnswers[currentIndex] = letter; 
-            displayQuestion(); 
-        };
+        btn.onclick = () => { userAnswers[currentIndex] = letter; displayQuestion(); };
         optionsDiv.appendChild(btn);
     }
 }
@@ -64,61 +59,26 @@ function displayQuestion() {
 function goNext() {
     if (isReviewingSkipped) {
         let nextIndex = -1;
-        for (let i = currentIndex + 1; i < testQuestions.length; i++) {
-            if (!userAnswers[i]) { nextIndex = i; break; }
-        }
-        if (nextIndex !== -1) {
-            currentIndex = nextIndex;
-            displayQuestion();
-        } else {
-            showReviewMenu();
-        }
+        for (let i = currentIndex + 1; i < testQuestions.length; i++) { if (!userAnswers[i]) { nextIndex = i; break; } }
+        if (nextIndex !== -1) { currentIndex = nextIndex; displayQuestion(); } 
+        else { showReviewMenu(); }
     } else {
-        if (currentIndex < testQuestions.length - 1) {
-            currentIndex++;
-            displayQuestion();
-        } else {
-            showReviewMenu();
-        }
+        if (currentIndex < testQuestions.length - 1) { currentIndex++; displayQuestion(); } 
+        else { showReviewMenu(); }
     }
 }
 
-function goBack() {
-    if (currentIndex > 0) {
-        currentIndex--;
-        displayQuestion();
-    }
-}
-
+function goBack() { if (currentIndex > 0) { currentIndex--; displayQuestion(); } }
 function goSkip() { goNext(); }
-
-function showReviewMenu() {
-    document.getElementById('quiz-ui').classList.add('hidden');
-    document.getElementById('review-menu').classList.remove('hidden');
-}
-
-function hideReviewMenu() {
-    isReviewingSkipped = false;
-    currentIndex = 0;
-    document.getElementById('review-menu').classList.add('hidden');
-    document.getElementById('quiz-ui').classList.remove('hidden');
-    displayQuestion();
-}
+function showReviewMenu() { document.getElementById('quiz-ui').classList.add('hidden'); document.getElementById('review-menu').classList.remove('hidden'); }
+function hideReviewMenu() { isReviewingSkipped = false; currentIndex = 0; document.getElementById('review-menu').classList.add('hidden'); document.getElementById('quiz-ui').classList.remove('hidden'); displayQuestion(); }
 
 function reviewSkipped() {
     isReviewingSkipped = true;
     let firstSkipped = -1;
-    for (let i = 0; i < testQuestions.length; i++) {
-        if (!userAnswers[i]) { firstSkipped = i; break; }
-    }
-    if (firstSkipped !== -1) {
-        currentIndex = firstSkipped;
-        document.getElementById('review-menu').classList.add('hidden');
-        document.getElementById('quiz-ui').classList.remove('hidden');
-        displayQuestion();
-    } else {
-        alert("No skipped questions found!");
-    }
+    for (let i = 0; i < testQuestions.length; i++) { if (!userAnswers[i]) { firstSkipped = i; break; } }
+    if (firstSkipped !== -1) { currentIndex = firstSkipped; document.getElementById('review-menu').classList.add('hidden'); document.getElementById('quiz-ui').classList.remove('hidden'); displayQuestion(); } 
+    else { alert("No skipped questions found!"); }
 }
 
 function finishTest() {
@@ -140,23 +100,25 @@ function finishTest() {
         const item = document.createElement('div');
         item.className = "review-item";
         
-        // Build choice display with red X or green Check
-        let choiceDisplay = "";
-        if (!userChoice) {
-            choiceDisplay = `<span style="color:gray;">⚪ Skipped</span>`;
-        } else if (isCorrect) {
-            choiceDisplay = `<span style="color:green; font-weight:bold;">${userChoice} <span class="status-icon">✅</span></span>`;
-        } else {
-            choiceDisplay = `<span style="color:red; font-weight:bold;">${userChoice} <span class="status-icon">❌</span></span>`;
+        // Build the list of all 4 choices
+        let choicesHtml = "";
+        for (const [letter, text] of Object.entries(q.choices)) {
+            let marker = "";
+            let style = "";
+            if (userChoice === letter && !isCorrect) {
+                marker = '<span style="color:red; font-weight:bold; margin-right:5px;">X</span>';
+                style = 'style="color:red; font-weight:bold;"';
+            }
+            choicesHtml += `<div class="review-choice" ${style}>${marker}${letter}: ${text}</div>`;
         }
 
         item.innerHTML = `
             <div><strong>Q${index + 1}: ${q.question}</strong></div>
-            <div style="font-size:0.95em; margin: 10px 0;">
-                Your Choice: ${choiceDisplay} <br>
-                <strong>Correct ${q.correct}:</strong> ${q.choices[q.correct]}
+            <div style="margin: 10px 0;">${choicesHtml}</div>
+            <div class="correct-answer-box">
+                <strong>Correct ${q.correct}:</strong><br>
+                ${q.explanation}
             </div>
-            <div class="explanation-box">${q.explanation}</div>
         `;
         reviewList.appendChild(item);
     });
