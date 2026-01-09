@@ -7,22 +7,28 @@
     <style>
         body { font-family: -apple-system, sans-serif; background: #f0f2f5; padding: 15px; display: flex; justify-content: center; margin: 0; }
         #app-container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 600px; width: 100%; box-sizing: border-box; }
+        
+        /* Standard Choice Buttons */
         .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ccc; border-radius: 10px; background: white; text-align: left; font-size: 16px; cursor: pointer; box-sizing: border-box; }
-        .action-btn { background: #bdbdbd; color: black; border: none; padding: 15px; font-weight: bold; border-radius: 5px; cursor: pointer; font-size: 1em; width: 100%; text-transform: uppercase; box-sizing: border-box; }
+        
+        /* Black on Grey Action Buttons */
+        .action-btn { background: #bdbdbd; color: black; border: none; padding: 15px; font-weight: bold; border-radius: 5px; cursor: pointer; font-size: 1em; width: 100%; text-transform: uppercase; box-sizing: border-box; margin-bottom: 10px; }
         .action-btn:active { background: #999; }
+        
         .hidden { display: none; }
         .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
         
-        /* Review Section Styling */
+        /* Review Styling */
         .review-item { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid #eee; line-height: 1.6; }
-        .review-choice { margin: 5px 0; font-size: 1em; }
-        .user-wrong { color: #d32f2f; font-weight: bold; }
+        .review-choice { margin: 5px 0; font-size: 1em; padding-left: 20px; position: relative; }
+        .red-x { color: #d32f2f; font-weight: bold; position: absolute; left: 0; }
         .correct-answer-box { 
             background: #eef7ff; 
             padding: 15px; 
             border-radius: 8px; 
             margin-top: 15px; 
             border-left: 5px solid #2196f3;
+            color: #333;
         }
     </style>
 </head>
@@ -45,11 +51,16 @@
     </div>
 
     <div id="review-menu" class="hidden" style="text-align: center;">
-        <h2>Finish Test?</h2>
-        <p>Review answers or finish to see your score.</p>
-        <button class="btn" onclick="hideReviewMenu()">Review All (from 1)</button>
-        <button class="btn" onclick="reviewSkipped()">Review Skipped Only</button>
-        <button class="action-btn" style="background: #d32f2f; color: white; margin-top:20px;" onclick="finishTest()">Finish & View Results</button>
+        <h2 style="margin-bottom: 5px;">Finish Test?</h2>
+        <p style="margin-bottom: 20px; color: #666;">Review answers or finish to see your score.</p>
+        
+        <button class="action-btn" onclick="hideReviewMenu()">Review All (from 1)</button>
+        <button class="action-btn" onclick="reviewWrong()">Review Wrong Only</button>
+        <button class="action-btn" onclick="reviewSkipped()">Review Skipped Only</button>
+        
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+        
+        <button class="action-btn" onclick="goToMainMenu()">Finish</button>
     </div>
 
     <div id="result-ui" class="hidden" style="text-align: center;">
