@@ -5,85 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Orion Drive - Mock Test</title>
     <style>
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            background: #f0f2f5; 
-            padding: 15px; 
-            display: flex; 
-            justify-content: center; 
-            margin: 0;
-        }
-        #app-container { 
-            background: white; 
-            padding: 20px; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            max-width: 600px; 
-            width: 100%; 
-            box-sizing: border-box;
-        }
-        
-        /* Choice Buttons (A, B, C, D) */
-        .btn { 
-            display: block; 
-            width: 100%; 
-            padding: 15px; 
-            margin: 10px 0; 
-            border: 1px solid #ccc; 
-            border-radius: 10px; 
-            background: white; 
-            text-align: left; 
-            font-size: 16px; 
-            cursor: pointer; 
-            box-sizing: border-box;
-        }
-        
-        /* Grey Action Buttons (Back, Next, Skip, Finish, Restart) */
-        .action-btn { 
-            background: #bdbdbd; 
-            color: black; 
-            border: none; 
-            padding: 15px; 
-            font-weight: bold; 
-            border-radius: 5px; 
-            cursor: pointer; 
-            font-size: 1em; 
-            width: 100%; 
-            text-transform: uppercase; 
-            box-sizing: border-box;
-        }
+        body { font-family: -apple-system, sans-serif; background: #f0f2f5; padding: 15px; display: flex; justify-content: center; margin: 0; }
+        #app-container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 600px; width: 100%; box-sizing: border-box; }
+        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ccc; border-radius: 10px; background: white; text-align: left; font-size: 16px; cursor: pointer; box-sizing: border-box; }
+        .action-btn { background: #bdbdbd; color: black; border: none; padding: 15px; font-weight: bold; border-radius: 5px; cursor: pointer; font-size: 1em; width: 100%; text-transform: uppercase; box-sizing: border-box; }
         .action-btn:active { background: #999; }
-
         .hidden { display: none; }
-        .grid-container { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px; 
-            margin-top: 20px; 
-        }
-
-        #wrong-ids { 
-            color: #d32f2f; 
-            font-weight: bold; 
-            word-wrap: break-word; 
-        }
-
-        /* Review List Styles */
-        .review-item {
-            margin-bottom: 25px;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            line-height: 1.4;
-        }
-        .explanation-box {
-            background: #eef7ff;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.9em;
-            font-style: italic;
-            margin-top: 8px;
-            color: #333;
-        }
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .review-item { margin-bottom: 25px; padding: 15px; border-bottom: 1px solid #eee; line-height: 1.4; }
+        .explanation-box { background: #eef7ff; padding: 12px; border-radius: 8px; font-size: 0.9em; font-style: italic; margin-top: 8px; color: #333; }
     </style>
 </head>
 <body>
@@ -91,16 +21,11 @@
 <div id="app-container">
     <div id="quiz-ui">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <div id="counter" style="font-weight: bold; color: #d32f2f; font-size: 1em;">Question 0 of 50</div>
-            <div id="category-display" style="color: #4caf50; font-weight: bold; font-size: 1em;">CATEGORY</div>
+            <div id="counter" style="font-weight: bold; color: #d32f2f;">Question 0 of 50</div>
+            <div id="category-display" style="color: #4caf50; font-weight: bold;">CATEGORY</div>
         </div>
-
-        <div id="question-text" style="font-size: 1.1em; font-weight: 500; margin-bottom: 20px; min-height: 50px;">
-            Loading your test questions...
-        </div>
-        
+        <div id="question-text" style="font-size: 1.1em; font-weight: 500; margin-bottom: 20px; min-height: 50px;">Loading...</div>
         <div id="options"></div>
-
         <div class="grid-container">
             <button class="action-btn" onclick="goBack()">< BACK</button>
             <button class="action-btn" onclick="goNext()">NEXT ></button>
@@ -111,30 +36,23 @@
 
     <div id="review-menu" class="hidden" style="text-align: center;">
         <h2>Finish Test?</h2>
-        <p>Would you like to review your answers before seeing your final score?</p>
-        <button class="btn" onclick="hideReviewMenu()">Review All Questions (from 1)</button>
-        <button class="btn" onclick="reviewSkipped()">Review Skipped Questions Only</button>
-        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-        <button class="action-btn" style="background: #d32f2f; color: white;" onclick="finishTest()">Finish & View Results</button>
+        <p>Review answers or finish to see your score.</p>
+        <button class="btn" onclick="hideReviewMenu()">Review All (from 1)</button>
+        <button class="btn" onclick="reviewSkipped()">Review Skipped Only</button>
+        <button class="action-btn" style="background: #d32f2f; color: white; margin-top:20px;" onclick="finishTest()">Finish & View Results</button>
     </div>
 
     <div id="result-ui" class="hidden" style="text-align: center;">
-        <h2 id="pass-fail-text" style="margin-bottom: 5px;">Test Result</h2>
-        <p id="final-score" style="font-size: 2.5em; font-weight: bold; margin: 10px 0;"></p>
-        <p id="percentage-text" style="font-size: 1.2em; margin-bottom: 20px;"></p>
-        
-        <div style="background: #fdf2f2; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
-            <p style="margin: 0 0 5px 0; font-size: 0.9em; color: #666;">Incorrect Question IDs:</p>
-            <div id="wrong-ids"></div>
+        <h2 id="pass-fail-text">Result</h2>
+        <p id="final-score" style="font-size: 2.5em; font-weight: bold;"></p>
+        <p id="percentage-text"></p>
+        <div style="background: #fdf2f2; padding: 10px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="margin:0;">Wrong IDs:</p>
+            <div id="wrong-ids" style="color:#d32f2f; font-weight:bold;"></div>
         </div>
-
-        <button class="action-btn" onclick="window.location.href='/OD/TheoryTest/untimed.html'" style="margin-bottom: 40px;">
-            Start New Test
-        </button>
-
-        <div id="full-review-container" style="text-align: left; border-top: 2px solid #eee; padding-top: 20px;">
-            <h3 style="margin-top: 0;">Detailed Review</h3>
-            <p style="font-size: 0.85em; color: #777; margin-bottom: 20px;">Review all your answers and explanations below.</p>
+        <button class="action-btn" onclick="window.location.reload()">Start New Test</button>
+        <div id="full-review-container" style="text-align: left; border-top: 2px solid #eee; padding-top: 20px; margin-top:20px;">
+            <h3>Detailed Review</h3>
             <div id="review-list"></div>
         </div>
     </div>
