@@ -7,16 +7,12 @@
     <style>
         body { font-family: -apple-system, sans-serif; background: #f0f2f5; padding: 15px; display: flex; justify-content: center; }
         #app-container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 500px; width: 100%; }
-        
-        /* Choice Buttons (A, B, C, D) */
         .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ccc; border-radius: 10px; background: white; text-align: left; font-size: 16px; cursor: pointer; }
-        
-        /* Grey Action Buttons from your image */
         .action-btn { background: #bdbdbd; color: black; border: none; padding: 15px; font-weight: bold; border-radius: 5px; cursor: pointer; font-size: 1em; width: 100%; text-transform: uppercase; }
         .action-btn:active { background: #999; }
-
         .hidden { display: none; }
         .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        #wrong-ids { color: #d32f2f; font-weight: bold; word-wrap: break-word; }
     </style>
 </head>
 <body>
@@ -24,33 +20,39 @@
 <div id="app-container">
     <div id="quiz-ui">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <div id="counter" style="font-weight: bold; color: #d32f2f;">Question 0 of 50</div>
-            <div id="category-display" style="font-size: 1.4em; color: #4caf50; font-weight: bold;">CATEGORY</div>
+            <div id="counter" style="font-weight: bold; color: #d32f2f; font-size: 1em;">Question 0 of 50</div>
+            <div id="category-display" style="color: #4caf50; font-weight: bold; font-size: 1em;">CATEGORY</div>
         </div>
 
-        <div id="question-text" style="font-size: 1.1em; font-weight: 500; margin-bottom: 20px; line-height: 1.4;">
-            Loading your test questions...
-        </div>
-        
-        <div id="options">
-            </div>
+        <div id="question-text" style="font-size: 1.1em; font-weight: 500; margin-bottom: 20px;">Loading...</div>
+        <div id="options"></div>
 
         <div class="grid-container">
             <button class="action-btn" onclick="goBack()">< BACK</button>
             <button class="action-btn" onclick="goNext()">NEXT ></button>
-            <button class="action-btn" onclick="goNext()">SKIP</button>
-            <button class="action-btn" onclick="finishTest()">FINISH</button>
+            <button class="action-btn" onclick="goSkip()">SKIP</button>
+            <button class="action-btn" onclick="showReviewMenu()">FINISH</button>
         </div>
     </div>
 
+    <div id="review-menu" class="hidden" style="text-align: center;">
+        <h2>Finish Test?</h2>
+        <p>Would you like to review your answers before seeing your final score?</p>
+        <button class="btn" onclick="hideReviewMenu()">Review All Questions (from 1)</button>
+        <button class="btn" onclick="reviewSkipped()">Review Skipped Questions Only</button>
+        <button class="btn" style="background: #d32f2f; color: white;" onclick="finishTest()">Finish & View Results</button>
+    </div>
+
     <div id="result-ui" class="hidden" style="text-align: center;">
-        <h2>Test Result</h2>
+        <h2 id="pass-fail-text">Test Result</h2>
         <p id="final-score" style="font-size: 2em; font-weight: bold;"></p>
+        <p id="percentage-text"></p>
+        
         <div style="background: #fdf2f2; padding: 15px; border-radius: 8px; margin: 20px 0;">
-            <p style="margin-top:0;">Check these IDs:</p>
-            <div id="wrong-ids" style="color: #d32f2f; font-weight: bold;"></div>
+            <p style="margin-top:0;">Incorrect Question IDs:</p>
+            <div id="wrong-ids"></div>
         </div>
-        <button class="btn" onclick="location.reload()" style="text-align:center; background:#d32f2f; color:white;">Restart Test</button>
+        <button class="btn" onclick="window.location.href='/OD/TheoryTest/untimed.html'" style="text-align:center; background:#d32f2f; color:white;">Start New Test</button>
     </div>
 </div>
 
