@@ -1,49 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Orion Drive - Mock Test</title>
-    <style>
-        body { font-family: -apple-system, sans-serif; background: #f4f4f9; padding: 20px; display: flex; justify-content: center; }
-        #app-container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 500px; width: 100%; }
-        #counter { font-weight: bold; color: #d32f2f; margin-bottom: 10px; }
-        #question-text { font-size: 1.2em; margin-bottom: 20px; color: #333; }
-        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #ddd; border-radius: 10px; background: white; text-align: left; font-size: 1em; cursor: pointer; }
-        .btn:active { background: #eee; }
-        #exit-btn { background: #666; color: white; border: none; margin-top: 20px; text-align: center; }
-        #result-ui { text-align: center; }
-        #wrong-ids { font-weight: bold; color: #d32f2f; word-wrap: break-word; }
-        .hidden { display: none; }
-    </style>
-</head>
-<body>
-
 <div id="app-container">
     <div id="quiz-ui">
-        <div id="counter">Loading questions...</div>
-        <div id="question-text">Please wait while we prepare your test...</div>
-        
-        <div id="options">
-            </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div id="counter" style="font-weight: bold; color: #d32f2f;">Question 1 of 50</div>
+            <div id="category-display" style="font-size: 1.5em; color: #4caf50; font-weight: bold;">Category</div>
+        </div>
 
-        <button id="exit-btn" class="btn" onclick="finishTest()">Finish Test Early</button>
+        <div id="question-text" style="font-size: 1.1em; margin-bottom: 20px;"></div>
+        
+        <div id="options"></div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
+            <button class="action-btn" onclick="goBack()">< BACK</button>
+            <button class="action-btn" onclick="goNext()">NEXT ></button>
+            <button class="action-btn" onclick="goNext()">SKIP</button> <button class="action-btn" onclick="finishTest()">FINISH</button>
+        </div>
     </div>
 
     <div id="result-ui" class="hidden">
         <h2>Test Complete</h2>
-        <p id="final-score" style="font-size: 1.5em;"></p>
-        
-        <div style="background: #fff3f3; padding: 15px; border-radius: 10px; margin-top: 20px;">
-            <p>Incorrect Question IDs to Review:</p>
-            <div id="wrong-ids"></div>
-        </div>
-
-        <button class="btn" onclick="location.reload()" style="text-align:center; background:#d32f2f; color:white; border:none;">Start New Test</button>
+        <p id="final-score"></p>
+        <p>Incorrect Question IDs:</p>
+        <div id="wrong-ids"></div>
+        <button class="btn" onclick="location.reload()">Restart</button>
     </div>
 </div>
 
-<script src="script.js"></script>
-
-</body>
-</html>
+<style>
+    /* Adding the grey button style from your image */
+    .action-btn { 
+        background: #bdbdbd; 
+        color: black; 
+        border: none; 
+        padding: 15px; 
+        font-weight: bold; 
+        border-radius: 5px; 
+        cursor: pointer;
+        font-size: 1em;
+    }
+    .action-btn:active { background: #9e9e9e; }
+    /* Your existing .btn style for A, B, C, D choices stays here */
+</style>
