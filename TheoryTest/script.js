@@ -2,7 +2,7 @@ let allQuestions = [];
 let testQuestions = [];
 let currentIndex = 0;
 let userAnswers = {}; 
-let reviewMode = "none"; // none, all, wrong, skipped
+let midTestReviewMode = "none";
 
 async function loadTestData() {
     try {
@@ -10,6 +10,7 @@ async function loadTestData() {
         if (!response.ok) throw new Error('Could not find questions.json');
         allQuestions = await response.json();
         
+        // Balanced categories logic
         const categories = {};
         allQuestions.forEach(q => {
             if (!categories[q.category]) categories[q.category] = [];
@@ -32,7 +33,7 @@ async function loadTestData() {
         testQuestions.sort(() => 0.5 - Math.random());
         displayQuestion();
     } catch (err) {
-        document.getElementById('question-text').innerText = "Error: questions.json not found.";
+        document.getElementById('question-text').innerText = "Error loading questions.";
     }
 }
 
@@ -56,16 +57,12 @@ function displayQuestion() {
     }
 }
 
+// Navigation for Editing Answers
 function goNext() {
     let nextIndex = -1;
-    
-    if (reviewMode === "skipped") {
+    if (midTestReviewMode === "skipped") {
         for (let i = currentIndex + 1; i < testQuestions.length; i++) {
             if (!userAnswers[i]) { nextIndex = i; break; }
-        }
-    } else if (reviewMode === "wrong") {
-        for (let i = currentIndex + 1; i < testQuestions.length; i++) {
-            if (userAnswers[i] && userAnswers[i] !== testQuestions[i].correct) { nextIndex = i; break; }
         }
     } else {
         if (currentIndex < testQuestions.length - 1) { nextIndex = currentIndex + 1; }
@@ -81,18 +78,22 @@ function goNext() {
 
 function goBack() { if (currentIndex > 0) { currentIndex--; displayQuestion(); } }
 function goSkip() { goNext(); }
-function showReviewMenu() { document.getElementById('quiz-ui').classList.add('hidden'); document.getElementById('review-menu').classList.remove('hidden'); }
 
-function hideReviewMenu() { 
-    reviewMode = "all";
-    currentIndex = 0; 
-    document.getElementById('review-menu').classList.add('hidden'); 
-    document.getElementById('quiz-ui').classList.remove('hidden'); 
-    displayQuestion(); 
+function showReviewMenu() {
+    document.getElementById('quiz-ui').classList.add('hidden');
+    document.getElementById('review-menu').classList.remove('hidden');
+}
+
+function hideReviewMenu() {
+    midTestReviewMode = "all";
+    currentIndex = 0;
+    document.getElementById('review-menu').classList.add('hidden');
+    document.getElementById('quiz-ui').classList.remove('hidden');
+    displayQuestion();
 }
 
 function reviewSkipped() {
-    reviewMode = "skipped";
+    midTestReviewMode = "skipped";
     let firstSkipped = -1;
     for (let i = 0; i < testQuestions.length; i++) { if (!userAnswers[i]) { firstSkipped = i; break; } }
     if (firstSkipped !== -1) {
@@ -103,39 +104,48 @@ function reviewSkipped() {
     } else { alert("No skipped questions found!"); }
 }
 
-function reviewWrong() {
-    reviewMode = "wrong";
-    let firstWrong = -1;
-    for (let i = 0; i < testQuestions.length; i++) {
-        if (userAnswers[i] && userAnswers[i] !== testQuestions[i].correct) { firstWrong = i; break; }
-    }
-    if (firstWrong !== -1) {
-        currentIndex = firstWrong;
-        document.getElementById('review-menu').classList.add('hidden');
-        document.getElementById('quiz-ui').classList.remove('hidden');
-        displayQuestion();
-    } else { alert("No incorrect answers to review!"); }
-}
+function goToMainMenu() { window.location.href = 'mainmenu.html'; }
 
-function goToMainMenu() {
-    window.location.href = 'mainmenu.html';
-}
-
+// Final Test Submission
 function finishTest() {
     let score = 0;
-    let incorrectIDs = [];
     let hallOfShame = JSON.parse(localStorage.getItem('hallOfShame')) || [];
+    
+    testQuestions.forEach((q, index) => {
+        if (userAnswers[index] === q.correct) score++;
+        else if (userAnswers[index]) {
+            if (!hallOfShame.includes(q.id)) hallOfShame.push(q.id);
+        }
+    });
+
+    localStorage.setItem('hallOfShame', JSON.stringify(hallOfShame));
+    let percent = Math.round((score / 50) * 100);
+    
+    document.getElementById('review-menu').classList.add('hidden');
+    document.getElementById('result-ui').classList.remove('hidden');
+    document.getElementById('pass-fail-text').innerText = percent >= 86 ? "🎉 Passed" : "❌ Failed";
+    document.getElementById('pass-fail-text').style.color = percent >= 86 ? "green" : "red";
+    document.getElementById('final-score').innerText = `${score} / 50`;
+    document.getElementById('percentage-text').innerText = `${percent}% (Pass: 86%)`;
+    
+    generateReviewList('all'); // Default view on results
+    window.scrollTo(0, 0);
+}
+
+// Logic for the Scrollable Explanations at the end
+function generateReviewList(filter) {
     const reviewList = document.getElementById('review-list');
-    reviewList.innerHTML = ''; 
+    const title = document.getElementById('review-title');
+    reviewList.innerHTML = '';
+    title.innerText = filter === 'all' ? "All Answers" : filter === 'wrong' ? "Incorrect Answers" : "Skipped Questions";
 
     testQuestions.forEach((q, index) => {
         const userChoice = userAnswers[index];
         const isCorrect = userChoice === q.correct;
-        if (isCorrect) score++;
-        else if (userChoice) {
-            incorrectIDs.push(q.id);
-            if (!hallOfShame.includes(q.id)) hallOfShame.push(q.id);
-        }
+
+        // Apply filters
+        if (filter === 'wrong' && (isCorrect || !userChoice)) return;
+        if (filter === 'skipped' && userChoice) return;
 
         const item = document.createElement('div');
         item.className = "review-item";
@@ -161,17 +171,6 @@ function finishTest() {
         `;
         reviewList.appendChild(item);
     });
-
-    localStorage.setItem('hallOfShame', JSON.stringify(hallOfShame));
-    let percent = Math.round((score / 50) * 100);
-    document.getElementById('review-menu').classList.add('hidden');
-    document.getElementById('result-ui').classList.remove('hidden');
-    document.getElementById('pass-fail-text').innerText = percent >= 86 ? "🎉 Passed" : "❌ Failed";
-    document.getElementById('pass-fail-text').style.color = percent >= 86 ? "green" : "red";
-    document.getElementById('final-score').innerText = `${score} / 50`;
-    document.getElementById('percentage-text').innerText = `${percent}% (Pass: 86%)`;
-    document.getElementById('wrong-ids').innerText = incorrectIDs.join(', ') || "None";
-    window.scrollTo(0, 0);
 }
 
 loadTestData();
