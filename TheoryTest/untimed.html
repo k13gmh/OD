@@ -1,42 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Orion Drive - Mock Test</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f0f2f5; padding: 15px; display: flex; justify-content: center; }
+        #app-container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 500px; width: 100%; }
+        
+        /* Choice Buttons (A, B, C, D) */
+        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ccc; border-radius: 10px; background: white; text-align: left; font-size: 16px; cursor: pointer; }
+        
+        /* Grey Action Buttons from your image */
+        .action-btn { background: #bdbdbd; color: black; border: none; padding: 15px; font-weight: bold; border-radius: 5px; cursor: pointer; font-size: 1em; width: 100%; text-transform: uppercase; }
+        .action-btn:active { background: #999; }
+
+        .hidden { display: none; }
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
 <div id="app-container">
     <div id="quiz-ui">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <div id="counter" style="font-weight: bold; color: #d32f2f;">Question 1 of 50</div>
-            <div id="category-display" style="font-size: 1.5em; color: #4caf50; font-weight: bold;">Category</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div id="counter" style="font-weight: bold; color: #d32f2f;">Question 0 of 50</div>
+            <div id="category-display" style="font-size: 1.4em; color: #4caf50; font-weight: bold;">CATEGORY</div>
         </div>
 
-        <div id="question-text" style="font-size: 1.1em; margin-bottom: 20px;"></div>
+        <div id="question-text" style="font-size: 1.1em; font-weight: 500; margin-bottom: 20px; line-height: 1.4;">
+            Loading your test questions...
+        </div>
         
-        <div id="options"></div>
+        <div id="options">
+            </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
+        <div class="grid-container">
             <button class="action-btn" onclick="goBack()">< BACK</button>
             <button class="action-btn" onclick="goNext()">NEXT ></button>
-            <button class="action-btn" onclick="goNext()">SKIP</button> <button class="action-btn" onclick="finishTest()">FINISH</button>
+            <button class="action-btn" onclick="goNext()">SKIP</button>
+            <button class="action-btn" onclick="finishTest()">FINISH</button>
         </div>
     </div>
 
-    <div id="result-ui" class="hidden">
-        <h2>Test Complete</h2>
-        <p id="final-score"></p>
-        <p>Incorrect Question IDs:</p>
-        <div id="wrong-ids"></div>
-        <button class="btn" onclick="location.reload()">Restart</button>
+    <div id="result-ui" class="hidden" style="text-align: center;">
+        <h2>Test Result</h2>
+        <p id="final-score" style="font-size: 2em; font-weight: bold;"></p>
+        <div style="background: #fdf2f2; padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <p style="margin-top:0;">Check these IDs:</p>
+            <div id="wrong-ids" style="color: #d32f2f; font-weight: bold;"></div>
+        </div>
+        <button class="btn" onclick="location.reload()" style="text-align:center; background:#d32f2f; color:white;">Restart Test</button>
     </div>
 </div>
 
-<style>
-    /* Adding the grey button style from your image */
-    .action-btn { 
-        background: #bdbdbd; 
-        color: black; 
-        border: none; 
-        padding: 15px; 
-        font-weight: bold; 
-        border-radius: 5px; 
-        cursor: pointer;
-        font-size: 1em;
-    }
-    .action-btn:active { background: #9e9e9e; }
-    /* Your existing .btn style for A, B, C, D choices stays here */
-</style>
+<script src="script.js"></script>
+</body>
+</html>
