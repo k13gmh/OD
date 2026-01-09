@@ -1,18 +1,21 @@
 let allQuestions = [];
 let testQuestions = [];
 let currentIndex = 0;
-let score = 0;
-let incorrectIDs = [];
-let userAnswers = {}; 
+let userAnswers = {}; // Stores what the user clicked
 
 async function loadTestData() {
     try {
         const response = await fetch('questions.json');
+        if (!response.ok) throw new Error('File not found');
         allQuestions = await response.json();
+        
+        // Pick 50 questions (Equal distribution per category)
         prepareBalancedTest(50);
+        
+        // Start the display
         displayQuestion();
-    } catch (error) {
-        document.getElementById('question-text').innerText = "Error: questions.json not found.";
+    } catch (err) {
+        document.getElementById('question-text').innerText = "Failed to load questions.json. Make sure the file is in the theorytest folder.";
     }
 }
 
@@ -28,13 +31,14 @@ function prepareBalancedTest(totalLimit) {
     testQuestions = [];
 
     catNames.forEach(name => {
-        let shuffledCat = categories[name].sort(() => 0.5 - Math.random());
-        testQuestions.push(...shuffledCat.slice(0, amountPerCat));
+        let shuffled = categories[name].sort(() => 0.5 - Math.random());
+        testQuestions.push(...shuffled.slice(0, amountPerCat));
     });
 
+    // Top up to 50 if needed
     while (testQuestions.length < totalLimit) {
-        let randomQ = allQuestions[Math.floor(Math.random() * allQuestions.length)];
-        if (!testQuestions.includes(randomQ)) testQuestions.push(randomQ);
+        let rand = allQuestions[Math.floor(Math.random() * allQuestions.length)];
+        if (!testQuestions.includes(rand)) testQuestions.push(rand);
     }
     testQuestions.sort(() => 0.5 - Math.random());
 }
@@ -42,9 +46,9 @@ function prepareBalancedTest(totalLimit) {
 function displayQuestion() {
     const q = testQuestions[currentIndex];
     
-    // Fill the slots we made in the HTML
-    document.getElementById('category-display').innerText = q.category;
+    // Fill the HTML elements
     document.getElementById('counter').innerText = `Question ${currentIndex + 1} of ${testQuestions.length}`;
+    document.getElementById('category-display').innerText = q.category;
     document.getElementById('question-text').innerText = q.question;
     
     const optionsDiv = document.getElementById('options');
@@ -55,15 +59,15 @@ function displayQuestion() {
         btn.innerText = `${letter}: ${text}`;
         btn.className = "btn";
         
-        // This keeps the blue highlight if you go "Back"
+        // If user already answered this (going Back), highlight it blue
         if (userAnswers[currentIndex] === letter) {
             btn.style.background = "#e3f2fd";
-            btn.style.borderColor = "#2196F3";
+            btn.style.borderColor = "#2196f3";
         }
 
         btn.onclick = () => {
-            userAnswers[currentIndex] = letter;
-            displayQuestion(); 
+            userAnswers[currentIndex] = letter; 
+            displayQuestion(); // Refresh to show the selection
         };
         optionsDiv.appendChild(btn);
     }
@@ -86,8 +90,9 @@ function goBack() {
 }
 
 function finishTest() {
-    score = 0;
-    incorrectIDs = [];
+    let score = 0;
+    let incorrectIDs = [];
+
     testQuestions.forEach((q, index) => {
         if (userAnswers[index] === q.correct) {
             score++;
@@ -95,11 +100,12 @@ function finishTest() {
             incorrectIDs.push(q.id);
         }
     });
-    document.getElementById('quiz-ui').style.display = 'none';
+
+    document.getElementById('quiz-ui').classList.add('hidden');
     document.getElementById('result-ui').classList.remove('hidden');
-    document.getElementById('final-score').innerText = `Score: ${score} / ${testQuestions.length}`;
+    document.getElementById('final-score').innerText = `${score} / ${testQuestions.length}`;
     document.getElementById('wrong-ids').innerText = incorrectIDs.join(', ') || "None";
 }
 
-// THIS LINE IS THE KEY - It turns the engine on!
+// Kickstart
 loadTestData();
