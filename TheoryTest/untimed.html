@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orion Drive - Mock Test</title>
+    <link rel="stylesheet" href="style.css"> </head>
+<body>
+
+    <div id="app">
+        <div id="quiz-ui">
+            <div id="counter">Loading questions...</div>
+            
+            <h2 id="question-text"></h2>
+            
+            <div id="options">
+                </div>
+
+            <hr>
+            <button onclick="finishTest()" id="exit-btn">Finish Test Early</button>
+        </div>
+
+        <div id="result-ui" style="display: none;">
+            <h1>Test Results</h1>
+            <p id="final-score"></p>
+            
+            <div id="review-section">
+                <h3>Incorrect Question IDs:</h3>
+                <p id="wrong-ids"></p>
+            </div>
+
+            <button onclick="location.reload()">Restart New Test</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
