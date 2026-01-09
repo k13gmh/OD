@@ -2,7 +2,7 @@ let allQuestions = [];
 let testQuestions = [];
 let currentIndex = 0;
 let userAnswers = {}; 
-let isReviewingSkipped = false;
+let reviewMode = "none"; // none, all, wrong, skipped
 
 async function loadTestData() {
     try {
@@ -57,28 +57,68 @@ function displayQuestion() {
 }
 
 function goNext() {
-    if (isReviewingSkipped) {
-        let nextIndex = -1;
-        for (let i = currentIndex + 1; i < testQuestions.length; i++) { if (!userAnswers[i]) { nextIndex = i; break; } }
-        if (nextIndex !== -1) { currentIndex = nextIndex; displayQuestion(); } 
-        else { showReviewMenu(); }
+    let nextIndex = -1;
+    
+    if (reviewMode === "skipped") {
+        for (let i = currentIndex + 1; i < testQuestions.length; i++) {
+            if (!userAnswers[i]) { nextIndex = i; break; }
+        }
+    } else if (reviewMode === "wrong") {
+        for (let i = currentIndex + 1; i < testQuestions.length; i++) {
+            if (userAnswers[i] && userAnswers[i] !== testQuestions[i].correct) { nextIndex = i; break; }
+        }
     } else {
-        if (currentIndex < testQuestions.length - 1) { currentIndex++; displayQuestion(); } 
-        else { showReviewMenu(); }
+        if (currentIndex < testQuestions.length - 1) { nextIndex = currentIndex + 1; }
+    }
+
+    if (nextIndex !== -1) {
+        currentIndex = nextIndex;
+        displayQuestion();
+    } else {
+        showReviewMenu();
     }
 }
 
 function goBack() { if (currentIndex > 0) { currentIndex--; displayQuestion(); } }
 function goSkip() { goNext(); }
 function showReviewMenu() { document.getElementById('quiz-ui').classList.add('hidden'); document.getElementById('review-menu').classList.remove('hidden'); }
-function hideReviewMenu() { isReviewingSkipped = false; currentIndex = 0; document.getElementById('review-menu').classList.add('hidden'); document.getElementById('quiz-ui').classList.remove('hidden'); displayQuestion(); }
+
+function hideReviewMenu() { 
+    reviewMode = "all";
+    currentIndex = 0; 
+    document.getElementById('review-menu').classList.add('hidden'); 
+    document.getElementById('quiz-ui').classList.remove('hidden'); 
+    displayQuestion(); 
+}
 
 function reviewSkipped() {
-    isReviewingSkipped = true;
+    reviewMode = "skipped";
     let firstSkipped = -1;
     for (let i = 0; i < testQuestions.length; i++) { if (!userAnswers[i]) { firstSkipped = i; break; } }
-    if (firstSkipped !== -1) { currentIndex = firstSkipped; document.getElementById('review-menu').classList.add('hidden'); document.getElementById('quiz-ui').classList.remove('hidden'); displayQuestion(); } 
-    else { alert("No skipped questions found!"); }
+    if (firstSkipped !== -1) {
+        currentIndex = firstSkipped;
+        document.getElementById('review-menu').classList.add('hidden');
+        document.getElementById('quiz-ui').classList.remove('hidden');
+        displayQuestion();
+    } else { alert("No skipped questions found!"); }
+}
+
+function reviewWrong() {
+    reviewMode = "wrong";
+    let firstWrong = -1;
+    for (let i = 0; i < testQuestions.length; i++) {
+        if (userAnswers[i] && userAnswers[i] !== testQuestions[i].correct) { firstWrong = i; break; }
+    }
+    if (firstWrong !== -1) {
+        currentIndex = firstWrong;
+        document.getElementById('review-menu').classList.add('hidden');
+        document.getElementById('quiz-ui').classList.remove('hidden');
+        displayQuestion();
+    } else { alert("No incorrect answers to review!"); }
+}
+
+function goToMainMenu() {
+    window.location.href = 'mainmenu.html';
 }
 
 function finishTest() {
@@ -100,13 +140,12 @@ function finishTest() {
         const item = document.createElement('div');
         item.className = "review-item";
         
-        // Build the list of all 4 choices
         let choicesHtml = "";
         for (const [letter, text] of Object.entries(q.choices)) {
             let marker = "";
             let style = "";
             if (userChoice === letter && !isCorrect) {
-                marker = '<span style="color:red; font-weight:bold; margin-right:5px;">X</span>';
+                marker = '<span class="red-x">X</span>';
                 style = 'style="color:red; font-weight:bold;"';
             }
             choicesHtml += `<div class="review-choice" ${style}>${marker}${letter}: ${text}</div>`;
