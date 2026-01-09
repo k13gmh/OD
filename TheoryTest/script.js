@@ -5,40 +5,39 @@ let userAnswers = {};
 let isReviewingSkipped = false;
 
 async function loadTestData() {
-    const questionText = document.getElementById('question-text');
     try {
-        const response = await fetch('./questions.json');
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        // Fetch from current folder
+        const response = await fetch('questions.json');
+        if (!response.ok) throw new Error('Could not find questions.json');
         
         allQuestions = await response.json();
-        prepareBalancedTest(50);
+        
+        // Setup 50 questions
+        const categories = {};
+        allQuestions.forEach(q => {
+            if (!categories[q.category]) categories[q.category] = [];
+            categories[q.category].push(q);
+        });
+
+        const catNames = Object.keys(categories);
+        const amountPerCat = Math.floor(50 / catNames.length);
+        testQuestions = [];
+
+        catNames.forEach(name => {
+            let shuffled = [...categories[name]].sort(() => 0.5 - Math.random());
+            testQuestions.push(...shuffled.slice(0, amountPerCat));
+        });
+
+        while (testQuestions.length < 50) {
+            let rand = allQuestions[Math.floor(Math.random() * allQuestions.length)];
+            if (!testQuestions.includes(rand)) testQuestions.push(rand);
+        }
+        testQuestions.sort(() => 0.5 - Math.random());
+
         displayQuestion();
     } catch (err) {
-        questionText.innerHTML = `<span style="color:red;">Error: Cannot find questions.json in the TheoryTest folder.</span>`;
+        document.getElementById('question-text').innerText = "Error: questions.json not found.";
     }
-}
-
-function prepareBalancedTest(totalLimit) {
-    const categories = {};
-    allQuestions.forEach(q => {
-        if (!categories[q.category]) categories[q.category] = [];
-        categories[q.category].push(q);
-    });
-
-    const catNames = Object.keys(categories);
-    const amountPerCat = Math.floor(totalLimit / catNames.length);
-    testQuestions = [];
-
-    catNames.forEach(name => {
-        let shuffled = [...categories[name]].sort(() => 0.5 - Math.random());
-        testQuestions.push(...shuffled.slice(0, amountPerCat));
-    });
-
-    while (testQuestions.length < totalLimit) {
-        let rand = allQuestions[Math.floor(Math.random() * allQuestions.length)];
-        if (!testQuestions.includes(rand)) testQuestions.push(rand);
-    }
-    testQuestions.sort(() => 0.5 - Math.random());
 }
 
 function displayQuestion() {
@@ -95,9 +94,7 @@ function goBack() {
     }
 }
 
-function goSkip() {
-    goNext();
-}
+function goSkip() { goNext(); }
 
 function showReviewMenu() {
     document.getElementById('quiz-ui').classList.add('hidden');
@@ -146,26 +143,23 @@ function finishTest() {
 
         const item = document.createElement('div');
         item.className = "review-item";
-        let statusText = userChoice ? (isCorrect ? "✅ Correct" : "❌ Incorrect") : "⚪ Skipped";
+        let status = userChoice ? (isCorrect ? "✅ Correct" : "❌ Incorrect") : "⚪ Skipped";
         item.innerHTML = `
-            <div style="font-weight:bold; margin-bottom:5px;">Q${index + 1}: ${q.question}</div>
-            <div style="font-size:0.9em; margin-bottom:5px;">
-                <strong>Correct Answer:</strong> ${q.correct} - ${q.choices[q.correct]} <br>
-                <span style="color: ${isCorrect ? 'green' : 'red'}"><strong>Your Choice:</strong> ${userChoice ? userChoice : 'No answer'} (${statusText})</span>
-            </div>
-            <div class="explanation-box"><strong>Explanation:</strong> ${q.explanation}</div>
+            <div><strong>Q${index + 1}: ${q.question}</strong></div>
+            <div style="font-size:0.9em;">Correct: ${q.correct} | Yours: ${userChoice || 'None'} (${status})</div>
+            <div class="explanation-box">${q.explanation}</div>
         `;
         reviewList.appendChild(item);
     });
 
     localStorage.setItem('hallOfShame', JSON.stringify(hallOfShame));
-    let percent = Math.round((score / testQuestions.length) * 100);
+    let percent = Math.round((score / 50) * 100);
     document.getElementById('review-menu').classList.add('hidden');
     document.getElementById('result-ui').classList.remove('hidden');
-    document.getElementById('pass-fail-text').innerText = percent >= 86 ? "🎉 Test Passed!" : "❌ Test Failed";
+    document.getElementById('pass-fail-text').innerText = percent >= 86 ? "🎉 Passed" : "❌ Failed";
     document.getElementById('pass-fail-text').style.color = percent >= 86 ? "green" : "red";
-    document.getElementById('final-score').innerText = `${score} / ${testQuestions.length}`;
-    document.getElementById('percentage-text').innerText = `${percent}% (Pass mark: 86%)`;
+    document.getElementById('final-score').innerText = `${score} / 50`;
+    document.getElementById('percentage-text').innerText = `${percent}% (Pass: 86%)`;
     document.getElementById('wrong-ids').innerText = incorrectIDs.join(', ') || "None";
     window.scrollTo(0, 0);
 }
