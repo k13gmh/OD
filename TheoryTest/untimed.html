@@ -1,55 +1,76 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Theory Test - Untimed</title>
-    <style>
-        body { font-family: -apple-system, sans-serif; background-color: #000; color: #e0e0e0; padding: 20px; margin: 0; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 100%; max-width: 600px; margin-top: 20px; }
-        h1 { color: #fff; text-align: center; font-size: 1.8rem; font-weight: bold; margin-bottom: 30px; }
+// script.js - Ver 1.6.1
+let questions = [];
+let currentIndex = 0;
+
+async function loadQuestions() {
+    try {
+        const response = await fetch('questions.json');
+        if (!response.ok) throw new Error("questions.json not found");
+        questions = await response.json();
         
-        .question-card { background: #1c1c1e; padding: 25px; border-radius: 20px; border: 1px solid #2c2c2e; margin-bottom: 20px; position: relative; }
-        .question-text { font-size: 1.2rem; margin-bottom: 25px; line-height: 1.4; color: #fff; }
-        
-        .option-btn { 
-            background: #2c2c2e; color: #fff; border: 1px solid #444; padding: 16px; 
-            border-radius: 12px; width: 100%; margin-bottom: 12px; text-align: left; 
-            cursor: pointer; font-size: 1rem; transition: background 0.2s;
-        }
-        .option-btn:hover { background: #3a3a3c; }
-        .option-btn.correct { background: #28a745 !important; border-color: #28a745; color: #fff; }
-        .option-btn.incorrect { background: #dc3545 !important; border-color: #dc3545; color: #fff; }
+        // Ensure we start at index 0 and render immediately
+        currentIndex = 0;
+        renderQuestion();
+    } catch (e) {
+        document.getElementById('q-text').innerText = "Error: questions.json not found.";
+        console.error(e);
+    }
+}
 
-        .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        .nav-btn { background: #007bff; color: #fff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
-        .nav-btn:disabled { background: #333; cursor: not-allowed; color: #666; }
-        .finish-btn { background: #6c757d; grid-column: span 2; margin-top: 5px; }
+function renderQuestion() {
+    if (!questions || questions.length === 0) return;
+    const q = questions[currentIndex];
+    
+    // Update question count and text
+    document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${questions.length}`;
+    document.getElementById('q-text').innerText = q.question;
+    
+    const area = document.getElementById('options-area');
+    area.innerHTML = ""; // Clear for new options
+    
+    // Create the multiple choice buttons (A, B, C, D)
+    if (q.answers && Array.isArray(q.answers)) {
+        q.answers.forEach((ans, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = ans.text;
+            btn.onclick = () => selectAnswer(btn, ans.correct);
+            area.appendChild(btn);
+        });
+    }
 
-        .v-tag { position: fixed; bottom: 10px; right: 15px; font-family: monospace; font-size: 0.6rem; color: #333; }
-    </style>
-</head>
-<body>
+    // Set navigation button states
+    document.getElementById('prev-btn').disabled = (currentIndex === 0);
+    document.getElementById('next-btn').disabled = (currentIndex === questions.length - 1);
+    document.getElementById('skip-btn').disabled = (currentIndex === questions.length - 1);
+}
 
-    <div class="container">
-        <h1>Theory Test - No Timer</h1>
-        
-        <div class="question-card">
-            <div id="q-number" style="color: #007bff; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">Loading...</div>
-            <div id="q-text" class="question-text">Please wait...</div>
-            <div id="options-area"></div>
-        </div>
+function selectAnswer(btn, isCorrect) {
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(b => b.disabled = true); // Lock choices after selection
 
-        <div class="nav-grid">
-            <button id="prev-btn" class="nav-btn" onclick="changeQuestion(-1)">Back</button>
-            <button id="next-btn" class="nav-btn" onclick="changeQuestion(1)">Next</button>
-            <button id="skip-btn" class="nav-btn" onclick="changeQuestion(1)">Skip</button>
-            <button id="finish-btn" class="nav-btn finish-btn" onclick="window.location.href='mainmenu.html'">Finish</button>
-        </div>
-    </div>
+    if (isCorrect) {
+        btn.classList.add('correct');
+    } else {
+        btn.classList.add('incorrect');
+        // Show the correct answer automatically
+        const options = questions[currentIndex].answers;
+        const allButtons = document.querySelectorAll('.option-btn');
+        options.forEach((opt, i) => {
+            if (opt.correct) allButtons[i].classList.add('correct');
+        });
+    }
+}
 
-    <span class="v-tag">v1.6.0</span>
+function changeQuestion(step) {
+    currentIndex += step;
+    // Bounds check to prevent errors
+    if (currentIndex < 0) currentIndex = 0;
+    if (currentIndex >= questions.length) currentIndex = questions.length - 1;
+    
+    renderQuestion();
+    window.scrollTo(0, 0);
+}
 
-    <script src="script.js"></script>
-</body>
-</html>
+// Call load on startup
+window.onload = loadQuestions;
