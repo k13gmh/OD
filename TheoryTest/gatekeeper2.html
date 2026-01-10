@@ -6,7 +6,7 @@
     <title>Monthly Token Forecast</title>
     <style>
         body {
-            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, sans-serif;
             background-color: #000000;
             color: #e0e0e0;
             display: flex;
@@ -69,7 +69,6 @@
             font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
         }
         .copy-btn:active { background: #007bff; }
     </style>
@@ -82,21 +81,17 @@
     <div id="mainToken">-----</div>
 </div>
 
-<div class="forecast-table" id="forecastBody">
-    </div>
+<div class="forecast-table" id="forecastBody"></div>
 
 <script>
-    // Alphabet optimized for readability (omits 0, O, 1, I, L, S, 5)
     const ALPHABET = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
     const EPOCH_1900 = new Date(1900, 0, 1, 0, 0, 0);
 
     function getCodeForMonth(year, month) {
-        // Force date to the 1st of the month at midnight
         const targetDate = new Date(year, month, 1, 0, 0, 0);
         const diffMs = targetDate - EPOCH_1900;
         const minutes = Math.floor(diffMs / 60000);
 
-        // 1. Base-32 conversion (4 chars)
         let val = minutes % (Math.pow(32, 4));
         let code = "";
         for (let i = 0; i < 4; i++) {
@@ -104,37 +99,35 @@
             val = Math.floor(val / 32);
         }
 
-        // 2. Luhn Checksum (5th char)
         let total = 0;
         let codeArray = code.split('').reverse();
         for (let i = 0; i < codeArray.length; i++) {
             let v = ALPHABET.indexOf(codeArray[i]);
-            if (i % 2 === 0) { // Apply weighting
+            if (i % 2 === 0) {
                 v *= 2;
                 if (v >= 32) v = (v % 32) + Math.floor(v / 32);
             }
             total += v;
         }
         
-        // FIX: Added the extra % 32 to prevent index 32 "undefined" error
-        const checkIndex = (32 - (total % 32)) % 32;
-        return code + ALPHABET[checkIndex];
+        // Logical Fallback: If calculation results in 32 or undefined, use index 0 ('A')
+        let checkIndex = (32 - (total % 32)) % 32;
+        let checksum = ALPHABET[checkIndex] || ALPHABET[0]; 
+        
+        return code + checksum;
     }
 
     function init() {
         const now = new Date();
         const currentYear = now.getFullYear();
         const currentMonth = now.getMonth();
-        
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         
-        // Update Main Display
         document.getElementById('dateLabel').innerText = monthNames[currentMonth] + " " + currentYear;
         document.getElementById('mainToken').innerText = getCodeForMonth(currentYear, currentMonth);
 
-        // Generate Forecast for 13 months
         const forecastBody = document.getElementById('forecastBody');
-        forecastBody.innerHTML = ""; // Clear existing
+        forecastBody.innerHTML = "";
         
         for (let i = 0; i < 13; i++) {
             let d = new Date(currentYear, currentMonth + i, 1);
@@ -145,16 +138,10 @@
             row.innerHTML = `
                 <span class="month-name">${monthNames[d.getMonth()]} ${d.getFullYear()}</span>
                 <span class="token-val">${token}</span>
-                <button class="copy-btn" onclick="copyToClipboard('${token}')">COPY</button>
+                <button class="copy-btn" onclick="navigator.clipboard.writeText('${token}')">COPY</button>
             `;
             forecastBody.appendChild(row);
         }
-    }
-
-    function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            // Optional: You could add a "Copied!" toast here
-        });
     }
 
     window.onload = init;
