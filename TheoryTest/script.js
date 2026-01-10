@@ -1,24 +1,29 @@
-/* script.js - Ver 1.6.3 */
+/* script.js - Ver 1.6.4 */
 let questions = [];
 let currentIndex = 0;
-let userSelections = {}; 
+
+// Tracking Object
+let testData = {
+    selections: {}, // { qId: "A" }
+    flagged: new Set(), // Set of qIds
+    seenIndices: new Set() // Track which questions were viewed
+};
 
 async function loadQuestions() {
     try {
         const response = await fetch('questions.json');
         if (!response.ok) throw new Error("questions.json not found");
         questions = await response.json();
-        currentIndex = 0;
         renderQuestion();
     } catch (e) {
         document.getElementById('q-text').innerText = "Error: questions.json not found.";
-        console.error(e);
     }
 }
 
 function renderQuestion() {
-    if (!questions || questions.length === 0) return;
+    if (!questions.length) return;
     const q = questions[currentIndex];
+    testData.seenIndices.add(currentIndex); // Mark as seen
     
     document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${questions.length}`;
     document.getElementById('q-category').innerText = q.category || "";
@@ -32,40 +37,41 @@ function renderQuestion() {
         if (q.choices[letter]) {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
-            btn.innerHTML = `<strong>${letter}:</strong> ${q.choices[letter]}`;
+            if (testData.selections[q.id] === letter) btn.classList.add('selected');
             
-            if (userSelections[q.id] === letter) {
-                btn.classList.add('selected');
-            }
-
-            btn.onclick = () => selectAnswer(btn, letter, q.correct, q.id);
+            btn.innerHTML = `<strong>${letter}:</strong> ${q.choices[letter]}`;
+            btn.onclick = () => selectAnswer(letter, q.id);
             area.appendChild(btn);
         }
     });
+
+    // Update Flag button visual state
+    const flagBtn = document.getElementById('flag-btn');
+    if (testData.flagged.has(q.id)) {
+        flagBtn.classList.add('is-flagged');
+        flagBtn.innerText = "Flagged";
+    } else {
+        flagBtn.classList.remove('is-flagged');
+        flagBtn.innerText = "Flag";
+    }
 
     document.getElementById('prev-btn').disabled = (currentIndex === 0);
     document.getElementById('next-btn').disabled = (currentIndex === questions.length - 1);
 }
 
-function selectAnswer(btn, chosenLetter, correctLetter, qId) {
-    userSelections[qId] = chosenLetter;
+function selectAnswer(letter, qId) {
+    testData.selections[qId] = letter; // Save selection silently
+    renderQuestion(); // Refresh UI to show "selected" state
+}
 
-    const buttons = document.querySelectorAll('.option-btn');
-    buttons.forEach(b => {
-        b.disabled = true;
-        b.classList.remove('selected');
-    });
-
-    if (chosenLetter === correctLetter) {
-        btn.classList.add('correct');
+function toggleFlag() {
+    const qId = questions[currentIndex].id;
+    if (testData.flagged.has(qId)) {
+        testData.flagged.delete(qId);
     } else {
-        btn.classList.add('incorrect');
-        const allButtons = document.querySelectorAll('.option-btn');
-        const letters = ["A", "B", "C", "D"];
-        allButtons.forEach((b, i) => {
-            if (letters[i] === correctLetter) b.classList.add('correct');
-        });
+        testData.flagged.add(qId);
     }
+    renderQuestion();
 }
 
 function changeQuestion(step) {
@@ -77,8 +83,38 @@ function changeQuestion(step) {
 }
 
 function finishTest() {
-    console.log("Saving Selections:", userSelections);
-    localStorage.setItem('last_test_results', JSON.stringify(userSelections));
+    // Calculate stats based only on seen questions
+    let totalSeen = testData.seenIndices.size;
+    let correctCount = 0;
+    let skippedCount = 0;
+    let flaggedCount = testData.flagged.size;
+
+    testData.seenIndices.forEach(idx => {
+        const q = questions[idx];
+        const userChoice = testData.selections[q.id];
+        if (!userChoice) {
+            skippedCount++;
+        } else if (userChoice === q.correct) {
+            correctCount++;
+        }
+    });
+
+    const percentage = totalSeen > 0 ? Math.round((correctCount / totalSeen) * 100) : 0;
+    const pass = percentage >= 86; // Standard DVSA is roughly 86%
+
+    const summary = {
+        totalSeen,
+        correctCount,
+        skippedCount,
+        flaggedCount,
+        percentage,
+        pass,
+        timestamp: new Date().toLocaleString()
+    };
+
+    // Store results for the summary page
+    localStorage.setItem('theory_test_summary', JSON.stringify(summary));
+    alert(`Test Finished!\nScore: ${percentage}%\nSeen: ${totalSeen}\nCorrect: ${correctCount}`);
     window.location.href = 'mainmenu.html';
 }
 
