@@ -2,18 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Orion - System Check</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gatekeeper - Ver 1.1.3</title>
     <style>
-        body { font-family: monospace; background: #1a1a1a; color: #00ff00; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .hjhj88708 { border: 1px solid #333; padding: 40px; border-radius: 5px; text-align: center; }
-        .hihj87707 { font-size: 3.5em; letter-spacing: 8px; margin: 20px 0; color: #fff; text-shadow: 0 0 10px #00ff00; }
+        body { font-family: -apple-system, sans-serif; background-color: #f0f2f5; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .hjhj88708 { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; width: 90%; max-width: 400px; }
+        .header-text { color: #666; font-size: 0.8em; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .hihj87707 { font-size: 3.5em; font-weight: bold; color: #2196f3; letter-spacing: 8px; margin: 20px 0; font-family: monospace; }
+        .sync-btn { background-color: #2196f3; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 1em; box-shadow: 0 4px 0 #1976d2; transition: all 0.1s; }
+        .sync-btn:active { box-shadow: 0 0 0; transform: translateY(4px); }
+        .footer { margin-top: 25px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 15px; }
+        .v-tag { font-family: monospace; font-size: 0.7em; color: #999; background: #eee; padding: 3px 8px; border-radius: 4px; }
+        #ijij77808 { font-size: 1.1em; color: #333; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="hjhj88708">
-        <div id="ijij77808">SYSTEM STATUS</div>
+        <div class="header-text">Access Token For</div>
+        <div id="ijij77808">--/--/----</div>
         <div id="hihj87707" class="hihj87707">-----</div>
-        <button onclick="jjij88707()" style="background:transparent; color:#555; border:1px solid #333; cursor:pointer; padding:5px;">SYNC</button>
+        <button class="sync-btn" onclick="jjij88707()">GENERATE TOKEN</button>
+        <div class="footer">
+            <span style="font-size: 0.7em; color: #aaa;">Status: Verified</span>
+            <span class="v-tag">v1.1.3</span>
+        </div>
     </div>
 
     <script>
@@ -47,10 +59,10 @@
             });
 
             const jhjh87707 = (32 - (ijij77707 % 32)) % 32;
-            const ihih88707 = hihj87707.join('') + ihih77807[jhjh87707];
+            const ihih88707 = hihj87707.join('') + ihih77807.charAt(jhjh87707);
 
             document.getElementById('hihj87707').innerText = ihih88707;
-            document.getElementById('ijij77808').innerText = jhjh77808.toLocaleDateString();
+            document.getElementById('ijij77808').innerText = jhjh77808.toLocaleDateString('en-GB');
         }
 
         window.onload = jjij88707;
