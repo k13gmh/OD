@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion Drive - Simple Editor</title>
+    <title>Orion Editor - Error Fixer</title>
     <style>
         body { font-family: -apple-system, sans-serif; background: #f0f2f5; padding: 15px; }
-        .container { max-width: 850px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .control-panel { position: sticky; top: 0; background: white; padding: 10px 0; z-index: 100; border-bottom: 2px solid #eee; margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
-        .q-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; border-radius: 10px; }
-        .has-error { border: 2px solid #f44336; background: #fff8f8; }
-        .save-btn { background: #4CAF50; color: white; border: none; padding: 10px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-left: auto; }
-        .view-btn { background: #2196f3; color: white; border: none; padding: 10px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        .err-btn { background: #f44336; color: white; border: none; padding: 10px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        label { display: block; font-size: 0.75em; font-weight: bold; color: #666; margin: 5px 0 2px 0; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .header { position: sticky; top: 0; background: white; padding: 10px 0; border-bottom: 2px solid #eee; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .version-badge { background: #333; color: #00ff00; padding: 5px 12px; border-radius: 5px; font-family: monospace; font-size: 0.9em; }
+        .q-card { border: 2px solid #f44336; padding: 15px; margin-bottom: 20px; border-radius: 10px; background: #fff8f8; }
+        .copy-btn { background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        label { display: block; font-size: 0.75em; font-weight: bold; color: #666; margin: 8px 0 2px 0; }
         input, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
         .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="control-panel">
-            <button class="view-btn" onclick="showAll()">SHOW ALL</button>
-            <button class="err-btn" onclick="showErrors()">ERRORS ONLY</button>
-            <button class="save-btn" onclick="copyJSON()">COPY TO CLIPBOARD</button>
+        <div class="header">
+            <div>
+                <h2 style="margin:0">Maintain Tool</h2>
+                <div id="app-version" class="version-badge">Ver: 1.0.0</div>
+            </div>
+            <button class="copy-btn" onclick="copyJSON()">COPY TO CLIPBOARD</button>
         </div>
-        <div id="status-text" style="margin-bottom: 10px; font-weight: bold;">Loading...</div>
+        <div id="status-msg" style="margin-bottom: 10px; font-weight: bold; color: #d32f2f;">Scanning for errors...</div>
         <div id="maintenance-list"></div>
     </div>
     <script src="maintain.js"></script>
