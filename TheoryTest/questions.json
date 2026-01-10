@@ -9034,18 +9034,18 @@
     "correct": "B",
     "explanation": "The 'C' stands for checking for severe bleeding after you've checked breathing.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
-  {
+ {
     "id": "703",
     "category": "Incidents Accidents and Emergencies",
-    "question": "If you are involved in a collision",
+    "question": "If you are involved in a collision, what must you give to other parties involved?",
     "choices": {
-      "A": " what must you give to other parties?",
-      "B": "Your car's service history",
-      "C": "Your name",
-      "D": " address"
+      "A": "Your car's service history",
+      "B": "Your name, address and vehicle registration",
+      "C": "Your bank details",
+      "D": "Your driving licence number"
     },
-    "correct": " and vehicle registration",
-    "explanation": "Your bank details"
+    "correct": "B",
+    "explanation": "If you're involved in a collision that causes damage or injury, you must give your name, address, and vehicle registration to anyone who has reasonable grounds for requiring them."
   },
   {
     "id": "704",
