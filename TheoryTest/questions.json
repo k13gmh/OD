@@ -8192,15 +8192,15 @@
   {
     "id": "637",
     "category": "Essential Documents",
-    "question": "Under the 'New Drivers Act'",
+    "question": "Under the 'New Drivers Act,how many points will cause you to lose your license within the first two years?'",
     "choices": {
-      "A": " how many points will cause you to lose your license within the first two years?",
-      "B": "3 points",
-      "C": "6 points",
-      "D": "9 points"
+      "A": "3 points",
+      "B": "6 points",
+      "C": "9 points",
+      "D": "12 points"
     },
-    "correct": "12 points",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "New drivers are on probation for the first two years.  There is no discretion for the court or DVLA, your licence would be revoked.  You have to restart, taking your theory and practical driving test. "
   },
   {
     "id": "638",
