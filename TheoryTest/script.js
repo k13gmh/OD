@@ -7,20 +7,32 @@ let midTestReviewMode = "none";
 async function loadTestData() {
     const statusBox = document.getElementById('question-text');
     try {
-        const response = await fetch('questions.json');
-        if (!response.ok) throw new Error('File not found on server.');
+        // We add a timestamp to the URL to force the browser to grab the NEWEST version
+        const response = await fetch('questions.json?v=' + Date.now());
         
-        const text = await response.text();
+        if (!response.ok) throw new Error('File not found at: ' + response.url);
+        
+        // Grab as text first to bypass "MIME type" errors
+        const rawText = await response.text();
+        
         try {
-            allQuestions = JSON.parse(text);
+            allQuestions = JSON.parse(rawText);
         } catch (jsonErr) {
-            throw new Error('Formatting Error in questions.json: ' + jsonErr.message);
+            console.error("JSON Error details:", jsonErr);
+            throw new Error('The file has a formatting error (check for missing commas or extra brackets).');
         }
         
+        if (allQuestions.length === 0) throw new Error('The questions file appears to be empty.');
+
         prepareTest();
         displayQuestion();
     } catch (err) {
-        statusBox.innerHTML = `<span style="color:red; font-weight:bold;">Error: ${err.message}</span><br><small>Check for missing commas or brackets in questions.json</small>`;
+        statusBox.innerHTML = `
+            <div style="color:red; background:#fff0f0; padding:15px; border-radius:8px; border:1px solid red;">
+                <strong>Load Error:</strong><br>
+                ${err.message}<br><br>
+                <small>The file exists but the app can't read the format. Try re-saving it as "Plain Text" on your desktop.</small>
+            </div>`;
     }
 }
 
@@ -113,10 +125,17 @@ function generateReviewList(filter) {
         let choicesHtml = "";
         for (const [letter, text] of Object.entries(q.choices)) {
             let style = (userChoice === letter && !isCorrect) ? 'style="color:red; font-weight:bold;"' : '';
-            let marker = (userChoice === letter && !isCorrect) ? '<span class="red-x">X</span>' : '';
-            choicesHtml += `<div ${style}>${marker}${letter}: ${text}</div>`;
+            let marker = (userChoice === letter && !isCorrect) ? '<span style="color:red; font-weight:bold; margin-right:5px;">X</span>' : '';
+            choicesHtml += `<div class="review-choice" ${style}>${marker}${letter}: ${text}</div>`;
         }
-        list.innerHTML += `<div class="review-item"><strong>Q${i+1}: ${q.question}</strong><br>${choicesHtml}<div class="correct-answer-box"><strong>Correct ${q.correct}:</strong><br>${q.explanation}</div></div>`;
+        list.innerHTML += `
+            <div class="review-item">
+                <strong>Q${i+1}: ${q.question}</strong><br>
+                <div style="margin:10px 0;">${choicesHtml}</div>
+                <div class="correct-answer-box">
+                    <strong>Correct ${q.correct}:</strong><br>${q.explanation}
+                </div>
+            </div>`;
     });
 }
 
