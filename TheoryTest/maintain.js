@@ -1,66 +1,70 @@
-// CHANGE THIS NUMBER EVERY TIME YOU UPDATE THE SCRIPT
-const MAINTAIN_VERSION = "1.0.3"; 
+const MAINTAIN_VERSION = "1.0.7 - Error Focused"; 
 
 let allData = [];
 
 async function loadQuestions() {
-    // Display the script version immediately
     document.getElementById('app-version').innerText = `Ver: ${MAINTAIN_VERSION}`;
+    const status = document.getElementById('status-msg');
     
     try {
-        // Fetch with a cache-buster
+        // Fetch fresh data
         const response = await fetch('questions.json?v=' + Date.now());
         allData = await response.json();
         
-        // Filter: Only show questions where 'correct' is not a single letter
-        const errors = allData.filter(q => q.correct && q.correct.length > 1);
-        renderErrors(errors);
+        // Identify the broken ones (like your ID 703)
+        const brokenQuestions = allData.filter(q => q.correct && q.correct.length > 1);
+        
+        if (brokenQuestions.length > 0) {
+            status.style.color = "#d32f2f";
+            status.innerText = `Found ${brokenQuestions.length} formatting errors. Fix them below:`;
+            renderList(brokenQuestions);
+        } else {
+            status.style.color = "green";
+            status.innerText = "✓ No formatting errors detected. Showing all records for manual review:";
+            renderList(allData);
+        }
     } catch (err) {
-        document.getElementById('status-msg').innerText = "Error: JSON file not found.";
+        status.innerHTML = `<div style="color:red"><b>Load Error:</b> The JSON file might have a syntax error (missing comma/bracket).</div>`;
     }
 }
 
-function renderErrors(errorList) {
+function renderList(dataToDisplay) {
     const list = document.getElementById('maintenance-list');
-    const status = document.getElementById('status-msg');
     list.innerHTML = '';
 
-    if (errorList.length === 0) {
-        status.innerHTML = "<span style='color:green'>✓ No formatting errors found in the current file.</span>";
-        return;
-    }
-
-    status.innerText = `Found ${errorList.length} questions requiring attention:`;
-
-    errorList.forEach((q) => {
-        // Find where this question lives in the main array
+    dataToDisplay.forEach((q) => {
         const idx = allData.findIndex(item => item.id === q.id);
+        const isError = q.correct && q.correct.length > 1;
         
         const card = document.createElement('div');
         card.className = 'q-card';
+        if (isError) card.style.border = "2px solid #f44336";
+
         card.innerHTML = `
-            <strong>ID: ${q.id}</strong>
-            <label>Question</label>
-            <textarea onchange="updateVal(${idx}, 'question', this.value)">${q.question}</textarea>
+            <div style="background:#eee; padding:5px 10px; border-radius:5px; margin-bottom:10px; display:flex; justify-content:space-between;">
+                <strong>Question ID: ${q.id}</strong>
+                ${isError ? '<b style="color:red">FORMAT ERROR</b>' : '<b style="color:green">OK</b>'}
+            </div>
+
+            <label>Question Text</label>
+            <textarea rows="2" onchange="allData[${idx}].question = this.value">${q.question}</textarea>
             
             <div class="choice-grid">
-                ${['A', 'B', 'C', 'D'].map(L => `
-                    <div>
-                        <label>Choice ${L}</label>
-                        <input type="text" value="${q.choices[L] || ''}" onchange="updateChoice(${idx}, '${L}', this.value)">
-                    </div>
-                `).join('')}
+                <div><label>A</label><input type="text" value="${q.choices.A}" onchange="allData[${idx}].choices.A = this.value"></div>
+                <div><label>B</label><input type="text" value="${q.choices.B}" onchange="allData[${idx}].choices.B = this.value"></div>
+                <div><label>C</label><input type="text" value="${q.choices.C}" onchange="allData[${idx}].choices.C = this.value"></div>
+                <div><label>D</label><input type="text" value="${q.choices.D}" onchange="allData[${idx}].choices.D = this.value"></div>
             </div>
 
             <div style="display:flex; gap:10px;">
-                <div style="width:100px;">
-                    <label>Correct (Letter Only)</label>
-                    <input type="text" maxlength="1" style="text-align:center; font-weight:bold; border:2px solid #2196f3;" 
-                           placeholder="?" onchange="updateVal(${idx}, 'correct', this.value.toUpperCase())">
+                <div style="width:140px;">
+                    <label style="color:red">Correct Letter</label>
+                    <input type="text" maxlength="1" style="text-align:center; font-weight:bold; border:2px solid red;" 
+                           placeholder="A, B, C or D" onchange="allData[${idx}].correct = this.value.toUpperCase()">
                 </div>
                 <div style="flex-grow:1;">
                     <label>Explanation</label>
-                    <textarea onchange="updateVal(${idx}, 'explanation', this.value)">${q.explanation || ''}</textarea>
+                    <textarea rows="2" onchange="allData[${idx}].explanation = this.value">${q.explanation}</textarea>
                 </div>
             </div>
         `;
@@ -68,12 +72,9 @@ function renderErrors(errorList) {
     });
 }
 
-function updateVal(idx, key, val) { allData[idx][key] = val; }
-function updateChoice(idx, L, val) { allData[idx].choices[L] = val; }
-
 async function copyJSON() {
     await navigator.clipboard.writeText(JSON.stringify(allData, null, 2));
-    alert("Full JSON (all records) copied to clipboard!");
+    alert("Copied everything! Now paste into GitHub.");
 }
 
 loadQuestions();
