@@ -3,30 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion Drive - Editor</title>
+    <title>Orion Drive - Expert Editor</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #f0f2f5; padding: 20px; }
+        body { font-family: -apple-system, sans-serif; background: #f0f2f5; padding: 15px; margin: 0; }
         .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .header-tools { display: flex; gap: 10px; margin-bottom: 20px; align-items: center; position: sticky; top: 0; background: white; padding: 10px 0; z-index: 10; border-bottom: 2px solid #eee; }
-        .search-box { flex-grow: 1; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; }
-        .save-btn { background: #4CAF50; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .q-card { border: 2px solid #eee; padding: 20px; margin-bottom: 20px; border-radius: 12px; transition: border-color 0.3s; }
-        .q-card.has-error { border-color: #f44336; background: #fff8f8; }
+        
+        /* Control Panel Styling */
+        .control-panel { position: sticky; top: 0; background: white; padding: 15px 0; z-index: 100; border-bottom: 2px solid #eee; margin-bottom: 20px; }
+        .toolbar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+        
+        .search-box { flex: 2; padding: 10px; border: 1px solid #ccc; border-radius: 5px; min-width: 200px; }
+        .id-box { flex: 0.5; padding: 10px; border: 1px solid #ccc; border-radius: 5px; min-width: 80px; font-weight: bold; text-align: center; }
+        
+        button { padding: 10px 15px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 0.8em; }
+        .btn-blue { background: #2196f3; color: white; }
+        .btn-red { background: #f44336; color: white; }
+        .btn-green { background: #4CAF50; color: white; }
+        .btn-grey { background: #757575; color: white; }
+
+        .q-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; border-radius: 10px; }
+        .has-error { border: 2px solid #f44336; background: #fff8f8; }
         .input-group { margin-bottom: 10px; }
-        label { display: block; font-size: 0.8em; color: #666; margin-bottom: 3px; font-weight: bold; }
+        label { display: block; font-size: 0.75em; font-weight: bold; color: #666; margin-bottom: 2px; }
         input, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-family: inherit; }
-        .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
-        .error-tag { background: #f44336; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-left: 10px; }
+        .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header-tools">
-            <input type="text" id="searchInput" class="search-box" placeholder="Search by ID or keywords..." onkeyup="filterQuestions()">
-            <button class="save-btn" onclick="downloadJSON()">DOWNLOAD FIXED JSON</button>
+        <div class="control-panel">
+            <div class="toolbar">
+                <input type="text" id="searchInput" class="search-box" placeholder="Search text..." onkeyup="filterData()">
+                <input type="number" id="idInput" class="id-box" placeholder="ID #" onkeyup="filterData()">
+            </div>
+            <div class="toolbar">
+                <button class="btn-grey" onclick="setView('all')">Show All</button>
+                <button class="btn-red" onclick="setView('errors')">Errors Only</button>
+                <div style="flex-grow: 1;"></div>
+                <button class="btn-green" onclick="copyJSON()">Copy to Clipboard</button>
+            </div>
+            <div id="status-bar" style="font-size: 0.8em; color: #666; margin-top: 5px;">Loading questions...</div>
         </div>
         
-        <div id="maintenance-list">Loading...</div>
+        <div id="maintenance-list"></div>
     </div>
     <script src="maintain.js"></script>
 </body>
