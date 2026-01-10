@@ -23,12 +23,13 @@
             margin-top: 50px;
         }
         h1 { color: #fff; margin-bottom: 5px; letter-spacing: 2px; }
-        h2 { color: #007bff; margin-top: 0; font-weight: 300; font-size: 1.2rem; margin-bottom: 10px; }
+        h2 { color: #007bff; margin-top: 0; font-weight: 300; font-size: 1.2rem; margin-bottom: 5px; }
         
+        /* Fixed: Green message now under Theory Test */
         #status-msg { 
             color: #28a745; 
             font-size: 0.85rem; 
-            margin-bottom: 25px; 
+            margin-bottom: 20px; 
             font-weight: bold;
             display: none; 
         }
@@ -39,7 +40,7 @@
             border-radius: 20px;
             border: 1px solid #2c2c2e;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            box-sizing: border-box; /* Prevents button overflow */
+            box-sizing: border-box; /* Fixed: Prevents blue box overflow */
         }
         .lock-screen input {
             background: #000;
@@ -47,7 +48,8 @@
             color: #007bff;
             padding: 12px;
             font-size: 1.2rem;
-            width: 90%; /* Adjusted for padding */
+            width: 100%; 
+            box-sizing: border-box;
             text-align: center;
             border-radius: 8px;
             margin-bottom: 15px;
@@ -57,12 +59,12 @@
             background: #007bff;
             color: #fff;
             border: none;
-            padding: 12px 0; /* Vertical padding only */
+            padding: 15px 0;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
             text-transform: uppercase;
-            width: 100%; /* Fits container exactly */
+            width: 100%; /* Fixed: Contained within box */
             margin-top: 10px;
             display: block;
             text-decoration: none;
@@ -106,7 +108,7 @@
         <div id="debug-box" style="display:none"></div>
     </div>
 
-    <span class="v-tag">v1.6.1</span>
+    <span class="v-tag">v1.6.2</span>
 
     <script>
         const DEBUGZ = 1; 
@@ -117,7 +119,6 @@
             const s = new Date(Date.UTC(d.getFullYear(), d.getMonth(), 1, 0, 0, 0));
             const e = new Date(Date.UTC(1900, 0, 1, 0, 0, 0));
             const m = Math.floor((s.getTime() - e.getTime()) / 60000);
-            
             let v = m % Math.pow(32, 4);
             let r = "";
             for (let j = 0; j < 4; j++) {
@@ -125,7 +126,6 @@
                 v = Math.floor(v / 32);
             }
             while (r.length < 4) { r = ALPH.charAt(0) + r; }
-
             let t = 0;
             let ra = r.split('').reverse();
             for (let j = 0; j < ra.length; j++) {
