@@ -1,121 +1,120 @@
-/* script.js - Ver 1.6.4 */
-let questions = [];
+/* script.js - Ver 1.6.6 - Orion Drive Engine */
+let allQuestions = [];
+let sessionQuestions = [];
 let currentIndex = 0;
 
-// Tracking Object
 let testData = {
-    selections: {}, // { qId: "A" }
-    flagged: new Set(), // Set of qIds
-    seenIndices: new Set() // Track which questions were viewed
+    selections: {}, // { questionId: "A" }
+    flagged: [],    // Array of questionIds
+    seenIndices: [] // Array of indices
 };
 
-async function loadQuestions() {
+async function init() {
     try {
         const response = await fetch('questions.json');
-        if (!response.ok) throw new Error("questions.json not found");
-        questions = await response.json();
-        renderQuestion();
+        allQuestions = await response.json();
+        
+        const savedSession = localStorage.getItem('orion_current_session');
+        if (savedSession) {
+            document.getElementById('resume-modal').style.display = 'flex';
+        } else {
+            startNewTest();
+        }
     } catch (e) {
-        document.getElementById('q-text').innerText = "Error: questions.json not found.";
+        document.getElementById('q-text').innerText = "Error loading database.";
     }
 }
 
-function renderQuestion() {
-    if (!questions.length) return;
-    const q = questions[currentIndex];
-    testData.seenIndices.add(currentIndex); // Mark as seen
+function startNewTest() {
+    // Balanced Randomizer (dvsa style)
+    const categories = [...new Set(allQuestions.map(q => q.category))];
+    sessionQuestions = [];
+    categories.forEach(cat => {
+        let pool = allQuestions.filter(q => q.category === cat).sort(() => 0.5 - Math.random());
+        sessionQuestions.push(...pool.slice(0, 5)); // 5 per category
+    });
+    sessionQuestions.sort(() => 0.5 - Math.random());
     
-    document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${questions.length}`;
-    document.getElementById('q-category').innerText = q.category || "";
+    testData = { selections: {}, flagged: [], seenIndices: [] };
+    renderQuestion();
+}
+
+function resumeTest(shouldResume) {
+    document.getElementById('resume-modal').style.display = 'none';
+    if (shouldResume) {
+        const saved = JSON.parse(localStorage.getItem('orion_current_session'));
+        sessionQuestions = saved.questions;
+        testData = saved.data;
+        currentIndex = saved.index;
+    } else {
+        startNewTest();
+    }
+    renderQuestion();
+}
+
+function renderQuestion() {
+    const q = sessionQuestions[currentIndex];
+    if (!testData.seenIndices.includes(currentIndex)) testData.seenIndices.push(currentIndex);
+
+    document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
+    document.getElementById('q-category').innerText = q.category;
     document.getElementById('q-text').innerText = q.question;
     
     const area = document.getElementById('options-area');
-    area.innerHTML = ""; 
-    
-    const letters = ["A", "B", "C", "D"];
-    letters.forEach(letter => {
+    area.innerHTML = "";
+
+    ["A", "B", "C", "D"].forEach(letter => {
         if (q.choices[letter]) {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
             if (testData.selections[q.id] === letter) btn.classList.add('selected');
-            
             btn.innerHTML = `<strong>${letter}:</strong> ${q.choices[letter]}`;
-            btn.onclick = () => selectAnswer(letter, q.id);
+            btn.onclick = () => { testData.selections[q.id] = letter; saveProgress(); renderQuestion(); };
             area.appendChild(btn);
         }
     });
 
-    // Update Flag button visual state
     const flagBtn = document.getElementById('flag-btn');
-    if (testData.flagged.has(q.id)) {
-        flagBtn.classList.add('is-flagged');
-        flagBtn.innerText = "Flagged";
-    } else {
-        flagBtn.classList.remove('is-flagged');
-        flagBtn.innerText = "Flag";
-    }
-
-    document.getElementById('prev-btn').disabled = (currentIndex === 0);
-    document.getElementById('next-btn').disabled = (currentIndex === questions.length - 1);
-}
-
-function selectAnswer(letter, qId) {
-    testData.selections[qId] = letter; // Save selection silently
-    renderQuestion(); // Refresh UI to show "selected" state
+    flagBtn.style.background = testData.flagged.includes(q.id) ? "#f1c40f" : "#bdc3c7";
 }
 
 function toggleFlag() {
-    const qId = questions[currentIndex].id;
-    if (testData.flagged.has(qId)) {
-        testData.flagged.delete(qId);
-    } else {
-        testData.flagged.add(qId);
-    }
+    const id = sessionQuestions[currentIndex].id;
+    const idx = testData.flagged.indexOf(id);
+    (idx > -1) ? testData.flagged.splice(idx, 1) : testData.flagged.push(id);
+    saveProgress();
     renderQuestion();
 }
 
 function changeQuestion(step) {
-    currentIndex += step;
-    if (currentIndex < 0) currentIndex = 0;
-    if (currentIndex >= questions.length) currentIndex = questions.length - 1;
-    renderQuestion();
-    window.scrollTo(0, 0);
+    let nextIdx = currentIndex + step;
+    if (nextIdx >= 0 && nextIdx < sessionQuestions.length) {
+        currentIndex = nextIdx;
+        saveProgress();
+        renderQuestion();
+        window.scrollTo(0, 0);
+    }
+}
+
+function saveProgress() {
+    const session = {
+        questions: sessionQuestions,
+        data: testData,
+        index: currentIndex
+    };
+    localStorage.setItem('orion_current_session', JSON.stringify(session));
 }
 
 function finishTest() {
-    // Calculate stats based only on seen questions
-    let totalSeen = testData.seenIndices.size;
-    let correctCount = 0;
-    let skippedCount = 0;
-    let flaggedCount = testData.flagged.size;
-
-    testData.seenIndices.forEach(idx => {
-        const q = questions[idx];
-        const userChoice = testData.selections[q.id];
-        if (!userChoice) {
-            skippedCount++;
-        } else if (userChoice === q.correct) {
-            correctCount++;
-        }
-    });
-
-    const percentage = totalSeen > 0 ? Math.round((correctCount / totalSeen) * 100) : 0;
-    const pass = percentage >= 86; // Standard DVSA is roughly 86%
-
-    const summary = {
-        totalSeen,
-        correctCount,
-        skippedCount,
-        flaggedCount,
-        percentage,
-        pass,
-        timestamp: new Date().toLocaleString()
-    };
-
-    // Store results for the summary page
-    localStorage.setItem('theory_test_summary', JSON.stringify(summary));
-    alert(`Test Finished!\nScore: ${percentage}%\nSeen: ${totalSeen}\nCorrect: ${correctCount}`);
+    // Final save of data for the results app to read
+    localStorage.setItem('orion_final_results', JSON.stringify({
+        timestamp: new Date().getTime(),
+        questions: sessionQuestions,
+        data: testData
+    }));
+    // Remove temporary session after finish
+    localStorage.removeItem('orion_current_session');
     window.location.href = 'mainmenu.html';
 }
 
-window.onload = loadQuestions;
+window.onload = init;
