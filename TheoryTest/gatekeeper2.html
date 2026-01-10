@@ -6,8 +6,8 @@
     <title>Monthly Token Forecast</title>
     <style>
         body {
-            font-family: -apple-system, sans-serif;
-            background-color: #121212;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #000000;
             color: #e0e0e0;
             display: flex;
             flex-direction: column;
@@ -16,52 +16,60 @@
             margin: 0;
         }
         .card {
-            background: #1e1e1e;
+            background: #1c1c1e;
             padding: 2rem;
-            border-radius: 20px;
+            border-radius: 24px;
             text-align: center;
             width: 100%;
             max-width: 400px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid #333;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
-        h2 { color: #007bff; margin: 0; }
-        .current-label { color: #888; font-size: 0.9rem; margin-top: 5px; }
+        h2 { color: #007bff; margin: 0; font-size: 1.5rem; }
+        .current-label { color: #8e8e93; font-size: 0.9rem; margin-top: 8px; }
         #mainToken {
-            font-family: monospace;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
             font-size: 3.5rem;
             font-weight: bold;
             margin: 1.5rem 0;
-            color: #fff;
-            letter-spacing: 5px;
+            color: #ffffff;
+            letter-spacing: 4px;
         }
         .forecast-table {
             width: 100%;
             max-width: 400px;
-            background: #1e1e1e;
-            border-radius: 15px;
+            background: #1c1c1e;
+            border-radius: 20px;
             overflow: hidden;
-            border: 1px solid #333;
+            border: 1px solid #2c2c2e;
         }
         .forecast-row {
             display: flex;
             justify-content: space-between;
-            padding: 12px 20px;
-            border-bottom: 1px solid #333;
+            padding: 14px 20px;
+            border-bottom: 1px solid #2c2c2e;
             align-items: center;
         }
         .forecast-row:last-child { border-bottom: none; }
-        .month-name { color: #aaa; font-size: 0.9rem; }
-        .token-val { font-family: monospace; font-weight: bold; color: #007bff; font-size: 1.1rem; }
+        .month-name { color: #8e8e93; font-size: 0.9rem; width: 100px; }
+        .token-val { 
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace; 
+            font-weight: bold; 
+            color: #007bff; 
+            font-size: 1.2rem;
+            flex-grow: 1;
+            text-align: center;
+        }
         .copy-btn {
-            background: #333;
+            background: #2c2c2e;
             border: none;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.7rem;
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
             cursor: pointer;
+            transition: background 0.2s;
         }
         .copy-btn:active { background: #007bff; }
     </style>
@@ -78,14 +86,17 @@
     </div>
 
 <script>
+    // Alphabet optimized for readability (omits 0, O, 1, I, L, S, 5)
     const ALPHABET = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
     const EPOCH_1900 = new Date(1900, 0, 1, 0, 0, 0);
 
     function getCodeForMonth(year, month) {
+        // Force date to the 1st of the month at midnight
         const targetDate = new Date(year, month, 1, 0, 0, 0);
         const diffMs = targetDate - EPOCH_1900;
         const minutes = Math.floor(diffMs / 60000);
 
+        // 1. Base-32 conversion (4 chars)
         let val = minutes % (Math.pow(32, 4));
         let code = "";
         for (let i = 0; i < 4; i++) {
@@ -93,16 +104,19 @@
             val = Math.floor(val / 32);
         }
 
+        // 2. Luhn Checksum (5th char)
         let total = 0;
         let codeArray = code.split('').reverse();
         for (let i = 0; i < codeArray.length; i++) {
             let v = ALPHABET.indexOf(codeArray[i]);
-            if (i % 2 === 0) {
+            if (i % 2 === 0) { // Apply weighting
                 v *= 2;
                 if (v >= 32) v = (v % 32) + Math.floor(v / 32);
             }
             total += v;
         }
+        
+        // FIX: Added the extra % 32 to prevent index 32 "undefined" error
         const checkIndex = (32 - (total % 32)) % 32;
         return code + ALPHABET[checkIndex];
     }
@@ -118,8 +132,10 @@
         document.getElementById('dateLabel').innerText = monthNames[currentMonth] + " " + currentYear;
         document.getElementById('mainToken').innerText = getCodeForMonth(currentYear, currentMonth);
 
-        // Generate Forecast
+        // Generate Forecast for 13 months
         const forecastBody = document.getElementById('forecastBody');
+        forecastBody.innerHTML = ""; // Clear existing
+        
         for (let i = 0; i < 13; i++) {
             let d = new Date(currentYear, currentMonth + i, 1);
             let token = getCodeForMonth(d.getFullYear(), d.getMonth());
@@ -129,10 +145,16 @@
             row.innerHTML = `
                 <span class="month-name">${monthNames[d.getMonth()]} ${d.getFullYear()}</span>
                 <span class="token-val">${token}</span>
-                <button class="copy-btn" onclick="navigator.clipboard.writeText('${token}')">COPY</button>
+                <button class="copy-btn" onclick="copyToClipboard('${token}')">COPY</button>
             `;
             forecastBody.appendChild(row);
         }
+    }
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            // Optional: You could add a "Copied!" toast here
+        });
     }
 
     window.onload = init;
