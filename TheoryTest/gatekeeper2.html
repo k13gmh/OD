@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Token Generator</title>
+    <style>
+        body {
+            font-family: -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 350px;
+        }
+        h2 { color: #1c1e21; margin-bottom: 0.5rem; }
+        p { color: #606770; font-size: 0.9rem; margin-bottom: 1.5rem; }
+        #tokenDisplay {
+            font-family: 'Courier New', monospace;
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #007bff;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            min-height: 3.5rem;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        button:active { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Token Gen</h2>
+    <p>Minutes since 1900 (Luhn-32)</p>
+    <div id="tokenDisplay">-----</div>
+    <button onclick="updateToken()">Generate Code</button>
+</div>
+
+<script>
+    const ALPHABET = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
+    const EPOCH_1900 = new Date(1900, 0, 1);
+
+    function generateToken() {
+        // 1. Calculate minutes since Jan 1, 1900
+        const now = new Date();
+        const diffMs = now - EPOCH_1900;
+        const minutes = Math.floor(diffMs / 60000);
+
+        // 2. Base-32 conversion (4 chars)
+        let val = minutes % (Math.pow(32, 4));
+        let code = "";
+        for (let i = 0; i < 4; i++) {
+            code = ALPHABET[val % 32] + code;
+            val = Math.floor(val / 32);
+        }
+
+        // 3. Luhn Checksum (5th char)
+        let total = 0;
+        let codeArray = code.split('').reverse();
+        
+        for (let i = 0; i < codeArray.length; i++) {
+            let v = ALPHABET.indexOf(codeArray[i]);
+            if (i % 2 === 0) { // Weighting logic
+                v *= 2;
+                if (v >= 32) {
+                    v = (v % 32) + Math.floor(v / 32);
+                }
+            }
+            total += v;
+        }
+
+        const checkIndex = (32 - (total % 32)) % 32;
+        const checkDigit = ALPHABET[checkIndex];
+
+        return code + checkDigit;
+    }
+
+    function updateToken() {
+        const display = document.getElementById('tokenDisplay');
+        display.innerText = generateToken();
+    }
+</script>
+
+</body>
+</html>
