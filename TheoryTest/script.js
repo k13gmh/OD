@@ -1,4 +1,4 @@
-/* script.js - Ver 1.6.8 - Summary & Save Logic */
+/* script.js - Ver 1.6.9 - Summary View & Navigation Logic */
 let allQuestions = [];
 let sessionQuestions = [];
 let currentIndex = 0;
@@ -11,13 +11,11 @@ async function initEngine() {
         const saved = localStorage.getItem('orion_current_session');
         if (saved) document.getElementById('resume-modal').style.display = 'flex';
         else startNewTest();
-    } catch (e) {
-        document.getElementById('q-text').innerText = "Database Error.";
-    }
+    } catch (e) { console.error("Database load error"); }
 }
 
 function startNewTest() {
-    localStorage.removeItem('orion_current_session'); // Clear old session data
+    localStorage.removeItem('orion_current_session');
     const categories = [...new Set(allQuestions.map(q => q.category))];
     sessionQuestions = [];
     categories.forEach(cat => {
@@ -37,9 +35,7 @@ function resumeTest(shouldResume) {
         sessionQuestions = saved.questions;
         testData = saved.data;
         currentIndex = saved.index;
-    } else {
-        startNewTest();
-    }
+    } else { startNewTest(); }
     renderQuestion();
 }
 
@@ -66,14 +62,6 @@ function renderQuestion() {
     document.getElementById('flag-btn').style.background = testData.flagged.includes(q.id) ? "#f1c40f" : "#bdc3c7";
 }
 
-function toggleFlag() {
-    const id = sessionQuestions[currentIndex].id;
-    const idx = testData.flagged.indexOf(id);
-    (idx > -1) ? testData.flagged.splice(idx, 1) : testData.flagged.push(id);
-    saveProgress();
-    renderQuestion();
-}
-
 function changeQuestion(step) {
     let nextIdx = currentIndex + step;
     if (nextIdx >= 0 && nextIdx < sessionQuestions.length) {
@@ -84,6 +72,14 @@ function changeQuestion(step) {
     }
 }
 
+function toggleFlag() {
+    const id = sessionQuestions[currentIndex].id;
+    const idx = testData.flagged.indexOf(id);
+    (idx > -1) ? testData.flagged.splice(idx, 1) : testData.flagged.push(id);
+    saveProgress();
+    renderQuestion();
+}
+
 function saveProgress() {
     localStorage.setItem('orion_current_session', JSON.stringify({
         questions: sessionQuestions,
@@ -92,7 +88,8 @@ function saveProgress() {
     }));
 }
 
-function finishTest() {
+/* Summary View Logic */
+function showSummary() {
     document.getElementById('test-ui').style.display = 'none';
     const summaryUI = document.getElementById('summary-ui');
     summaryUI.style.display = 'block';
@@ -108,24 +105,36 @@ function finishTest() {
     const percent = totalSeen > 0 ? Math.round((correct / totalSeen) * 100) : 0;
     const passed = percent >= 86;
 
-    document.getElementById('result-icon').innerHTML = passed ? "✔️" : "❌";
-    document.getElementById('result-status').innerHTML = passed ? "<span class='pass-text'>Passed</span>" : "<span class='fail-text'>Failed</span>";
-    document.getElementById('result-score').innerText = `${correct} / ${totalSeen}`;
-    document.getElementById('result-percent').innerText = `${percent}% (Pass: 86%)`;
+    document.getElementById('res-icon').innerHTML = passed ? "✔️" : "❌";
+    document.getElementById('res-icon').className = `status-icon ${passed ? 'pass' : 'fail'}`;
+    document.getElementById('res-status').innerHTML = passed ? "Passed" : "Failed";
+    document.getElementById('res-status').className = `status-text ${passed ? 'pass' : 'fail'}`;
+    document.getElementById('res-score').innerText = `${correct} / ${totalSeen}`;
+    document.getElementById('res-percent').innerText = `${percent}% (Pass: 86%)`;
 
-    // Save final results for the review app
+    // Final data save for Review app
     localStorage.setItem('orion_final_results', JSON.stringify({
         questions: sessionQuestions,
         data: testData,
         score: correct,
-        total: totalSeen,
-        percentage: percent
+        total: totalSeen
     }));
 }
 
-function continueLater() {
-    saveProgress(); // Ensure current state is saved
+/* Navigation Options */
+function restartTest() {
+    localStorage.removeItem('orion_current_session'); // Clear progress
     window.location.href = 'mainmenu.html';
+}
+
+function continueLater() {
+    saveProgress(); // Keep current data
+    window.location.href = 'mainmenu.html';
+}
+
+function reviewAnswers() {
+    // This will open the review app we write later
+    window.location.href = 'review.html';
 }
 
 document.addEventListener('DOMContentLoaded', initEngine);
