@@ -8261,11 +8261,11 @@
     "choices": {
       "A": "One month",
       "B": "Six months",
-      "C": "Until the vehicle is taxed",
-      "D": " sold or scrapped"
+      "C": "Until the vehicle is taxed, sold or scrapped",
+      "D": "Ten Years"
     },
-    "correct": "Ten years",
-    "explanation": "C"
+    "correct": "C",
+    "explanation": "A SORN is valid indefinitely as long as the vehicle remains off the road.  It does not need to be renewed annually"
   },
   {
     "id": "643",
