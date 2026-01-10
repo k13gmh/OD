@@ -1,50 +1,78 @@
 let allData = [];
+let currentView = 'all'; // 'all' or 'errors'
 
 async function loadQuestions() {
     try {
         const response = await fetch('questions.json?v=' + Date.now());
         allData = await response.json();
-        renderList(allData);
+        filterData();
     } catch (err) {
-        document.getElementById('maintenance-list').innerHTML = "Error: Check if questions.json exists or has a typo.";
+        document.getElementById('status-bar').innerText = "Error loading JSON.";
     }
 }
 
-function renderList(data) {
+function setView(view) {
+    currentView = view;
+    filterData();
+}
+
+function filterData() {
+    const searchText = document.getElementById('searchInput').value.toLowerCase();
+    const searchID = document.getElementById('idInput').value;
+    
+    const filtered = allData.filter(q => {
+        const matchesText = q.question.toLowerCase().includes(searchText);
+        const matchesID = searchID === "" || q.id.toString() === searchID;
+        const isError = q.correct.length > 1;
+        
+        if (currentView === 'errors') {
+            return isError && matchesText && matchesID;
+        }
+        return matchesText && matchesID;
+    });
+
+    renderList(filtered);
+    
+    const errCount = allData.filter(q => q.correct.length > 1).length;
+    document.getElementById('status-bar').innerText = 
+        `Showing ${filtered.length} of ${allData.length} questions. (${errCount} formatting errors found)`;
+}
+
+function renderList(dataToDisplay) {
     const list = document.getElementById('maintenance-list');
     list.innerHTML = '';
 
-    data.forEach((q, index) => {
-        const isError = q.correct.length > 1; // Flagging errors like ID 703
+    dataToDisplay.forEach((q) => {
+        const actualIndex = allData.findIndex(item => item.id === q.id);
+        const isError = q.correct.length > 1;
         const card = document.createElement('div');
         card.className = `q-card ${isError ? 'has-error' : ''}`;
         
         card.innerHTML = `
-            <div style="margin-bottom: 15px;">
-                <strong>ID: ${q.id}</strong> ${isError ? '<span class="error-tag">FORMAT ERROR</span>' : ''}
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                <strong>ID: ${q.id}</strong>
+                ${isError ? '<b style="color:red">FORMAT ERROR</b>' : ''}
             </div>
-            
             <div class="input-group">
-                <label>Question Text</label>
-                <textarea onchange="updateData(${index}, 'question', this.value)">${q.question}</textarea>
+                <label>Question</label>
+                <textarea onchange="updateVal(${actualIndex}, 'question', this.value)">${q.question}</textarea>
             </div>
-
             <div class="choice-grid">
-                <div class="input-group"><label>A</label><input type="text" value="${q.choices.A}" onchange="updateChoice(${index}, 'A', this.value)"></div>
-                <div class="input-group"><label>B</label><input type="text" value="${q.choices.B}" onchange="updateChoice(${index}, 'B', this.value)"></div>
-                <div class="input-group"><label>C</label><input type="text" value="${q.choices.C}" onchange="updateChoice(${index}, 'C', this.value)"></div>
-                <div class="input-group"><label>D</label><input type="text" value="${q.choices.D}" onchange="updateChoice(${index}, 'D', this.value)"></div>
+                ${['A', 'B', 'C', 'D'].map(L => `
+                    <div class="input-group">
+                        <label>Choice ${L}</label>
+                        <input type="text" value="${q.choices[L]}" onchange="updateChoice(${actualIndex}, '${L}', this.value)">
+                    </div>
+                `).join('')}
             </div>
-
-            <div style="display: flex; gap: 15px;">
-                <div class="input-group" style="width: 100px;">
-                    <label>Correct Letter</label>
-                    <input type="text" maxlength="1" style="text-align: center; font-weight: bold; border: 2px solid #2196f3;" 
-                           value="${q.correct}" onchange="updateData(${index}, 'correct', this.value.toUpperCase())">
+            <div style="display:flex; gap:10px;">
+                <div style="width:80px">
+                    <label>Correct</label>
+                    <input type="text" maxlength="1" style="text-align:center" value="${isError ? '?' : q.correct}" onchange="updateVal(${actualIndex}, 'correct', this.value.toUpperCase())">
                 </div>
-                <div class="input-group" style="flex-grow: 1;">
+                <div style="flex-grow:1">
                     <label>Explanation</label>
-                    <textarea onchange="updateData(${index}, 'explanation', this.value)">${q.explanation}</textarea>
+                    <textarea onchange="updateVal(${actualIndex}, 'explanation', this.value)">${q.explanation}</textarea>
                 </div>
             </div>
         `;
@@ -52,29 +80,12 @@ function renderList(data) {
     });
 }
 
-// Update functions to keep our data object current
-function updateData(index, field, value) { allData[index][field] = value; }
-function updateChoice(index, letter, value) { allData[index].choices[letter] = value; }
+function updateVal(idx, key, val) { allData[idx][key] = val; }
+function updateChoice(idx, L, val) { allData[idx].choices[L] = val; }
 
-function filterQuestions() {
-    const term = document.getElementById('searchInput').value.toLowerCase();
-    const cards = document.getElementsByClassName('q-card');
-    allData.forEach((q, i) => {
-        const matches = q.id.toString().includes(term) || q.question.toLowerCase().includes(term);
-        cards[i].style.display = matches ? 'block' : 'none';
-    });
-}
-
-// Generates a clean JSON file for Gary to save
-function downloadJSON() {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allData, null, 2));
-    const downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", "questions.json");
-    document.body.appendChild(downloadAnchorNode);
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
-    alert("New questions.json downloaded! Replace your old file with this one.");
+async function copyJSON() {
+    await navigator.clipboard.writeText(JSON.stringify(allData, null, 2));
+    alert("Full JSON copied to clipboard! Ready for GitHub.");
 }
 
 loadQuestions();
