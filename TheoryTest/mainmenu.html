@@ -91,7 +91,7 @@
             box-sizing: border-box; 
         }
         
-        /* Version Tag Style */
+        /* Version Tag Style - Discrete Grey */
         .v-tag { 
             position: absolute; 
             bottom: 10px; 
@@ -156,7 +156,10 @@
 
         function init() {
             const savedStamp = localStorage.getItem('gatekeeper_stamp');
+            // Check if existing stamp is valid for this month
             if (savedStamp === curMonthYear) { showMenu(); }
+            
+            // Show debug info if enabled
             if (DEBUGZ) { 
                 const db = document.getElementById('debug-box'); 
                 db.style.display = 'block'; 
@@ -167,6 +170,7 @@
         function verifyAccess() {
             const input = document.getElementById('passCode').value.toUpperCase();
             if (input === targetKey) { 
+                // Set the stamp that sub-apps like untimed.html will check
                 localStorage.setItem('gatekeeper_stamp', curMonthYear); 
                 showMenu(); 
             } else { 
