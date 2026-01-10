@@ -1,67 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Orion Drive - Mock Test</title>
-    <style>
-        body { font-family: -apple-system, sans-serif; background: #f0f2f5; padding: 15px; display: flex; justify-content: center; margin: 0; }
-        #app-container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 600px; width: 100%; box-sizing: border-box; }
-        .review-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #2196f3; border-radius: 10px; background: white; color: #2196f3; text-align: left; font-size: 16px; cursor: pointer; }
-        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ccc; border-radius: 10px; background: white; text-align: left; font-size: 16px; cursor: pointer; }
-        .action-btn { background: #bdbdbd; color: black; border: none; padding: 15px; font-weight: bold; border-radius: 5px; cursor: pointer; font-size: 1em; width: 100%; text-transform: uppercase; box-sizing: border-box; }
-        .hidden { display: none; }
-        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        .review-item { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid #eee; }
-        .correct-answer-box { background: #eef7ff; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 5px solid #2196f3; color: #333; }
-        .red-x { color: #d32f2f; font-weight: bold; margin-right: 5px; }
-        /* Filter Button Styling */
-        .filter-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
-        .active-filter { background: #2196f3 !important; color: white !important; }
-    </style>
-</head>
-<body>
-<div id="app-container">
-    <div id="quiz-ui">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-            <div id="counter" style="font-weight: bold; color: #d32f2f;">Question 0 of 50</div>
-            <div id="category-display" style="color: #4caf50; font-weight: bold;">CATEGORY</div>
-        </div>
-        <div id="question-text" style="font-size: 1.1em; font-weight: 500; margin-bottom: 20px; min-height: 50px;">Attempting to load...</div>
-        <div id="options"></div>
-        <div class="grid-container">
-            <button class="action-btn" onclick="goBack()">< BACK</button>
-            <button class="action-btn" onclick="goNext()">NEXT ></button>
-            <button class="action-btn" onclick="goSkip()">SKIP</button>
-            <button class="action-btn" onclick="showReviewMenu()">FINISH</button>
-        </div>
-    </div>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Orion - Untimed</title><style>body{font-family:sans-serif;background:#121212;color:#fff;text-align:center;padding:20px}#g-box{background:#1e1e1e;padding:30px;border-radius:15px;max-width:400px;margin:50px auto;border:1px solid #333}input{background:#000;border:1px solid #444;color:#007bff;padding:10px;font-size:1.2rem;width:80%;text-align:center;border-radius:8px;margin:15px 0}button{background:#007bff;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:bold}#db-ui{margin-top:40px;padding:15px;border:1px dashed #555;font-family:monospace;font-size:0.8rem}</style></head><body><div id="main-ui"><h1>Orion System</h1><div id="g-box" style="display:none"><h3>Monthly Access Required</h3><p>Session expired or file missing.</p><input type="text" id="pass" placeholder="ENTER CODE"><br><button onclick="vfy()">UNLOCK</button></div><div id="game" style="display:none"><p>Questions Loaded. System Active.</p></div></div><div id="db-ui" style="display:none"></div><script>
+const DEBUGZ = 1; 
+const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 
-    <div id="review-menu" class="hidden" style="text-align: center;">
-        <h2>Finish Test?</h2>
-        <button class="review-btn" onclick="hideReviewMenu()">Review All (from 1)</button>
-        <button class="review-btn" onclick="reviewSkipped()">Review Skipped Only</button>
-        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-        <button class="action-btn" onclick="finishTest()">FINISH & VIEW RESULTS</button>
-    </div>
+function getS(){
+const d=new Date();const s=new Date(Date.UTC(d.getFullYear(),d.getMonth(),1,0,0,0));const e=new Date(Date.UTC(1900,0,1,0,0,0));const m=Math.floor((s.getTime()-e.getTime())/60000);let v=m%Math.pow(32,4);let r="";for(let j=0;j<4;j++){r=ALPH.charAt(v%32)+r;v=Math.floor(v/32)}while(r.length<4){r=ALPH.charAt(0)+r}let t=0;let ra=r.split('').reverse();for(let j=0;j<ra.length;j++){let x=ALPH.indexOf(ra[j]);if(j%2===0){x*=2;if(x>=32)x=(x%32)+Math.floor(x/32)}t+=x}let ci=(32-(t%32))%32;return r+(ALPH[ci]||ALPH[0]);}
 
-    <div id="result-ui" class="hidden" style="text-align: center;">
-        <h2 id="pass-fail-text">Result</h2>
-        <p id="final-score" style="font-size: 2.5em; font-weight: bold; margin: 0;"></p>
-        <p id="percentage-text" style="margin-bottom: 20px;"></p>
-        
-        <div class="filter-container">
-            <button id="btn-all" class="action-btn active-filter" onclick="generateReviewList('all')">View All</button>
-            <button id="btn-wrong" class="action-btn" onclick="generateReviewList('wrong')">View Wrong</button>
-            <button id="btn-skipped" class="action-btn" onclick="generateReviewList('skipped')">View Skipped</button>
-            <button class="action-btn" onclick="window.location.href='mainmenu.html'">Main Menu</button>
-        </div>
+const curS = getS();
+const curM = new Date().getMonth() + "-" + new Date().getFullYear();
 
-        <button class="action-btn" onclick="window.location.reload()" style="background:#4CAF50; color:white; width: 100%;">Start New Test</button>
+function init(){
+const locM = localStorage.getItem('q_month');
+const locQ = localStorage.getItem('questions_json');
+if(locM === curM && locQ){showG();}else{document.getElementById('g-box').style.display='block';}
+if(DEBUGZ){const db=document.getElementById('db-ui');db.style.display='block';db.innerHTML=`DEBUG: Expected [${curS}]<br><button onclick="localStorage.clear();location.reload();">FORCE DELETE LOCAL JSON</button>`;}}
 
-        <div id="review-list" style="text-align: left; border-top: 2px solid #eee; padding-top: 20px; margin-top: 20px;"></div>
-    </div>
-</div>
-<script src="script.js"></script>
-</body>
-</html>
+function vfy(){
+const ui = document.getElementById('pass').value.toUpperCase();
+if(ui === curS){
+localStorage.setItem('q_month', curM);
+// Simulated Download
+localStorage.setItem('questions_json', '{"status":"active"}');
+location.reload();
+}else{
+localStorage.removeItem('questions_json');
+localStorage.removeItem('q_month');
+alert('Incorrect Code. Local data wiped.');
+location.reload();
+}}
+
+function showG(){document.getElementById('game').style.display='block';document.getElementById('g-box').style.display='none';}
+window.onload = init;
+</script></body></html>
