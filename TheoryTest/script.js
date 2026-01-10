@@ -7,32 +7,18 @@ let midTestReviewMode = "none";
 async function loadTestData() {
     const statusBox = document.getElementById('question-text');
     try {
-        // We add a timestamp to the URL to force the browser to grab the NEWEST version
         const response = await fetch('questions.json?v=' + Date.now());
-        
-        if (!response.ok) throw new Error('File not found at: ' + response.url);
-        
-        // Grab as text first to bypass "MIME type" errors
-        const rawText = await response.text();
-        
+        if (!response.ok) throw new Error('File not found.');
+        const text = await response.text();
         try {
-            allQuestions = JSON.parse(rawText);
+            allQuestions = JSON.parse(text);
         } catch (jsonErr) {
-            console.error("JSON Error details:", jsonErr);
-            throw new Error('The file has a formatting error (check for missing commas or extra brackets).');
+            throw new Error('Formatting Error: ' + jsonErr.message);
         }
-        
-        if (allQuestions.length === 0) throw new Error('The questions file appears to be empty.');
-
         prepareTest();
         displayQuestion();
     } catch (err) {
-        statusBox.innerHTML = `
-            <div style="color:red; background:#fff0f0; padding:15px; border-radius:8px; border:1px solid red;">
-                <strong>Load Error:</strong><br>
-                ${err.message}<br><br>
-                <small>The file exists but the app can't read the format. Try re-saving it as "Plain Text" on your desktop.</small>
-            </div>`;
+        statusBox.innerHTML = `<span style="color:red; font-weight:bold;">${err.message}</span><br><small>Check the very end of your questions.json file for a missing bracket.</small>`;
     }
 }
 
@@ -114,6 +100,12 @@ function finishTest() {
 }
 
 function generateReviewList(filter) {
+    // UI Update for buttons
+    ['all', 'wrong', 'skipped'].forEach(f => {
+        document.getElementById('btn-' + f).classList.remove('active-filter');
+    });
+    document.getElementById('btn-' + filter).classList.add('active-filter');
+
     const list = document.getElementById('review-list');
     list.innerHTML = '';
     testQuestions.forEach((q, i) => {
@@ -125,17 +117,10 @@ function generateReviewList(filter) {
         let choicesHtml = "";
         for (const [letter, text] of Object.entries(q.choices)) {
             let style = (userChoice === letter && !isCorrect) ? 'style="color:red; font-weight:bold;"' : '';
-            let marker = (userChoice === letter && !isCorrect) ? '<span style="color:red; font-weight:bold; margin-right:5px;">X</span>' : '';
-            choicesHtml += `<div class="review-choice" ${style}>${marker}${letter}: ${text}</div>`;
+            let marker = (userChoice === letter && !isCorrect) ? '<span class="red-x">X</span>' : '';
+            choicesHtml += `<div ${style}>${marker}${letter}: ${text}</div>`;
         }
-        list.innerHTML += `
-            <div class="review-item">
-                <strong>Q${i+1}: ${q.question}</strong><br>
-                <div style="margin:10px 0;">${choicesHtml}</div>
-                <div class="correct-answer-box">
-                    <strong>Correct ${q.correct}:</strong><br>${q.explanation}
-                </div>
-            </div>`;
+        list.innerHTML += `<div class="review-item"><strong>Q${i+1}: ${q.question}</strong><br><div style="margin:10px 0;">${choicesHtml}</div><div class="correct-answer-box"><strong>Correct ${q.correct}:</strong><br>${q.explanation}</div></div>`;
     });
 }
 
