@@ -3,74 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Token Generator</title>
+    <title>Monthly Token Forecast</title>
     <style>
         body {
             font-family: -apple-system, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
+            padding: 20px;
             margin: 0;
-            background-color: #f0f2f5;
         }
         .card {
-            background: white;
+            background: #1e1e1e;
             padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 20px;
             text-align: center;
-            width: 90%;
-            max-width: 350px;
-        }
-        h2 { color: #1c1e21; margin-bottom: 0.5rem; }
-        p { color: #606770; font-size: 0.9rem; margin-bottom: 1.5rem; }
-        #tokenDisplay {
-            font-family: 'Courier New', monospace;
-            font-size: 2.5rem;
-            font-weight: bold;
-            letter-spacing: 4px;
-            color: #007bff;
-            margin: 1rem 0;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 8px;
-            min-height: 3.5rem;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 1rem;
-            border-radius: 8px;
-            cursor: pointer;
             width: 100%;
-            transition: background 0.2s;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+            margin-bottom: 20px;
         }
-        button:active { background-color: #0056b3; }
+        h2 { color: #007bff; margin: 0; }
+        .current-label { color: #888; font-size: 0.9rem; margin-top: 5px; }
+        #mainToken {
+            font-family: monospace;
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin: 1.5rem 0;
+            color: #fff;
+            letter-spacing: 5px;
+        }
+        .forecast-table {
+            width: 100%;
+            max-width: 400px;
+            background: #1e1e1e;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+        .forecast-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 20px;
+            border-bottom: 1px solid #333;
+            align-items: center;
+        }
+        .forecast-row:last-child { border-bottom: none; }
+        .month-name { color: #aaa; font-size: 0.9rem; }
+        .token-val { font-family: monospace; font-weight: bold; color: #007bff; font-size: 1.1rem; }
+        .copy-btn {
+            background: #333;
+            border: none;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .copy-btn:active { background: #007bff; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>Token Gen</h2>
-    <p>Minutes since 1900 (Luhn-32)</p>
-    <div id="tokenDisplay">-----</div>
-    <button onclick="updateToken()">Generate Code</button>
+    <h2>Current Token</h2>
+    <div id="dateLabel" class="current-label">---</div>
+    <div id="mainToken">-----</div>
 </div>
+
+<div class="forecast-table" id="forecastBody">
+    </div>
 
 <script>
     const ALPHABET = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
-    const EPOCH_1900 = new Date(1900, 0, 1);
+    const EPOCH_1900 = new Date(1900, 0, 1, 0, 0, 0);
 
-    function generateToken() {
-        // 1. Calculate minutes since Jan 1, 1900
-        const now = new Date();
-        const diffMs = now - EPOCH_1900;
+    function getCodeForMonth(year, month) {
+        const targetDate = new Date(year, month, 1, 0, 0, 0);
+        const diffMs = targetDate - EPOCH_1900;
         const minutes = Math.floor(diffMs / 60000);
 
-        // 2. Base-32 conversion (4 chars)
         let val = minutes % (Math.pow(32, 4));
         let code = "";
         for (let i = 0; i < 4; i++) {
@@ -78,31 +93,49 @@
             val = Math.floor(val / 32);
         }
 
-        // 3. Luhn Checksum (5th char)
         let total = 0;
         let codeArray = code.split('').reverse();
-        
         for (let i = 0; i < codeArray.length; i++) {
             let v = ALPHABET.indexOf(codeArray[i]);
-            if (i % 2 === 0) { // Weighting logic
+            if (i % 2 === 0) {
                 v *= 2;
-                if (v >= 32) {
-                    v = (v % 32) + Math.floor(v / 32);
-                }
+                if (v >= 32) v = (v % 32) + Math.floor(v / 32);
             }
             total += v;
         }
-
         const checkIndex = (32 - (total % 32)) % 32;
-        const checkDigit = ALPHABET[checkIndex];
-
-        return code + checkDigit;
+        return code + ALPHABET[checkIndex];
     }
 
-    function updateToken() {
-        const display = document.getElementById('tokenDisplay');
-        display.innerText = generateToken();
+    function init() {
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth();
+        
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        
+        // Update Main Display
+        document.getElementById('dateLabel').innerText = monthNames[currentMonth] + " " + currentYear;
+        document.getElementById('mainToken').innerText = getCodeForMonth(currentYear, currentMonth);
+
+        // Generate Forecast
+        const forecastBody = document.getElementById('forecastBody');
+        for (let i = 0; i < 13; i++) {
+            let d = new Date(currentYear, currentMonth + i, 1);
+            let token = getCodeForMonth(d.getFullYear(), d.getMonth());
+            
+            const row = document.createElement('div');
+            row.className = 'forecast-row';
+            row.innerHTML = `
+                <span class="month-name">${monthNames[d.getMonth()]} ${d.getFullYear()}</span>
+                <span class="token-val">${token}</span>
+                <button class="copy-btn" onclick="navigator.clipboard.writeText('${token}')">COPY</button>
+            `;
+            forecastBody.appendChild(row);
+        }
     }
+
+    window.onload = init;
 </script>
 
 </body>
