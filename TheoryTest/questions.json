@@ -8768,7 +8768,7 @@
     "choices": {
       "A": "Every two years",
       "B": "Once a year",
-      "C": "Every six months"
+      "C": "Every six months",
       "D": "Only when it breaks down",
     },
     "correct": "B",
