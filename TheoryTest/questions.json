@@ -8762,17 +8762,17 @@
     "explanation": "Driving without insurance is a serious offense.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
-    "id": "682",
+        "id": "682",
     "category": "Essential Documents",
-    "question": "If your car is three years old",
+    "question": "If your car is three years old, how often must it be MOT tested?",
     "choices": {
-      "A": " how often must it be MOT tested?",
-      "B": "Every two years",
-      "C": "Once a year",
-      "D": "Every six months"
+      "A": "Every two years",
+      "B": "Once a year",
+      "C": "Every six months"
+      "D": "Only when it breaks down",
     },
-    "correct": "Only when it breaks down",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "In the UK, cars must have their first MOT when they are three years old"
   },
   {
     "id": "683",
