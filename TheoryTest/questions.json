@@ -8769,10 +8769,10 @@
       "A": "Every two years",
       "B": "Once a year",
       "C": "Every six months",
-      "D": "Only when it breaks down",
+      "D": "Only when it breaks down"
     },
     "correct": "B",
-    "explanation": "In the UK, cars must have their first MOT when they are three years old"
+    "explanation": "In the UK, cars must have their first MOT when they are three years old\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "683",
