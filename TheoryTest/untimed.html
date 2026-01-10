@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Theory Test - No Timer</title>
+    <title>Theory Test - Untimed</title>
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #000; color: #e0e0e0; padding: 20px; margin: 0; display: flex; flex-direction: column; align-items: center; }
         .container { width: 100%; max-width: 600px; margin-top: 20px; }
@@ -21,99 +21,35 @@
         .option-btn.correct { background: #28a745 !important; border-color: #28a745; color: #fff; }
         .option-btn.incorrect { background: #dc3545 !important; border-color: #dc3545; color: #fff; }
 
-        .nav-controls { display: flex; justify-content: space-between; margin-top: 20px; gap: 10px; }
-        .nav-btn { background: #007bff; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; flex: 1; text-transform: uppercase; }
+        .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .nav-btn { background: #007bff; color: #fff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
         .nav-btn:disabled { background: #333; cursor: not-allowed; color: #666; }
+        .finish-btn { background: #6c757d; grid-column: span 2; margin-top: 5px; }
 
-        .menu-btn { background: #333; color: #e0e0e0; border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 20px; font-weight: bold; }
-        
-        /* Discrete Version Tag */
         .v-tag { position: fixed; bottom: 10px; right: 15px; font-family: monospace; font-size: 0.6rem; color: #333; }
     </style>
 </head>
 <body>
 
-    <div id="test-ui" class="container">
+    <div class="container">
         <h1>Theory Test - No Timer</h1>
         
         <div class="question-card">
             <div id="q-number" style="color: #007bff; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">Loading...</div>
-            <div id="q-text" class="question-text">Please wait, loading questions...</div>
+            <div id="q-text" class="question-text">Please wait...</div>
             <div id="options-area"></div>
         </div>
 
-        <div class="nav-controls">
-            <button id="prev-btn" class="nav-btn" onclick="changeQuestion(-1)">Previous</button>
+        <div class="nav-grid">
+            <button id="prev-btn" class="nav-btn" onclick="changeQuestion(-1)">Back</button>
             <button id="next-btn" class="nav-btn" onclick="changeQuestion(1)">Next</button>
+            <button id="skip-btn" class="nav-btn" onclick="changeQuestion(1)">Skip</button>
+            <button id="finish-btn" class="nav-btn finish-btn" onclick="window.location.href='mainmenu.html'">Finish</button>
         </div>
-        
-        <button onclick="window.location.href='mainmenu.html'" class="menu-btn">Back to Menu</button>
     </div>
 
-    <span class="v-tag">v1.5.6</span>
+    <span class="v-tag">v1.6.0</span>
 
-    <script>
-        let questions = [];
-        let currentIndex = 0;
-
-        async function loadQuestions() {
-            try {
-                const response = await fetch('questions.json');
-                if (!response.ok) throw new Error("questions.json not found");
-                questions = await response.json();
-                renderQuestion();
-            } catch (e) {
-                document.getElementById('q-text').innerText = "Error loading questions.json. Check file path.";
-                console.error(e);
-            }
-        }
-
-        function renderQuestion() {
-            const q = questions[currentIndex];
-            document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${questions.length}`;
-            document.getElementById('q-text').innerText = q.question;
-            
-            const area = document.getElementById('options-area');
-            area.innerHTML = ""; 
-            
-            // Loop through answers and create buttons
-            q.answers.forEach((ans, index) => {
-                const btn = document.createElement('button');
-                btn.className = "option-btn";
-                btn.innerText = ans.text;
-                btn.onclick = () => selectAnswer(btn, ans.correct);
-                area.appendChild(btn);
-            });
-
-            document.getElementById('prev-btn').disabled = (currentIndex === 0);
-            document.getElementById('next-btn').disabled = (currentIndex === questions.length - 1);
-        }
-
-        function selectAnswer(btn, isCorrect) {
-            // Disable buttons to lock the answer
-            const buttons = document.querySelectorAll('.option-btn');
-            buttons.forEach(b => b.disabled = true);
-
-            if (isCorrect) {
-                btn.classList.add('correct');
-            } else {
-                btn.classList.add('incorrect');
-                // Find and highlight the correct one automatically
-                const options = questions[currentIndex].answers;
-                const allButtons = document.querySelectorAll('.option-btn');
-                options.forEach((opt, i) => {
-                    if (opt.correct) allButtons[i].classList.add('correct');
-                });
-            }
-        }
-
-        function changeQuestion(step) {
-            currentIndex += step;
-            renderQuestion();
-            window.scrollTo(0, 0);
-        }
-
-        window.onload = loadQuestions;
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
