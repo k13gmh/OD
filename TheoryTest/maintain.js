@@ -1,30 +1,36 @@
-const MAINTAIN_VERSION = "1.0.7 - Error Focused"; 
+const MAINTAIN_VERSION = "1.0.9 - Total Reset"; 
 
 let allData = [];
 
 async function loadQuestions() {
-    document.getElementById('app-version').innerText = `Ver: ${MAINTAIN_VERSION}`;
+    // Set version immediately
+    const vDisplay = document.getElementById('app-version');
+    if (vDisplay) vDisplay.innerText = `Ver: ${MAINTAIN_VERSION}`;
+    
     const status = document.getElementById('status-msg');
     
     try {
-        // Fetch fresh data
+        // Force a fresh fetch of the data
         const response = await fetch('questions.json?v=' + Date.now());
+        if (!response.ok) throw new Error("File questions.json not found on server.");
+        
         allData = await response.json();
         
-        // Identify the broken ones (like your ID 703)
-        const brokenQuestions = allData.filter(q => q.correct && q.correct.length > 1);
+        // Find questions where 'correct' field is longer than 1 character (the errors)
+        const errors = allData.filter(q => q.correct && q.correct.length > 1);
         
-        if (brokenQuestions.length > 0) {
+        if (errors.length > 0) {
             status.style.color = "#d32f2f";
-            status.innerText = `Found ${brokenQuestions.length} formatting errors. Fix them below:`;
-            renderList(brokenQuestions);
+            status.innerText = `Found ${errors.length} formatting errors:`;
+            renderList(errors);
         } else {
             status.style.color = "green";
-            status.innerText = "✓ No formatting errors detected. Showing all records for manual review:";
+            status.innerText = "No format errors found. Showing all records for review:";
             renderList(allData);
         }
     } catch (err) {
-        status.innerHTML = `<div style="color:red"><b>Load Error:</b> The JSON file might have a syntax error (missing comma/bracket).</div>`;
+        status.style.color = "red";
+        status.innerHTML = `<b>Load Failed:</b> ${err.message}<br><small>Check for commas/brackets errors in GitHub.</small>`;
     }
 }
 
@@ -33,17 +39,16 @@ function renderList(dataToDisplay) {
     list.innerHTML = '';
 
     dataToDisplay.forEach((q) => {
+        // Map back to the original full data array
         const idx = allData.findIndex(item => item.id === q.id);
         const isError = q.correct && q.correct.length > 1;
         
         const card = document.createElement('div');
-        card.className = 'q-card';
-        if (isError) card.style.border = "2px solid #f44336";
+        card.className = 'q-card' + (isError ? ' error-border' : '');
 
         card.innerHTML = `
-            <div style="background:#eee; padding:5px 10px; border-radius:5px; margin-bottom:10px; display:flex; justify-content:space-between;">
-                <strong>Question ID: ${q.id}</strong>
-                ${isError ? '<b style="color:red">FORMAT ERROR</b>' : '<b style="color:green">OK</b>'}
+            <div style="background:#f0f0f0; padding:5px 10px; border-radius:5px; margin-bottom:10px; font-weight:bold;">
+                ID: ${q.id} ${isError ? ' <span style="color:red">(FORMAT ERROR)</span>' : ''}
             </div>
 
             <label>Question Text</label>
@@ -58,9 +63,10 @@ function renderList(dataToDisplay) {
 
             <div style="display:flex; gap:10px;">
                 <div style="width:140px;">
-                    <label style="color:red">Correct Letter</label>
+                    <label style="color:red">Correct Letter Only</label>
                     <input type="text" maxlength="1" style="text-align:center; font-weight:bold; border:2px solid red;" 
-                           placeholder="A, B, C or D" onchange="allData[${idx}].correct = this.value.toUpperCase()">
+                           value="${isError ? '' : q.correct}" placeholder="?" 
+                           onchange="allData[${idx}].correct = this.value.toUpperCase()">
                 </div>
                 <div style="flex-grow:1;">
                     <label>Explanation</label>
@@ -73,8 +79,13 @@ function renderList(dataToDisplay) {
 }
 
 async function copyJSON() {
-    await navigator.clipboard.writeText(JSON.stringify(allData, null, 2));
-    alert("Copied everything! Now paste into GitHub.");
+    try {
+        await navigator.clipboard.writeText(JSON.stringify(allData, null, 2));
+        alert("Success! Full JSON (all questions) is now in your clipboard.");
+    } catch (err) {
+        alert("Clipboard error. Try a different browser or check permissions.");
+    }
 }
 
+// Kick off the load
 loadQuestions();
