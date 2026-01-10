@@ -7,34 +7,24 @@
     <style>
         body { font-family: -apple-system, sans-serif; background: #f0f2f5; padding: 15px; display: flex; justify-content: center; margin: 0; }
         #app-container { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 600px; width: 100%; box-sizing: border-box; }
-        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ccc; border-radius: 10px; background: white; text-align: left; font-size: 16px; cursor: pointer; box-sizing: border-box; }
+        .review-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #2196f3; border-radius: 10px; background: white; color: #2196f3; text-align: left; font-size: 16px; cursor: pointer; }
+        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ccc; border-radius: 10px; background: white; text-align: left; font-size: 16px; cursor: pointer; }
         .action-btn { background: #bdbdbd; color: black; border: none; padding: 15px; font-weight: bold; border-radius: 5px; cursor: pointer; font-size: 1em; width: 100%; text-transform: uppercase; box-sizing: border-box; }
-        .action-btn:active { background: #999; }
         .hidden { display: none; }
         .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        
-        /* Review Section Styling */
-        .review-item { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid #eee; line-height: 1.6; }
-        .review-choice { margin: 5px 0; font-size: 1em; }
-        .user-wrong { color: #d32f2f; font-weight: bold; }
-        .correct-answer-box { 
-            background: #eef7ff; 
-            padding: 15px; 
-            border-radius: 8px; 
-            margin-top: 15px; 
-            border-left: 5px solid #2196f3;
-        }
+        .review-item { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid #eee; }
+        .correct-answer-box { background: #eef7ff; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 5px solid #2196f3; color: #333; }
+        .red-x { color: #d32f2f; font-weight: bold; margin-right: 5px; }
     </style>
 </head>
 <body>
-
 <div id="app-container">
     <div id="quiz-ui">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
             <div id="counter" style="font-weight: bold; color: #d32f2f;">Question 0 of 50</div>
             <div id="category-display" style="color: #4caf50; font-weight: bold;">CATEGORY</div>
         </div>
-        <div id="question-text" style="font-size: 1.1em; font-weight: 500; margin-bottom: 20px; min-height: 50px;">Loading...</div>
+        <div id="question-text" style="font-size: 1.1em; font-weight: 500; margin-bottom: 20px; min-height: 50px;">Attempting to load questions...</div>
         <div id="options"></div>
         <div class="grid-container">
             <button class="action-btn" onclick="goBack()">< BACK</button>
@@ -46,28 +36,25 @@
 
     <div id="review-menu" class="hidden" style="text-align: center;">
         <h2>Finish Test?</h2>
-        <p>Review answers or finish to see your score.</p>
-        <button class="btn" onclick="hideReviewMenu()">Review All (from 1)</button>
-        <button class="btn" onclick="reviewSkipped()">Review Skipped Only</button>
-        <button class="action-btn" style="background: #d32f2f; color: white; margin-top:20px;" onclick="finishTest()">Finish & View Results</button>
+        <button class="review-btn" onclick="hideReviewMenu()">Review All (from 1)</button>
+        <button class="review-btn" onclick="reviewSkipped()">Review Skipped Only</button>
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+        <button class="action-btn" onclick="finishTest()">FINISH & VIEW RESULTS</button>
     </div>
 
     <div id="result-ui" class="hidden" style="text-align: center;">
         <h2 id="pass-fail-text">Result</h2>
-        <p id="final-score" style="font-size: 2.5em; font-weight: bold;"></p>
-        <p id="percentage-text"></p>
-        <div style="background: #fdf2f2; padding: 10px; border-radius: 8px; margin-bottom: 20px;">
-            <p style="margin:0;">Wrong IDs:</p>
-            <div id="wrong-ids" style="color:#d32f2f; font-weight:bold;"></div>
+        <p id="final-score" style="font-size: 2.5em; font-weight: bold; margin: 0;"></p>
+        <p id="percentage-text" style="margin-bottom: 20px;"></p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+            <button class="action-btn" onclick="generateReviewList('all')">View All</button>
+            <button class="action-btn" onclick="generateReviewList('wrong')">View Wrong</button>
+            <button class="action-btn" onclick="generateReviewList('skipped')">View Skipped</button>
+            <button class="action-btn" onclick="window.location.href='mainmenu.html'">Main Menu</button>
         </div>
-        <button class="action-btn" onclick="window.location.reload()">Start New Test</button>
-        <div id="full-review-container" style="text-align: left; border-top: 2px solid #eee; padding-top: 20px; margin-top:20px;">
-            <h2 style="margin-top: 0;">Detailed Review</h2>
-            <div id="review-list"></div>
-        </div>
+        <div id="review-list" style="text-align: left; border-top: 2px solid #eee; padding-top: 20px;"></div>
     </div>
 </div>
-
 <script src="script.js"></script>
 </body>
 </html>
