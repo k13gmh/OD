@@ -7,38 +7,38 @@
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #000; color: #e0e0e0; padding: 20px; margin: 0; display: flex; flex-direction: column; align-items: center; }
         .container { width: 100%; max-width: 600px; margin-top: 20px; }
-        h1 { color: #fff; text-align: center; font-size: 1.5rem; }
+        h1 { color: #fff; text-align: center; font-size: 1.8rem; font-weight: bold; margin-bottom: 30px; }
         
-        #test-ui { display: none; width: 100%; }
-        #status-message { color: #007bff; font-weight: bold; margin-top: 50px; text-align: center; }
-
-        .question-card { background: #1c1c1e; padding: 25px; border-radius: 20px; border: 1px solid #2c2c2e; margin-bottom: 20px; }
-        .question-text { font-size: 1.2rem; margin-bottom: 20px; line-height: 1.4; }
+        .question-card { background: #1c1c1e; padding: 25px; border-radius: 20px; border: 1px solid #2c2c2e; margin-bottom: 20px; position: relative; }
+        .question-text { font-size: 1.2rem; margin-bottom: 25px; line-height: 1.4; color: #fff; }
         
         .option-btn { 
-            background: #2c2c2e; color: #fff; border: 1px solid #444; padding: 15px; 
-            border-radius: 10px; width: 100%; margin-bottom: 10px; text-align: left; 
+            background: #2c2c2e; color: #fff; border: 1px solid #444; padding: 16px; 
+            border-radius: 12px; width: 100%; margin-bottom: 12px; text-align: left; 
             cursor: pointer; font-size: 1rem; transition: background 0.2s;
         }
         .option-btn:hover { background: #3a3a3c; }
-        
-        .nav-controls { display: flex; justify-content: space-between; margin-top: 20px; }
-        .nav-btn { background: #007bff; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        .nav-btn:disabled { background: #333; cursor: not-allowed; }
+        .option-btn.correct { background: #28a745 !important; border-color: #28a745; color: #fff; }
+        .option-btn.incorrect { background: #dc3545 !important; border-color: #dc3545; color: #fff; }
 
+        .nav-controls { display: flex; justify-content: space-between; margin-top: 20px; gap: 10px; }
+        .nav-btn { background: #007bff; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: bold; flex: 1; text-transform: uppercase; }
+        .nav-btn:disabled { background: #333; cursor: not-allowed; color: #666; }
+
+        .menu-btn { background: #333; color: #e0e0e0; border: none; padding: 12px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 20px; font-weight: bold; }
+        
+        /* Discrete Version Tag */
         .v-tag { position: fixed; bottom: 10px; right: 15px; font-family: monospace; font-size: 0.6rem; color: #333; }
     </style>
 </head>
 <body>
 
-    <div id="status-message">Verifying Access...</div>
-
     <div id="test-ui" class="container">
         <h1>Theory Test - No Timer</h1>
         
         <div class="question-card">
-            <div id="q-number" style="color: #007bff; font-weight: bold; margin-bottom: 10px;">Question 1</div>
-            <div id="q-text" class="question-text">Loading...</div>
+            <div id="q-number" style="color: #007bff; font-weight: bold; margin-bottom: 15px; font-size: 1.1rem;">Loading...</div>
+            <div id="q-text" class="question-text">Please wait, loading questions...</div>
             <div id="options-area"></div>
         </div>
 
@@ -47,41 +47,24 @@
             <button id="next-btn" class="nav-btn" onclick="changeQuestion(1)">Next</button>
         </div>
         
-        <button onclick="window.location.href='mainmenu.html'" class="nav-btn" style="margin-top: 30px; background: #444; width: 100%;">Back to Menu</button>
+        <button onclick="window.location.href='mainmenu.html'" class="menu-btn">Back to Menu</button>
     </div>
 
-    <span class="v-tag">v1.5.4</span>
+    <span class="v-tag">v1.5.6</span>
 
     <script>
         let questions = [];
         let currentIndex = 0;
 
-        async function init() {
-            const status = document.getElementById('status-message');
-            const now = new Date();
-            // Create the same comparison stamp used in the Main Menu
-            const currentMonthYear = (now.getUTCMonth() + 1) + "-" + now.getUTCFullYear();
-            const savedStamp = localStorage.getItem('gatekeeper_stamp');
-
-            // Access validation
-            if (savedStamp === currentMonthYear) {
-                try {
-                    status.innerText = "Loading Questions...";
-                    const response = await fetch('questions.json');
-                    if (!response.ok) throw new Error("questions.json not found");
-                    
-                    questions = await response.json();
-                    
-                    document.getElementById('status-message').style.display = 'none';
-                    document.getElementById('test-ui').style.display = 'block';
-                    
-                    renderQuestion();
-                } catch (e) {
-                    status.innerText = "Error: questions.json missing from server.";
-                }
-            } else {
-                status.innerText = "Access Expired. Redirecting to Menu...";
-                setTimeout(() => { window.location.href = "mainmenu.html"; }, 2000);
+        async function loadQuestions() {
+            try {
+                const response = await fetch('questions.json');
+                if (!response.ok) throw new Error("questions.json not found");
+                questions = await response.json();
+                renderQuestion();
+            } catch (e) {
+                document.getElementById('q-text').innerText = "Error loading questions.json. Check file path.";
+                console.error(e);
             }
         }
 
@@ -91,13 +74,14 @@
             document.getElementById('q-text').innerText = q.question;
             
             const area = document.getElementById('options-area');
-            area.innerHTML = "";
+            area.innerHTML = ""; 
             
+            // Loop through answers and create buttons
             q.answers.forEach((ans, index) => {
                 const btn = document.createElement('button');
                 btn.className = "option-btn";
                 btn.innerText = ans.text;
-                btn.onclick = () => selectAnswer(index);
+                btn.onclick = () => selectAnswer(btn, ans.correct);
                 area.appendChild(btn);
             });
 
@@ -105,17 +89,31 @@
             document.getElementById('next-btn').disabled = (currentIndex === questions.length - 1);
         }
 
+        function selectAnswer(btn, isCorrect) {
+            // Disable buttons to lock the answer
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+            } else {
+                btn.classList.add('incorrect');
+                // Find and highlight the correct one automatically
+                const options = questions[currentIndex].answers;
+                const allButtons = document.querySelectorAll('.option-btn');
+                options.forEach((opt, i) => {
+                    if (opt.correct) allButtons[i].classList.add('correct');
+                });
+            }
+        }
+
         function changeQuestion(step) {
             currentIndex += step;
             renderQuestion();
+            window.scrollTo(0, 0);
         }
 
-        function selectAnswer(index) {
-            // Logic for checking correct answer goes here
-            console.log("Selected option:", index);
-        }
-
-        window.onload = init;
+        window.onload = loadQuestions;
     </script>
 </body>
 </html>
