@@ -1,14 +1,13 @@
-// script.js - Ver 1.6.1
+/* script.js - Ver 1.6.3 */
 let questions = [];
 let currentIndex = 0;
+let userSelections = {}; 
 
 async function loadQuestions() {
     try {
         const response = await fetch('questions.json');
         if (!response.ok) throw new Error("questions.json not found");
         questions = await response.json();
-        
-        // Ensure we start at index 0 and render immediately
         currentIndex = 0;
         renderQuestion();
     } catch (e) {
@@ -21,56 +20,66 @@ function renderQuestion() {
     if (!questions || questions.length === 0) return;
     const q = questions[currentIndex];
     
-    // Update question count and text
     document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${questions.length}`;
+    document.getElementById('q-category').innerText = q.category || "";
     document.getElementById('q-text').innerText = q.question;
     
     const area = document.getElementById('options-area');
-    area.innerHTML = ""; // Clear for new options
+    area.innerHTML = ""; 
     
-    // Create the multiple choice buttons (A, B, C, D)
-    if (q.answers && Array.isArray(q.answers)) {
-        q.answers.forEach((ans, index) => {
+    const letters = ["A", "B", "C", "D"];
+    letters.forEach(letter => {
+        if (q.choices[letter]) {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
-            btn.innerText = ans.text;
-            btn.onclick = () => selectAnswer(btn, ans.correct);
-            area.appendChild(btn);
-        });
-    }
+            btn.innerHTML = `<strong>${letter}:</strong> ${q.choices[letter]}`;
+            
+            if (userSelections[q.id] === letter) {
+                btn.classList.add('selected');
+            }
 
-    // Set navigation button states
+            btn.onclick = () => selectAnswer(btn, letter, q.correct, q.id);
+            area.appendChild(btn);
+        }
+    });
+
     document.getElementById('prev-btn').disabled = (currentIndex === 0);
     document.getElementById('next-btn').disabled = (currentIndex === questions.length - 1);
-    document.getElementById('skip-btn').disabled = (currentIndex === questions.length - 1);
 }
 
-function selectAnswer(btn, isCorrect) {
-    const buttons = document.querySelectorAll('.option-btn');
-    buttons.forEach(b => b.disabled = true); // Lock choices after selection
+function selectAnswer(btn, chosenLetter, correctLetter, qId) {
+    userSelections[qId] = chosenLetter;
 
-    if (isCorrect) {
+    const buttons = document.querySelectorAll('.option-btn');
+    buttons.forEach(b => {
+        b.disabled = true;
+        b.classList.remove('selected');
+    });
+
+    if (chosenLetter === correctLetter) {
         btn.classList.add('correct');
     } else {
         btn.classList.add('incorrect');
-        // Show the correct answer automatically
-        const options = questions[currentIndex].answers;
         const allButtons = document.querySelectorAll('.option-btn');
-        options.forEach((opt, i) => {
-            if (opt.correct) allButtons[i].classList.add('correct');
+        const letters = ["A", "B", "C", "D"];
+        allButtons.forEach((b, i) => {
+            if (letters[i] === correctLetter) b.classList.add('correct');
         });
     }
 }
 
 function changeQuestion(step) {
     currentIndex += step;
-    // Bounds check to prevent errors
     if (currentIndex < 0) currentIndex = 0;
     if (currentIndex >= questions.length) currentIndex = questions.length - 1;
-    
     renderQuestion();
     window.scrollTo(0, 0);
 }
 
-// Call load on startup
+function finishTest() {
+    console.log("Saving Selections:", userSelections);
+    localStorage.setItem('last_test_results', JSON.stringify(userSelections));
+    window.location.href = 'mainmenu.html';
+}
+
 window.onload = loadQuestions;
