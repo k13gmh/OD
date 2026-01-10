@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orion Drive - Editor</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #f0f2f5; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .header-tools { display: flex; gap: 10px; margin-bottom: 20px; align-items: center; position: sticky; top: 0; background: white; padding: 10px 0; z-index: 10; border-bottom: 2px solid #eee; }
+        .search-box { flex-grow: 1; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; }
+        .save-btn { background: #4CAF50; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .q-card { border: 2px solid #eee; padding: 20px; margin-bottom: 20px; border-radius: 12px; transition: border-color 0.3s; }
+        .q-card.has-error { border-color: #f44336; background: #fff8f8; }
+        .input-group { margin-bottom: 10px; }
+        label { display: block; font-size: 0.8em; color: #666; margin-bottom: 3px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-family: inherit; }
+        .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+        .error-tag { background: #f44336; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-tools">
+            <input type="text" id="searchInput" class="search-box" placeholder="Search by ID or keywords..." onkeyup="filterQuestions()">
+            <button class="save-btn" onclick="downloadJSON()">DOWNLOAD FIXED JSON</button>
+        </div>
+        
+        <div id="maintenance-list">Loading...</div>
+    </div>
+    <script src="maintain.js"></script>
+</body>
+</html>
