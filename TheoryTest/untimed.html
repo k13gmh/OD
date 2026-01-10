@@ -5,32 +5,35 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Orion Drive - Theory Test</title>
     <style>
-        /* Orion Drive Colour Scheme */
         body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; color: #333; padding: 20px; margin: 0; display: flex; flex-direction: column; align-items: center; }
         .container { width: 100%; max-width: 600px; margin-top: 10px; }
         
+        /* Card Styles */
         .card { background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 20px; }
         
+        /* Test UI */
         .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: bold; }
         #q-number { color: #d9534f; font-size: 1.1rem; }
         #q-category { color: #5cb85c; font-size: 0.95rem; }
-
         .question-text { font-size: 1.25rem; margin-bottom: 25px; line-height: 1.4; color: #1a1a1a; font-weight: 600; }
         
-        .option-btn { 
-            background: #fff; color: #007bff; border: 1px solid #d1e3f8; padding: 16px; 
-            border-radius: 12px; width: 100%; margin-bottom: 12px; text-align: left; 
-            cursor: pointer; font-size: 1.05rem; transition: all 0.2s;
-        }
-        .option-btn:hover { background: #f0f7ff; }
+        .option-btn { background: #fff; color: #007bff; border: 1px solid #d1e3f8; padding: 16px; border-radius: 12px; width: 100%; margin-bottom: 12px; text-align: left; cursor: pointer; font-size: 1.05rem; transition: all 0.2s; }
         .option-btn.selected { border-color: #007bff; background: #e7f2ff; border-width: 2px; }
 
+        /* Navigation & Buttons */
         .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .btn { background: #bdc3c7; color: #2c3e50; border: none; padding: 18px; border-radius: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.95rem; }
         .btn-blue { background: #007bff; color: #fff; }
-        .btn:active { opacity: 0.8; }
 
-        /* Modal for Restart/Resume */
+        /* Summary UI */
+        #summary-ui { display: none; text-align: center; }
+        .result-icon { font-size: 3rem; margin-bottom: 10px; }
+        .pass-text { color: #5cb85c; font-size: 2rem; font-weight: bold; }
+        .fail-text { color: #d9534f; font-size: 2rem; font-weight: bold; }
+        .score-val { font-size: 3.5rem; font-weight: bold; margin: 10px 0; }
+        .stat-line { font-size: 1.1rem; color: #7f8c8d; margin-bottom: 20px; }
+
+        /* Modal */
         #resume-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 100; }
         .modal-content { background: #fff; padding: 30px; border-radius: 20px; text-align: center; max-width: 85%; }
 
@@ -41,32 +44,47 @@
 
     <div id="resume-modal">
         <div class="modal-content">
-            <h3>Previous Test Found</h3>
-            <p>Would you like to continue from where you left off?</p>
-            <button class="btn btn-blue" style="width:100%; margin-bottom:10px;" onclick="resumeTest(true)">Resume Last Session</button>
-            <button class="btn" style="width:100%;" onclick="resumeTest(false)">Start New Test</button>
+            <h3>Resume Session?</h3>
+            <p>Continue your previous test or start fresh?</p>
+            <button class="btn btn-blue" style="width:100%; margin-bottom:10px;" onclick="resumeTest(true)">RESUME</button>
+            <button class="btn" style="width:100%;" onclick="resumeTest(false)">START NEW</button>
         </div>
     </div>
 
-    <div class="container" id="main-ui">
-        <div class="card">
-            <div class="q-header">
-                <div id="q-number">Question 1</div>
-                <div id="q-category">Category</div>
+    <div class="container">
+        <div id="test-ui">
+            <div class="card">
+                <div class="q-header">
+                    <div id="q-number">Question -- of --</div>
+                    <div id="q-category">Loading...</div>
+                </div>
+                <div id="q-text" class="question-text">Initializing...</div>
+                <div id="options-area"></div>
             </div>
-            <div id="q-text" class="question-text">Loading...</div>
-            <div id="options-area"></div>
+            <div class="nav-grid">
+                <button class="btn" onclick="changeQuestion(-1)">< BACK</button>
+                <button class="btn" onclick="changeQuestion(1)">NEXT ></button>
+                <button id="flag-btn" class="btn" onclick="toggleFlag()">FLAG</button>
+                <button class="btn" onclick="finishTest()">FINISH</button>
+            </div>
         </div>
 
-        <div class="nav-grid">
-            <button class="btn" onclick="changeQuestion(-1)">< BACK</button>
-            <button class="btn" onclick="changeQuestion(1)">NEXT ></button>
-            <button id="flag-btn" class="btn" onclick="toggleFlag()">FLAG</button>
-            <button class="btn" onclick="finishTest()">FINISH</button>
+        <div id="summary-ui">
+            <div class="card">
+                <div id="result-icon" class="result-icon"></div>
+                <div id="result-status"></div>
+                <div id="result-score" class="score-val">0 / 0</div>
+                <div id="result-percent" class="stat-line">0% (Pass: 86%)</div>
+            </div>
+            <div class="nav-grid" style="grid-template-columns: 1fr;">
+                <button class="btn btn-blue" onclick="location.href='mainmenu.html'">RESTART (Main Menu)</button>
+                <button class="btn" onclick="continueLater()">CONTINUE LATER</button>
+                <button class="btn" onclick="location.href='review.html'">REVIEW ANSWERS</button>
+            </div>
         </div>
     </div>
 
-    <span class="v-tag">v1.6.6</span>
+    <span class="v-tag">v1.6.8</span>
     <script src="script.js"></script>
 </body>
 </html>
