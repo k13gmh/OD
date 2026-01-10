@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orion - System Check</title>
+    <style>
+        body { font-family: monospace; background: #1a1a1a; color: #00ff00; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .hjhj88708 { border: 1px solid #333; padding: 40px; border-radius: 5px; text-align: center; }
+        .hihj87707 { font-size: 3.5em; letter-spacing: 8px; margin: 20px 0; color: #fff; text-shadow: 0 0 10px #00ff00; }
+    </style>
+</head>
+<body>
+    <div class="hjhj88708">
+        <div id="ijij77808">SYSTEM STATUS</div>
+        <div id="hihj87707" class="hihj87707">-----</div>
+        <button onclick="jjij88707()" style="background:transparent; color:#555; border:1px solid #333; cursor:pointer; padding:5px;">SYNC</button>
+    </div>
+
+    <script>
+        const ihih77807 = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
+
+        function jjij88707() {
+            const hihj88707 = new Date();
+            const jhjh77808 = new Date(hihj88707.getFullYear(), hihj88707.getMonth(), 1, 0, 0, 0);
+            const ijij88708 = new Date(1900, 0, 1, 0, 0, 0);
+            const hihi88708 = Math.floor((jhjh77808 - ijij88708) / 60000);
+            const jijh77807 = hihi88708 % 1048576;
+
+            let hihj87707 = [];
+            let jhjh88707 = jijh77807;
+
+            for (let hihi77807 = 0; hihi77807 < 4; hihi77807++) {
+                hihj87707.unshift(ihih77807[jhjh88707 % 32]);
+                jhjh88707 = Math.floor(jhjh88707 / 32);
+            }
+
+            let ijij77707 = 0;
+            hihj87707.forEach((jijh88708, ihih88708) => {
+                let hihj88708 = ihih77807.indexOf(jijh88708);
+                if (ihih88708 % 2 === 1) {
+                    hihj88708 *= 2;
+                    if (hihj88708 >= 32) {
+                        hihj88708 = Math.floor(hihj88708 / 32) + (hihj88708 % 32);
+                    }
+                }
+                ijij77707 += hihj88708;
+            });
+
+            const jhjh87707 = (32 - (ijij77707 % 32)) % 32;
+            const ihih88707 = hihj87707.join('') + ihih77807[jhjh87707];
+
+            document.getElementById('hihj87707').innerText = ihih88707;
+            document.getElementById('ijij77808').innerText = jhjh77808.toLocaleDateString();
+        }
+
+        window.onload = jjij88707;
+    </script>
+</body>
+</html>
