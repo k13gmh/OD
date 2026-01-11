@@ -20,18 +20,16 @@
         
         .q-card { background: #fff; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #e1e8ed; position: relative; }
         
-        /* Header row purely for the Status */
         .q-status-row { display: flex; justify-content: flex-end; font-size: 0.9rem; margin-bottom: 5px; font-weight: bold; }
         
-        /* Color Coding for Status */
         .status-correct { color: #5cb85c; }
         .status-wrong { color: #d9534f; }
         .status-skipped { color: #f1c40f; }
 
-        /* Integrated Q# and Text */
         .question-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; line-height: 1.4; color: #1a1a1a; }
         .q-num-label { color: #000; margin-right: 5px; }
 
+        /* Clean Answer Rows */
         .ans-row { padding: 12px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #f1f1f1; font-size: 0.95rem; }
         .ans-correct { background: #e8f5e9; border-color: #a5d6a7; color: #2e7d32; }
         .ans-wrong { background: #ffebee; border-color: #ef9a9a; color: #c62828; }
@@ -56,7 +54,7 @@
 
     <div class="container" id="review-container"></div>
 
-    <span class="v-tag">v1.2 (Review Detail)</span>
+    <span class="v-tag">v1.3 (Review Detail)</span>
 
     <script>
         function initDetail() {
@@ -109,10 +107,11 @@
             const div = document.getElementById(divId);
             ["A", "B", "C", "D"].forEach(letter => {
                 if (!q.choices[letter]) return;
-                const isCorrect = letter === q.correct;
-                const isUserChoice = letter === userAns;
+                const isCorrect = (letter === q.correct);
+                const isUserChoice = (letter === userAns);
                 
                 let className = "ans-row";
+                // Color logic only
                 if (isCorrect) className += " ans-correct";
                 if (isUserChoice && !isCorrect) className += " ans-wrong";
                 if (isUserChoice) className += " ans-selected";
@@ -120,8 +119,6 @@
                 div.innerHTML += `
                     <div class="${className}">
                         <strong>${letter}:</strong> ${q.choices[letter]}
-                        ${isUserChoice ? ' (Your Choice)' : ''}
-                        ${isCorrect ? ' (Correct Answer)' : ''}
                     </div>
                 `;
             });
