@@ -20,7 +20,8 @@
         
         .q-card { background: #fff; padding: 12px 15px; border-radius: 12px; margin-bottom: 12px; border: 1px solid #e1e8ed; position: relative; }
         
-        .q-status-row { display: flex; justify-content: flex-end; font-size: 0.8rem; margin-bottom: 2px; font-weight: bold; }
+        /* Updated Status Row for Flags */
+        .q-status-row { display: flex; justify-content: flex-end; font-size: 0.75rem; margin-bottom: 2px; font-weight: bold; letter-spacing: 0.02rem; }
         .status-correct { color: #5cb85c; }
         .status-wrong { color: #d9534f; }
         .status-skipped { color: #f1c40f; }
@@ -52,7 +53,7 @@
 
     <div class="container" id="review-container"></div>
 
-    <span class="v-tag">v1.4 (Sorted Review)</span>
+    <span class="v-tag">v1.5 (Review + Flags)</span>
 
     <script>
         function initDetail() {
@@ -63,37 +64,34 @@
             const results = JSON.parse(rawData);
             const container = document.getElementById('review-container');
             
-            // 1. Map questions with their status metadata
             let processedList = results.questions.map((q, idx) => {
                 const userAns = results.data.selections[q.id];
                 const isCorrect = userAns === q.correct;
                 const isSeen = results.data.seenIndices.includes(idx);
+                const isFlagged = results.data.flagged.includes(q.id); // Check flag status
                 
                 let status = "correct";
                 if (!isCorrect && userAns) status = "wrong";
                 if (!userAns) status = "skipped";
 
-                return { ...q, userAns, status, isSeen };
+                return { ...q, userAns, status, isSeen, isFlagged };
             });
 
-            // 2. Filter and Sort logic
             if (mode === 'wrong') {
-                // Keep only wrong and skipped
                 processedList = processedList.filter(item => item.isSeen && item.status !== "correct");
-                
-                // Sort: Wrong (priority 0) then Skipped (priority 1)
                 processedList.sort((a, b) => {
                     const priority = { "wrong": 0, "skipped": 1 };
                     return priority[a.status] - priority[b.status];
                 });
             }
 
-            // 3. Render
             processedList.forEach((q, idx) => {
                 const card = document.createElement('div');
                 card.className = 'q-card';
 
-                const statusText = q.status.toUpperCase();
+                // Combined Flag and Status Label
+                const flagPrefix = q.isFlagged ? "FLAGGED - " : "";
+                const statusText = flagPrefix + q.status.toUpperCase();
                 const statusClass = `status-${q.status}`;
 
                 card.innerHTML = `
