@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Orion Drive - Theory Test</title>
     <style>
-        /* Orion Drive Colour Scheme */
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            font-family: -apple-system, sans-serif; 
             background-color: #f4f7f9; 
             color: #333; 
             padding: 20px; 
@@ -18,7 +17,6 @@
         }
         .container { width: 100%; max-width: 600px; margin-top: 10px; }
         
-        /* Main Card Styling */
         .card { 
             background: #fff; 
             padding: 25px; 
@@ -29,13 +27,11 @@
             min-height: 250px;
         }
         
-        /* Test Header */
         .q-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: bold; }
         #q-number { color: #d9534f; font-size: 1.1rem; }
         #q-category { color: #5cb85c; font-size: 0.95rem; }
         .question-text { font-size: 1.25rem; margin-bottom: 25px; line-height: 1.4; color: #1a1a1a; font-weight: 600; }
         
-        /* Answer Options */
         .option-btn { 
             background: #fff; 
             color: #007bff; 
@@ -47,11 +43,9 @@
             text-align: left; 
             cursor: pointer; 
             font-size: 1.05rem; 
-            transition: background 0.2s, border-color 0.2s;
         }
         .option-btn.selected { border-color: #007bff; background: #e7f2ff; border-width: 2px; }
 
-        /* Summary View Styling */
         #summary-ui { display: none; text-align: center; }
         .status-icon { font-size: 3.5rem; margin-bottom: 10px; display: block; }
         .status-text { font-size: 2rem; font-weight: bold; margin-bottom: 15px; }
@@ -60,7 +54,6 @@
         .score-display { font-size: 3.8rem; font-weight: bold; margin: 10px 0; color: #1a1a1a; }
         .percent-line { font-size: 1.2rem; color: #7f8c8d; margin-bottom: 30px; }
 
-        /* Navigation Buttons */
         .nav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .btn { 
             background: #bdc3c7; 
@@ -71,12 +64,11 @@
             cursor: pointer; 
             font-weight: bold; 
             text-transform: uppercase; 
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
         }
         .btn-blue { background: #007bff; color: #fff; }
-        .btn:active { opacity: 0.8; }
+        .btn-full { grid-column: span 2; }
 
-        /* Resume Session Modal */
         #resume-modal { 
             display: none; 
             position: fixed; 
@@ -87,7 +79,7 @@
             align-items: center; 
             z-index: 100; 
         }
-        .modal-content { background: #fff; padding: 30px; border-radius: 20px; text-align: center; max-width: 85%; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .modal-content { background: #fff; padding: 30px; border-radius: 20px; text-align: center; max-width: 85%; }
 
         .v-tag { position: fixed; bottom: 8px; right: 12px; font-family: monospace; font-size: 0.65rem; color: #bdc3c7; }
     </style>
@@ -118,7 +110,7 @@
                 <button class="btn" onclick="changeQuestion(-1)">< BACK</button>
                 <button class="btn" onclick="changeQuestion(1)">NEXT ></button>
                 <button id="flag-btn" class="btn" onclick="toggleFlag()">FLAG</button>
-                <button class="btn" onclick="showSummary()">FINISH</button>
+                <button id="finish-btn" class="btn" onclick="showSummary()">FINISH</button>
             </div>
         </div>
 
@@ -130,15 +122,17 @@
                 <div id="res-percent" class="percent-line"></div>
             </div>
             
-            <div class="nav-grid" style="grid-template-columns: 1fr;">
-                <button class="btn btn-blue" onclick="restartTest()">RESTART (Main Menu)</button>
-                <button class="btn" onclick="continueLater()">CONTINUE LATER</button>
-                <button class="btn" onclick="reviewAnswers()">REVIEW</button>
+            <div class="nav-grid">
+                <button id="review-flagged-btn" class="btn btn-blue" onclick="reviewSubset('flagged')">Review Flagged</button>
+                <button id="review-skipped-btn" class="btn btn-blue" onclick="reviewSubset('skipped')">Review Skipped</button>
+                <button class="btn btn-blue btn-full" onclick="restartTest()">RESTART (Main Menu)</button>
+                <button class="btn" onclick="continueLater()">SAVE & EXIT</button>
+                <button class="btn" onclick="reviewAnswers()">DETAILED REVIEW</button>
             </div>
         </div>
     </div>
 
-    <span class="v-tag">v1.7.1</span>
+    <span class="v-tag">v1.8.0</span>
     <script src="script.js"></script>
 </body>
 </html>
