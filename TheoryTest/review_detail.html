@@ -7,7 +7,6 @@
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; color: #333; padding: 0; margin: 0; }
         
-        /* Sticky Header */
         .sticky-nav { 
             position: sticky; top: 0; z-index: 1000;
             background: rgba(255, 255, 255, 0.95);
@@ -21,24 +20,23 @@
         
         .q-card { background: #fff; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #e1e8ed; position: relative; }
         
-        /* New Header Style */
-        .q-header-row { display: flex; justify-content: space-between; font-size: 1rem; margin-bottom: 12px; font-weight: bold; }
-        .q-label { color: #000; } /* Question number in Black */
+        /* Header row purely for the Status */
+        .q-status-row { display: flex; justify-content: flex-end; font-size: 0.9rem; margin-bottom: 5px; font-weight: bold; }
         
         /* Color Coding for Status */
         .status-correct { color: #5cb85c; }
         .status-wrong { color: #d9534f; }
         .status-skipped { color: #f1c40f; }
 
+        /* Integrated Q# and Text */
         .question-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; line-height: 1.4; color: #1a1a1a; }
+        .q-num-label { color: #000; margin-right: 5px; }
 
-        /* Answer Rows */
         .ans-row { padding: 12px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #f1f1f1; font-size: 0.95rem; }
         .ans-correct { background: #e8f5e9; border-color: #a5d6a7; color: #2e7d32; }
         .ans-wrong { background: #ffebee; border-color: #ef9a9a; color: #c62828; }
         .ans-selected { border-width: 2px; }
 
-        /* Footer ID */
         .q-footer { display: flex; justify-content: flex-end; margin-top: 10px; }
         .id-tag { font-size: 0.7rem; color: #000; font-family: sans-serif; }
 
@@ -58,7 +56,7 @@
 
     <div class="container" id="review-container"></div>
 
-    <span class="v-tag">v1.1 (Review Detail)</span>
+    <span class="v-tag">v1.2 (Review Detail)</span>
 
     <script>
         function initDetail() {
@@ -81,7 +79,6 @@
                 const card = document.createElement('div');
                 card.className = 'q-card';
 
-                // Logic for Status and Color
                 let statusText = "SKIPPED";
                 let statusClass = "status-skipped";
                 if (userAns) {
@@ -90,11 +87,12 @@
                 }
 
                 card.innerHTML = `
-                    <div class="q-header-row">
-                        <span class="q-label">Q${displayCount}:</span>
+                    <div class="q-status-row">
                         <span class="${statusClass}">${statusText}</span>
                     </div>
-                    <div class="question-text">${q.question}</div>
+                    <div class="question-text">
+                        <span class="q-num-label">Q${displayCount}:</span> ${q.question}
+                    </div>
                     <div id="answers-${q.id}"></div>
                     <div class="q-footer">
                         <span class="id-tag">ID: ${q.id}</span>
