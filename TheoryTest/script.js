@@ -1,4 +1,4 @@
-/* script.js - Ver 1.6.9 - Summary View & Navigation Logic */
+/* script.js - Ver 1.7.1 - Corrected Finish Link */
 let allQuestions = [];
 let sessionQuestions = [];
 let currentIndex = 0;
@@ -40,6 +40,7 @@ function resumeTest(shouldResume) {
 }
 
 function renderQuestion() {
+    if (!sessionQuestions[currentIndex]) return;
     const q = sessionQuestions[currentIndex];
     if (!testData.seenIndices.includes(currentIndex)) testData.seenIndices.push(currentIndex);
     
@@ -88,11 +89,9 @@ function saveProgress() {
     }));
 }
 
-/* Summary View Logic */
 function showSummary() {
     document.getElementById('test-ui').style.display = 'none';
-    const summaryUI = document.getElementById('summary-ui');
-    summaryUI.style.display = 'block';
+    document.getElementById('summary-ui').style.display = 'block';
 
     let correct = 0;
     let totalSeen = testData.seenIndices.length;
@@ -105,14 +104,17 @@ function showSummary() {
     const percent = totalSeen > 0 ? Math.round((correct / totalSeen) * 100) : 0;
     const passed = percent >= 86;
 
-    document.getElementById('res-icon').innerHTML = passed ? "✔️" : "❌";
-    document.getElementById('res-icon').className = `status-icon ${passed ? 'pass' : 'fail'}`;
-    document.getElementById('res-status').innerHTML = passed ? "Passed" : "Failed";
-    document.getElementById('res-status').className = `status-text ${passed ? 'pass' : 'fail'}`;
+    const iconBox = document.getElementById('res-icon');
+    iconBox.innerHTML = passed ? "✔️" : "❌";
+    iconBox.className = `status-icon ${passed ? 'pass' : 'fail'}`;
+
+    const statusBox = document.getElementById('res-status');
+    statusBox.innerText = passed ? "Passed" : "Failed";
+    statusBox.className = `status-text ${passed ? 'pass' : 'fail'}`;
+
     document.getElementById('res-score').innerText = `${correct} / ${totalSeen}`;
     document.getElementById('res-percent').innerText = `${percent}% (Pass: 86%)`;
 
-    // Final data save for Review app
     localStorage.setItem('orion_final_results', JSON.stringify({
         questions: sessionQuestions,
         data: testData,
@@ -121,19 +123,17 @@ function showSummary() {
     }));
 }
 
-/* Navigation Options */
 function restartTest() {
-    localStorage.removeItem('orion_current_session'); // Clear progress
+    localStorage.removeItem('orion_current_session');
     window.location.href = 'mainmenu.html';
 }
 
 function continueLater() {
-    saveProgress(); // Keep current data
+    saveProgress();
     window.location.href = 'mainmenu.html';
 }
 
 function reviewAnswers() {
-    // This will open the review app we write later
     window.location.href = 'review.html';
 }
 
