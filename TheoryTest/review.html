@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Orion Drive - Review Results</title>
+    <style>
+        body { 
+            font-family: -apple-system, sans-serif; 
+            background-color: #f4f7f9; 
+            color: #333; 
+            padding: 20px; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .container { width: 100%; max-width: 600px; margin-top: 20px; }
+        
+        /* Orion Results Card */
+        .card { 
+            background: #fff; 
+            padding: 35px 25px; 
+            border-radius: 20px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            border: 1px solid #e1e8ed; 
+            margin-bottom: 25px; 
+            text-align: center;
+        }
+
+        .status-icon { font-size: 3.5rem; margin-bottom: 10px; display: block; }
+        .status-text { font-size: 2.2rem; font-weight: bold; margin-bottom: 15px; }
+        .pass { color: #5cb85c; }
+        .fail { color: #d9534f; }
+        
+        .score-display { font-size: 4rem; font-weight: bold; margin: 15px 0; color: #1a1a1a; }
+        .percent-line { font-size: 1.2rem; color: #7f8c8d; margin-bottom: 10px; }
+
+        /* Navigation Menu */
+        .menu-grid { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        .btn { 
+            background: #bdc3c7; 
+            color: #2c3e50; 
+            border: none; 
+            padding: 20px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            font-size: 1rem; 
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .btn-blue { background: #007bff; color: #fff; }
+        .btn:active { transform: scale(0.98); opacity: 0.9; }
+
+        .v-tag { position: fixed; bottom: 8px; right: 12px; font-family: monospace; font-size: 0.65rem; color: #bdc3c7; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div id="res-icon" class="status-icon"></div>
+            <div id="res-status" class="status-text"></div>
+            <div id="res-score" class="score-display">-- / --</div>
+            <div id="res-percent" class="percent-line">--% (Pass: 86%)</div>
+        </div>
+
+        <div class="menu-grid">
+            <button class="btn btn-blue" onclick="startReview('all')">Review All Questions</button>
+            <button class="btn btn-blue" onclick="startReview('wrong')">Review Wrong Answers</button>
+            <button class="btn" onclick="exitToMenu()">Back to Main Menu</button>
+        </div>
+    </div>
+
+    <span class="v-tag">v1.0.0 (Review)</span>
+
+    <script>
+        let finalResults = null;
+
+        function initReview() {
+            const data = localStorage.getItem('orion_final_results');
+            if (!data) {
+                alert("No test results found.");
+                window.location.href = 'mainmenu.html';
+                return;
+            }
+
+            finalResults = JSON.parse(data);
+            renderSummary();
+        }
+
+        function renderSummary() {
+            const score = finalResults.score;
+            const total = finalResults.total;
+            const percent = Math.round((score / total) * 100);
+            const passed = percent >= 86; // DVSA Pass Rate
+
+            const iconBox = document.getElementById('res-icon');
+            iconBox.innerHTML = passed ? "✔️" : "❌";
+            iconBox.className = `status-icon ${passed ? 'pass' : 'fail'}`;
+
+            const statusBox = document.getElementById('res-status');
+            statusBox.innerText = passed ? "Passed" : "Failed";
+            statusBox.className = `status-text ${passed ? 'pass' : 'fail'}`;
+
+            document.getElementById('res-score').innerText = `${score} / ${total}`;
+            document.getElementById('res-percent').innerText = `${percent}% (Pass: 86%)`;
+        }
+
+        function startReview(mode) {
+            // We will save the mode preference to local storage
+            // This tells our next app whether to show all questions or just the wrong ones
+            localStorage.setItem('orion_review_mode', mode);
+            
+            // For now, this points to the detailed review app we will write next
+            window.location.href = 'review_detail.html';
+        }
+
+        function exitToMenu() {
+            // Clears all temporary test data before exiting
+            localStorage.removeItem('orion_current_session');
+            localStorage.removeItem('orion_final_results');
+            window.location.href = 'mainmenu.html';
+        }
+
+        window.onload = initReview;
+    </script>
+</body>
+</html>
