@@ -7,7 +7,7 @@
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; color: #333; padding: 0; margin: 0; }
         
-        /* Floating Sticky Header */
+        /* Sticky Header */
         .sticky-nav { 
             position: sticky; top: 0; z-index: 1000;
             background: rgba(255, 255, 255, 0.95);
@@ -15,30 +15,33 @@
             border-bottom: 1px solid #e1e8ed;
             padding: 10px;
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .container { padding: 15px; max-width: 600px; margin: 0 auto; }
         
-        /* Question Cards */
-        .q-card { background: #fff; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #e1e8ed; }
+        .q-card { background: #fff; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #e1e8ed; position: relative; }
         
-        .q-meta { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 10px; }
-        .q-id { color: #7f8c8d; font-family: monospace; } /* ID for JSON verification */
-        .q-status-tag { font-weight: bold; text-transform: uppercase; }
+        /* New Header Style */
+        .q-header-row { display: flex; justify-content: space-between; font-size: 1rem; margin-bottom: 12px; font-weight: bold; }
+        .q-label { color: #000; } /* Question number in Black */
+        
+        /* Color Coding for Status */
+        .status-correct { color: #5cb85c; }
+        .status-wrong { color: #d9534f; }
+        .status-skipped { color: #f1c40f; }
 
-        .question-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; line-height: 1.4; }
+        .question-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; line-height: 1.4; color: #1a1a1a; }
 
-        /* Answer Styles */
+        /* Answer Rows */
         .ans-row { padding: 12px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #f1f1f1; font-size: 0.95rem; }
         .ans-correct { background: #e8f5e9; border-color: #a5d6a7; color: #2e7d32; }
         .ans-wrong { background: #ffebee; border-color: #ef9a9a; color: #c62828; }
         .ans-selected { border-width: 2px; }
 
-        /* Icon Styles */
-        .flag-icon { color: #f1c40f; font-weight: bold; }
+        /* Footer ID */
+        .q-footer { display: flex; justify-content: flex-end; margin-top: 10px; }
+        .id-tag { font-size: 0.7rem; color: #000; font-family: sans-serif; }
 
-        /* Buttons */
         .btn { border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 0.75rem; text-transform: uppercase; }
         .btn-red { background: #f8d7da; color: #721c24; }
         .btn-grey { background: #e2e3e5; color: #383d41; }
@@ -49,14 +52,13 @@
 <body>
 
     <div class="sticky-nav">
-        <button class="btn btn-grey" onclick="exitReview(false)">Save & Exit</button>
-        <button class="btn btn-red" onclick="exitReview(true)">Clear & Exit</button>
+        <button class="btn btn-grey" onclick="exitReview(false)">SAVE & EXIT</button>
+        <button class="btn btn-red" onclick="exitReview(true)">CLEAR & EXIT</button>
     </div>
 
-    <div class="container" id="review-container">
-        </div>
+    <div class="container" id="review-container"></div>
 
-    <span class="v-tag">v1.0 (Review Detail)</span>
+    <span class="v-tag">v1.1 (Review Detail)</span>
 
     <script>
         function initDetail() {
@@ -67,40 +69,41 @@
             const results = JSON.parse(rawData);
             const container = document.getElementById('review-container');
             
+            let displayCount = 1;
+
             results.questions.forEach((q, idx) => {
                 const userAns = results.data.selections[q.id];
                 const isCorrect = userAns === q.correct;
-                const isFlagged = results.data.flagged.includes(q.id);
                 const isSeen = results.data.seenIndices.includes(idx);
 
-                // If "Review Wrong" mode, skip correctly answered seen questions
                 if (mode === 'wrong' && (isCorrect || !isSeen)) return;
 
                 const card = document.createElement('div');
                 card.className = 'q-card';
 
-                // Determine Status Label
-                let statusLabel = "Skipped";
-                let statusColor = "#7f8c8d";
+                // Logic for Status and Color
+                let statusText = "SKIPPED";
+                let statusClass = "status-skipped";
                 if (userAns) {
-                    if (isCorrect) { statusLabel = "Correct"; statusColor = "#5cb85c"; }
-                    else { statusLabel = "Wrong"; statusColor = "#d9534f"; }
+                    if (isCorrect) { statusText = "CORRECT"; statusClass = "status-correct"; }
+                    else { statusText = "WRONG"; statusClass = "status-wrong"; }
                 }
 
                 card.innerHTML = `
-                    <div class="q-meta">
-                        <span class="q-id">JSON ID: ${q.id}</span>
-                        <span>
-                            ${isFlagged ? '<span class="flag-icon">🚩 FLAG</span> | ' : ''}
-                            <span class="q-status-tag" style="color:${statusColor}">${statusLabel}</span>
-                        </span>
+                    <div class="q-header-row">
+                        <span class="q-label">Q${displayCount}:</span>
+                        <span class="${statusClass}">${statusText}</span>
                     </div>
                     <div class="question-text">${q.question}</div>
                     <div id="answers-${q.id}"></div>
+                    <div class="q-footer">
+                        <span class="id-tag">ID: ${q.id}</span>
+                    </div>
                 `;
 
                 container.appendChild(card);
                 renderAnswers(`answers-${q.id}`, q, userAns);
+                displayCount++;
             });
         }
 
@@ -108,7 +111,6 @@
             const div = document.getElementById(divId);
             ["A", "B", "C", "D"].forEach(letter => {
                 if (!q.choices[letter]) return;
-                
                 const isCorrect = letter === q.correct;
                 const isUserChoice = letter === userAns;
                 
