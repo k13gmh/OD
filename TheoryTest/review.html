@@ -3,56 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Orion Drive - Review Results</title>
+    <title>Orion Drive - Performance Review</title>
     <style>
-        body { 
-            font-family: -apple-system, sans-serif; 
-            background-color: #f4f7f9; 
-            color: #333; 
-            padding: 20px; 
-            margin: 0; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-        }
-        .container { width: 100%; max-width: 600px; margin-top: 20px; }
+        body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; color: #333; padding: 20px; margin: 0; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 600px; margin-top: 10px; }
         
-        /* Orion Results Card */
-        .card { 
-            background: #fff; 
-            padding: 35px 25px; 
-            border-radius: 20px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            border: 1px solid #e1e8ed; 
-            margin-bottom: 25px; 
-            text-align: center;
-        }
-
-        .status-icon { font-size: 3.5rem; margin-bottom: 10px; display: block; }
-        .status-text { font-size: 2.2rem; font-weight: bold; margin-bottom: 15px; }
+        .card { background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 20px; }
+        
+        /* Results Header */
+        .res-header { text-align: center; border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 20px; }
+        .status-text { font-size: 2.2rem; font-weight: bold; margin: 10px 0; }
         .pass { color: #5cb85c; }
         .fail { color: #d9534f; }
-        
-        .score-display { font-size: 4rem; font-weight: bold; margin: 15px 0; color: #1a1a1a; }
-        .percent-line { font-size: 1.2rem; color: #7f8c8d; margin-bottom: 10px; }
+        .score-big { font-size: 3.5rem; font-weight: bold; display: block; }
 
-        /* Navigation Menu */
-        .menu-grid { display: flex; flex-direction: column; gap: 12px; width: 100%; }
-        .btn { 
-            background: #bdc3c7; 
-            color: #2c3e50; 
-            border: none; 
-            padding: 20px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            font-size: 1rem; 
-            transition: all 0.2s;
-            text-align: center;
-        }
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .stat-box { background: #f8fafc; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #edf2f7; }
+        .stat-label { font-size: 0.8rem; color: #7f8c8d; text-transform: uppercase; display: block; margin-bottom: 5px; }
+        .stat-val { font-size: 1.2rem; font-weight: bold; color: #2d3748; }
+
+        /* Category Breakdown */
+        .cat-list { text-align: left; }
+        .cat-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f1f1f1; }
+        .cat-name { font-size: 0.95rem; font-weight: 500; color: #4a5568; }
+        .cat-score { font-weight: bold; font-size: 0.95rem; }
+        .good { color: #5cb85c; }
+        .bad { color: #d9534f; }
+
+        /* Menu Buttons */
+        .menu-grid { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+        .btn { background: #bdc3c7; color: #2c3e50; border: none; padding: 18px; border-radius: 12px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; }
         .btn-blue { background: #007bff; color: #fff; }
-        .btn:active { transform: scale(0.98); opacity: 0.9; }
 
         .v-tag { position: fixed; bottom: 8px; right: 12px; font-family: monospace; font-size: 0.65rem; color: #bdc3c7; }
     </style>
@@ -61,10 +43,35 @@
 
     <div class="container">
         <div class="card">
-            <div id="res-icon" class="status-icon"></div>
-            <div id="res-status" class="status-text"></div>
-            <div id="res-score" class="score-display">-- / --</div>
-            <div id="res-percent" class="percent-line">--% (Pass: 86%)</div>
+            <div class="res-header">
+                <div id="res-status" class="status-text">--</div>
+                <span id="res-score-big" class="score-big">0 / 0</span>
+                <span id="res-percent" style="color:#7f8c8d;">0% (Pass: 86%)</span>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-label">Answered</span>
+                    <span id="stat-answered" class="stat-val">0 / 0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Skipped</span>
+                    <span id="stat-skipped" class="stat-val">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Correct</span>
+                    <span id="stat-correct" class="stat-val" style="color:#5cb85c;">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Wrong</span>
+                    <span id="stat-wrong" class="stat-val" style="color:#d9534f;">0</span>
+                </div>
+            </div>
+
+            <div class="cat-list">
+                <h4 style="margin: 0 0 10px 0; font-size: 0.9rem; color: #a0aec0;">CATEGORY ANALYSIS</h4>
+                <div id="category-data"></div>
+            </div>
         </div>
 
         <div class="menu-grid">
@@ -74,52 +81,86 @@
         </div>
     </div>
 
-    <span class="v-tag">v1.0.0 (Review)</span>
+    <span class="v-tag">v1.1 (Review)</span>
 
     <script>
-        let finalResults = null;
-
         function initReview() {
-            const data = localStorage.getItem('orion_final_results');
-            if (!data) {
-                alert("No test results found.");
-                window.location.href = 'mainmenu.html';
-                return;
-            }
+            const rawData = localStorage.getItem('orion_final_results');
+            if (!rawData) { window.location.href = 'mainmenu.html'; return; }
+            
+            const results = JSON.parse(rawData);
+            const data = results.data;
+            const questions = results.questions;
 
-            finalResults = JSON.parse(data);
-            renderSummary();
-        }
+            let correct = 0;
+            let wrong = 0;
+            let skipped = 0;
+            let categoryStats = {};
 
-        function renderSummary() {
-            const score = finalResults.score;
-            const total = finalResults.total;
-            const percent = Math.round((score / total) * 100);
-            const passed = percent >= 86; // DVSA Pass Rate
+            // Calculate Metrics
+            questions.forEach((q, idx) => {
+                const userAns = data.selections[q.id];
+                const isSeen = data.seenIndices.includes(idx);
+                
+                // Initialize category tracking
+                if (!categoryStats[q.category]) {
+                    categoryStats[q.category] = { correct: 0, total: 0 };
+                }
+                
+                if (isSeen) {
+                    categoryStats[q.category].total++;
+                    if (userAns) {
+                        if (userAns === q.correct) {
+                            correct++;
+                            categoryStats[q.category].correct++;
+                        } else {
+                            wrong++;
+                        }
+                    } else {
+                        skipped++;
+                    }
+                }
+            });
 
-            const iconBox = document.getElementById('res-icon');
-            iconBox.innerHTML = passed ? "✔️" : "❌";
-            iconBox.className = `status-icon ${passed ? 'pass' : 'fail'}`;
+            const totalSeen = data.seenIndices.length;
+            const percent = totalSeen > 0 ? Math.round((correct / totalSeen) * 100) : 0;
+            const passed = percent >= 86;
 
-            const statusBox = document.getElementById('res-status');
-            statusBox.innerText = passed ? "Passed" : "Failed";
-            statusBox.className = `status-text ${passed ? 'pass' : 'fail'}`;
-
-            document.getElementById('res-score').innerText = `${score} / ${total}`;
+            // UI Updates
+            const statusEl = document.getElementById('res-status');
+            statusEl.innerText = passed ? "Passed" : "Failed";
+            statusEl.className = `status-text ${passed ? 'pass' : 'fail'}`;
+            
+            document.getElementById('res-score-big').innerText = `${correct} / ${totalSeen}`;
             document.getElementById('res-percent').innerText = `${percent}% (Pass: 86%)`;
+            
+            document.getElementById('stat-answered').innerText = `${correct + wrong} / ${totalSeen}`;
+            document.getElementById('stat-skipped').innerText = skipped;
+            document.getElementById('stat-correct').innerText = correct;
+            document.getElementById('stat-wrong').innerText = wrong;
+
+            // Category Breakdown
+            const catArea = document.getElementById('category-data');
+            catArea.innerHTML = "";
+            for (let cat in categoryStats) {
+                const c = categoryStats[cat];
+                const catPerc = Math.round((c.correct / c.total) * 100);
+                const div = document.createElement('div');
+                div.className = 'cat-item';
+                div.innerHTML = `
+                    <span class="cat-name">${cat}</span>
+                    <span class="cat-score ${catPerc >= 86 ? 'good' : 'bad'}">${catPerc}%</span>
+                `;
+                catArea.appendChild(div);
+            }
         }
 
         function startReview(mode) {
-            // We will save the mode preference to local storage
-            // This tells our next app whether to show all questions or just the wrong ones
             localStorage.setItem('orion_review_mode', mode);
-            
-            // For now, this points to the detailed review app we will write next
             window.location.href = 'review_detail.html';
         }
 
         function exitToMenu() {
-            // Clears all temporary test data before exiting
             localStorage.removeItem('orion_current_session');
             localStorage.removeItem('orion_final_results');
             window.location.href = 'mainmenu.html';
