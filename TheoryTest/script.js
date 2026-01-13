@@ -1,4 +1,4 @@
-const SCRIPT_VERSION = "v1.8.8";
+const SCRIPT_VERSION = "v1.8.9";
 
 if (!sessionStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -9,11 +9,7 @@ let sessionQuestions = [];
 let currentIndex = 0;
 let originalSessionQuestions = []; 
 
-let testData = {
-    selections: {},
-    flagged: [],
-    seenIndices: []
-};
+let testData = { selections: {}, flagged: [], seenIndices: [] };
 
 async function init() {
     const tag = document.getElementById('v-tag-top');
@@ -24,9 +20,7 @@ async function init() {
         const saved = localStorage.getItem('orion_current_session');
         if (saved) {
             document.getElementById('resume-modal').style.display = 'flex';
-        } else {
-            startFreshSession();
-        }
+        } else { startFreshSession(); }
     } catch (e) { console.error("Load fail", e); }
 }
 
@@ -63,18 +57,13 @@ function renderQuestion() {
         btn.className = 'option-btn';
         if (testData.selections[q.id] === letter) btn.classList.add('selected');
         btn.innerText = `${letter}: ${q.choices[letter]}`;
-        btn.onclick = () => selectOption(q.id, letter);
+        btn.onclick = () => { testData.selections[q.id] = letter; renderQuestion(); };
         optionsArea.appendChild(btn);
     });
     const flagBtn = document.getElementById('flag-btn');
     flagBtn.style.background = testData.flagged.includes(q.id) ? "#f1c40f" : "#bdc3c7";
     flagBtn.style.color = testData.flagged.includes(q.id) ? "#fff" : "#444";
     saveProgress();
-}
-
-function selectOption(qId, letter) {
-    testData.selections[qId] = letter;
-    renderQuestion();
 }
 
 function toggleFlag() {
@@ -97,25 +86,19 @@ function changeQuestion(step) {
 function showSummary() {
     document.getElementById('test-ui').style.display = 'none';
     document.getElementById('summary-ui').style.display = 'block';
-    let score = 0;
+    
     let answeredCount = 0;
+    let score = 0;
     originalSessionQuestions.forEach(q => {
         if (testData.selections[q.id]) {
             answeredCount++;
             if (testData.selections[q.id] === q.correct) score++;
         }
     });
+
     const total = originalSessionQuestions.length;
     const skippedCount = total - answeredCount;
     const percent = Math.round((score / total) * 100);
-    const passed = percent >= 86;
-
-    document.getElementById('res-icon').innerHTML = passed ? "✔️" : "❌";
-    document.getElementById('res-icon').className = `status-icon ${passed ? 'pass' : 'fail'}`;
-    document.getElementById('res-status').innerText = passed ? "PASSED" : "FAILED";
-    document.getElementById('res-status').className = `status-text ${passed ? 'pass' : 'fail'}`;
-    document.getElementById('res-score').innerText = `${score} / ${total}`;
-    document.getElementById('res-percent').innerText = `${percent}% (Pass: 86%)`;
 
     const flagBtn = document.getElementById('review-flagged-btn');
     flagBtn.innerText = `FLAGGED (${testData.flagged.length})`;
@@ -127,7 +110,10 @@ function showSummary() {
     skipBtn.style.opacity = skippedCount > 0 ? "1" : "0.5";
     skipBtn.onclick = skippedCount > 0 ? reviewSkipped : null;
 
-    localStorage.setItem('orion_final_results', JSON.stringify({ score, total, questions: originalSessionQuestions, data: testData }));
+    // Saving final stats to be picked up by the Review (Analysis) screen
+    localStorage.setItem('orion_final_results', JSON.stringify({ 
+        score, total, percent, questions: originalSessionQuestions, data: testData 
+    }));
 }
 
 function reviewFlagged() {
