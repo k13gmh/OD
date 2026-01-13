@@ -1,8 +1,26 @@
+/* Orion Drive - Theory Engine
+   Version: 1.9.0
+*/
+
+const APP_VERSION = "1.9.0"; 
+
+/* --- 1. ENFORCED GATEKEEPER --- */
+// This ensures the file only runs if called from Main Menu
+const launchToken = localStorage.getItem('orion_launch_token');
+if (!launchToken) {
+    // No token? Boot back to menu
+    window.location.href = 'mainmenu.html';
+} else {
+    // Token found! Delete it immediately so it can't be reused or bookmarked
+    localStorage.removeItem('orion_launch_token');
+}
+
+/* --- 2. GLOBAL VARIABLES --- */
 let allQuestions = [];
 let sessionQuestions = [];
 let currentIndex = 0;
 let originalSessionQuestions = []; 
-let isSubsetReview = false; // Tracks if we are looking at a filtered list
+let isSubsetReview = false; 
 
 let testData = {
     selections: {},
@@ -10,11 +28,18 @@ let testData = {
     seenIndices: []
 };
 
+/* --- 3. INITIALIZATION --- */
 async function init() {
     try {
         const response = await fetch('questions.json');
-        allQuestions = await response.json();
+        const rawData = await response.json();
         
+        // Support both simple arrays and metadata-wrapped JSON
+        allQuestions = rawData.questions || rawData;
+        const jsonVersion = rawData.metadata ? rawData.metadata.version : "Unknown";
+
+        checkVersion(jsonVersion);
+
         const saved = localStorage.getItem('orion_current_session');
         if (saved) {
             document.getElementById('resume-modal').style.display = 'flex';
@@ -23,10 +48,25 @@ async function init() {
         }
     } catch (e) {
         console.error("Failed to load questions", e);
+        alert("Error loading question database.");
     }
 }
 
+function checkVersion(jsonVersion) {
+    const tag = document.querySelector('.v-tag');
+    if (tag) {
+        if (jsonVersion !== APP_VERSION) {
+            tag.style.color = "#d9534f"; // Red for mismatch
+            tag.innerText = `v${APP_VERSION} (JSON: v${jsonVersion})`;
+        } else {
+            tag.innerText = `v${APP_VERSION}`;
+        }
+    }
+}
+
+/* --- 4. SESSION MANAGEMENT --- */
 function startFreshSession() {
+    // Shuffle and pick 50 random questions
     sessionQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 50);
     originalSessionQuestions = [...sessionQuestions];
     currentIndex = 0;
@@ -50,12 +90,26 @@ function resumeTest(shouldResume) {
     }
 }
 
+/* --- 5. CORE RENDERING --- */
 function renderQuestion() {
     const q = sessionQuestions[currentIndex];
+    
+    // IMAGE SYSTEM
+    // Automatically looks for images/ID.jpg
+    const imgContainer = document.getElementById('image-container');
+    const qImg = document.getElementById('q-image');
+    if (imgContainer && qImg) {
+        qImg.src = `images/${q.id}.jpg`;
+        qImg.onload = () => imgContainer.style.display = 'block';
+        qImg.onerror = () => imgContainer.style.display = 'none';
+    }
+
+    // Update Header
     document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
     document.getElementById('q-category').innerText = q.category;
     document.getElementById('q-text').innerText = q.question;
     
+    // Render Options
     const optionsArea = document.getElementById('options-area');
     optionsArea.innerHTML = '';
     
@@ -69,17 +123,19 @@ function renderQuestion() {
         optionsArea.appendChild(btn);
     });
 
+    // Update Flag Button Color
     const flagBtn = document.getElementById('flag-btn');
     flagBtn.style.background = testData.flagged.includes(q.id) ? "#f1c40f" : "#bdc3c7";
     flagBtn.style.color = testData.flagged.includes(q.id) ? "#fff" : "#444";
     
-    // Change Finish button text if in subset review
+    // Toggle Finish Button Text
     const finishBtn = document.getElementById('finish-btn');
     finishBtn.innerText = isSubsetReview ? "EXIT REVIEW" : "FINISH";
 
     saveProgress();
 }
 
+/* --- 6. USER ACTIONS --- */
 function selectOption(qId, letter) {
     testData.selections[qId] = letter;
     renderQuestion();
@@ -106,8 +162,9 @@ function changeQuestion(step) {
     }
 }
 
+/* --- 7. SUMMARY & RESULTS --- */
 function showSummary() {
-    // When returning from a subset, restore the full list for accurate scoring
+    // If we were reviewing a subset, revert to the full list for the final score
     sessionQuestions = [...originalSessionQuestions];
     isSubsetReview = false;
 
@@ -123,6 +180,7 @@ function showSummary() {
     const percent = Math.round((score / total) * 100);
     const passed = percent >= 86;
 
+    // Update Score UI
     document.getElementById('res-icon').innerHTML = passed ? "✔️" : "❌";
     document.getElementById('res-icon').className = `status-icon ${passed ? 'pass' : 'fail'}`;
     document.getElementById('res-status').innerText = passed ? "Passed" : "Failed";
@@ -130,7 +188,7 @@ function showSummary() {
     document.getElementById('res-score').innerText = `${score} / ${total}`;
     document.getElementById('res-percent').innerText = `${percent}% (Pass: 86%)`;
 
-    // Manage Review Buttons
+    // Manage Review Buttons (Flagged/Skipped)
     const flaggedCount = testData.flagged.length;
     const skippedCount = total - Object.keys(testData.selections).length;
 
@@ -142,6 +200,7 @@ function showSummary() {
     sBtn.style.display = skippedCount > 0 ? "block" : "none";
     sBtn.innerText = `Skipped (${skippedCount})`;
 
+    // Save final state for detailed review page
     localStorage.setItem('orion_final_results', JSON.stringify({
         score, total, questions: originalSessionQuestions, data: testData
     }));
@@ -166,6 +225,7 @@ function reviewSubset(type) {
     renderQuestion();
 }
 
+/* --- 8. STORAGE --- */
 function saveProgress() {
     localStorage.setItem('orion_current_session', JSON.stringify({
         questions: originalSessionQuestions,
@@ -188,4 +248,5 @@ function reviewAnswers() {
     window.location.href = 'review.html';
 }
 
+// Start Engine
 init();
