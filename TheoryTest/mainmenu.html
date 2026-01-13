@@ -3,39 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>OrionDrive - Main Menu</title>
+    <title>Orion Drive - Main Menu</title>
     <style>
-        body { 
-            font-family: -apple-system, sans-serif; 
-            background-color: #000; 
-            color: #e0e0e0; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 20px; 
-            margin: 0; 
-            min-height: 100vh; 
-        }
-        .container { 
-            text-align: center; 
-            width: 100%; 
-            max-width: 400px; 
-            margin-top: 50px; 
-        }
+        body { font-family: -apple-system, sans-serif; background-color: #000; color: #e0e0e0; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; min-height: 100vh; }
+        .container { text-align: center; width: 100%; max-width: 400px; margin-top: 50px; }
         
         /* Main Header */
         h1 { color: #fff; margin-bottom: 5px; letter-spacing: 2px; font-weight: bold; }
         
-        /* Sub Header - Bold White */
+        /* Sub Header - Now Bold White */
         h2 { color: #ffffff; margin-top: 0; font-weight: bold; font-size: 1.2rem; margin-bottom: 5px; }
         
-        #status-msg { 
-            color: #28a745; 
-            font-size: 0.85rem; 
-            margin-bottom: 20px; 
-            font-weight: bold; 
-            display: none; 
-        }
+        #status-msg { color: #28a745; font-size: 0.85rem; margin-bottom: 20px; font-weight: bold; display: none; }
         
         .menu-box { 
             background: #1c1c1e; 
@@ -44,54 +23,19 @@
             border: 1px solid #2c2c2e; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
             box-sizing: border-box; 
-            position: relative; 
+            position: relative; /* Container for version tag */
             min-height: 180px;
         }
         
-        .lock-screen input { 
-            background: #000; 
-            border: 1px solid #444; 
-            color: #007bff; 
-            padding: 12px; 
-            font-size: 1.2rem; 
-            width: 100%; 
-            box-sizing: border-box; 
-            text-align: center; 
-            border-radius: 8px; 
-            margin-bottom: 15px; 
-            font-family: monospace; 
-        }
+        .lock-screen input { background: #000; border: 1px solid #444; color: #007bff; padding: 12px; font-size: 1.2rem; width: 100%; box-sizing: border-box; text-align: center; border-radius: 8px; margin-bottom: 15px; font-family: monospace; }
         
-        .btn { 
-            background: #007bff; 
-            color: #fff; 
-            border: none; 
-            padding: 15px 0; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            width: 100%; 
-            margin-top: 10px; 
-            display: block; 
-            text-decoration: none; 
-            box-sizing: border-box; 
-        }
+        .btn { background: #007bff; color: #fff; border: none; padding: 15px 0; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; margin-top: 10px; display: block; text-decoration: none; box-sizing: border-box; }
         
         .btn-locked { background: #333; cursor: not-allowed; color: #666; }
         
-        #debug-box { 
-            margin-top: 40px; 
-            padding: 15px; 
-            border: 1px dashed #444; 
-            font-family: monospace; 
-            font-size: 0.8rem; 
-            color: #8e8e93; 
-            width: 100%; 
-            box-sizing: border-box; 
-        }
+        #debug-box { margin-top: 40px; padding: 15px; border: 1px dashed #444; font-family: monospace; font-size: 0.8rem; color: #8e8e93; width: 100%; box-sizing: border-box; }
         
-        /* Version Tag Style - Discrete Grey */
+        /* Visible Version Tag */
         .v-tag { 
             position: absolute; 
             bottom: 10px; 
@@ -130,7 +74,6 @@
         const DEBUGZ = 1; 
         const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 
-        // Logic for monthly token calculation
         function calcKey() {
             const d = new Date(); 
             const s = new Date(Date.UTC(d.getFullYear(), d.getMonth(), 1, 0, 0, 0));
@@ -156,10 +99,7 @@
 
         function init() {
             const savedStamp = localStorage.getItem('gatekeeper_stamp');
-            // Check if existing stamp is valid for this month
             if (savedStamp === curMonthYear) { showMenu(); }
-            
-            // Show debug info if enabled
             if (DEBUGZ) { 
                 const db = document.getElementById('debug-box'); 
                 db.style.display = 'block'; 
@@ -170,7 +110,6 @@
         function verifyAccess() {
             const input = document.getElementById('passCode').value.toUpperCase();
             if (input === targetKey) { 
-                // Set the stamp that sub-apps like untimed.html will check
                 localStorage.setItem('gatekeeper_stamp', curMonthYear); 
                 showMenu(); 
             } else { 
