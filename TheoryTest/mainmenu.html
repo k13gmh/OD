@@ -58,7 +58,18 @@
             transition: background 0.2s;
         }
         .btn-secondary { background: #bdc3c7; color: #444; }
-        .btn:disabled { background: #dfe6e9; cursor: not-allowed; }
+        
+        /* Debug Styling */
+        .debug-box { 
+            margin-top: 20px; 
+            font-family: monospace; 
+            font-size: 0.75rem; 
+            color: #d9534f; 
+            background: #fff0f0; 
+            padding: 10px; 
+            border-radius: 10px;
+            border: 1px dashed #d9534f;
+        }
 
         #auth-section { display: block; }
         #menu-section { display: none; }
@@ -75,28 +86,43 @@
         <div id="auth-section" class="card">
             <div class="input-group">
                 <label>Enter Student Access Code</label>
-                <input type="text" id="access-code" placeholder="0000" maxlength="4">
+                <input type="number" id="access-code" placeholder="00000" maxlength="5">
             </div>
             <button class="btn" onclick="validateCode()">Unlock Tests</button>
+            
+            <div class="debug-box">
+                DEBUG: Expected Code for 
+                <span id="debug-date"></span> is 
+                <span id="debug-code" style="font-weight:bold; font-size: 1rem;"></span>
+            </div>
         </div>
 
         <div id="menu-section">
             <div class="card">
                 <button class="btn" onclick="launchTest('untimed.html')">Untimed Practice</button>
                 <button class="btn btn-secondary" onclick="launchTest('timed.html')">Timed Mock Test</button>
-                <button class="btn btn-secondary" disabled>Category Filter (Soon)</button>
+                <button class="btn btn-secondary" style="opacity:0.5" disabled>Category Filter</button>
             </div>
             <button class="btn btn-secondary" onclick="logout()">Change Access Code</button>
         </div>
     </div>
 
-    <span class="v-tag">v1.9.0</span>
+    <span class="v-tag">v1.9.1</span>
 
     <script>
-        const APP_VERSION = "1.9.0";
+        const APP_VERSION = "1.9.1";
 
-        // Check if already logged in on load
+        // Calculate expected values globally for debugging and validation
+        const now = new Date();
+        const mm = now.getMonth() + 1;
+        const yy = now.getFullYear() % 100;
+        const expectedCode = (mm + yy) * 11;
+
         window.onload = function() {
+            // Fill Debug Info
+            document.getElementById('debug-date').innerText = `${mm}/${yy}`;
+            document.getElementById('debug-code').innerText = expectedCode;
+
             const savedExpiry = localStorage.getItem('orion_auth_expiry');
             if (savedExpiry && !isExpired(savedExpiry)) {
                 showMenu();
@@ -105,26 +131,18 @@
 
         function validateCode() {
             const codeInput = document.getElementById('access-code').value;
-            
-            // Your math logic here: (MM + YY) * 11
-            const now = new Date();
-            const mm = now.getMonth() + 1;
-            const yy = now.getFullYear() % 100;
-            const expectedCode = (mm + yy) * 11;
 
             if (parseInt(codeInput) === expectedCode) {
                 const expiryString = yy.toString() + mm.toString().padStart(2, '0');
                 localStorage.setItem('orion_auth_expiry', expiryString);
                 showMenu();
             } else {
-                alert("Invalid Access Code for the current month.");
+                alert("Invalid Access Code. Check the debug box!");
             }
         }
 
         function isExpired(expiryStr) {
-            const now = new Date();
-            const currentYYMM = (now.getFullYear() % 100).toString() + 
-                                (now.getMonth() + 1).toString().padStart(2, '0');
+            const currentYYMM = yy.toString() + mm.toString().padStart(2, '0');
             return parseInt(currentYYMM) > parseInt(expiryStr);
         }
 
@@ -138,20 +156,15 @@
             location.reload();
         }
 
-        // ENFORCED GATEKEEPER LOGIC
         function launchTest(filename) {
-            // Check expiry again just in case
             const expiry = localStorage.getItem('orion_auth_expiry');
             if (!expiry || isExpired(expiry)) {
-                alert("Session expired. Please re-enter code.");
+                alert("Session expired.");
                 logout();
                 return;
             }
 
-            // Set the one-time launch token
             localStorage.setItem('orion_launch_token', 'active');
-            
-            // Redirect to the chosen test
             window.location.href = filename;
         }
     </script>
