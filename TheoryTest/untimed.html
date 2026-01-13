@@ -9,10 +9,14 @@
         .container { width: 90%; max-width: 600px; background-color: #2c2c2e; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); position: relative; }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .question-number { color: #ff453a; font-weight: bold; }
-        .status { color: #32d74b; font-size: 0.9em; }
+        
+        /* Category Label - Bold White per your screenshot */
+        #category-label { color: #ffffff; font-weight: bold; font-size: 0.9em; }
+        
         .question-text { font-size: 1.2em; margin-bottom: 20px; min-height: 80px; }
         .options { display: grid; grid-template-columns: 1fr; gap: 10px; }
         .option { background-color: #3a3a3c; border: none; color: white; padding: 15px; border-radius: 10px; text-align: left; font-size: 1em; cursor: pointer; }
+        
         .footer-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
         .nav-btn { background-color: #636366; border: none; color: white; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         
@@ -21,28 +25,27 @@
             position: absolute; 
             top: 10px; 
             right: 15px; 
-            font-size: 0.9rem; 
+            font-size: 1rem; 
             color: #ffffff; 
             font-weight: bold;
-            background: rgba(255, 69, 58, 0.8); 
-            padding: 2px 8px;
-            border-radius: 4px;
+            background: rgba(0, 122, 255, 0.8); 
+            padding: 4px 10px;
+            border-radius: 6px;
             z-index: 1000;
         }
 
         .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); }
         .modal-content { background-color: #2c2c2e; margin: 25% auto; padding: 20px; border-radius: 10px; width: 80%; max-width: 400px; text-align: center; }
-        #debug-data { text-align: left; background: #000; color: #0f0; padding: 10px; font-size: 0.7rem; overflow-x: auto; margin-top: 10px; border-radius: 5px; }
         .close-btn { background-color: #ff453a; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 15px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div id="version-display">LOADING...</div>
+    <div id="version-display">V-INIT</div>
 
     <div class="container">
         <div class="header">
             <div class="question-number" id="q-count">Question -- of --</div>
-            <div class="status" id="load-status">Loading...</div>
+            <div id="category-label">Loading...</div>
         </div>
         <div class="question-text" id="q-text">Initializing...</div>
         <div id="options-container" class="options"></div>
@@ -54,15 +57,14 @@
 
     <div id="errorModal" class="modal">
         <div class="modal-content">
-            <h3 style="color:#ff453a; margin-top:0;">Data Format Error</h3>
-            <p id="errorText">The database loaded, but the structure is wrong.</p>
-            <div id="debug-data"></div>
+            <h3 style="color:#ff453a;">System Error</h3>
+            <p id="errorText"></p>
             <button class="close-btn" onclick="window.location.href='mainmenu.html'">Return to Menu</button>
         </div>
     </div>
 
     <script>
-        const APP_VERSION = "v1.8.4";
+        const APP_VERSION = "v1.8.5";
         document.getElementById('version-display').innerText = APP_VERSION;
 
         let questions = [];
@@ -71,9 +73,8 @@
         async function loadDatabase() {
             try {
                 const response = await fetch('questions.json'); 
-                if (!response.ok) throw new Error("Could not find questions.json");
+                if (!response.ok) throw new Error("questions.json not found");
                 questions = await response.json();
-                document.getElementById('load-status').innerText = "Ready";
                 displayQuestion();
             } catch (err) {
                 showError(err.message);
@@ -81,38 +82,41 @@
         }
 
         function displayQuestion() {
-            try {
-                if (questions.length === 0) return;
-                const q = questions[currentIdx];
-                
-                document.getElementById('q-count').innerText = `Question ${currentIdx + 1} of ${questions.length}`;
-                document.getElementById('q-text').innerText = q.question || "Question missing text";
-                
-                const container = document.getElementById('options-container');
-                container.innerHTML = '';
-                
-                // If 'options' doesn't exist, show debug info
-                if (!q.options || !Array.isArray(q.options)) {
-                    throw new Error("Missing 'options' array in JSON data.");
-                }
-
-                q.options.forEach((opt, index) => {
+            if (questions.length === 0) return;
+            const q = questions[currentIdx];
+            
+            // Header Info
+            document.getElementById('q-count').innerText = `Question ${currentIdx + 1} of ${questions.length}`;
+            document.getElementById('category-label').innerText = q.category || "General";
+            document.getElementById('q-text').innerText = q.question;
+            
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            // Mapping your "choices" object (A, B, C, D)
+            if (q.choices) {
+                Object.keys(q.choices).forEach(key => {
                     const btn = document.createElement('button');
                     btn.className = 'option';
-                    btn.innerText = opt;
+                    // Shows the letter and the text
+                    btn.innerText = `${key}: ${q.choices[key]}`;
+                    btn.onclick = () => checkAnswer(key, q.correct);
                     container.appendChild(btn);
                 });
-            } catch (err) {
-                showError(err.message, questions[currentIdx]);
             }
         }
 
-        function showError(msg, data = null) {
+        function checkAnswer(selected, correct) {
+            if (selected === correct) {
+                alert("Correct!");
+            } else {
+                alert("Incorrect. The right answer was " + correct);
+            }
+        }
+
+        function showError(msg) {
             document.getElementById('errorModal').style.display = 'block';
             document.getElementById('errorText').innerText = msg;
-            if (data) {
-                document.getElementById('debug-data').innerText = "Raw Question Data:\n" + JSON.stringify(data, null, 2);
-            }
         }
 
         function nextQuestion() { if (currentIdx < questions.length - 1) { currentIdx++; displayQuestion(); } }
