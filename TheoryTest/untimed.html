@@ -89,10 +89,24 @@
         }
         .modal-content { background: #fff; padding: 30px; border-radius: 20px; text-align: center; max-width: 85%; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
 
-        .v-tag { position: fixed; bottom: 8px; right: 12px; font-family: monospace; font-size: 0.65rem; color: #bdc3c7; }
+        /* Bold White Version Tag per Request */
+        #v-tag-top { 
+            position: fixed; 
+            top: 10px; 
+            right: 15px; 
+            font-family: monospace; 
+            font-size: 0.9rem; 
+            color: #ffffff; 
+            font-weight: bold;
+            background: rgba(0, 122, 255, 0.9);
+            padding: 4px 10px;
+            border-radius: 6px;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
+    <div id="v-tag-top">v1.8.7</div>
 
     <div id="resume-modal">
         <div class="modal-content">
@@ -131,15 +145,16 @@
             </div>
             
             <div class="nav-grid" style="grid-template-columns: 1fr;">
-                <button id="review-flagged-btn" class="btn btn-blue" onclick="reviewFlagged()">Review Flagged Questions</button>
+                <button id="review-skipped-btn" class="btn btn-blue">Review Skipped (0)</button>
+                <button id="review-flagged-btn" class="btn btn-blue">Review Flagged (0)</button>
+                
                 <button class="btn btn-blue" onclick="restartTest()">RESTART (Main Menu)</button>
-                <button class="btn" onclick="continueLater()">CONTINUE LATER</button>
-                <button class="btn" onclick="reviewAnswers()">REVIEW ALL ANSWERS</button>
+                <button class="btn" onclick="continueLater()">SAVE & EXIT</button>
+                <button class="btn" onclick="reviewAnswers()">DETAILED REVIEW</button>
             </div>
         </div>
     </div>
 
-    <span class="v-tag">v1.7.2</span>
     <script src="script.js"></script>
 </body>
 </html>
