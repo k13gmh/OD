@@ -1,172 +1,191 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Orion Drive - Main Menu</title>
     <style>
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            background-color: #f4f7f9; 
-            color: #333; 
+            font-family: -apple-system, sans-serif; 
+            background-color: #000; 
+            color: #e0e0e0; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
+            padding: 20px; 
             margin: 0; 
-            padding: 20px;
+            min-height: 100vh; 
         }
-        .container { width: 100%; max-width: 400px; text-align: center; }
-        .logo { font-size: 2.5rem; font-weight: bold; color: #007bff; margin-bottom: 10px; }
-        .subtitle { color: #7f8c8d; margin-bottom: 30px; }
+        .container { 
+            text-align: center; 
+            width: 100%; 
+            max-width: 400px; 
+            margin-top: 50px; 
+        }
         
-        .card { 
-            background: #fff; 
+        /* Main Header */
+        h1 { color: #fff; margin-bottom: 5px; letter-spacing: 2px; font-weight: bold; }
+        
+        /* Sub Header - Bold White */
+        h2 { color: #ffffff; margin-top: 0; font-weight: bold; font-size: 1.2rem; margin-bottom: 5px; }
+        
+        #status-msg { 
+            color: #28a745; 
+            font-size: 0.85rem; 
+            margin-bottom: 20px; 
+            font-weight: bold; 
+            display: none; 
+        }
+        
+        .menu-box { 
+            background: #1c1c1e; 
             padding: 25px; 
             border-radius: 20px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            border: 1px solid #e1e8ed; 
-            margin-bottom: 20px;
+            border: 1px solid #2c2c2e; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            box-sizing: border-box; 
+            position: relative; 
+            min-height: 180px;
         }
-
-        .input-group { margin-bottom: 20px; text-align: left; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: #444; }
-        input { 
+        
+        .lock-screen input { 
+            background: #000; 
+            border: 1px solid #444; 
+            color: #007bff; 
+            padding: 12px; 
+            font-size: 1.2rem; 
             width: 100%; 
-            padding: 14px; 
-            border-radius: 10px; 
-            border: 1px solid #d1e3f8; 
-            font-size: 1.1rem; 
-            box-sizing: border-box;
-            text-align: center;
-            letter-spacing: 2px;
+            box-sizing: border-box; 
+            text-align: center; 
+            border-radius: 8px; 
+            margin-bottom: 15px; 
+            font-family: monospace; 
         }
-
+        
         .btn { 
-            width: 100%; 
             background: #007bff; 
             color: #fff; 
             border: none; 
-            padding: 18px; 
-            border-radius: 12px; 
+            padding: 15px 0; 
+            border-radius: 8px; 
             cursor: pointer; 
             font-weight: bold; 
-            font-size: 1rem; 
             text-transform: uppercase; 
-            margin-bottom: 12px;
-            transition: background 0.2s;
+            width: 100%; 
+            margin-top: 10px; 
+            display: block; 
+            text-decoration: none; 
+            box-sizing: border-box; 
         }
-        .btn-secondary { background: #bdc3c7; color: #444; }
         
-        /* Debug Styling */
-        .debug-box { 
-            margin-top: 20px; 
+        .btn-locked { background: #333; cursor: not-allowed; color: #666; }
+        
+        #debug-box { 
+            margin-top: 40px; 
+            padding: 15px; 
+            border: 1px dashed #444; 
             font-family: monospace; 
-            font-size: 0.75rem; 
-            color: #d9534f; 
-            background: #fff0f0; 
-            padding: 10px; 
-            border-radius: 10px;
-            border: 1px dashed #d9534f;
+            font-size: 0.8rem; 
+            color: #8e8e93; 
+            width: 100%; 
+            box-sizing: border-box; 
         }
-
-        #auth-section { display: block; }
-        #menu-section { display: none; }
-
-        .v-tag { position: fixed; bottom: 8px; right: 12px; font-family: monospace; font-size: 0.65rem; color: #bdc3c7; }
+        
+        /* Version Tag Style - Discrete Grey */
+        .v-tag { 
+            position: absolute; 
+            bottom: 10px; 
+            right: 15px; 
+            font-size: 0.65rem; 
+            color: #555; 
+            font-family: monospace; 
+        }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <div class="logo">ORION DRIVE</div>
-        <p class="subtitle">Theory Test Training</p>
+        <h1>ORION DRIVE</h1>
+        <h2>Theory Test</h2>
+        <div id="status-msg">● System Unlocked</div>
 
-        <div id="auth-section" class="card">
-            <div class="input-group">
-                <label>Enter Student Access Code</label>
-                <input type="number" id="access-code" placeholder="00000" maxlength="5">
+        <div class="menu-box">
+            <div id="lock-ui">
+                <p style="font-size: 0.8rem; color: #8e8e93;">Monthly Security Token Required</p>
+                <input type="text" id="passCode" placeholder="ENTER CODE" autocomplete="off">
+                <button class="btn" onclick="verifyAccess()">Unlock System</button>
             </div>
-            <button class="btn" onclick="validateCode()">Unlock Tests</button>
+
+            <div id="menu-options" style="display:none;">
+                <a href="untimed.html" class="btn">Option 1 - Untimed</a>
+                <button class="btn btn-locked" disabled>Option 2 - (Coming Soon)</button>
+            </div>
             
-            <div class="debug-box">
-                DEBUG: Expected Code for 
-                <span id="debug-date"></span> is 
-                <span id="debug-code" style="font-weight:bold; font-size: 1rem;"></span>
-            </div>
+            <span class="v-tag">v1.6.4</span>
         </div>
 
-        <div id="menu-section">
-            <div class="card">
-                <button class="btn" onclick="launchTest('untimed.html')">Untimed Practice</button>
-                <button class="btn btn-secondary" onclick="launchTest('timed.html')">Timed Mock Test</button>
-                <button class="btn btn-secondary" style="opacity:0.5" disabled>Category Filter</button>
-            </div>
-            <button class="btn btn-secondary" onclick="logout()">Change Access Code</button>
-        </div>
+        <div id="debug-box" style="display:none"></div>
     </div>
 
-    <span class="v-tag">v1.9.1</span>
-
     <script>
-        const APP_VERSION = "1.9.1";
+        const DEBUGZ = 1; 
+        const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 
-        // Calculate expected values globally for debugging and validation
-        const now = new Date();
-        const mm = now.getMonth() + 1;
-        const yy = now.getFullYear() % 100;
-        const expectedCode = (mm + yy) * 11;
-
-        window.onload = function() {
-            // Fill Debug Info
-            document.getElementById('debug-date').innerText = `${mm}/${yy}`;
-            document.getElementById('debug-code').innerText = expectedCode;
-
-            const savedExpiry = localStorage.getItem('orion_auth_expiry');
-            if (savedExpiry && !isExpired(savedExpiry)) {
-                showMenu();
+        // Logic for monthly token calculation
+        function calcKey() {
+            const d = new Date(); 
+            const s = new Date(Date.UTC(d.getFullYear(), d.getMonth(), 1, 0, 0, 0));
+            const e = new Date(Date.UTC(1900, 0, 1, 0, 0, 0)); 
+            const m = Math.floor((s.getTime() - e.getTime()) / 60000);
+            let v = m % Math.pow(32, 4); 
+            let r = ""; 
+            for (let j = 0; j < 4; j++) { r = ALPH.charAt(v % 32) + r; v = Math.floor(v / 32); }
+            while (r.length < 4) { r = ALPH.charAt(0) + r; }
+            let t = 0; 
+            let ra = r.split('').reverse();
+            for (let j = 0; j < ra.length; j++) { 
+                let x = ALPH.indexOf(ra[j]); 
+                if (j % 2 === 0) { x *= 2; if (x >= 32) x = (x % 32) + Math.floor(x / 32); } 
+                t += x; 
             }
-        };
+            let ci = (32 - (t % 32)) % 32; 
+            return r + (ALPH[ci] || ALPH[0]);
+        }
 
-        function validateCode() {
-            const codeInput = document.getElementById('access-code').value;
+        const targetKey = calcKey(); 
+        const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 
-            if (parseInt(codeInput) === expectedCode) {
-                const expiryString = yy.toString() + mm.toString().padStart(2, '0');
-                localStorage.setItem('orion_auth_expiry', expiryString);
-                showMenu();
-            } else {
-                alert("Invalid Access Code. Check the debug box!");
+        function init() {
+            const savedStamp = localStorage.getItem('gatekeeper_stamp');
+            // Check if existing stamp is valid for this month
+            if (savedStamp === curMonthYear) { showMenu(); }
+            
+            // Show debug info if enabled
+            if (DEBUGZ) { 
+                const db = document.getElementById('debug-box'); 
+                db.style.display = 'block'; 
+                db.innerHTML = `DEBUG: Expected [${targetKey}]<br><br><button onclick="localStorage.clear();location.reload();" style="background:#444;font-size:0.7rem;color:#fff;padding:5px;border-radius:4px;border:none;cursor:pointer">RESET SYSTEM STAMP</button>`; 
             }
         }
 
-        function isExpired(expiryStr) {
-            const currentYYMM = yy.toString() + mm.toString().padStart(2, '0');
-            return parseInt(currentYYMM) > parseInt(expiryStr);
-        }
-
-        function showMenu() {
-            document.getElementById('auth-section').style.display = 'none';
-            document.getElementById('menu-section').style.display = 'block';
-        }
-
-        function logout() {
-            localStorage.removeItem('orion_auth_expiry');
-            location.reload();
-        }
-
-        function launchTest(filename) {
-            const expiry = localStorage.getItem('orion_auth_expiry');
-            if (!expiry || isExpired(expiry)) {
-                alert("Session expired.");
-                logout();
-                return;
+        function verifyAccess() {
+            const input = document.getElementById('passCode').value.toUpperCase();
+            if (input === targetKey) { 
+                // Set the stamp that sub-apps like untimed.html will check
+                localStorage.setItem('gatekeeper_stamp', curMonthYear); 
+                showMenu(); 
+            } else { 
+                localStorage.removeItem('gatekeeper_stamp'); 
+                alert("Incorrect Code."); 
             }
-
-            localStorage.setItem('orion_launch_token', 'active');
-            window.location.href = filename;
         }
+
+        function showMenu() { 
+            document.getElementById('lock-ui').style.display = 'none'; 
+            document.getElementById('menu-options').style.display = 'block'; 
+            document.getElementById('status-msg').style.display = 'block'; 
+        }
+        
+        window.onload = init;
     </script>
 </body>
 </html>
