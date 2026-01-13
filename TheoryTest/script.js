@@ -1,7 +1,15 @@
+// VERSION CONTROL
+const SCRIPT_VERSION = "v1.8.7";
+
+// 1. Session Handshake Check
+if (!sessionStorage.getItem('orion_session_token')) {
+    window.location.href = 'mainmenu.html';
+}
+
 let allQuestions = [];
 let sessionQuestions = [];
 let currentIndex = 0;
-let originalSessionQuestions = []; // To store the full set when reviewing flagged
+let originalSessionQuestions = []; 
 
 let testData = {
     selections: {},
@@ -9,8 +17,10 @@ let testData = {
     seenIndices: []
 };
 
-// Initialization
 async function init() {
+    const tag = document.getElementById('v-tag-top');
+    if (tag) tag.innerText = SCRIPT_VERSION;
+
     try {
         const response = await fetch('questions.json');
         allQuestions = await response.json();
@@ -58,7 +68,7 @@ function renderQuestion() {
     optionsArea.innerHTML = '';
     
     ["A", "B", "C", "D"].forEach(letter => {
-        if (!q.choices[letter]) return;
+        if (!q.choices || !q.choices[letter]) return;
         const btn = document.createElement('button');
         btn.className = 'option-btn';
         if (testData.selections[q.id] === letter) btn.classList.add('selected');
@@ -105,11 +115,16 @@ function showSummary() {
     document.getElementById('summary-ui').style.display = 'block';
 
     let score = 0;
+    let answeredCount = 0;
     originalSessionQuestions.forEach(q => {
-        if (testData.selections[q.id] === q.correct) score++;
+        if (testData.selections[q.id]) {
+            answeredCount++;
+            if (testData.selections[q.id] === q.correct) score++;
+        }
     });
 
     const total = originalSessionQuestions.length;
+    const skippedCount = total - answeredCount;
     const percent = Math.round((score / total) * 100);
     const passed = percent >= 86;
 
@@ -120,14 +135,17 @@ function showSummary() {
     document.getElementById('res-score').innerText = `${score} / ${total}`;
     document.getElementById('res-percent').innerText = `${percent}% (Pass: 86%)`;
 
-    // Manage Review Flagged Button
+    // Logic for Review Flagged Button
     const flagBtn = document.getElementById('review-flagged-btn');
-    if (testData.flagged.length > 0) {
-        flagBtn.style.display = "block";
-        flagBtn.innerText = `Review ${testData.flagged.length} Flagged Question(s)`;
-    } else {
-        flagBtn.style.display = "none";
-    }
+    flagBtn.innerText = `Review Flagged (${testData.flagged.length})`;
+    flagBtn.style.opacity = testData.flagged.length > 0 ? "1" : "0.5";
+    flagBtn.onclick = testData.flagged.length > 0 ? reviewFlagged : null;
+
+    // Logic for Review Skipped Button
+    const skipBtn = document.getElementById('review-skipped-btn');
+    skipBtn.innerText = `Review Skipped (${skippedCount})`;
+    skipBtn.style.opacity = skippedCount > 0 ? "1" : "0.5";
+    skipBtn.onclick = skippedCount > 0 ? reviewSkipped : null;
 
     localStorage.setItem('orion_final_results', JSON.stringify({
         score, total, questions: originalSessionQuestions, data: testData
@@ -136,11 +154,17 @@ function showSummary() {
 
 function reviewFlagged() {
     const flaggedQuestions = originalSessionQuestions.filter(q => testData.flagged.includes(q.id));
-    if (flaggedQuestions.length === 0) return;
-
     sessionQuestions = flaggedQuestions;
     currentIndex = 0;
+    document.getElementById('summary-ui').style.display = 'none';
+    document.getElementById('test-ui').style.display = 'block';
+    renderQuestion();
+}
 
+function reviewSkipped() {
+    const skippedQuestions = originalSessionQuestions.filter(q => !testData.selections[q.id]);
+    sessionQuestions = skippedQuestions;
+    currentIndex = 0;
     document.getElementById('summary-ui').style.display = 'none';
     document.getElementById('test-ui').style.display = 'block';
     renderQuestion();
