@@ -13,11 +13,12 @@
         .question-text { font-size: 1.2em; margin-bottom: 20px; min-height: 80px; }
         .options { display: grid; grid-template-columns: 1fr; gap: 10px; }
         .option { background-color: #3a3a3c; border: none; color: white; padding: 15px; border-radius: 10px; text-align: left; font-size: 1em; cursor: pointer; transition: background-color 0.2s; }
-        .option:active { background-color: #48484a; }
         .footer-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
         .nav-btn { background-color: #636366; border: none; color: white; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        .v-tag { position: absolute; bottom: 5px; right: 10px; font-size: 0.7em; color: #48484a; }
-        /* Modal Style for Database Error */
+        
+        /* Discreet Version Position */
+        #version-display { position: absolute; bottom: 5px; right: 10px; font-size: 0.65rem; color: #444; font-family: monospace; }
+
         .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); }
         .modal-content { background-color: #2c2c2e; margin: 25% auto; padding: 20px; border-radius: 10px; width: 80%; max-width: 300px; text-align: center; }
         .close-btn { background-color: #ff453a; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-top: 15px; cursor: pointer; }
@@ -30,14 +31,14 @@
             <div class="status" id="load-status">Loading...</div>
         </div>
         <div class="question-text" id="q-text">Initializing...</div>
-        <div class="options" id="options-container"></div>
+        <div id="options-container" class="options"></div>
         <div class="footer-buttons">
             <button class="nav-btn" onclick="prevQuestion()">< BACK</button>
             <button class="nav-btn" onclick="nextQuestion()">NEXT ></button>
             <button class="nav-btn" style="background-color: #48484a;">FLAG</button>
             <button class="nav-btn" style="background-color: #48484a;">FINISH</button>
         </div>
-        <div class="v-tag">v1.8.1</div>
+        <div id="version-display"></div>
     </div>
 
     <div id="errorModal" class="modal">
@@ -48,10 +49,20 @@
     </div>
 
     <script>
-        // --- SESSION HANDSHAKE CHECK ---
+        // VERSION CONTROL
+        const APP_VERSION = "v1.8.2";
+
+        // HANDSHAKE CHECK
         const sessionActive = sessionStorage.getItem('orion_session_token');
-        if (!sessionActive) {
-            window.location.href = 'mainmenu.html';
+        
+        function initVersion() {
+            document.getElementById('version-display').innerText = APP_VERSION;
+            if (!sessionActive) {
+                console.log("Handshake missing. Redirecting...");
+                window.location.href = 'mainmenu.html';
+            } else {
+                loadDatabase();
+            }
         }
 
         let questions = [];
@@ -59,15 +70,16 @@
 
         async function loadDatabase() {
             try {
-                // Ensure this matches your actual JSON file name exactly
+                // Ensure questions.json is in the TheoryTest folder
                 const response = await fetch('questions.json'); 
-                if (!response.ok) throw new Error("File not found");
+                if (!response.ok) throw new Error("404: questions.json not found");
                 questions = await response.json();
                 document.getElementById('load-status').innerText = "Ready";
                 displayQuestion();
             } catch (err) {
-                console.error(err);
+                console.error("Database Error:", err);
                 document.getElementById('errorModal').style.display = 'block';
+                document.getElementById('errorText').innerText = "Database Error: " + err.message;
             }
         }
 
@@ -76,39 +88,21 @@
             const q = questions[currentIdx];
             document.getElementById('q-count').innerText = `Question ${currentIdx + 1} of ${questions.length}`;
             document.getElementById('q-text').innerText = q.question;
-            
             const container = document.getElementById('options-container');
             container.innerHTML = '';
-            
             q.options.forEach((opt, index) => {
                 const btn = document.createElement('button');
                 btn.className = 'option';
                 btn.innerText = opt;
-                btn.onclick = () => selectOption(index);
+                btn.onclick = () => console.log("Selected:", index);
                 container.appendChild(btn);
             });
         }
 
-        function nextQuestion() {
-            if (currentIdx < questions.length - 1) {
-                currentIdx++;
-                displayQuestion();
-            }
-        }
+        function nextQuestion() { if (currentIdx < questions.length - 1) { currentIdx++; displayQuestion(); } }
+        function prevQuestion() { if (currentIdx > 0) { currentIdx--; displayQuestion(); } }
 
-        function prevQuestion() {
-            if (currentIdx > 0) {
-                currentIdx--;
-                displayQuestion();
-            }
-        }
-
-        function selectOption(idx) {
-            // Logic for selecting an answer
-            console.log("Selected:", idx);
-        }
-
-        window.onload = loadDatabase;
+        window.onload = initVersion;
     </script>
 </body>
 </html>
