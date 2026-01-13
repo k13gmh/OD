@@ -1,8 +1,7 @@
 let allQuestions = [];
 let sessionQuestions = [];
 let currentIndex = 0;
-let originalSessionQuestions = []; 
-let isSubsetReview = false; // Tracks if we are looking at a filtered list
+let originalSessionQuestions = []; // To store the full set when reviewing flagged
 
 let testData = {
     selections: {},
@@ -10,6 +9,7 @@ let testData = {
     seenIndices: []
 };
 
+// Initialization
 async function init() {
     try {
         const response = await fetch('questions.json');
@@ -30,7 +30,6 @@ function startFreshSession() {
     sessionQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 50);
     originalSessionQuestions = [...sessionQuestions];
     currentIndex = 0;
-    isSubsetReview = false;
     testData = { selections: {}, flagged: [], seenIndices: [0] };
     renderQuestion();
 }
@@ -43,7 +42,6 @@ function resumeTest(shouldResume) {
         originalSessionQuestions = [...sessionQuestions];
         testData = saved.data;
         currentIndex = saved.currentIndex || 0;
-        isSubsetReview = false;
         renderQuestion();
     } else {
         startFreshSession();
@@ -73,10 +71,6 @@ function renderQuestion() {
     flagBtn.style.background = testData.flagged.includes(q.id) ? "#f1c40f" : "#bdc3c7";
     flagBtn.style.color = testData.flagged.includes(q.id) ? "#fff" : "#444";
     
-    // Change Finish button text if in subset review
-    const finishBtn = document.getElementById('finish-btn');
-    finishBtn.innerText = isSubsetReview ? "EXIT REVIEW" : "FINISH";
-
     saveProgress();
 }
 
@@ -107,19 +101,15 @@ function changeQuestion(step) {
 }
 
 function showSummary() {
-    // When returning from a subset, restore the full list for accurate scoring
-    sessionQuestions = [...originalSessionQuestions];
-    isSubsetReview = false;
-
     document.getElementById('test-ui').style.display = 'none';
     document.getElementById('summary-ui').style.display = 'block';
 
     let score = 0;
-    sessionQuestions.forEach(q => {
+    originalSessionQuestions.forEach(q => {
         if (testData.selections[q.id] === q.correct) score++;
     });
 
-    const total = sessionQuestions.length;
+    const total = originalSessionQuestions.length;
     const percent = Math.round((score / total) * 100);
     const passed = percent >= 86;
 
@@ -130,36 +120,26 @@ function showSummary() {
     document.getElementById('res-score').innerText = `${score} / ${total}`;
     document.getElementById('res-percent').innerText = `${percent}% (Pass: 86%)`;
 
-    // Manage Review Buttons
-    const flaggedCount = testData.flagged.length;
-    const skippedCount = total - Object.keys(testData.selections).length;
-
-    const fBtn = document.getElementById('review-flagged-btn');
-    fBtn.style.display = flaggedCount > 0 ? "block" : "none";
-    fBtn.innerText = `Flagged (${flaggedCount})`;
-
-    const sBtn = document.getElementById('review-skipped-btn');
-    sBtn.style.display = skippedCount > 0 ? "block" : "none";
-    sBtn.innerText = `Skipped (${skippedCount})`;
+    // Manage Review Flagged Button
+    const flagBtn = document.getElementById('review-flagged-btn');
+    if (testData.flagged.length > 0) {
+        flagBtn.style.display = "block";
+        flagBtn.innerText = `Review ${testData.flagged.length} Flagged Question(s)`;
+    } else {
+        flagBtn.style.display = "none";
+    }
 
     localStorage.setItem('orion_final_results', JSON.stringify({
         score, total, questions: originalSessionQuestions, data: testData
     }));
 }
 
-function reviewSubset(type) {
-    let subset = [];
-    if (type === 'flagged') {
-        subset = originalSessionQuestions.filter(q => testData.flagged.includes(q.id));
-    } else {
-        subset = originalSessionQuestions.filter(q => !testData.selections[q.id]);
-    }
+function reviewFlagged() {
+    const flaggedQuestions = originalSessionQuestions.filter(q => testData.flagged.includes(q.id));
+    if (flaggedQuestions.length === 0) return;
 
-    if (subset.length === 0) return;
-
-    sessionQuestions = subset;
+    sessionQuestions = flaggedQuestions;
     currentIndex = 0;
-    isSubsetReview = true;
 
     document.getElementById('summary-ui').style.display = 'none';
     document.getElementById('test-ui').style.display = 'block';
@@ -170,7 +150,7 @@ function saveProgress() {
     localStorage.setItem('orion_current_session', JSON.stringify({
         questions: originalSessionQuestions,
         data: testData,
-        currentIndex: isSubsetReview ? 0 : currentIndex 
+        currentIndex: currentIndex
     }));
 }
 
