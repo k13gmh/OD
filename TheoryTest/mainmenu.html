@@ -7,15 +7,27 @@
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #000; color: #e0e0e0; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; min-height: 100vh; }
         .container { text-align: center; width: 100%; max-width: 400px; margin-top: 30px; }
+        
         h1 { color: #fff; margin-bottom: 5px; letter-spacing: 2px; font-weight: bold; }
         h2 { color: #ffffff; margin-top: 0; font-weight: bold; font-size: 1.2rem; margin-bottom: 5px; }
+        
         #status-msg { color: #28a745; font-size: 0.85rem; margin-bottom: 20px; font-weight: bold; display: none; }
-        .menu-box { background: #1c1c1e; padding: 20px; border-radius: 20px; border: 1px solid #2c2c2e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); box-sizing: border-box; position: relative; margin-bottom: 20px; }
-        .section-label { color: #007bff; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; text-align: left; margin: 15px 0 8px 5px; letter-spacing: 1px; }
+        
+        .menu-box { 
+            background: #1c1c1e; 
+            padding: 20px; 
+            border-radius: 20px; 
+            border: 1px solid #2c2c2e; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            box-sizing: border-box; 
+            position: relative;
+        }
+        
         .lock-screen input { background: #000; border: 1px solid #444; color: #007bff; padding: 12px; font-size: 1.2rem; width: 100%; box-sizing: border-box; text-align: center; border-radius: 8px; margin-bottom: 15px; font-family: monospace; }
-        .btn { background: #007bff; color: #fff; border: none; padding: 14px 0; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; margin-top: 8px; display: block; text-decoration: none; box-sizing: border-box; font-size: 0.9rem; text-align: center; }
+        
+        .btn { background: #007bff; color: #fff; border: none; padding: 14px 0; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; margin-top: 8px; display: block; text-decoration: none; box-sizing: border-box; font-size: 0.9rem; }
         .btn-grey { background: #333; color: #aaa; }
-        .btn-outline { background: transparent; border: 1px solid #444; color: #888; font-size: 0.75rem; padding: 10px 0; }
+        
         #debug-box { margin-top: 20px; padding: 15px; border: 1px dashed #444; font-family: monospace; font-size: 0.8rem; color: #8e8e93; width: 100%; box-sizing: border-box; }
         .v-tag { position: absolute; bottom: 10px; right: 15px; font-size: 0.65rem; color: #555; font-family: monospace; }
     </style>
@@ -25,29 +37,29 @@
         <h1>ORION DRIVE</h1>
         <h2>Theory Test</h2>
         <div id="status-msg">● System Unlocked</div>
+
         <div class="menu-box">
             <div id="lock-ui">
                 <p style="font-size: 0.8rem; color: #8e8e93;">Monthly Security Token Required</p>
                 <input type="text" id="passCode" placeholder="ENTER CODE" autocomplete="off">
                 <button class="btn" onclick="verifyAccess()">Unlock System</button>
             </div>
+
             <div id="menu-options" style="display:none;">
-                <div class="section-label">Mock Tests</div>
-                <a href="untimed.html" class="btn">Untimed Practice</a>
-                <div class="section-label">System Manager</div>
-                <a href="maintain.html" class="btn btn-grey">Maintain Tool</a>
-                <a href="gatekeeper.html" class="btn btn-grey">Gatekeeper</a>
-                <div class="section-label" style="margin-top:25px; color:#555;">Direct Link Test</div>
-                <a href="review.html" class="btn btn-outline">Test: Review.html</a>
-                <a href="review_detail.html" class="btn btn-outline">Test: Review_Detail.html</a>
+                <a href="untimed.html" class="btn">Start Mock Test</a>
+                <a href="maintain.html" class="btn btn-grey">System Manager</a>
             </div>
-            <span class="v-tag">v1.7.1</span>
+            
+            <span class="v-tag">v1.6.5</span>
         </div>
+
         <div id="debug-box" style="display:none"></div>
     </div>
+
     <script>
         const DEBUGZ = 1; 
         const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
+
         function calcKey() {
             const d = new Date(); 
             const s = new Date(Date.UTC(d.getFullYear(), d.getMonth(), 1, 0, 0, 0));
@@ -67,37 +79,38 @@
             let ci = (32 - (t % 32)) % 32; 
             return r + (ALPH[ci] || ALPH[0]);
         }
+
         const targetKey = calcKey(); 
         const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
+
         function init() {
             const savedStamp = localStorage.getItem('gatekeeper_stamp');
-            if (savedStamp === curMonthYear) { 
-                // Ensure token is set before showing menu
-                sessionStorage.setItem('orion_session_token', 'active-' + Date.now());
-                showMenu(); 
-            }
+            if (savedStamp === curMonthYear) { showMenu(); }
             if (DEBUGZ) { 
                 const db = document.getElementById('debug-box'); 
                 db.style.display = 'block'; 
                 db.innerHTML = `DEBUG: Expected [${targetKey}]<br><br><button onclick="localStorage.clear();sessionStorage.clear();location.reload();" style="background:#444;font-size:0.7rem;color:#fff;padding:5px;border-radius:4px;border:none;cursor:pointer">RESET SYSTEM STAMP</button>`; 
             }
         }
+
         function verifyAccess() {
             const input = document.getElementById('passCode').value.toUpperCase();
             if (input === targetKey) { 
-                localStorage.setItem('gatekeeper_stamp', curMonthYear);
-                sessionStorage.setItem('orion_session_token', 'active-' + Date.now()); 
+                localStorage.setItem('gatekeeper_stamp', curMonthYear); 
                 showMenu(); 
             } else { 
                 localStorage.removeItem('gatekeeper_stamp'); 
                 alert("Incorrect Code."); 
             }
         }
+
         function showMenu() { 
+            sessionStorage.setItem('orion_session_token', 'active-' + Date.now());
             document.getElementById('lock-ui').style.display = 'none'; 
             document.getElementById('menu-options').style.display = 'block'; 
             document.getElementById('status-msg').style.display = 'block'; 
         }
+        
         window.onload = init;
     </script>
 </body>
