@@ -9,7 +9,7 @@
         .container { text-align: center; width: 100%; max-width: 400px; margin-top: 30px; }
         
         h1 { color: #fff; margin-bottom: 5px; letter-spacing: 2px; font-weight: bold; }
-        h2 { color: #ffffff; margin-top: 0; font-weight: bold; font-size: 1.2rem; margin-bottom: 5px; }
+        h2 { color: #ffffff; margin-top: 0; font-weight: bold; font-size: 1.2rem; margin-bottom: 25px; }
         
         #status-msg { color: #28a745; font-size: 0.85rem; margin-bottom: 20px; font-weight: bold; display: none; }
         
@@ -21,11 +21,24 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
             box-sizing: border-box; 
             position: relative;
+            text-align: left;
         }
         
+        .sub-header {
+            color: #8e8e93;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px 0 10px 5px;
+            font-weight: bold;
+            border-bottom: 1px solid #2c2c2e;
+            padding-bottom: 5px;
+        }
+        .sub-header:first-of-type { margin-top: 5px; }
+
         .lock-screen input { background: #000; border: 1px solid #444; color: #007bff; padding: 12px; font-size: 1.2rem; width: 100%; box-sizing: border-box; text-align: center; border-radius: 8px; margin-bottom: 15px; font-family: monospace; }
         
-        .btn { background: #007bff; color: #fff; border: none; padding: 14px 0; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; margin-top: 8px; display: block; text-decoration: none; box-sizing: border-box; font-size: 0.9rem; }
+        .btn { background: #007bff; color: #fff; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; margin-top: 8px; display: block; text-decoration: none; box-sizing: border-box; font-size: 0.9rem; text-align: center; }
         .btn-grey { background: #333; color: #aaa; }
         
         #debug-box { margin-top: 20px; padding: 15px; border: 1px dashed #444; font-family: monospace; font-size: 0.8rem; color: #8e8e93; width: 100%; box-sizing: border-box; }
@@ -40,17 +53,21 @@
 
         <div class="menu-box">
             <div id="lock-ui">
-                <p style="font-size: 0.8rem; color: #8e8e93;">Monthly Security Token Required</p>
+                <div class="sub-header">Security Access</div>
+                <p style="font-size: 0.8rem; color: #8e8e93; margin-left: 5px;">Monthly Token Required</p>
                 <input type="text" id="passCode" placeholder="ENTER CODE" autocomplete="off">
                 <button class="btn" onclick="verifyAccess()">Unlock System</button>
             </div>
 
             <div id="menu-options" style="display:none;">
-                <a href="untimed.html" class="btn">Start Mock Test</a>
-                <a href="maintain.html" class="btn btn-grey">System Manager</a>
-            </div>
+                <div class="sub-header">Mock Tests</div>
+                <a href="untimed.html" class="btn">Untimed Practice</a>
+                
+                <div class="sub-header">System Manager</div>
+                <a href="maintain.html" class="btn btn-grey">Database Maintainer</a>
+                </div>
             
-            <span class="v-tag">v1.6.5</span>
+            <span class="v-tag">v1.6.6</span>
         </div>
 
         <div id="debug-box" style="display:none"></div>
