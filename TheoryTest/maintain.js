@@ -26,7 +26,7 @@ function addSearchUI() {
         searchDiv.innerHTML = `
             <input type="text" id="idSearch" placeholder="Search by ID..." 
                 style="padding: 10px; border-radius: 5px; border: 1px solid #ddd; flex-grow: 1;">
-            <button onclick="copyErrorIDs()" style="padding: 10px; background: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">COPY ERROR IDs</button>
+            <button onclick="copyErrorData()" style="padding: 10px; background: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">COPY ERROR DATA</button>
             <button onclick="clearSearch()" style="padding: 10px; background: #666; color: white; border: none; border-radius: 5px; cursor: pointer;">Clear</button>
         `;
         header.parentNode.insertBefore(searchDiv, header.nextSibling);
@@ -49,16 +49,29 @@ function getErrors() {
     });
 }
 
-function copyErrorIDs() {
+function copyErrorData() {
     const errors = getErrors();
-    const idList = errors.map(q => q.id).join(", ");
-    if (idList) {
-        navigator.clipboard.writeText(idList).then(() => {
-            alert("Copied Error IDs: " + idList);
-        });
-    } else {
+    if (errors.length === 0) {
         alert("No errors found!");
+        return;
     }
+
+    let report = "";
+    errors.forEach(q => {
+        report += `ID: ${q.id}\n`;
+        report += `Category: ${q.category || ''}\n`;
+        report += `Question: ${q.question}\n`;
+        report += `A: ${q.choices.A || ''}\n`;
+        report += `B: ${q.choices.B || ''}\n`;
+        report += `C: ${q.choices.C || ''}\n`;
+        report += `D: ${q.choices.D || ''}\n`;
+        report += `Correct: ${q.correct || ''}\n`;
+        report += `Explanation: ${q.explanation || ''}\n\n`;
+    });
+
+    navigator.clipboard.writeText(report).then(() => {
+        alert("Copied " + errors.length + " error records to clipboard.");
+    });
 }
 
 function renderList() {
@@ -92,10 +105,8 @@ function renderList() {
     });
 
     status.innerHTML = searchTerm !== "" ? `Showing ID: ${searchTerm}` : `<span style="color: #f44336;">Records needing attention: ${displayCount}</span>`;
-    document.getElementById('app-version').innerText = "Ver: 1.1.8";
+    document.getElementById('app-version').innerText = "Ver: 1.2.0";
 }
-
-// ... (renderCardContent, shiftUp, resetRecord, updateData, updateChoice, copyJSON remain same as 1.1.7)
 
 function renderCardContent(q, index, issues) {
     const btnStyle = "background:#007bff; color:white; border:none; padding:2px 8px; border-radius:3px; cursor:pointer; font-size:10px; margin-left:10px;";
