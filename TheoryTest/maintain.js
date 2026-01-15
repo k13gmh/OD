@@ -8,10 +8,8 @@ async function loadQuestions() {
     try {
         const response = await fetch('questions.json?v=' + Date.now());
         const data = await response.json();
-        
         questionsData = JSON.parse(JSON.stringify(data));
         originalData = JSON.parse(JSON.stringify(data));
-        
         addSearchUI();
         renderList();
     } catch (e) {
@@ -28,6 +26,7 @@ function addSearchUI() {
         searchDiv.innerHTML = `
             <input type="text" id="idSearch" placeholder="Search by ID..." 
                 style="padding: 10px; border-radius: 5px; border: 1px solid #ddd; flex-grow: 1;">
+            <button onclick="copyErrorIDs()" style="padding: 10px; background: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">COPY ERROR IDs</button>
             <button onclick="clearSearch()" style="padding: 10px; background: #666; color: white; border: none; border-radius: 5px; cursor: pointer;">Clear</button>
         `;
         header.parentNode.insertBefore(searchDiv, header.nextSibling);
@@ -39,10 +38,27 @@ function addSearchUI() {
     }
 }
 
-function clearSearch() {
-    document.getElementById('idSearch').value = "";
-    searchTerm = "";
-    renderList();
+function getErrors() {
+    const validLetters = ["A", "B", "C", "D"];
+    return questionsData.filter(q => {
+        const correctVal = q.correct ? q.correct.toString().trim().toUpperCase() : "";
+        const hasLetterError = !validLetters.includes(correctVal);
+        const hasPlaceholder = q.explanation === "****";
+        const hasBlanks = !q.question || !q.choices.A || !q.choices.B;
+        return hasLetterError || hasPlaceholder || hasBlanks;
+    });
+}
+
+function copyErrorIDs() {
+    const errors = getErrors();
+    const idList = errors.map(q => q.id).join(", ");
+    if (idList) {
+        navigator.clipboard.writeText(idList).then(() => {
+            alert("Copied Error IDs: " + idList);
+        });
+    } else {
+        alert("No errors found!");
+    }
 }
 
 function renderList() {
@@ -55,8 +71,6 @@ function renderList() {
 
     questionsData.forEach((q, index) => {
         let issues = [];
-        
-        // Audit Logic
         const correctVal = q.correct ? q.correct.toString().trim().toUpperCase() : "";
         if (!validLetters.includes(correctVal)) issues.push("LETTER ERROR");
         if (q.explanation === "****") issues.push("FIX EXPLANATION");
@@ -64,14 +78,12 @@ function renderList() {
         if (!q.choices.A || q.choices.A.trim() === "") issues.push("BLANK A");
         if (!q.choices.B || q.choices.B.trim() === "") issues.push("BLANK B");
 
-        // Logic: Show if (Search Matches ID) OR (Search is empty AND it has issues)
         const matchesSearch = searchTerm !== "" && q.id.toString() === searchTerm;
         const shouldShow = matchesSearch || (searchTerm === "" && issues.length > 0);
 
         if (shouldShow) {
             displayCount++;
             const card = document.createElement('div');
-            // If it matches search but has no errors, use a normal border instead of red
             card.className = issues.length > 0 ? 'q-card error-border' : 'q-card';
             card.id = `q-card-${index}`;
             card.innerHTML = renderCardContent(q, index, issues);
@@ -79,13 +91,11 @@ function renderList() {
         }
     });
 
-    if (searchTerm !== "") {
-        status.innerHTML = `Search result for ID: <strong>${searchTerm}</strong>`;
-    } else {
-        status.innerHTML = `<span style="color: #f44336;">Records needing attention: ${displayCount}</span>`;
-    }
-    document.getElementById('app-version').innerText = "Ver: 1.1.7 - Searchable";
+    status.innerHTML = searchTerm !== "" ? `Showing ID: ${searchTerm}` : `<span style="color: #f44336;">Records needing attention: ${displayCount}</span>`;
+    document.getElementById('app-version').innerText = "Ver: 1.1.8";
 }
+
+// ... (renderCardContent, shiftUp, resetRecord, updateData, updateChoice, copyJSON remain same as 1.1.7)
 
 function renderCardContent(q, index, issues) {
     const btnStyle = "background:#007bff; color:white; border:none; padding:2px 8px; border-radius:3px; cursor:pointer; font-size:10px; margin-left:10px;";
@@ -96,19 +106,16 @@ function renderCardContent(q, index, issues) {
             <strong style="color: #333;">ID: ${q.id} ${issueLabels}</strong>
             <button onclick="resetRecord(${index})" style="background:#666; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:0.75rem; cursor:pointer;">RESET</button>
         </div>
-        
         <div style="margin-top:10px;">
             <label>Question <button style="${btnStyle}" onclick="shiftUp(${index}, 'Q')">FIX & SHIFT ↑</button></label>
             <textarea onchange="updateData(${index}, 'question', this.value)">${q.question}</textarea>
         </div>
-        
         <div class="choice-grid">
             <div><label>Choice A <button style="${btnStyle}" onclick="shiftUp(${index}, 'A')">↑</button></label><input type="text" value="${q.choices.A || ''}" onchange="updateChoice(${index}, 'A', this.value)"></div>
             <div><label>Choice B <button style="${btnStyle}" onclick="shiftUp(${index}, 'B')">↑</button></label><input type="text" value="${q.choices.B || ''}" onchange="updateChoice(${index}, 'B', this.value)"></div>
             <div><label>Choice C <button style="${btnStyle}" onclick="shiftUp(${index}, 'C')">↑</button></label><input type="text" value="${q.choices.C || ''}" onchange="updateChoice(${index}, 'C', this.value)"></div>
             <div><label>Choice D <button style="${btnStyle}" onclick="shiftUp(${index}, 'D')">↑</button></label><input type="text" value="${q.choices.D || ''}" onchange="updateChoice(${index}, 'D', this.value)"></div>
         </div>
-
         <div style="margin-top:10px; border-top: 1px solid #eee; padding-top:10px;">
             <label>Correct Answer</label>
             <input type="text" style="font-weight:bold;" value="${q.correct || ''}" onchange="updateData(${index}, 'correct', this.value)">
@@ -147,6 +154,12 @@ function resetRecord(index) {
 
 function updateData(index, field, value) { questionsData[index][field] = value; }
 function updateChoice(index, letter, value) { questionsData[index].choices[letter] = value; }
+
+function clearSearch() {
+    document.getElementById('idSearch').value = "";
+    searchTerm = "";
+    renderList();
+}
 
 function copyJSON() {
     if (document.activeElement) document.activeElement.blur();
