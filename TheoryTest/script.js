@@ -1,6 +1,5 @@
-const SCRIPT_VERSION = "v1.9.1";
+const SCRIPT_VERSION = "v1.8.9";
 
-// Immediate security check
 if (!sessionStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
 }
@@ -9,6 +8,7 @@ let allQuestions = [];
 let sessionQuestions = [];
 let currentIndex = 0;
 let originalSessionQuestions = []; 
+
 let testData = { selections: {}, flagged: [], seenIndices: [] };
 
 async function init() {
@@ -46,13 +46,6 @@ function resumeTest(shouldResume) {
 
 function renderQuestion() {
     const q = sessionQuestions[currentIndex];
-    const imgElement = document.getElementById('q-image');
-    if (imgElement) {
-        imgElement.style.display = 'none'; 
-        imgElement.src = `images/${q.id}.jpeg`;
-        imgElement.onload = () => { imgElement.style.display = 'block'; };
-        imgElement.onerror = () => { imgElement.style.display = 'none'; };
-    }
     document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
     document.getElementById('q-category').innerText = q.category;
     document.getElementById('q-text').innerText = q.question;
@@ -93,6 +86,7 @@ function changeQuestion(step) {
 function showSummary() {
     document.getElementById('test-ui').style.display = 'none';
     document.getElementById('summary-ui').style.display = 'block';
+    
     let answeredCount = 0;
     let score = 0;
     originalSessionQuestions.forEach(q => {
@@ -101,15 +95,21 @@ function showSummary() {
             if (testData.selections[q.id] === q.correct) score++;
         }
     });
+
     const total = originalSessionQuestions.length;
     const skippedCount = total - answeredCount;
     const percent = Math.round((score / total) * 100);
+
     const flagBtn = document.getElementById('review-flagged-btn');
     flagBtn.innerText = `FLAGGED (${testData.flagged.length})`;
-    flagBtn.onclick = () => { if(testData.flagged.length > 0) reviewFlagged(); };
+    flagBtn.style.opacity = testData.flagged.length > 0 ? "1" : "0.5";
+    flagBtn.onclick = testData.flagged.length > 0 ? reviewFlagged : null;
+
     const skipBtn = document.getElementById('review-skipped-btn');
     skipBtn.innerText = `SKIPPED (${skippedCount})`;
-    skipBtn.onclick = () => { if(skippedCount > 0) reviewSkipped(); };
+    skipBtn.style.opacity = skippedCount > 0 ? "1" : "0.5";
+    skipBtn.onclick = skippedCount > 0 ? reviewSkipped : null;
+
     localStorage.setItem('orion_final_results', JSON.stringify({ 
         score, total, percent, questions: originalSessionQuestions, data: testData 
     }));
@@ -132,11 +132,7 @@ function reviewSkipped() {
 }
 
 function saveProgress() {
-    localStorage.setItem('orion_current_session', JSON.stringify({ 
-        questions: originalSessionQuestions, 
-        data: testData, 
-        currentIndex: currentIndex 
-    }));
+    localStorage.setItem('orion_current_session', JSON.stringify({ questions: originalSessionQuestions, data: testData, currentIndex: currentIndex }));
 }
 
 function restartTest() { localStorage.removeItem('orion_current_session'); window.location.href = 'mainmenu.html'; }
