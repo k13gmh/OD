@@ -8,9 +8,21 @@
         body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; padding: 20px; color: #333; }
         .container { max-width: 800px; margin: 0 auto; }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 10px; }
-        .error-tag { background: #ff4757; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-left: 10px; }
-        .valid-tag { background: #2ed573; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-left: 10px; }
+        
+        /* Matching your original 'Red Border' style */
+        .card { background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 15px; position: relative; }
+        .error-card { border: 2px solid #ff4757 !important; background: #fff5f5; }
+        
+        .id-badge { font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; display: block; }
+        .error-tag { background: #ff4757; color: white; padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; float: right; }
+        .valid-tag { background: #2ed573; color: white; padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; float: right; }
+        
+        .data-box { margin-top: 10px; font-size: 0.9rem; }
+        .row { margin-bottom: 8px; display: flex; border-bottom: 1px solid #eee; padding-bottom: 4px; }
+        .label { font-weight: bold; width: 100px; color: #666; font-size: 0.8rem; text-transform: uppercase; }
+        .val { flex: 1; color: #000; }
+        .err-val { color: #ff4757; font-weight: bold; background: #ffffb3; padding: 0 4px; }
+
         .btn { background: #007bff; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; text-decoration: none; }
         .v-tag { position: fixed; bottom: 10px; right: 15px; font-family: monospace; font-size: 0.7rem; color: #bdc3c7; }
     </style>
@@ -19,18 +31,18 @@
 
 <div class="container">
     <div class="header">
-        <h1>Database Maintainer</h1>
+        <h1>Maintain Tool</h1>
         <a href="mainmenu.html" class="btn" style="background:#6c757d;">BACK</a>
     </div>
 
     <div id="stats" class="card" style="background:#eef2f7;">
-        Loading database statistics...
+        Analysing questions.json...
     </div>
 
     <div id="audit-list"></div>
 </div>
 
-<span class="v-tag">v1.6 (Maintain)</span>
+<span class="v-tag">v1.7 (Maintain)</span>
 
 <script>
     async function runAudit() {
@@ -46,41 +58,45 @@
 
             data.forEach((q, index) => {
                 let issues = [];
+                const validLetters = ["A", "B", "C", "D"];
                 
-                // Simple validation
-                if (!q.question) issues.push("Missing Question");
-                if (!q.choices.A || !q.choices.B) issues.push("Missing Choices");
-                if (!["A", "B", "C", "D"].includes(q.correct)) issues.push("Format Error");
+                // Detection logic
+                if (!validLetters.includes(q.correct)) issues.push("FORMAT ERROR");
+                if (q.explanation && q.explanation.length < 5) issues.push("EXP ERROR");
+
+                const isError = issues.length > 0;
+                if (isError) errorsCount++;
 
                 const card = document.createElement('div');
-                card.className = 'card';
+                card.className = isError ? 'card error-card' : 'card';
                 
-                const statusHtml = issues.length > 0 
-                    ? `<span class="error-tag">${issues.join(", ")}</span>`
-                    : `<span class="valid-tag">VALID</span>`;
-
-                if (issues.length > 0) errorsCount++;
-
                 card.innerHTML = `
-                    <div>
-                        <strong>ID: ${q.id}</strong> (Index: ${index})
-                        ${statusHtml}
-                    </div>
-                    <div style="font-size: 0.85rem; color: #666; margin-top: 5px;">
-                        ${q.question.substring(0, 80)}...
+                    <span class="${isError ? 'error-tag' : 'valid-tag'}">${isError ? issues.join(" / ") : 'VALID'}</span>
+                    <span class="id-badge">ID: ${q.id}</span>
+                    
+                    <div class="data-box">
+                        <div class="row"><span class="label">Question:</span><span class="val">${q.question}</span></div>
+                        <div class="row"><span class="label">Choice A:</span><span class="val">${q.choices.A || ""}</span></div>
+                        <div class="row"><span class="label">Choice B:</span><span class="val">${q.choices.B || ""}</span></div>
+                        <div class="row"><span class="label">Choice C:</span><span class="val">${q.choices.C || ""}</span></div>
+                        <div class="row"><span class="label">Choice D:</span><span class="val">${q.choices.D || ""}</span></div>
+                        <div class="row">
+                            <span class="label">Correct:</span>
+                            <span class="val ${!validLetters.includes(q.correct) ? 'err-val' : ''}">${q.correct || "???"}</span>
+                        </div>
+                        <div class="row">
+                            <span class="label">Explanation:</span>
+                            <span class="val ${q.explanation && q.explanation.length < 5 ? 'err-val' : ''}">${q.explanation || ""}</span>
+                        </div>
                     </div>
                 `;
                 auditList.appendChild(card);
             });
 
-            statsBox.innerHTML = `
-                <strong>Total Questions:</strong> ${data.length}<br>
-                <strong>Questions with Errors:</strong> <span style="color:${errorsCount > 0 ? '#ff4757' : '#2ed573'}">${errorsCount}</span>
-            `;
+            statsBox.innerHTML = `Found <strong>${data.length}</strong> questions. Errors: <span style="color:#ff4757; font-weight:bold;">${errorsCount}</span>`;
 
         } catch (e) {
-            statsBox.innerHTML = `<span class="error-tag">ERROR LOADING JSON</span>`;
-            console.error(e);
+            statsBox.innerHTML = `<span class="error-tag">LOAD FAILED: Check questions.json</span>`;
         }
     }
 
