@@ -1,4 +1,4 @@
-const SCRIPT_VERSION = "v1.8.9";
+const SCRIPT_VERSION = "v1.9.0";
 
 if (!sessionStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -46,9 +46,20 @@ function resumeTest(shouldResume) {
 
 function renderQuestion() {
     const q = sessionQuestions[currentIndex];
+    
+    // Image Handling Logic
+    const imgElement = document.getElementById('q-image');
+    if (imgElement) {
+        imgElement.style.display = 'none'; // Reset display
+        imgElement.src = `images/${q.id}.jpeg`;
+        imgElement.onload = () => { imgElement.style.display = 'block'; };
+        imgElement.onerror = () => { imgElement.style.display = 'none'; };
+    }
+
     document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
     document.getElementById('q-category').innerText = q.category;
     document.getElementById('q-text').innerText = q.question;
+    
     const optionsArea = document.getElementById('options-area');
     optionsArea.innerHTML = '';
     ["A", "B", "C", "D"].forEach(letter => {
@@ -60,6 +71,7 @@ function renderQuestion() {
         btn.onclick = () => { testData.selections[q.id] = letter; renderQuestion(); };
         optionsArea.appendChild(btn);
     });
+
     const flagBtn = document.getElementById('flag-btn');
     flagBtn.style.background = testData.flagged.includes(q.id) ? "#f1c40f" : "#bdc3c7";
     flagBtn.style.color = testData.flagged.includes(q.id) ? "#fff" : "#444";
@@ -102,15 +114,12 @@ function showSummary() {
 
     const flagBtn = document.getElementById('review-flagged-btn');
     flagBtn.innerText = `FLAGGED (${testData.flagged.length})`;
-    flagBtn.style.opacity = testData.flagged.length > 0 ? "1" : "0.5";
-    flagBtn.onclick = testData.flagged.length > 0 ? reviewFlagged : null;
+    flagBtn.onclick = () => { if(testData.flagged.length > 0) reviewFlagged(); };
 
     const skipBtn = document.getElementById('review-skipped-btn');
     skipBtn.innerText = `SKIPPED (${skippedCount})`;
-    skipBtn.style.opacity = skippedCount > 0 ? "1" : "0.5";
-    skipBtn.onclick = skippedCount > 0 ? reviewSkipped : null;
+    skipBtn.onclick = () => { if(skippedCount > 0) reviewSkipped(); };
 
-    // Saving final stats to be picked up by the Review (Analysis) screen
     localStorage.setItem('orion_final_results', JSON.stringify({ 
         score, total, percent, questions: originalSessionQuestions, data: testData 
     }));
@@ -133,7 +142,11 @@ function reviewSkipped() {
 }
 
 function saveProgress() {
-    localStorage.setItem('orion_current_session', JSON.stringify({ questions: originalSessionQuestions, data: testData, currentIndex: currentIndex }));
+    localStorage.setItem('orion_current_session', JSON.stringify({ 
+        questions: originalSessionQuestions, 
+        data: testData, 
+        currentIndex: currentIndex 
+    }));
 }
 
 function restartTest() { localStorage.removeItem('orion_current_session'); window.location.href = 'mainmenu.html'; }
