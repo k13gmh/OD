@@ -1,14 +1,10 @@
-const SCRIPT_VERSION = "v1.9.2";
+const SCRIPT_VERSION = "v1.9.3";
 
 if (!sessionStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
 }
 
-let allQuestions = [];
-let sessionQuestions = [];
-let currentIndex = 0;
-let originalSessionQuestions = []; 
-
+let allQuestions = [], sessionQuestions = [], currentIndex = 0, originalSessionQuestions = []; 
 let testData = { selections: {}, flagged: [], seenIndices: [] };
 
 async function init() {
@@ -18,10 +14,9 @@ async function init() {
         const response = await fetch('questions.json');
         allQuestions = await response.json();
         const saved = localStorage.getItem('orion_current_session');
-        if (saved) {
-            document.getElementById('resume-modal').style.display = 'flex';
-        } else { startFreshSession(); }
-    } catch (e) { console.error("Load fail", e); }
+        if (saved) { document.getElementById('resume-modal').style.display = 'flex'; } 
+        else { startFreshSession(); }
+    } catch (e) { console.error(e); }
 }
 
 function startFreshSession() {
@@ -46,42 +41,38 @@ function resumeTest(shouldResume) {
 
 function renderQuestion() {
     const q = sessionQuestions[currentIndex];
-    
-    // Image Handling Logic
     const imgElement = document.getElementById('q-image');
     if (imgElement) {
-        imgElement.style.display = 'none'; // Hide while loading
+        imgElement.style.display = 'none'; 
         imgElement.src = `images/${q.id}.jpeg`;
         imgElement.onload = () => { imgElement.style.display = 'block'; };
         imgElement.onerror = () => { imgElement.style.display = 'none'; };
+        // Trigger modal on click
+        imgElement.onclick = () => openModal(imgElement.src);
     }
-
     document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
     document.getElementById('q-category').innerText = q.category;
     document.getElementById('q-text').innerText = q.question;
     const optionsArea = document.getElementById('options-area');
     optionsArea.innerHTML = '';
     ["A", "B", "C", "D"].forEach(letter => {
-        if (!q.choices || !q.choices[letter]) return;
+        if (!q.choices[letter]) return;
         const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        if (testData.selections[q.id] === letter) btn.classList.add('selected');
+        btn.className = 'option-btn' + (testData.selections[q.id] === letter ? ' selected' : '');
         btn.innerText = `${letter}: ${q.choices[letter]}`;
         btn.onclick = () => { testData.selections[q.id] = letter; renderQuestion(); };
         optionsArea.appendChild(btn);
     });
     const flagBtn = document.getElementById('flag-btn');
     flagBtn.style.background = testData.flagged.includes(q.id) ? "#f1c40f" : "#bdc3c7";
-    flagBtn.style.color = testData.flagged.includes(q.id) ? "#fff" : "#444";
     saveProgress();
 }
 
-function toggleFlag() {
-    const qId = sessionQuestions[currentIndex].id;
-    if (testData.flagged.includes(qId)) {
-        testData.flagged = testData.flagged.filter(id => id !== qId);
-    } else { testData.flagged.push(qId); }
-    renderQuestion();
+// Modal handler
+function openModal(src) {
+    const modal = document.getElementById('img-modal');
+    document.getElementById('img-modal-content').src = src;
+    modal.style.display = 'flex';
 }
 
 function changeQuestion(step) {
@@ -96,55 +87,21 @@ function changeQuestion(step) {
 function showSummary() {
     document.getElementById('test-ui').style.display = 'none';
     document.getElementById('summary-ui').style.display = 'block';
-    
-    let answeredCount = 0;
-    let score = 0;
+    let answered = 0, score = 0;
     originalSessionQuestions.forEach(q => {
         if (testData.selections[q.id]) {
-            answeredCount++;
+            answered++;
             if (testData.selections[q.id] === q.correct) score++;
         }
     });
-
-    const total = originalSessionQuestions.length;
-    const skippedCount = total - answeredCount;
-    const percent = Math.round((score / total) * 100);
-
-    const flagBtn = document.getElementById('review-flagged-btn');
-    flagBtn.innerText = `FLAGGED (${testData.flagged.length})`;
-    flagBtn.onclick = () => { if(testData.flagged.length > 0) reviewFlagged(); };
-
-    const skipBtn = document.getElementById('review-skipped-btn');
-    skipBtn.innerText = `SKIPPED (${skippedCount})`;
-    skipBtn.onclick = () => { if(skippedCount > 0) reviewSkipped(); };
-
-    localStorage.setItem('orion_final_results', JSON.stringify({ 
-        score, total, percent, questions: originalSessionQuestions, data: testData 
-    }));
+    const skipped = originalSessionQuestions.length - answered;
+    document.getElementById('review-skipped-btn').innerText = `SKIPPED (${skipped})`;
+    document.getElementById('review-flagged-btn').innerText = `FLAGGED (${testData.flagged.length})`;
+    localStorage.setItem('orion_final_results', JSON.stringify({ score, total: originalSessionQuestions.length, questions: originalSessionQuestions, data: testData }));
 }
 
-function reviewFlagged() {
-    sessionQuestions = originalSessionQuestions.filter(q => testData.flagged.includes(q.id));
-    currentIndex = 0;
-    document.getElementById('summary-ui').style.display = 'none';
-    document.getElementById('test-ui').style.display = 'block';
-    renderQuestion();
-}
-
-function reviewSkipped() {
-    sessionQuestions = originalSessionQuestions.filter(q => !testData.selections[q.id]);
-    currentIndex = 0;
-    document.getElementById('summary-ui').style.display = 'none';
-    document.getElementById('test-ui').style.display = 'block';
-    renderQuestion();
-}
-
-function saveProgress() {
-    localStorage.setItem('orion_current_session', JSON.stringify({ questions: originalSessionQuestions, data: testData, currentIndex: currentIndex }));
-}
-
+function saveProgress() { localStorage.setItem('orion_current_session', JSON.stringify({ questions: originalSessionQuestions, data: testData, currentIndex })); }
 function restartTest() { localStorage.removeItem('orion_current_session'); window.location.href = 'mainmenu.html'; }
-function continueLater() { saveProgress(); window.location.href = 'mainmenu.html'; }
 function reviewAnswers() { window.location.href = 'review.html'; }
 
 init();
