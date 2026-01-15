@@ -5,28 +5,29 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Orion Drive - Review</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; color: #333; padding: 15px; margin: 0; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 100%; max-width: 600px; }
+        body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; color: #333; padding: 10px; margin: 0; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 600px; margin-top: 5px; }
         
-        /* Compact Card */
+        /* Dynamic Result Card at Top */
+        .result-card { background: #fff; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 15px; }
+        .result-status { font-size: 2.2rem; font-weight: bold; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 15px; }
+        .result-detail { font-size: 1.2rem; font-weight: 600; }
+        
         .card { background: #fff; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 15px; }
         
-        /* Stats Grid - Tighter Spacing */
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .stat-box { background: #f8fafc; padding: 10px; border-radius: 10px; text-align: center; border: 1px solid #edf2f7; }
         .stat-label { font-size: 0.7rem; color: #7f8c8d; text-transform: uppercase; display: block; }
         .stat-val { font-size: 1.1rem; font-weight: bold; color: #2d3748; }
 
-        /* Category Analysis - Compressed */
         .cat-header { font-size: 0.8rem; font-weight: bold; color: #a0aec0; margin-bottom: 8px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 5px;}
         .cat-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dotted #f1f1f1; font-size: 0.85rem; }
-        .cat-name { color: #4a5568; }
-        .cat-score { font-weight: bold; }
-        .good { color: #5cb85c; }
-        .bad { color: #d9534f; }
+        
+        /* Pass/Fail Colors */
+        .pass-text { color: #5cb85c; }
+        .fail-text { color: #d9534f; }
         .neutral { color: #cbd5e0; }
 
-        /* Buttons */
         .menu-grid { display: flex; flex-direction: column; gap: 8px; width: 100%; }
         .btn { background: #bdc3c7; color: #2c3e50; border: none; padding: 15px; border-radius: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.85rem; }
         .btn-blue { background: #007bff; color: #fff; }
@@ -37,24 +38,20 @@
 <body>
 
     <div class="container">
+        <div id="top-result" class="result-card">
+            <div id="res-status" class="result-status">
+                <span id="res-emoji"></span>
+                <span id="res-text">Calculating...</span>
+            </div>
+            <div id="res-detail" class="result-detail">-- / -- (--%)</div>
+        </div>
+
         <div class="card">
             <div class="stats-grid">
-                <div class="stat-box">
-                    <span class="stat-label">Answered</span>
-                    <span id="stat-answered" class="stat-val">0 / 0</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">Skipped</span>
-                    <span id="stat-skipped" class="stat-val">0</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">Correct</span>
-                    <span id="stat-correct" class="stat-val" style="color:#5cb85c;">0</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">Wrong</span>
-                    <span id="stat-wrong" class="stat-val" style="color:#d9534f;">0</span>
-                </div>
+                <div class="stat-box"><span class="stat-label">Answered</span><span id="stat-answered" class="stat-val">0 / 0</span></div>
+                <div class="stat-box"><span class="stat-label">Skipped</span><span id="stat-skipped" class="stat-val">0</span></div>
+                <div class="stat-box"><span class="stat-label">Correct</span><span id="stat-correct" class="stat-val" style="color:#5cb85c;">0</span></div>
+                <div class="stat-box"><span class="stat-label">Wrong</span><span id="stat-wrong" class="stat-val" style="color:#d9534f;">0</span></div>
             </div>
 
             <div class="cat-header">Category Analysis</div>
@@ -68,7 +65,7 @@
         </div>
     </div>
 
-    <span class="v-tag">v1.2 (Review)</span>
+    <span class="v-tag">v1.4 (Review)</span>
 
     <script>
         function initReview() {
@@ -79,36 +76,41 @@
             const data = results.data;
             const questions = results.questions;
 
-            let correct = 0;
-            let wrong = 0;
-            let skipped = 0;
+            let correct = 0, wrong = 0, skipped = 0;
             let categoryStats = {};
 
             questions.forEach((q, idx) => {
                 const userAns = data.selections[q.id];
                 const isSeen = data.seenIndices.includes(idx);
                 
-                if (!categoryStats[q.category]) {
-                    categoryStats[q.category] = { correct: 0, total: 0, tested: false };
-                }
+                if (!categoryStats[q.category]) categoryStats[q.category] = { correct: 0, total: 0, tested: false };
                 
                 if (isSeen) {
                     categoryStats[q.category].tested = true;
                     categoryStats[q.category].total++;
                     if (userAns) {
-                        if (userAns === q.correct) {
-                            correct++;
-                            categoryStats[q.category].correct++;
-                        } else {
-                            wrong++;
-                        }
-                    } else {
-                        skipped++;
-                    }
+                        (userAns === q.correct) ? (correct++, categoryStats[q.category].correct++) : wrong++;
+                    } else { skipped++; }
                 }
             });
 
             const totalSeen = data.seenIndices.length;
+            const percent = totalSeen > 0 ? Math.round((correct / totalSeen) * 100) : 0;
+            const hasPassed = percent >= 86;
+
+            // Update Top Result Header
+            const textEl = document.getElementById('res-text');
+            const emojiEl = document.getElementById('res-emoji');
+            const detailEl = document.getElementById('res-detail');
+            
+            textEl.innerText = hasPassed ? "PASSED" : "FAILED";
+            emojiEl.innerText = hasPassed ? "✅" : "❌";
+            
+            const finalClass = hasPassed ? 'pass-text' : 'fail-text';
+            textEl.parentElement.className = `result-status ${finalClass}`;
+            detailEl.innerText = `${correct} / ${totalSeen} — ${percent}% (Pass: 86%)`;
+            detailEl.className = `result-detail ${finalClass}`;
+
             document.getElementById('stat-answered').innerText = `${correct + wrong} / ${totalSeen}`;
             document.getElementById('stat-skipped').innerText = skipped;
             document.getElementById('stat-correct').innerText = correct;
@@ -116,44 +118,27 @@
 
             const catArea = document.getElementById('category-data');
             catArea.innerHTML = "";
-            
-            // Sort categories alphabetically
-            const sortedCats = Object.keys(categoryStats).sort();
-
-            sortedCats.forEach(cat => {
+            Object.keys(categoryStats).sort().forEach(cat => {
                 const c = categoryStats[cat];
                 const div = document.createElement('div');
                 div.className = 'cat-item';
-                
-                // Fix for NaN% - only show % if questions were actually seen
-                let scoreText = "-";
-                let scoreClass = "neutral";
-                
+                let scoreText = "-", scoreClass = "neutral";
                 if (c.tested && c.total > 0) {
-                    const perc = Math.round((c.correct / c.total) * 100);
-                    scoreText = perc + "%";
-                    scoreClass = perc >= 86 ? "good" : "bad";
+                    const p = Math.round((c.correct / c.total) * 100);
+                    scoreText = p + "%";
+                    scoreClass = p >= 86 ? "pass-text" : "fail-text";
                 }
-
-                div.innerHTML = `
-                    <span class="cat-name">${cat}</span>
-                    <span class="cat-score ${scoreClass}">${scoreText}</span>
-                `;
+                div.innerHTML = `<span class="cat-name">${cat}</span><span class="cat-score ${scoreClass}">${scoreText}</span>`;
                 catArea.appendChild(div);
             });
         }
 
-        function startReview(mode) {
-            localStorage.setItem('orion_review_mode', mode);
-            window.location.href = 'review_detail.html';
+        function startReview(mode) { localStorage.setItem('orion_review_mode', mode); window.location.href = 'review_detail.html'; }
+        function exitToMenu() { 
+            localStorage.removeItem('orion_current_session'); 
+            localStorage.removeItem('orion_final_results'); 
+            window.location.href = 'mainmenu.html'; 
         }
-
-        function exitToMenu() {
-            localStorage.removeItem('orion_current_session');
-            localStorage.removeItem('orion_final_results');
-            window.location.href = 'mainmenu.html';
-        }
-
         window.onload = initReview;
     </script>
 </body>
