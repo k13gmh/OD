@@ -55,20 +55,10 @@ function copyErrorData() {
         alert("No errors found!");
         return;
     }
-
     let report = "";
     errors.forEach(q => {
-        report += `ID: ${q.id}\n`;
-        report += `Category: ${q.category || ''}\n`;
-        report += `Question: ${q.question}\n`;
-        report += `A: ${q.choices.A || ''}\n`;
-        report += `B: ${q.choices.B || ''}\n`;
-        report += `C: ${q.choices.C || ''}\n`;
-        report += `D: ${q.choices.D || ''}\n`;
-        report += `Correct: ${q.correct || ''}\n`;
-        report += `Explanation: ${q.explanation || ''}\n\n`;
+        report += `ID: ${q.id}\nCategory: ${q.category || ''}\nQuestion: ${q.question}\nA: ${q.choices.A || ''}\nB: ${q.choices.B || ''}\nC: ${q.choices.C || ''}\nD: ${q.choices.D || ''}\nCorrect: ${q.correct || ''}\nExplanation: ${q.explanation || ''}\n\n`;
     });
-
     navigator.clipboard.writeText(report).then(() => {
         alert("Copied " + errors.length + " error records to clipboard.");
     });
@@ -78,7 +68,6 @@ function renderList() {
     const list = document.getElementById('maintenance-list');
     const status = document.getElementById('status-msg');
     const validLetters = ["A", "B", "C", "D"];
-    
     let displayCount = 0;
     list.innerHTML = '';
 
@@ -105,7 +94,8 @@ function renderList() {
     });
 
     status.innerHTML = searchTerm !== "" ? `Showing ID: ${searchTerm}` : `<span style="color: #f44336;">Records needing attention: ${displayCount}</span>`;
-    document.getElementById('app-version').innerText = "Ver: 1.2.0";
+    const badge = document.getElementById('app-version');
+    if (badge) badge.innerText = "Ver: 1.2.0";
 }
 
 function renderCardContent(q, index, issues) {
@@ -165,12 +155,7 @@ function resetRecord(index) {
 
 function updateData(index, field, value) { questionsData[index][field] = value; }
 function updateChoice(index, letter, value) { questionsData[index].choices[letter] = value; }
-
-function clearSearch() {
-    document.getElementById('idSearch').value = "";
-    searchTerm = "";
-    renderList();
-}
+function clearSearch() { document.getElementById('idSearch').value = ""; searchTerm = ""; renderList(); }
 
 function copyJSON() {
     if (document.activeElement) document.activeElement.blur();
