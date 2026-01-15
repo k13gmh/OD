@@ -8,11 +8,8 @@ async function loadQuestions() {
     try {
         const response = await fetch('questions.json?v=' + Date.now());
         const data = await response.json();
-        
-        // Deep clone the data
         questionsData = JSON.parse(JSON.stringify(data));
         originalData = JSON.parse(JSON.stringify(data));
-        
         addSearchUI();
         renderList();
     } catch (e) {
@@ -29,7 +26,7 @@ function addSearchUI() {
         searchDiv.innerHTML = `
             <input type="text" id="idSearch" placeholder="Search by ID..." 
                 style="padding: 10px; border-radius: 5px; border: 1px solid #ddd; flex-grow: 1;">
-            <button onclick="copyFullErrorReport()" style="padding: 10px; background: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">COPY ERROR DATA</button>
+            <button onclick="copyErrorIDs()" style="padding: 10px; background: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">COPY ERROR IDs</button>
             <button onclick="clearSearch()" style="padding: 10px; background: #666; color: white; border: none; border-radius: 5px; cursor: pointer;">Clear</button>
         `;
         header.parentNode.insertBefore(searchDiv, header.nextSibling);
@@ -52,29 +49,16 @@ function getErrors() {
     });
 }
 
-function copyFullErrorReport() {
+function copyErrorIDs() {
     const errors = getErrors();
-    if (errors.length === 0) {
+    const idList = errors.map(q => q.id).join(", ");
+    if (idList) {
+        navigator.clipboard.writeText(idList).then(() => {
+            alert("Copied Error IDs: " + idList);
+        });
+    } else {
         alert("No errors found!");
-        return;
     }
-
-    let report = "--- ORION ERROR DATA REPORT ---\n\n";
-    errors.forEach(q => {
-        report += `ID: ${q.id}\n`;
-        report += `Q: ${q.question}\n`;
-        report += `A: ${q.choices.A || ''}\n`;
-        report += `B: ${q.choices.B || ''}\n`;
-        report += `C: ${q.choices.C || ''}\n`;
-        report += `D: ${q.choices.D || ''}\n`;
-        report += `CORRECT: ${q.correct || ''}\n`;
-        report += `EXP: ${q.explanation || ''}\n`;
-        report += `----------------------------\n\n`;
-    });
-
-    navigator.clipboard.writeText(report).then(() => {
-        alert(`Copied ${errors.length} error records to clipboard.`);
-    });
 }
 
 function renderList() {
@@ -108,11 +92,10 @@ function renderList() {
     });
 
     status.innerHTML = searchTerm !== "" ? `Showing ID: ${searchTerm}` : `<span style="color: #f44336;">Records needing attention: ${displayCount}</span>`;
-    
-    // This updates the version label in the HTML automatically
-    const verBadge = document.getElementById('app-version');
-    if (verBadge) verBadge.innerText = "Ver: 1.1.9";
+    document.getElementById('app-version').innerText = "Ver: 1.1.8";
 }
+
+// ... (renderCardContent, shiftUp, resetRecord, updateData, updateChoice, copyJSON remain same as 1.1.7)
 
 function renderCardContent(q, index, issues) {
     const btnStyle = "background:#007bff; color:white; border:none; padding:2px 8px; border-radius:3px; cursor:pointer; font-size:10px; margin-left:10px;";
