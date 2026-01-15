@@ -8,8 +8,11 @@ async function loadQuestions() {
     try {
         const response = await fetch('questions.json?v=' + Date.now());
         const data = await response.json();
+        
+        // Deep clone the data
         questionsData = JSON.parse(JSON.stringify(data));
         originalData = JSON.parse(JSON.stringify(data));
+        
         addSearchUI();
         renderList();
     } catch (e) {
@@ -59,7 +62,6 @@ function copyFullErrorReport() {
     let report = "--- ORION ERROR DATA REPORT ---\n\n";
     errors.forEach(q => {
         report += `ID: ${q.id}\n`;
-        report += `CAT: ${q.category || 'N/A'}\n`;
         report += `Q: ${q.question}\n`;
         report += `A: ${q.choices.A || ''}\n`;
         report += `B: ${q.choices.B || ''}\n`;
@@ -71,7 +73,7 @@ function copyFullErrorReport() {
     });
 
     navigator.clipboard.writeText(report).then(() => {
-        alert(`Copied ${errors.length} error records to clipboard in text format.`);
+        alert(`Copied ${errors.length} error records to clipboard.`);
     });
 }
 
@@ -106,7 +108,10 @@ function renderList() {
     });
 
     status.innerHTML = searchTerm !== "" ? `Showing ID: ${searchTerm}` : `<span style="color: #f44336;">Records needing attention: ${displayCount}</span>`;
-    document.getElementById('app-version').innerText = "Ver: 1.1.9";
+    
+    // This updates the version label in the HTML automatically
+    const verBadge = document.getElementById('app-version');
+    if (verBadge) verBadge.innerText = "Ver: 1.1.9";
 }
 
 function renderCardContent(q, index, issues) {
