@@ -379,15 +379,15 @@
   {
     "id": "32",
     "category": "Alertness",
-    "question": "When approaching a junction",
+    "question": "When approaching a junction,  you see a cyclist. What should you expect?",
     "choices": {
-      "A": " you see a cyclist. What should you expect?",
-      "B": "They will always stop for you",
-      "C": "They may swerve or change direction suddenly",
-      "D": "They are faster than cars"
+      "A": "They will always stop for you",
+      "B": "They may swerve or change direction suddenly",
+      "C": "They are faster than cars",
+      "D": "They have no right of way"
     },
-    "correct": "They have no right of way",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "33",
@@ -1163,11 +1163,11 @@
     "choices": {
       "A": "Traffic from the left",
       "B": "Traffic already on the roundabout from the right",
-      "C": "No one",
-      "D": " it is first come first served"
+      "C": "No one,  it is first come first served",
+      "D": "Only buses and lorries"
     },
-    "correct": "Only buses and lorries",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "97",
@@ -1318,12 +1318,12 @@
     "question": "You are at a railway level crossing. The red lights continue to flash after a train has passed. What should you do?",
     "choices": {
       "A": "Drive across quickly",
-      "B": "Wait",
-      "C": " as another train may be coming",
-      "D": "Get out and check the tracks"
+      "B": "Wait,  as another train may be coming",
+      "C": "Get out and check the tracks",
+      "D": "Sound your horn to warn others"
     },
-    "correct": "Sound your horn to warn others",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "109",
@@ -1513,12 +1513,12 @@
     "question": "What should you check before starting a long journey?",
     "choices": {
       "A": "The radio signal strength",
-      "B": "The oil",
-      "C": " water",
-      "D": " and tyre levels"
+      "B": "The oil,  water,  and tyre levels",
+      "C": "The car's maximum speed",
+      "D": "The cleanliness of the floor mats"
     },
-    "correct": "The car's maximum speed",
-    "explanation": "The cleanliness of the floor mats"
+    "correct": "****",
+    "explanation": "****"
   },
   {
     "id": "124",
@@ -1762,10 +1762,10 @@
       "A": "Leave the keys in the ignition when paying for fuel",
       "B": "Always lock the car and remove the keys even for a short time",
       "C": "Leave valuables on the passenger seat",
-      "D": "Park in dark"
+      "D": "Park in dark,  unlit side streets"
     },
-    "correct": " unlit side streets",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "143",
@@ -1941,9 +1941,9 @@
     "category": "Safety and Your Vehicle",
     "question": "How much can you be fined for having a tyre with insufficient tread?",
     "choices": {
-      "A": "Up to \u00a3100",
-      "B": "Up to \u00a31000 per tyre",
-      "C": "Up to \u00a32500 per tyre and 3 points",
+      "A": "Up to £100",
+      "B": "Up to £1000 per tyre",
+      "C": "Up to £2500 per tyre and 3 points",
       "D": "Nothing if it's a spare tyre"
     },
     "correct": "C",
@@ -2097,13 +2097,13 @@
     "category": "Safety and Your Vehicle",
     "question": "Why should you check your tyre pressures when they are cold?",
     "choices": {
-      "A": "Because the air expands when hot",
-      "B": " giving a false high reading",
-      "C": "Because tyres are easier to touch when cold",
-      "D": "Because it is better for the pump"
+      "A": "Because the air expands when hot,  giving a false high reading",
+      "B": "Because tyres are easier to touch when cold",
+      "C": "Because it is better for the pump",
+      "D": "Because the law says so"
     },
-    "correct": "Because the law says so",
-    "explanation": "A"
+    "correct": "A",
+    "explanation": "****"
   },
   {
     "id": "169",
@@ -2168,7 +2168,7 @@
       "D": "Maintain your speed and look away"
     },
     "correct": "C",
-    "explanation": "A bouncing ball is a classic 'hazard'\u2014always assume a child will run out after it without looking.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "A bouncing ball is a classic 'hazard'—always assume a child will run out after it without looking.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "174",
@@ -2332,12 +2332,12 @@
     "question": "What is a hazard associated with 'junction hopping' (cutting across lanes)?",
     "choices": {
       "A": "It saves fuel",
-      "B": "Other drivers may not expect your move",
-      "C": " leading to collisions",
-      "D": "It is the fastest way to travel"
+      "B": "Other drivers may not expect your move,  leading to collisions",
+      "C": "It is the fastest way to travel",
+      "D": "It is recommended by the Highway Code"
     },
-    "correct": "It is recommended by the Highway Code",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "187",
@@ -3213,15 +3213,15 @@
   {
     "id": "254",
     "category": "Safety Margins",
-    "question": "When descending a steep hill",
+    "question": "When descending a steep hill,  how can you control your speed?",
     "choices": {
-      "A": " how can you control your speed?",
-      "B": "By staying in a high gear and braking hard",
-      "C": "By selecting a lower gear and using the brakes carefully",
-      "D": "By switching the engine off"
+      "A": "By staying in a high gear and braking hard",
+      "B": "By selecting a lower gear and using the brakes carefully",
+      "C": "By switching the engine off",
+      "D": "By using the handbrake"
     },
-    "correct": "By using the handbrake",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "255",
@@ -3319,13 +3319,13 @@
     "category": "Safety Margins",
     "question": "How much extra room should you give a motorcyclist when it is windy?",
     "choices": {
-      "A": "None",
-      "B": " it doesn't affect them",
-      "C": "A little bit more than a car",
-      "D": "A lot of extra room as they can be blown across the lane"
+      "A": "None,  it doesn't affect them",
+      "B": "A little bit more than a car",
+      "C": "A lot of extra room as they can be blown across the lane",
+      "D": "Less than a car because they are small"
     },
-    "correct": "Less than a car because they are small",
-    "explanation": "C"
+    "correct": "C",
+    "explanation": "****"
   },
   {
     "id": "263",
@@ -3502,12 +3502,12 @@
     "question": "When is it particularly important to check your oil level?",
     "choices": {
       "A": "Every time you get fuel",
-      "B": "Before a long",
-      "C": " high-speed journey",
-      "D": "Only during the MOT"
+      "B": "Before a long,  high-speed journey",
+      "C": "Only during the MOT",
+      "D": "Only if the engine makes a loud noise"
     },
-    "correct": "Only if the engine makes a loud noise",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "277",
@@ -3594,11 +3594,11 @@
     "choices": {
       "A": "Check your tyre pressures and have the brakes checked by a professional",
       "B": "Speed up",
-      "C": "Nothing",
-      "D": " it's normal on old cars"
+      "C": "Nothing,  it's normal on old cars",
+      "D": "Brake harder"
     },
-    "correct": "Brake harder",
-    "explanation": "A"
+    "correct": "A",
+    "explanation": "****"
   },
   {
     "id": "284",
@@ -4526,15 +4526,15 @@
   {
     "id": "355",
     "category": "Other Types of Vehicle",
-    "question": "When you are following a large vehicle",
+    "question": "When you are following a large vehicle,  why is it important to see its mirrors?",
     "choices": {
-      "A": " why is it important to see its mirrors?",
-      "B": "So you can see what the driver looks like",
-      "C": "If you can see the mirrors",
-      "D": " the driver can see you"
+      "A": "So you can see what the driver looks like",
+      "B": "If you can see the mirrors,  the driver can see you",
+      "C": "To check if the mirrors are clean",
+      "D": "To see the traffic behind the lorry"
     },
-    "correct": "To check if the mirrors are clean",
-    "explanation": "To see the traffic behind the lorry"
+    "correct": "****",
+    "explanation": "****"
   },
   {
     "id": "356",
@@ -5348,12 +5348,12 @@
     "question": "What is the main danger of driving in high winds?",
     "choices": {
       "A": "The car will get dirty",
-      "B": "The car could be blown out of its lane",
-      "C": " particularly high-sided vehicles",
-      "D": "The engine will stall"
+      "B": "The car could be blown out of its lane,  particularly high-sided vehicles",
+      "C": "The engine will stall",
+      "D": "The radio won't work"
     },
-    "correct": "The radio won't work",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "419",
@@ -5673,12 +5673,12 @@
     "question": "How should you drive over a bridge in high winds?",
     "choices": {
       "A": "Fast and in the middle of the road",
-      "B": "Slowly and with extra care",
-      "C": " especially if you have a roof box",
-      "D": "With your hazard lights on"
+      "B": "Slowly and with extra care,  especially if you have a roof box",
+      "C": "With your hazard lights on",
+      "D": "By staying close to the vehicle in front"
     },
-    "correct": "By staying close to the vehicle in front",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "444",
@@ -6441,11 +6441,11 @@
     "choices": {
       "A": "No",
       "B": "Only if you are accompanied by an ADI (instructor) in a car with dual controls",
-      "C": "Yes",
-      "D": " as long as you have a passenger"
+      "C": "Yes,  as long as you have a passenger",
+      "D": "Only between 10 PM and 6 AM"
     },
-    "correct": "Only between 10 PM and 6 AM",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "503",
@@ -6965,7 +6965,7 @@
       "D": "Cycle parking"
     },
     "correct": "B",
-    "explanation": "Blue circles give positive instructions\u2014this is a dedicated cycle route.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "Blue circles give positive instructions—this is a dedicated cycle route.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "543",
@@ -8143,22 +8143,22 @@
     "question": "When must you notify the DVLA of a change?",
     "choices": {
       "A": "Only when you sell the car",
-      "B": "When you change your name",
-      "C": " address",
-      "D": " or health status"
+      "B": "When you change your name,  address,  or health status",
+      "C": "Only if you get a speeding ticket",
+      "D": "Every year"
     },
-    "correct": "Only if you get a speeding ticket",
-    "explanation": "Every year"
+    "correct": "****",
+    "explanation": "****"
   },
   {
     "id": "634",
     "category": "Essential Documents",
     "question": "What is the maximum fine for driving without insurance?",
     "choices": {
-      "A": "\u00a350",
-      "B": "\u00a3500",
+      "A": "£50",
+      "B": "£500",
       "C": "Unlimited",
-      "D": "\u00a3100"
+      "D": "£100"
     },
     "correct": "C",
     "explanation": "The courts can issue an unlimited fine and give you 6 to 8 penalty points.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
@@ -8218,15 +8218,15 @@
   {
     "id": "639",
     "category": "Essential Documents",
-    "question": "If your car fails an MOT",
+    "question": "If your car fails an MOT,  when can you drive it?",
     "choices": {
-      "A": " when can you drive it?",
-      "B": "Anytime for the next 7 days",
-      "C": "Only to a pre-arranged appointment at a garage to have the faults fixed",
-      "D": "Only during daylight hours"
+      "A": "Anytime for the next 7 days",
+      "B": "Only to a pre-arranged appointment at a garage to have the faults fixed",
+      "C": "Only during daylight hours",
+      "D": "To the shops and back"
     },
-    "correct": "To the shops and back",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "640",
@@ -8247,12 +8247,12 @@
     "question": "How often should you update your vehicle's logbook (V5C)?",
     "choices": {
       "A": "Every time you have a service",
-      "B": "When the vehicle is sold",
-      "C": " scrapped",
-      "D": " or the keeper changes details"
+      "B": "When the vehicle is sold,  scrapped,  or the keeper changes details",
+      "C": "Every 12 months",
+      "D": "Only if the color of the car changes"
     },
-    "correct": "Every 12 months",
-    "explanation": "Only if the color of the car changes"
+    "correct": "****",
+    "explanation": "****"
   },
   {
     "id": "642",
@@ -8309,15 +8309,15 @@
   {
     "id": "646",
     "category": "Essential Documents",
-    "question": "If you are involved in an accident",
+    "question": "If you are involved in an accident,  what document may the police ask to see?",
     "choices": {
-      "A": " what document may the police ask to see?",
-      "B": "Your birth certificate",
-      "C": "Your driving license and insurance certificate",
-      "D": "Your bank statement"
+      "A": "Your birth certificate",
+      "B": "Your driving license and insurance certificate",
+      "C": "Your bank statement",
+      "D": "Your school records"
     },
-    "correct": "Your school records",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "647",
@@ -8356,7 +8356,7 @@
       "D": "An extra fee for driving at night"
     },
     "correct": "B",
-    "explanation": "If your excess is \u00a3250 and a repair costs \u00a31000"
+    "explanation": "If your excess is £250 and a repair costs £1000"
   },
   {
     "id": "650",
@@ -8402,7 +8402,7 @@
     "category": "Essential Documents",
     "question": "What is the penalty for a new driver who gets 6 points?",
     "choices": {
-      "A": "A \u00a31000 fine",
+      "A": "A £1000 fine",
       "B": "Their license is revoked and they must retake both tests",
       "C": "A one-month ban",
       "D": "They must take a speed awareness course"
@@ -8442,12 +8442,12 @@
     "question": "What information is on a photocard driving license?",
     "choices": {
       "A": "Your height",
-      "B": "Your name",
-      "C": " address",
-      "D": " and the categories of vehicles you can drive"
+      "B": "Your name,  address,  and the categories of vehicles you can drive",
+      "C": "Your blood type",
+      "D": "Your bank details"
     },
-    "correct": "Your blood type",
-    "explanation": "Your bank details"
+    "correct": "****",
+    "explanation": "****"
   },
   {
     "id": "657",
@@ -8675,13 +8675,13 @@
     "category": "Essential Documents",
     "question": "Can you use a vehicle on the road if it is SORN?",
     "choices": {
-      "A": "Yes",
-      "B": " for one day a week",
-      "C": "No",
-      "D": " not under any circumstances"
+      "A": "Yes,  for one day a week",
+      "B": "No,  not under any circumstances",
+      "C": "Yes,  if you only drive at night",
+      "D": "****"
     },
-    "correct": "Yes",
-    "explanation": " if you only drive at night"
+    "correct": "****",
+    "explanation": "****"
   },
   {
     "id": "675",
@@ -8690,11 +8690,11 @@
     "choices": {
       "A": "Tell your friends",
       "B": "Notify the DVLA and update the V5C",
-      "C": "Nothing",
-      "D": " it's your car"
+      "C": "Nothing,  it's your car",
+      "D": "Buy new insurance only"
     },
-    "correct": "Buy new insurance only",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "676",
@@ -8714,8 +8714,8 @@
     "category": "Essential Documents",
     "question": "What is the penalty for failing to notify the DVLA of a change of address?",
     "choices": {
-      "A": "A \u00a350 fine",
-      "B": "A fine of up to \u00a31000",
+      "A": "A £50 fine",
+      "B": "A fine of up to £1000",
       "C": "Nothing",
       "D": "Your license is canceled"
     },
@@ -8738,15 +8738,15 @@
   {
     "id": "679",
     "category": "Essential Documents",
-    "question": "What is the purpose of Third-Party",
+    "question": "What is the purpose of Third-Party,  Fire and Theft insurance?",
     "choices": {
-      "A": " Fire and Theft insurance?",
-      "B": "It covers your car for everything",
-      "C": "It covers others plus your car if it is stolen or damaged by fire",
-      "D": "It only covers fire"
+      "A": "It covers your car for everything",
+      "B": "It covers others plus your car if it is stolen or damaged by fire",
+      "C": "It only covers fire",
+      "D": "It is for racing cars only"
     },
-    "correct": "It is for racing cars only",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "681",
@@ -8762,7 +8762,7 @@
     "explanation": "Driving without insurance is a serious offense.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
-        "id": "682",
+    "id": "682",
     "category": "Essential Documents",
     "question": "If your car is three years old, how often must it be MOT tested?",
     "choices": {
@@ -8816,15 +8816,15 @@
   {
     "id": "686",
     "category": "Incidents Accidents and Emergencies",
-    "question": "If a casualty is unconscious but breathing",
+    "question": "If a casualty is unconscious but breathing,  what position should they be placed in?",
     "choices": {
-      "A": " what position should they be placed in?",
-      "B": "Flat on their back",
-      "C": "The recovery position",
-      "D": "Sitting upright"
+      "A": "Flat on their back",
+      "B": "The recovery position",
+      "C": "Sitting upright",
+      "D": "On their stomach"
     },
-    "correct": "On their stomach",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "687",
@@ -8868,28 +8868,28 @@
   {
     "id": "690",
     "category": "Incidents Accidents and Emergencies",
-    "question": "What should you do if a person\u2019s clothes are on fire?",
+    "question": "What should you do if a person’s clothes are on fire?",
     "choices": {
       "A": "Tell them to run",
-      "B": "Make them 'Stop",
-      "C": " Drop and Roll'",
-      "D": "Throw petrol on them"
+      "B": "Make them 'Stop,  Drop and Roll'",
+      "C": "Throw petrol on them",
+      "D": "Give them a drink of water"
     },
-    "correct": "Give them a drink of water",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "691",
     "category": "Incidents Accidents and Emergencies",
     "question": "What is the 'DR ABC' code in first aid?",
     "choices": {
-      "A": "Driver",
-      "B": " Route",
-      "C": " Area",
-      "D": " Body"
+      "A": "Driver,  Route,  Area,  Body,  Check",
+      "B": "Danger, ****, ****, ****, ****",
+      "C": "****",
+      "D": "****"
     },
-    "correct": " Check",
-    "explanation": "Danger"
+    "correct": "****",
+    "explanation": "****"
   },
   {
     "id": "692",
@@ -8962,12 +8962,12 @@
     "question": "What are the signs of someone being in shock?",
     "choices": {
       "A": "They are very happy",
-      "B": "They are pale",
-      "C": " cold",
-      "D": " and have a rapid pulse"
+      "B": "They are pale,  cold,  and have a rapid pulse",
+      "C": "They have a high fever",
+      "D": "They are very talkative"
     },
-    "correct": "They have a high fever",
-    "explanation": "They are very talkative"
+    "correct": "****",
+    "explanation": "****"
   },
   {
     "id": "698",
@@ -8976,11 +8976,11 @@
     "choices": {
       "A": "If they are hungry",
       "B": "Only if they are very thirsty",
-      "C": "Never",
-      "D": " as it could complicate medical treatment or surgery"
+      "C": "Never,  as it could complicate medical treatment or surgery",
+      "D": "If they are in shock"
     },
-    "correct": "If they are in shock",
-    "explanation": "C"
+    "correct": "C",
+    "explanation": "****"
   },
   {
     "id": "699",
@@ -9034,7 +9034,7 @@
     "correct": "B",
     "explanation": "The 'C' stands for checking for severe bleeding after you've checked breathing.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
- {
+  {
     "id": "703",
     "category": "Incidents Accidents and Emergencies",
     "question": "If you are involved in a collision, what must you give to other parties involved?",
@@ -9209,12 +9209,12 @@
     "question": "What should you do if your car's throttle (accelerator) sticks open?",
     "choices": {
       "A": "Switch the engine off while moving",
-      "B": "Press the clutch and shift to neutral",
-      "C": " then brake safely",
-      "D": "Apply the handbrake hard"
+      "B": "Press the clutch and shift to neutral,  then brake safely",
+      "C": "Apply the handbrake hard",
+      "D": "Close your eyes"
     },
-    "correct": "Close your eyes",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "717",
@@ -9261,12 +9261,12 @@
     "question": "What is a common sign of internal bleeding?",
     "choices": {
       "A": "A high fever",
-      "B": "Bruising",
-      "C": " thirst",
-      "D": " and a weak but rapid pulse"
+      "B": "Bruising,  thirst,  and a weak but rapid pulse",
+      "C": "A very slow heartbeat",
+      "D": "They are very hungry"
     },
-    "correct": "A very slow heartbeat",
-    "explanation": "They are very hungry"
+    "correct": "****",
+    "explanation": "****"
   },
   {
     "id": "721",
@@ -9453,15 +9453,15 @@
   {
     "id": "735",
     "category": "Incidents Accidents and Emergencies",
-    "question": "If you are involved in an accident",
+    "question": "If you are involved in an accident,  how long do you have to produce your documents to the police?",
     "choices": {
-      "A": " how long do you have to produce your documents to the police?",
-      "B": "24 hours",
-      "C": "7 days",
-      "D": "30 days"
+      "A": "24 hours",
+      "B": "7 days",
+      "C": "30 days",
+      "D": "One year"
     },
-    "correct": "One year",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "736",
@@ -9702,13 +9702,13 @@
     "category": "Vehicle Loading",
     "question": "How does a heavy load affect your car's headlights?",
     "choices": {
-      "A": "It makes them point higher",
-      "B": " potentially dazzling other drivers",
-      "C": "It makes them point lower",
-      "D": "It makes them switch off"
+      "A": "It makes them point higher,  potentially dazzling other drivers",
+      "B": "It makes them point lower",
+      "C": "It makes them switch off",
+      "D": "It has no effect"
     },
-    "correct": "It has no effect",
-    "explanation": "A"
+    "correct": "A",
+    "explanation": "****"
   },
   {
     "id": "755",
@@ -9765,15 +9765,15 @@
   {
     "id": "759",
     "category": "Vehicle Loading",
-    "question": "When using a roof rack",
+    "question": "When using a roof rack,  when should you check the security of the load?",
     "choices": {
-      "A": " when should you check the security of the load?",
-      "B": "Only when you arrive",
-      "C": "After a few miles and at every rest stop",
-      "D": "Only if you hear a noise"
+      "A": "Only when you arrive",
+      "B": "After a few miles and at every rest stop",
+      "C": "Only if you hear a noise",
+      "D": "Once a year"
     },
-    "correct": "Once a year",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "760",
@@ -9871,13 +9871,13 @@
     "category": "Vehicle Loading",
     "question": "Can you carry a passenger in a caravan while it is being towed?",
     "choices": {
-      "A": "Yes",
-      "B": " if they have a seatbelt",
-      "C": "No",
-      "D": " it is illegal and very dangerous"
+      "A": "Yes,  if they have a seatbelt",
+      "B": "No,  it is illegal and very dangerous",
+      "C": "Only if the caravan is large",
+      "D": "Only at slow speeds"
     },
-    "correct": "Only if the caravan is large",
-    "explanation": "Only at slow speeds"
+    "correct": "****",
+    "explanation": "****"
   },
   {
     "id": "768",
@@ -9908,15 +9908,15 @@
   {
     "id": "770",
     "category": "Vehicle Loading",
-    "question": "If you have a roof rack",
+    "question": "If you have a roof rack,  what is the 'maximum roof load'?",
     "choices": {
-      "A": " what is the 'maximum roof load'?",
-      "B": "The weight of the car's roof",
-      "C": "The total weight (rack + load) allowed by the manufacturer",
-      "D": "The weight of the driver"
+      "A": "The weight of the car's roof",
+      "B": "The total weight (rack + load) allowed by the manufacturer",
+      "C": "The weight of the driver",
+      "D": "Unlimited"
     },
-    "correct": "Unlimited",
-    "explanation": "B"
+    "correct": "B",
+    "explanation": "****"
   },
   {
     "id": "771",
@@ -10223,12 +10223,12 @@
     "question": "What is the 'unladen weight' of a vehicle?",
     "choices": {
       "A": "The weight with a full load",
-      "B": "The weight of the vehicle without passengers",
-      "C": " fuel",
-      "D": " or cargo"
+      "B": "The weight of the vehicle without passengers,  fuel,  or cargo",
+      "C": "The weight of the trailer",
+      "D": "The weight of the driver"
     },
-    "correct": "The weight of the trailer",
-    "explanation": "The weight of the driver"
+    "correct": "****",
+    "explanation": "****"
   },
   {
     "id": "795",
