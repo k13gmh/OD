@@ -3,37 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion Editor - Ver 1.0.9</title>
+    <title>Orion Drive - Database Maintainer</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #f0f2f5; padding: 15px; margin: 0; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .header { position: sticky; top: 0; background: white; padding: 10px 0; border-bottom: 2px solid #eee; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
-        .version-badge { background: #333; color: #00ff00; padding: 5px 12px; border-radius: 5px; font-family: monospace; font-size: 0.9em; }
-        .q-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; border-radius: 10px; background: #fff; transition: 0.3s; }
-        .copy-btn { background: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        label { display: block; font-size: 0.75em; font-weight: bold; color: #666; margin: 8px 0 2px 0; }
-        input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-size: 16px; }
-        .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .error-border { border: 3px solid #f44336 !important; background: #fff8f8 !important; }
+        body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 10px; }
+        .error-tag { background: #ff4757; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-left: 10px; }
+        .valid-tag { background: #2ed573; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-left: 10px; }
+        .btn { background: #007bff; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; text-decoration: none; }
+        .v-tag { position: fixed; bottom: 10px; right: 15px; font-family: monospace; font-size: 0.7rem; color: #bdc3c7; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div>
-                <h2 style="margin:0">Maintain Tool</h2>
-                <div id="app-version" class="version-badge">Ver: Loading...</div>
-            </div>
-            <button class="copy-btn" onclick="copyJSON()">COPY TO CLIPBOARD</button>
-        </div>
-        <div id="status-msg" style="margin-bottom: 10px; font-weight: bold; color: #333;">Initialising cache-free scan...</div>
-        <div id="maintenance-list"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>Database Maintainer</h1>
+        <a href="mainmenu.html" class="btn" style="background:#6c757d;">BACK</a>
     </div>
 
-    <script>
-        const script = document.createElement('script');
-        script.src = 'maintain.js?v=' + Date.now();
-        document.body.appendChild(script);
-    </script>
+    <div id="stats" class="card" style="background:#eef2f7;">
+        Loading database statistics...
+    </div>
+
+    <div id="audit-list"></div>
+</div>
+
+<span class="v-tag">v1.6 (Maintain)</span>
+
+<script>
+    async function runAudit() {
+        const auditList = document.getElementById('audit-list');
+        const statsBox = document.getElementById('stats');
+        
+        try {
+            const response = await fetch('questions.json');
+            const data = await response.json();
+            
+            let errorsCount = 0;
+            auditList.innerHTML = "";
+
+            data.forEach((q, index) => {
+                let issues = [];
+                
+                // Simple validation
+                if (!q.question) issues.push("Missing Question");
+                if (!q.choices.A || !q.choices.B) issues.push("Missing Choices");
+                if (!["A", "B", "C", "D"].includes(q.correct)) issues.push("Format Error");
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                const statusHtml = issues.length > 0 
+                    ? `<span class="error-tag">${issues.join(", ")}</span>`
+                    : `<span class="valid-tag">VALID</span>`;
+
+                if (issues.length > 0) errorsCount++;
+
+                card.innerHTML = `
+                    <div>
+                        <strong>ID: ${q.id}</strong> (Index: ${index})
+                        ${statusHtml}
+                    </div>
+                    <div style="font-size: 0.85rem; color: #666; margin-top: 5px;">
+                        ${q.question.substring(0, 80)}...
+                    </div>
+                `;
+                auditList.appendChild(card);
+            });
+
+            statsBox.innerHTML = `
+                <strong>Total Questions:</strong> ${data.length}<br>
+                <strong>Questions with Errors:</strong> <span style="color:${errorsCount > 0 ? '#ff4757' : '#2ed573'}">${errorsCount}</span>
+            `;
+
+        } catch (e) {
+            statsBox.innerHTML = `<span class="error-tag">ERROR LOADING JSON</span>`;
+            console.error(e);
+        }
+    }
+
+    window.onload = runAudit;
+</script>
+
 </body>
 </html>
