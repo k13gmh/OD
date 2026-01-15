@@ -1,91 +1,106 @@
-const MAINTAIN_VERSION = "1.0.9 - Total Reset"; 
-
-let allData = [];
-
-async function loadQuestions() {
-    // Set version immediately
-    const vDisplay = document.getElementById('app-version');
-    if (vDisplay) vDisplay.innerText = `Ver: ${MAINTAIN_VERSION}`;
-    
-    const status = document.getElementById('status-msg');
-    
-    try {
-        // Force a fresh fetch of the data
-        const response = await fetch('questions.json?v=' + Date.now());
-        if (!response.ok) throw new Error("File questions.json not found on server.");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orion Drive - Database Maintainer</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 15px; }
         
-        allData = await response.json();
+        .error-tag { background: #ff4757; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-left: 10px; }
+        .valid-tag { background: #2ed573; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-left: 10px; }
         
-        // Find questions where 'correct' field is longer than 1 character (the errors)
-        const errors = allData.filter(q => q.correct && q.correct.length > 1);
+        .raw-data { background: #f8f9fa; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 0.85rem; }
+        .field { margin-bottom: 5px; display: block; }
+        .field-label { font-weight: bold; color: #555; width: 100px; display: inline-block; }
+        .field-val { color: #000; }
+        .highlight-err { color: #ff4757; font-weight: bold; }
+
+        .btn { background: #007bff; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; text-decoration: none; }
+        .v-tag { position: fixed; bottom: 10px; right: 15px; font-family: monospace; font-size: 0.7rem; color: #bdc3c7; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Database Maintainer</h1>
+        <a href="mainmenu.html" class="btn" style="background:#6c757d;">BACK</a>
+    </div>
+
+    <div id="stats" class="card" style="background:#eef2f7;">
+        Loading database statistics...
+    </div>
+
+    <div id="audit-list"></div>
+</div>
+
+<span class="v-tag">v1.7 (Maintain)</span>
+
+<script>
+    async function runAudit() {
+        const auditList = document.getElementById('audit-list');
+        const statsBox = document.getElementById('stats');
         
-        if (errors.length > 0) {
-            status.style.color = "#d32f2f";
-            status.innerText = `Found ${errors.length} formatting errors:`;
-            renderList(errors);
-        } else {
-            status.style.color = "green";
-            status.innerText = "No format errors found. Showing all records for review:";
-            renderList(allData);
-        }
-    } catch (err) {
-        status.style.color = "red";
-        status.innerHTML = `<b>Load Failed:</b> ${err.message}<br><small>Check for commas/brackets errors in GitHub.</small>`;
-    }
-}
-
-function renderList(dataToDisplay) {
-    const list = document.getElementById('maintenance-list');
-    list.innerHTML = '';
-
-    dataToDisplay.forEach((q) => {
-        // Map back to the original full data array
-        const idx = allData.findIndex(item => item.id === q.id);
-        const isError = q.correct && q.correct.length > 1;
-        
-        const card = document.createElement('div');
-        card.className = 'q-card' + (isError ? ' error-border' : '');
-
-        card.innerHTML = `
-            <div style="background:#f0f0f0; padding:5px 10px; border-radius:5px; margin-bottom:10px; font-weight:bold;">
-                ID: ${q.id} ${isError ? ' <span style="color:red">(FORMAT ERROR)</span>' : ''}
-            </div>
-
-            <label>Question Text</label>
-            <textarea rows="2" onchange="allData[${idx}].question = this.value">${q.question}</textarea>
+        try {
+            const response = await fetch('questions.json');
+            const data = await response.json();
             
-            <div class="choice-grid">
-                <div><label>A</label><input type="text" value="${q.choices.A}" onchange="allData[${idx}].choices.A = this.value"></div>
-                <div><label>B</label><input type="text" value="${q.choices.B}" onchange="allData[${idx}].choices.B = this.value"></div>
-                <div><label>C</label><input type="text" value="${q.choices.C}" onchange="allData[${idx}].choices.C = this.value"></div>
-                <div><label>D</label><input type="text" value="${q.choices.D}" onchange="allData[${idx}].choices.D = this.value"></div>
-            </div>
+            let errorsCount = 0;
+            auditList.innerHTML = "";
 
-            <div style="display:flex; gap:10px;">
-                <div style="width:140px;">
-                    <label style="color:red">Correct Letter Only</label>
-                    <input type="text" maxlength="1" style="text-align:center; font-weight:bold; border:2px solid red;" 
-                           value="${isError ? '' : q.correct}" placeholder="?" 
-                           onchange="allData[${idx}].correct = this.value.toUpperCase()">
-                </div>
-                <div style="flex-grow:1;">
-                    <label>Explanation</label>
-                    <textarea rows="2" onchange="allData[${idx}].explanation = this.value">${q.explanation}</textarea>
-                </div>
-            </div>
-        `;
-        list.appendChild(card);
-    });
-}
+            data.forEach((q, index) => {
+                let issues = [];
+                
+                // Validation Logic
+                if (!q.question || q.question.length < 5) issues.push("Question Text Missing/Short");
+                if (!q.choices.A || !q.choices.B) issues.push("Missing Options (Need at least A/B)");
+                
+                const validLetters = ["A", "B", "C", "D"];
+                if (!validLetters.includes(q.correct)) issues.push("Invalid 'Correct' Letter");
+                
+                if (!q.explanation || q.explanation.length < 5) issues.push("Explanation Missing");
 
-async function copyJSON() {
-    try {
-        await navigator.clipboard.writeText(JSON.stringify(allData, null, 2));
-        alert("Success! Full JSON (all questions) is now in your clipboard.");
-    } catch (err) {
-        alert("Clipboard error. Try a different browser or check permissions.");
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                const statusHtml = issues.length > 0 
+                    ? `<span class="error-tag">ISSUES: ${issues.join(", ")}</span>`
+                    : `<span class="valid-tag">VALID</span>`;
+
+                if (issues.length > 0) errorsCount++;
+
+                card.innerHTML = `
+                    <div><strong>ID: ${q.id}</strong> (Index: ${index}) ${statusHtml}</div>
+                    <div class="raw-data">
+                        <div class="field"><span class="field-label">Question:</span> <span class="field-val">${q.question || "MISSING"}</span></div>
+                        <div class="field"><span class="field-label">Choice A:</span> <span class="field-val">${q.choices.A || "MISSING"}</span></div>
+                        <div class="field"><span class="field-label">Choice B:</span> <span class="field-val">${q.choices.B || "MISSING"}</span></div>
+                        <div class="field"><span class="field-label">Choice C:</span> <span class="field-val">${q.choices.C || "MISSING"}</span></div>
+                        <div class="field"><span class="field-label">Choice D:</span> <span class="field-val">${q.choices.D || "MISSING"}</span></div>
+                        <div class="field"><span class="field-label">Correct:</span> <span class="field-val ${!validLetters.includes(q.correct) ? 'highlight-err' : ''}">${q.correct || "MISSING"}</span></div>
+                        <div class="field"><span class="field-label">Explanation:</span> <span class="field-val">${q.explanation || "MISSING"}</span></div>
+                    </div>
+                `;
+                auditList.appendChild(card);
+            });
+
+            statsBox.innerHTML = `
+                <strong>Total Questions:</strong> ${data.length}<br>
+                <strong>Questions with Errors:</strong> <span style="color:${errorsCount > 0 ? '#ff4757' : '#2ed573'}">${errorsCount}</span>
+            `;
+
+        } catch (e) {
+            statsBox.innerHTML = `<span class="error-tag">ERROR LOADING JSON: Check file name or format</span>`;
+            console.error(e);
+        }
     }
-}
 
-// Kick off the load
-loadQuestions();
+    window.onload = runAudit;
+</script>
+
+</body>
+</html>
