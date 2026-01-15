@@ -18,7 +18,7 @@ async function loadQuestions() {
 }
 
 function addSearchUI() {
-    const header = document.querySelector('.header');
+    const header = document.querySelector('.header');https://k13gmh.github.io/OD/TheoryTest/maintain.html
     if (!document.getElementById('search-container')) {
         const searchDiv = document.createElement('div');
         searchDiv.id = 'search-container';
@@ -26,7 +26,7 @@ function addSearchUI() {
         searchDiv.innerHTML = `
             <input type="text" id="idSearch" placeholder="Search by ID..." 
                 style="padding: 10px; border-radius: 5px; border: 1px solid #ddd; flex-grow: 1;">
-            <button onclick="copyErrorIDs()" style="padding: 10px; background: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">COPY ERROR IDs</button>
+            <button onclick="copyFullErrorReport()" style="padding: 10px; background: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">COPY ERROR DATA</button>
             <button onclick="clearSearch()" style="padding: 10px; background: #666; color: white; border: none; border-radius: 5px; cursor: pointer;">Clear</button>
         `;
         header.parentNode.insertBefore(searchDiv, header.nextSibling);
@@ -49,16 +49,30 @@ function getErrors() {
     });
 }
 
-function copyErrorIDs() {
+function copyFullErrorReport() {
     const errors = getErrors();
-    const idList = errors.map(q => q.id).join(", ");
-    if (idList) {
-        navigator.clipboard.writeText(idList).then(() => {
-            alert("Copied Error IDs: " + idList);
-        });
-    } else {
+    if (errors.length === 0) {
         alert("No errors found!");
+        return;
     }
+
+    let report = "--- ORION ERROR DATA REPORT ---\n\n";
+    errors.forEach(q => {
+        report += `ID: ${q.id}\n`;
+        report += `CAT: ${q.category || 'N/A'}\n`;
+        report += `Q: ${q.question}\n`;
+        report += `A: ${q.choices.A || ''}\n`;
+        report += `B: ${q.choices.B || ''}\n`;
+        report += `C: ${q.choices.C || ''}\n`;
+        report += `D: ${q.choices.D || ''}\n`;
+        report += `CORRECT: ${q.correct || ''}\n`;
+        report += `EXP: ${q.explanation || ''}\n`;
+        report += `----------------------------\n\n`;
+    });
+
+    navigator.clipboard.writeText(report).then(() => {
+        alert(`Copied ${errors.length} error records to clipboard in text format.`);
+    });
 }
 
 function renderList() {
@@ -92,10 +106,8 @@ function renderList() {
     });
 
     status.innerHTML = searchTerm !== "" ? `Showing ID: ${searchTerm}` : `<span style="color: #f44336;">Records needing attention: ${displayCount}</span>`;
-    document.getElementById('app-version').innerText = "Ver: 1.1.8";
+    document.getElementById('app-version').innerText = "Ver: 1.1.9";
 }
-
-// ... (renderCardContent, shiftUp, resetRecord, updateData, updateChoice, copyJSON remain same as 1.1.7)
 
 function renderCardContent(q, index, issues) {
     const btnStyle = "background:#007bff; color:white; border:none; padding:2px 8px; border-radius:3px; cursor:pointer; font-size:10px; margin-left:10px;";
