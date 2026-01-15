@@ -18,7 +18,7 @@ async function loadQuestions() {
 }
 
 function addSearchUI() {
-    const header = document.querySelector('.header');https://k13gmh.github.io/OD/TheoryTest/maintain.html
+    const header = document.querySelector('.header');
     if (!document.getElementById('search-container')) {
         const searchDiv = document.createElement('div');
         searchDiv.id = 'search-container';
