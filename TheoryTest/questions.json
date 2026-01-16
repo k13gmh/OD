@@ -379,7 +379,7 @@
   {
     "id": "32",
     "category": "Alertness",
-    "question": "When approaching a junction,  you see a cyclist. What should you expect?",
+    "question": "When approaching a junction, you see a cyclist. What should you expect?",
     "choices": {
       "A": "They will always stop for you",
       "B": "They may swerve or change direction suddenly",
@@ -387,7 +387,7 @@
       "D": "They have no right of way"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "Cyclists are vulnerable and may need to avoid potholes or be affected by wind, causing them to swerve or change direction suddenly."
   },
   {
     "id": "33",
@@ -1167,7 +1167,7 @@
       "D": "Only buses and lorries"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "You should generally give way to traffic already in the roundabout coming from your right, unless signs or markings tell you otherwise."
   },
   {
     "id": "97",
@@ -1318,12 +1318,12 @@
     "question": "You are at a railway level crossing. The red lights continue to flash after a train has passed. What should you do?",
     "choices": {
       "A": "Drive across quickly",
-      "B": "Wait,  as another train may be coming",
+      "B": "Wait, as another train may be coming",
       "C": "Get out and check the tracks",
       "D": "Sound your horn to warn others"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "If the lights continue to flash, it means another train is approaching.  You must stay behind the stop line until the lights go out."
   },
   {
     "id": "109",
@@ -1513,12 +1513,12 @@
     "question": "What should you check before starting a long journey?",
     "choices": {
       "A": "The radio signal strength",
-      "B": "The oil,  water,  and tyre levels",
+      "B": "The oil, water and tyre levels",
       "C": "The car's maximum speed",
       "D": "The cleanliness of the floor mats"
     },
-    "correct": "****",
-    "explanation": "****"
+    "correct": "B",
+    "explanation": "Checking oil, water and tyre pressures ensures your vehicle is reliable and safe for a long trip."
   },
   {
     "id": "124",
@@ -1762,10 +1762,10 @@
       "A": "Leave the keys in the ignition when paying for fuel",
       "B": "Always lock the car and remove the keys even for a short time",
       "C": "Leave valuables on the passenger seat",
-      "D": "Park in dark,  unlit side streets"
+      "D": "Park in dark, unlit side streets"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "To prevent theft, you should never leave your keys in the car.  Even for a few seconds."
   },
   {
     "id": "143",
@@ -2103,7 +2103,7 @@
       "D": "Because the law says so"
     },
     "correct": "A",
-    "explanation": "****"
+    "explanation": "Driving heats the air inside the tyres, causing it to expand.  Checking when hot gives an inaccurate, higher pressure."
   },
   {
     "id": "169",
@@ -2332,12 +2332,12 @@
     "question": "What is a hazard associated with 'junction hopping' (cutting across lanes)?",
     "choices": {
       "A": "It saves fuel",
-      "B": "Other drivers may not expect your move,  leading to collisions",
+      "B": "Other drivers may not expect your move, leading to collisions",
       "C": "It is the fastest way to travel",
       "D": "It is recommended by the Highway Code"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "Changing lanes abruptly or cutting across junctions can surprise other road users, significantly increasing the risk of a crash."
   },
   {
     "id": "187",
@@ -3221,7 +3221,7 @@
       "D": "By using the handbrake"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "Using a lower gear provides engine breaking, which prevents your brakes from overheating and loosing effectiveness on long descents."
   },
   {
     "id": "255",
@@ -3325,7 +3325,7 @@
       "D": "Less than a car because they are small"
     },
     "correct": "C",
-    "explanation": "****"
+    "explanation": "Motorcyclists are easily buffeted by side winds and may be blown into your path.  Give them as much room as you would a car."
   },
   {
     "id": "263",
@@ -3502,12 +3502,12 @@
     "question": "When is it particularly important to check your oil level?",
     "choices": {
       "A": "Every time you get fuel",
-      "B": "Before a long,  high-speed journey",
+      "B": "Before a long, high-speed journey",
       "C": "Only during the MOT",
       "D": "Only if the engine makes a loud noise"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "High-speed driving puts more stress on the engine.  Ensuring the oil level is correct prevents engine damage during long trips."
   },
   {
     "id": "277",
