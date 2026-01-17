@@ -1,4 +1,4 @@
-const SCRIPT_VERSION = "v1.9.8";
+const SCRIPT_VERSION = "v1.9.9";
 
 if (!sessionStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -20,7 +20,12 @@ async function init() {
 }
 
 function startFreshSession() {
-    sessionQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 50);
+    // Add originalIndex to each question object to maintain numbering
+    sessionQuestions = [...allQuestions]
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 50)
+        .map((q, idx) => ({ ...q, originalIndex: idx + 1 }));
+    
     originalSessionQuestions = [...sessionQuestions];
     currentIndex = 0;
     testData = { selections: {}, flagged: [], seenIndices: [0] };
@@ -56,7 +61,8 @@ function renderQuestion() {
         imgElement.onclick = () => openModal(imgElement.src);
     }
 
-    document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
+    // Displays the original stored index
+    document.getElementById('q-number').innerText = `Question ${q.originalIndex} of ${originalSessionQuestions.length}`;
     document.getElementById('q-category').innerText = q.category;
     document.getElementById('q-text').innerText = q.question;
     document.getElementById('q-id-display').innerText = `ID: ${q.id}`;
@@ -165,6 +171,8 @@ function retrySubset(type) {
     }
 
     currentIndex = 0;
+    // Clear seen states for the retry list
+    testData.seenIndices = [0];
     document.getElementById('summary-ui').style.display = 'none';
     document.getElementById('test-ui').style.display = 'block';
     renderQuestion();
@@ -182,11 +190,6 @@ function saveProgress() {
         data: testData, 
         currentIndex 
     })); 
-}
-
-function restartTest() { 
-    localStorage.removeItem('orion_current_session'); 
-    window.location.href = 'mainmenu.html'; 
 }
 
 function reviewAnswers() { 
