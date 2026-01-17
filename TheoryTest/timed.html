@@ -2,47 +2,93 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Orion Drive - Timed Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer Interface - v1.0.6</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; color: #333; padding: 20px; margin: 0; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 100%; max-width: 600px; margin-top: 10px; }
-        .header-strip { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; width: 100%; }
-        #timer-display { font-family: monospace; font-weight: bold; font-size: 1.4rem; background: #222; color: #0f0; padding: 5px 15px; border-radius: 5px; border: 2px solid #444; min-width: 80px; text-align: center; }
-        #timer-display.warning { color: #ff4d4d; border-color: #ff4d4d; }
-        .card { background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 20px; min-height: 150px; text-align: center; position: relative; }
-        #q-number { color: #d9534f; font-weight: bold; }
-        #q-category { color: #5cb85c; font-weight: bold; font-size: 0.8rem; text-align: right; max-width: 40%; }
-        #q-image { display: none; width: 60px; height: 60px; object-fit: cover; margin: 0 auto 15px auto; border-radius: 8px; border: 2px solid #007bff; }
-        .question-text { font-size: 1.25rem; margin-bottom: 25px; line-height: 1.4; color: #1a1a1a; font-weight: 600; text-align: left; }
-        .option-btn { background: #fff; color: #007bff; border: 1px solid #d1e3f8; padding: 16px; border-radius: 12px; width: 100%; margin-bottom: 12px; text-align: left; cursor: pointer; font-size: 1.05rem; }
-        .option-btn.selected { border-color: #007bff; background: #e7f2ff; border-width: 2px; font-weight: bold; }
-        .btn { background: #bdc3c7; color: #444; border: none; padding: 18px; border-radius: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.85rem; width: 100%; }
-        #q-id-display { position: absolute; bottom: 8px; right: 12px; font-size: 0.65rem; color: #ddd; font-family: monospace; }
-        #v-tag-top { position: fixed; top: 10px; right: 15px; font-size: 0.7rem; color: #999; }
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        #display {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .status {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
     </style>
 </head>
 <body>
-    <div id="v-tag-top">v1.0.1 (Timed)</div>
+
     <div class="container">
-        <div class="header-strip">
-            <div id="q-number">Q-- / 50</div>
-            <div id="timer-display">57:00</div>
-            <div id="q-category">---</div>
-        </div>
-        <div class="card">
-            <img id="q-image" src="">
-            <div id="q-text" class="question-text">Loading Questions...</div>
-            <div id="options-area"></div>
-            <div id="q-id-display">ID: --</div>
-        </div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-            <button class="btn" onclick="changeQuestion(-1)">< BACK</button>
-            <button class="btn" onclick="changeQuestion(1)">NEXT ></button>
-            <button id="flag-btn" class="btn" onclick="toggleFlag()">FLAG</button>
-            <button class="btn" onclick="showSummary()">FINISH</button>
-        </div>
+        <h2>System Timer</h2>
+        <div id="display">00</div>
+        <button onclick="runTestTimer()">Start 10s Timer</button>
+        <div id="statusLabel" class="status">Ready</div>
     </div>
-    <script src="timed_script.js"></script>
+
+    <script src="timed.js"></script>
+
+    <script>
+        /**
+         * Local UI Logic
+         * Version: 1.0.6
+         */
+        function runTestTimer() {
+            const display = document.getElementById('display');
+            const status = document.getElementById('statusLabel');
+            let count = 10;
+
+            display.textContent = count;
+            status.textContent = "Timer Running...";
+
+            // Calling the global object from timed.js
+            window.TimedEvents.startTimer('mainTest', 10, () => {
+                display.textContent = "00";
+                status.textContent = "Time Expired!";
+                alert("Timer Complete");
+            });
+
+            // Local interval just to update the UI display
+            const uiInterval = setInterval(() => {
+                count--;
+                if (count >= 0) {
+                    display.textContent = count < 10 ? "0" + count : count;
+                }
+                if (count <= 0 || !window.TimedEvents.isActive('mainTest')) {
+                    clearInterval(uiInterval);
+                }
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
