@@ -1,4 +1,4 @@
-const SCRIPT_VERSION = "v1.9.3";
+const SCRIPT_VERSION = "v1.9.4";
 
 if (!sessionStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -41,18 +41,24 @@ function resumeTest(shouldResume) {
 
 function renderQuestion() {
     const q = sessionQuestions[currentIndex];
+    
+    // Image Thumbnail Logic
     const imgElement = document.getElementById('q-image');
     if (imgElement) {
         imgElement.style.display = 'none'; 
         imgElement.src = `images/${q.id}.jpeg`;
         imgElement.onload = () => { imgElement.style.display = 'block'; };
         imgElement.onerror = () => { imgElement.style.display = 'none'; };
-        // Trigger modal on click
         imgElement.onclick = () => openModal(imgElement.src);
     }
+
+    // Question Details
     document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
     document.getElementById('q-category').innerText = q.category;
     document.getElementById('q-text').innerText = q.question;
+    document.getElementById('q-id-display').innerText = `ID: ${q.id}`;
+
+    // Options Rendering
     const optionsArea = document.getElementById('options-area');
     optionsArea.innerHTML = '';
     ["A", "B", "C", "D"].forEach(letter => {
@@ -60,15 +66,49 @@ function renderQuestion() {
         const btn = document.createElement('button');
         btn.className = 'option-btn' + (testData.selections[q.id] === letter ? ' selected' : '');
         btn.innerText = `${letter}: ${q.choices[letter]}`;
-        btn.onclick = () => { testData.selections[q.id] = letter; renderQuestion(); };
+        btn.onclick = () => { 
+            testData.selections[q.id] = letter; 
+            renderQuestion(); 
+        };
         optionsArea.appendChild(btn);
     });
+
+    // Flag Button Visual Logic
     const flagBtn = document.getElementById('flag-btn');
-    flagBtn.style.background = testData.flagged.includes(q.id) ? "#f1c40f" : "#bdc3c7";
+    const isFlagged = testData.flagged.includes(q.id);
+    const isSkipped = !testData.selections[q.id];
+
+    if (isFlagged) {
+        flagBtn.style.background = "#f1c40f"; // Yellow
+        flagBtn.style.color = "#000";
+        flagBtn.style.boxShadow = "inset 0 4px 8px rgba(0,0,0,0.3)"; // Depressed look
+        flagBtn.innerText = "FLAGGED";
+    } else if (isSkipped) {
+        flagBtn.style.background = "#e67e22"; // Orange for skipped
+        flagBtn.style.color = "#fff";
+        flagBtn.style.boxShadow = "none";
+        flagBtn.innerText = "FLAG";
+    } else {
+        flagBtn.style.background = "#bdc3c7"; // Neutral Grey
+        flagBtn.style.color = "#444";
+        flagBtn.style.boxShadow = "none";
+        flagBtn.innerText = "FLAG";
+    }
+
     saveProgress();
 }
 
-// Modal handler
+function toggleFlag() {
+    const q = sessionQuestions[currentIndex];
+    const flagIndex = testData.flagged.indexOf(q.id);
+    if (flagIndex > -1) {
+        testData.flagged.splice(flagIndex, 1);
+    } else {
+        testData.flagged.push(q.id);
+    }
+    renderQuestion();
+}
+
 function openModal(src) {
     const modal = document.getElementById('img-modal');
     document.getElementById('img-modal-content').src = src;
