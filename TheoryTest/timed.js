@@ -1,120 +1,58 @@
-/* timed_script.js - v1.0.2 */
-let sessionQuestions = [], currentIndex = 0, originalSessionQuestions = []; 
-let testData = { selections: {}, flagged: [], seenIndices: [0] };
-let timeLeft = 3420; 
-let timerInterval;
+/**
+ * File: timed.js
+ * Version: 1.0.5
+ */
 
-function init() {
-    const saved = localStorage.getItem('orion_timed_session');
-    if (!saved) {
-        alert("No active timed session found.");
-        window.location.href = 'mainmenu.html';
-        return;
-    }
+(function() {
+    'use strict';
 
-    const parsed = JSON.parse(saved);
-    sessionQuestions = parsed.questions;
-    originalSessionQuestions = [...sessionQuestions];
-    testData = parsed.data || { selections: {}, flagged: [], seenIndices: [0] };
-    currentIndex = parsed.currentIndex || 0;
-    timeLeft = parsed.timeLeft || 3420;
+    const TimedEvents = {
+        version: "1.0.5",
+        activeTimers: {},
 
-    startTimer();
-    renderQuestion();
-}
+        /**
+         * Initializes a countdown.
+         * @param {string} id - Unique identifier for the timer.
+         * @param {number} seconds - Duration in seconds.
+         * @param {function} onComplete - Callback function when time expires.
+         */
+        startTimer: function(id, seconds, onComplete) {
+            if (this.activeTimers[id]) {
+                clearInterval(this.activeTimers[id]);
+            }
 
-function startTimer() {
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            alert("TIME EXPIRED!");
-            showSummary();
+            let timeLeft = seconds;
+
+            this.activeTimers[id] = setInterval(() => {
+                timeLeft--;
+                
+                if (timeLeft <= 0) {
+                    this.stopTimer(id);
+                    if (typeof onComplete === 'function') {
+                        onComplete();
+                    }
+                }
+            }, 1000);
+        },
+
+        /**
+         * Stops and clears a specific timer.
+         * @param {string} id - The ID of the timer to stop.
+         */
+        stopTimer: function(id) {
+            if (this.activeTimers[id]) {
+                clearInterval(this.activeTimers[id]);
+                delete this.activeTimers[id];
+            }
+        },
+
+        /**
+         * Check if a specific timer is currently running.
+         */
+        isActive: function(id) {
+            return !!this.activeTimers[id];
         }
-    }, 1000);
-}
+    };
 
-function updateTimerDisplay() {
-    const min = Math.floor(timeLeft / 60);
-    const sec = timeLeft % 60;
-    const display = document.getElementById('timer-display');
-    if (display) {
-        display.innerText = `${min}:${sec < 10 ? '0' + sec : sec}`;
-        if (timeLeft <= 300) display.classList.add('warning');
-    }
-}
-
-function renderQuestion() {
-    const q = sessionQuestions[currentIndex];
-    if (!q) return;
-
-    const imgElement = document.getElementById('q-image');
-    imgElement.style.display = 'none'; 
-    imgElement.src = `images/${q.id}.jpeg`;
-    imgElement.onload = () => imgElement.style.display = 'block';
-
-    document.getElementById('q-number').innerText = `Q${currentIndex + 1} / 50`;
-    document.getElementById('q-category').innerText = q.category;
-    document.getElementById('q-text').innerText = q.question;
-    document.getElementById('q-id-display').innerText = `ID: ${q.id}`;
-
-    const optionsArea = document.getElementById('options-area');
-    optionsArea.innerHTML = '';
-    ["A", "B", "C", "D"].forEach(letter => {
-        if (q.choices && q.choices[letter]) {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn' + (testData.selections[q.id] === letter ? ' selected' : '');
-            btn.innerHTML = `<strong>${letter}:</strong> ${q.choices[letter]}`;
-            btn.onclick = () => { 
-                testData.selections[q.id] = letter; 
-                renderQuestion(); 
-                saveProgress();
-            };
-            optionsArea.appendChild(btn);
-        }
-    });
-
-    const flagBtn = document.getElementById('flag-btn');
-    const isFlagged = testData.flagged.includes(q.id);
-    flagBtn.style.background = isFlagged ? "#f1c40f" : "#bdc3c7";
-    flagBtn.innerText = isFlagged ? "FLAGGED" : "FLAG";
-}
-
-function toggleFlag() {
-    const q = sessionQuestions[currentIndex];
-    const flagIdx = testData.flagged.indexOf(q.id);
-    if (flagIdx > -1) testData.flagged.splice(flagIdx, 1);
-    else testData.flagged.push(q.id);
-    renderQuestion();
-    saveProgress();
-}
-
-function changeQuestion(step) {
-    const newIdx = currentIndex + step;
-    if (newIdx >= 0 && newIdx < sessionQuestions.length) {
-        currentIndex = newIdx;
-        renderQuestion();
-        saveProgress();
-    }
-}
-
-function saveProgress() { 
-    localStorage.setItem('orion_timed_session', JSON.stringify({ 
-        questions: originalSessionQuestions, 
-        data: testData, 
-        currentIndex,
-        timeLeft
-    })); 
-}
-
-function showSummary() {
-    clearInterval(timerInterval);
-    localStorage.setItem('orion_final_results', JSON.stringify({ 
-        questions: originalSessionQuestions, 
-        data: testData 
-    }));
-    window.location.href = 'review.html';
-}
-
-window.onload = init;
+    window.TimedEvents = TimedEvents;
+})();
