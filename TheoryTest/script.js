@@ -1,4 +1,4 @@
-const SCRIPT_VERSION = "v1.9.7";
+const SCRIPT_VERSION = "v1.9.8";
 
 if (!sessionStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -44,7 +44,6 @@ function resumeTest(shouldResume) {
 
 function renderQuestion() {
     const q = sessionQuestions[currentIndex];
-    
     const tag = document.getElementById('v-tag-top');
     if (tag) tag.innerText = SCRIPT_VERSION;
 
@@ -82,19 +81,17 @@ function renderQuestion() {
     const hasSelection = !!testData.selections[q.id];
     const isLastViewed = testData.seenIndices.includes(currentIndex);
 
-    // Default button style
     flagBtn.style.boxShadow = "none";
     flagBtn.style.color = "#444";
     flagBtn.style.background = "#bdc3c7"; 
     flagBtn.innerText = "FLAG";
 
     if (isFlagged) {
-        flagBtn.style.background = "#f1c40f"; // Yellow
+        flagBtn.style.background = "#f1c40f"; 
         flagBtn.style.color = "#000";
         flagBtn.style.boxShadow = "inset 0 4px 6px rgba(0,0,0,0.2)";
         flagBtn.innerText = "FLAGGED";
     } else if (!hasSelection && isLastViewed && currentIndex !== testData.seenIndices[testData.seenIndices.length-1]) {
-        // Only show Orange if they've seen it, didn't answer, and moved away/back
         flagBtn.style.background = "#e67e22"; 
         flagBtn.style.color = "#fff";
     }
@@ -105,7 +102,6 @@ function renderQuestion() {
 function toggleFlag() {
     const q = sessionQuestions[currentIndex];
     if (!testData.flagged) testData.flagged = [];
-    
     const flagIndex = testData.flagged.indexOf(q.id);
     if (flagIndex > -1) {
         testData.flagged.splice(flagIndex, 1);
@@ -115,16 +111,9 @@ function toggleFlag() {
     renderQuestion();
 }
 
-function openModal(src) {
-    const modal = document.getElementById('img-modal');
-    document.getElementById('img-modal-content').src = src;
-    modal.style.display = 'flex';
-}
-
 function changeQuestion(step) {
     const newIndex = currentIndex + step;
     if (newIndex >= 0 && newIndex < sessionQuestions.length) {
-        // Mark current as seen before moving
         if (!testData.seenIndices.includes(currentIndex)) testData.seenIndices.push(currentIndex);
         currentIndex = newIndex;
         renderQuestion();
@@ -133,18 +122,58 @@ function changeQuestion(step) {
 
 function showSummary() {
     document.getElementById('test-ui').style.display = 'none';
-    document.getElementById('summary-ui').style.display = 'block';
-    let answered = 0, score = 0;
+    const summaryUI = document.getElementById('summary-ui');
+    summaryUI.style.display = 'block';
+
+    const skippedQuestions = originalSessionQuestions.filter(q => !testData.selections[q.id]);
+    const flaggedQuestions = originalSessionQuestions.filter(q => testData.flagged.includes(q.id));
+
+    summaryUI.innerHTML = `
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+            <button class="btn btn-blue" onclick="retrySubset('skipped')">SKIPPED (${skippedQuestions.length})</button>
+            <button class="btn btn-blue" onclick="retrySubset('flagged')">FLAGGED (${flaggedQuestions.length})</button>
+            <button class="btn btn-blue" onclick="retrySubset('all')">REVIEW</button>
+            <button class="btn" onclick="reviewAnswers()">FINISHED</button>
+        </div>
+    `;
+
+    let score = 0;
     originalSessionQuestions.forEach(q => {
-        if (testData.selections[q.id]) {
-            answered++;
-            if (testData.selections[q.id] === q.correct) score++;
-        }
+        if (testData.selections[q.id] === q.correct) score++;
     });
-    const skipped = originalSessionQuestions.length - answered;
-    document.getElementById('review-skipped-btn').innerText = `SKIPPED (${skipped})`;
-    document.getElementById('review-flagged-btn').innerText = `FLAGGED (${testData.flagged.length})`;
-    localStorage.setItem('orion_final_results', JSON.stringify({ score, total: originalSessionQuestions.length, questions: originalSessionQuestions, data: testData }));
+    
+    localStorage.setItem('orion_final_results', JSON.stringify({ 
+        score, 
+        total: originalSessionQuestions.length, 
+        questions: originalSessionQuestions, 
+        data: testData 
+    }));
+}
+
+function retrySubset(type) {
+    if (type === 'skipped') {
+        sessionQuestions = originalSessionQuestions.filter(q => !testData.selections[q.id]);
+    } else if (type === 'flagged') {
+        sessionQuestions = originalSessionQuestions.filter(q => testData.flagged.includes(q.id));
+    } else {
+        sessionQuestions = [...originalSessionQuestions];
+    }
+
+    if (sessionQuestions.length === 0) {
+        alert("No questions found for this category.");
+        return;
+    }
+
+    currentIndex = 0;
+    document.getElementById('summary-ui').style.display = 'none';
+    document.getElementById('test-ui').style.display = 'block';
+    renderQuestion();
+}
+
+function openModal(src) {
+    const modal = document.getElementById('img-modal');
+    document.getElementById('img-modal-content').src = src;
+    modal.style.display = 'flex';
 }
 
 function saveProgress() { 
