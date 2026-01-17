@@ -1,41 +1,29 @@
-/* timed_script.js - v1.0.1 */
+/* timed_script.js - v1.0.2 */
 let sessionQuestions = [], currentIndex = 0, originalSessionQuestions = []; 
 let testData = { selections: {}, flagged: [], seenIndices: [0] };
 let timeLeft = 3420; 
 let timerInterval;
 
-async function init() {
+function init() {
     const saved = localStorage.getItem('orion_timed_session');
-    
-    if (saved) {
-        const parsed = JSON.parse(saved);
-        sessionQuestions = parsed.questions;
-        originalSessionQuestions = [...sessionQuestions];
-        testData = parsed.data || { selections: {}, flagged: [], seenIndices: [0] };
-        currentIndex = parsed.currentIndex || 0;
-        timeLeft = parsed.timeLeft || 3420;
-    } else {
-        // Fallback: If no session found, try to create one or boot to menu
-        try {
-            const response = await fetch('questions.json');
-            const all = await response.json();
-            sessionQuestions = all.sort(() => 0.5 - Math.random()).slice(0, 50)
-                                .map((q, idx) => ({ ...q, originalIndex: idx + 1 }));
-            originalSessionQuestions = [...sessionQuestions];
-            saveProgress();
-        } catch (e) {
-            alert("Session Error. Returning to Menu.");
-            window.location.href = 'mainmenu.html';
-            return;
-        }
+    if (!saved) {
+        alert("No active timed session found.");
+        window.location.href = 'mainmenu.html';
+        return;
     }
+
+    const parsed = JSON.parse(saved);
+    sessionQuestions = parsed.questions;
+    originalSessionQuestions = [...sessionQuestions];
+    testData = parsed.data || { selections: {}, flagged: [], seenIndices: [0] };
+    currentIndex = parsed.currentIndex || 0;
+    timeLeft = parsed.timeLeft || 3420;
 
     startTimer();
     renderQuestion();
 }
 
 function startTimer() {
-    if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         timeLeft--;
         updateTimerDisplay();
@@ -51,9 +39,10 @@ function updateTimerDisplay() {
     const min = Math.floor(timeLeft / 60);
     const sec = timeLeft % 60;
     const display = document.getElementById('timer-display');
-    if (!display) return;
-    display.innerText = `${min}:${sec < 10 ? '0' + sec : sec}`;
-    if (timeLeft <= 300) display.classList.add('warning');
+    if (display) {
+        display.innerText = `${min}:${sec < 10 ? '0' + sec : sec}`;
+        if (timeLeft <= 300) display.classList.add('warning');
+    }
 }
 
 function renderQuestion() {
@@ -64,10 +53,9 @@ function renderQuestion() {
     imgElement.style.display = 'none'; 
     imgElement.src = `images/${q.id}.jpeg`;
     imgElement.onload = () => imgElement.style.display = 'block';
-    imgElement.onerror = () => imgElement.style.display = 'none';
 
     document.getElementById('q-number').innerText = `Q${currentIndex + 1} / 50`;
-    document.getElementById('q-category').innerText = q.category || "General";
+    document.getElementById('q-category').innerText = q.category;
     document.getElementById('q-text').innerText = q.question;
     document.getElementById('q-id-display').innerText = `ID: ${q.id}`;
 
