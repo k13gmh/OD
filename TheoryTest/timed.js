@@ -1,10 +1,10 @@
 /**
  * File: timed.js
- * Version: v2.0.2
- * Refactored for iPad Safari Compatibility
+ * Version: v2.0.3
+ * Fix: Early finish logic and resume state clearing.
  */
 
-const SCRIPT_VERSION = "v2.0.2";
+const SCRIPT_VERSION = "v2.0.3";
 
 // Global error catcher for iPad debugging
 window.onerror = function(msg, url, line) {
@@ -22,7 +22,6 @@ async function init() {
     const tag = document.getElementById('v-tag-top');
     if (tag) tag.innerText = SCRIPT_VERSION;
 
-    // Check session
     if (!sessionStorage.getItem('orion_session_token')) {
         document.getElementById('q-text').innerText = "No session token. Redirecting...";
         setTimeout(() => { window.location.href = 'mainmenu.html'; }, 2000);
@@ -31,7 +30,7 @@ async function init() {
     
     try {
         const response = await fetch('questions.json');
-        if (!response.ok) throw new Error("questions.json not found on server");
+        if (!response.ok) throw new Error("questions.json not found");
         
         allQuestions = await response.json();
         const saved = localStorage.getItem('orion_current_session');
@@ -47,10 +46,7 @@ async function init() {
 }
 
 function startFreshSession() {
-    if (allQuestions.length === 0) {
-        document.getElementById('q-text').innerText = "Error: Question bank is empty.";
-        return;
-    }
+    if (allQuestions.length === 0) return;
     
     sessionQuestions = [...allQuestions]
         .sort(() => 0.5 - Math.random())
@@ -73,7 +69,7 @@ function startTimer() {
         totalSeconds--;
         if (totalSeconds < 0) {
             clearInterval(timerInterval);
-            reviewAnswers();
+            forceFinish(); // Automatic end when time is up
             return;
         }
 
@@ -99,14 +95,16 @@ function resumeTest(shouldResume) {
             startTimer(); 
             renderQuestion();
         }
-    } else { startFreshSession(); }
+    } else { 
+        localStorage.removeItem('orion_current_session');
+        startFreshSession(); 
+    }
 }
 
 function renderQuestion() {
     const q = sessionQuestions[currentIndex];
     if (!q) return;
 
-    // Image handling
     const imgElement = document.getElementById('q-image');
     if (imgElement) {
         imgElement.style.display = 'none'; 
@@ -170,11 +168,13 @@ function showSummary() {
     const flagged = originalSessionQuestions.filter(q => testData.flagged.includes(q.id)).length;
 
     summaryUI.innerHTML = `
+        <h3>Session Summary</h3>
+        <p>You have ${skipped} unanswered questions.</p>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
             <button class="btn btn-blue" onclick="retrySubset('skipped')">SKIPPED (${skipped})</button>
             <button class="btn btn-blue" onclick="retrySubset('flagged')">FLAGGED (${flagged})</button>
-            <button class="btn btn-blue" onclick="retrySubset('all')">REVIEW</button>
-            <button class="btn" onclick="reviewAnswers()">FINISHED</button>
+            <button class="btn btn-blue" onclick="retrySubset('all')">REVIEW ALL</button>
+            <button class="btn" style="background:#2ecc71; color:white;" onclick="finalSubmission()">FINISHED</button>
         </div>
     `;
 }
@@ -191,6 +191,33 @@ function retrySubset(type) {
     renderQuestion();
 }
 
+function forceFinish() {
+    if (timerInterval) clearInterval(timerInterval);
+    alert("TIME EXPIRED!");
+    finalSubmission();
+}
+
+function finalSubmission() {
+    if (timerInterval) clearInterval(timerInterval);
+    
+    // Calculate final score for storage
+    let score = 0;
+    originalSessionQuestions.forEach(q => {
+        if (testData.selections[q.id] === q.correct) score++;
+    });
+    
+    localStorage.setItem('orion_final_results', JSON.stringify({ 
+        score, 
+        total: originalSessionQuestions.length, 
+        questions: originalSessionQuestions, 
+        data: testData 
+    }));
+
+    // IMPORTANT: Clear current session so user cannot resume a finished test
+    localStorage.removeItem('orion_current_session');
+    window.location.href = 'review.html';
+}
+
 function openModal(src) {
     document.getElementById('img-modal-content').src = src;
     document.getElementById('img-modal').style.display = 'flex';
@@ -204,10 +231,4 @@ function saveProgress() {
     })); 
 }
 
-function reviewAnswers() { 
-    if (timerInterval) clearInterval(timerInterval);
-    window.location.href = 'review.html'; 
-}
-
-// Ensure DOM is ready before init
 window.addEventListener('load', init);
