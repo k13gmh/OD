@@ -1,10 +1,10 @@
 /**
  * File: timed.js
- * Version: v2.0.4
- * Fix: Total termination of timer upon submission to prevent ghost clocks in review.
+ * Version: v2.1.0
+ * Features: Dynamic Option Shuffling & Refresh-to-Reset Logic
  */
 
-const SCRIPT_VERSION = "v2.0.4";
+const SCRIPT_VERSION = "v2.1.0";
 
 // Global error catcher for iPad debugging
 window.onerror = function(msg, url, line) {
@@ -33,25 +33,64 @@ async function init() {
         if (!response.ok) throw new Error("questions.json not found");
         
         allQuestions = await response.json();
-        const saved = localStorage.getItem('orion_current_session');
         
-        if (saved) { 
-            document.getElementById('resume-modal').style.display = 'flex'; 
-        } else { 
-            startFreshSession(); 
-        }
+        // REFRESH PROTECTION: 
+        // If the page is refreshed, we clear any existing session to prevent 
+        // timer-cheating and force a brand new set of questions.
+        localStorage.removeItem('orion_current_session');
+        startFreshSession(); 
+        
     } catch (e) { 
         document.getElementById('q-text').innerText = "Load Error: " + e.message;
     }
 }
 
+/**
+ * Pairs answers with their correct status, shuffles them, 
+ * and re-assigns A, B, C, D and the 'correct' letter.
+ */
+function shuffleQuestionOptions(q, displayIndex) {
+    let optionsArray = [
+        { text: q.choices.A, correct: q.correct === "A" },
+        { text: q.choices.B, correct: q.correct === "B" },
+        { text: q.choices.C, correct: q.correct === "C" },
+        { text: q.choices.D, correct: q.correct === "D" }
+    ].filter(opt => opt.text);
+
+    for (let i = optionsArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [optionsArray[i], optionsArray[j]] = [optionsArray[j], optionsArray[i]];
+    }
+
+    const newChoices = {};
+    let newCorrectLetter = "";
+    const letters = ["A", "B", "C", "D"];
+
+    optionsArray.forEach((opt, i) => {
+        const letter = letters[i];
+        newChoices[letter] = opt.text;
+        if (opt.correct) newCorrectLetter = letter;
+    });
+
+    return {
+        ...q,
+        choices: newChoices,
+        correct: newCorrectLetter,
+        originalIndex: displayIndex
+    };
+}
+
 function startFreshSession() {
     if (allQuestions.length === 0) return;
     
-    sessionQuestions = [...allQuestions]
+    // Pick and Shuffle
+    let selected = [...allQuestions]
         .sort(() => 0.5 - Math.random())
-        .slice(0, 50)
-        .map((q, idx) => ({ ...q, originalIndex: idx + 1 }));
+        .slice(0, 50);
+
+    sessionQuestions = selected.map((q, idx) => {
+        return shuffleQuestionOptions(q, idx + 1);
+    });
     
     originalSessionQuestions = [...sessionQuestions];
     currentIndex = 0;
@@ -62,7 +101,6 @@ function startFreshSession() {
 }
 
 function startTimer() {
-    // Clear any existing interval before starting a new one
     if (timerInterval) {
         clearInterval(timerInterval);
         timerInterval = null;
@@ -93,25 +131,6 @@ function stopTimerInternal() {
     if (timerInterval) {
         clearInterval(timerInterval);
         timerInterval = null;
-    }
-}
-
-function resumeTest(shouldResume) {
-    document.getElementById('resume-modal').style.display = 'none';
-    if (shouldResume) {
-        const savedValue = localStorage.getItem('orion_current_session');
-        if (savedValue) {
-            const saved = JSON.parse(savedValue);
-            sessionQuestions = saved.questions;
-            originalSessionQuestions = [...sessionQuestions];
-            testData = saved.data;
-            currentIndex = saved.currentIndex || 0;
-            startTimer(); 
-            renderQuestion();
-        }
-    } else { 
-        localStorage.removeItem('orion_current_session');
-        startFreshSession(); 
     }
 }
 
@@ -212,7 +231,7 @@ function forceFinish() {
 }
 
 function finalSubmission() {
-    stopTimerInternal(); // Ensure the clock is killed before storage/redirect
+    stopTimerInternal();
     
     let score = 0;
     originalSessionQuestions.forEach(q => {
