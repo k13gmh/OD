@@ -8686,15 +8686,15 @@
   {
     "id": "675",
     "category": "Essential Documents",
-    "question": "What must you do if you change the color of your car?, Tell your friends",
+    "question": "What must you do if you change the colour of your car?",
     "choices": {
       "A": "Notify the DVLA and update the V5C",
-      "B": "Nothing,  it's your car",
+      "B": "Nothing, it's your car",
       "C": "Buy new insurance only",
-      "D": "B"
+      "D": "Tell your friends "
     },
-    "correct": "****",
-    "explanation": "****"
+    "correct": "A",
+    "explanation": "Any major alteration to a vehicle, such as a change of colour, must be updated on the V5C log book and reported to the DVLA."
   },
   {
     "id": "676",
@@ -8738,7 +8738,7 @@
   {
     "id": "679",
     "category": "Essential Documents",
-    "question": "What is the purpose of Third-Party,  Fire and Theft insurance?",
+    "question": "What is the purpose of Third-Party, Fire and Theft insurance?",
     "choices": {
       "A": "It covers your car for everything",
       "B": "It covers others plus your car if it is stolen or damaged by fire",
@@ -8746,7 +8746,7 @@
       "D": "It is for racing cars only"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "This insurance damage you cause to others, plus the cost of replacing your vehicle if it is stolen or fire-damaged."
   },
   {
     "id": "681",
@@ -8824,7 +8824,7 @@
       "D": "On their stomach"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "The recovery position keeps the airway open and prevents the person from choking on their tongue or vomit."
   },
   {
     "id": "687",
@@ -8871,25 +8871,25 @@
     "question": "What should you do if a person’s clothes are on fire?",
     "choices": {
       "A": "Tell them to run",
-      "B": "Make them 'Stop,  Drop and Roll'",
+      "B": "Make them 'Stop, Drop and Roll'",
       "C": "Throw petrol on them",
       "D": "Give them a drink of water"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "Running fans the flames.  Stopping, dropping to the ground and rolling is the most effective way to smother the fire."
   },
   {
     "id": "691",
     "category": "Incidents Accidents and Emergencies",
     "question": "What is the 'DR ABC' code in first aid?",
     "choices": {
-      "A": "Driver,  Route,  Area,  Body,  Check",
-      "B": "Danger, ****, ****, ****, ****",
-      "C": "****",
-      "D": "****"
+      "A": "Driver, Route, Area, Body, Check",
+      "B": "Danger, Response, Airway, Breathing, Circulation",
+      "C": "Danger, Rescue, Airway, Breathing, Compression",
+      "D": "Danger, Response, Ambulance, Breathing, Circulation"
     },
-    "correct": "****",
-    "explanation": "****"
+    "correct": "B",
+    "explanation": "DRABC stands for Danger, Response, Airway, Breathing and Circulation (or Compressions).  It’s the order of priority when treating a casualty."
   },
   {
     "id": "692",
@@ -8962,12 +8962,12 @@
     "question": "What are the signs of someone being in shock?",
     "choices": {
       "A": "They are very happy",
-      "B": "They are pale,  cold,  and have a rapid pulse",
+      "B": "They are pale, cold, and have a rapid pulse",
       "C": "They have a high fever",
       "D": "They are very talkative"
     },
-    "correct": "****",
-    "explanation": "****"
+    "correct": "B",
+    "explanation": "Shock is a life-threatening condition.  Signs include pale grey skin, sweating, rapid pulse and fast, shallow breathing."
   },
   {
     "id": "698",
@@ -8976,11 +8976,11 @@
     "choices": {
       "A": "If they are hungry",
       "B": "Only if they are very thirsty",
-      "C": "Never,  as it could complicate medical treatment or surgery",
+      "C": "Never, as it could complicate medical treatment or surgery",
       "D": "If they are in shock"
     },
     "correct": "C",
-    "explanation": "****"
+    "explanation": "You should never give food or drink to a casualty at an accident scene as they may need an an"
   },
   {
     "id": "699",
@@ -9209,12 +9209,12 @@
     "question": "What should you do if your car's throttle (accelerator) sticks open?",
     "choices": {
       "A": "Switch the engine off while moving",
-      "B": "Press the clutch and shift to neutral,  then brake safely",
+      "B": "Press the clutch and shift to neutral, then brake safely",
       "C": "Apply the handbrake hard",
       "D": "Close your eyes"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "By shifting to neutral, you disconnect the engine from the wheels, allowing you to brake safely to a stop without the car accelerating."
   },
   {
     "id": "717",
@@ -9261,12 +9261,12 @@
     "question": "What is a common sign of internal bleeding?",
     "choices": {
       "A": "A high fever",
-      "B": "Bruising,  thirst,  and a weak but rapid pulse",
+      "B": "Bruising, thirst, and a weak but rapid pulse",
       "C": "A very slow heartbeat",
       "D": "They are very hungry"
     },
-    "correct": "****",
-    "explanation": "****"
+    "correct": "B",
+    "explanation": "Internal bleeding is serious.  Signs include skin bruising, a cold/clamy feel, thirst and signs of shock like a rapid, weak pulse."
   },
   {
     "id": "721",
@@ -9461,7 +9461,7 @@
       "D": "One year"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "If you do not have your documents with you at the scene, you must take them to a police station within 7 days."
   },
   {
     "id": "736",
@@ -9702,13 +9702,13 @@
     "category": "Vehicle Loading",
     "question": "How does a heavy load affect your car's headlights?",
     "choices": {
-      "A": "It makes them point higher,  potentially dazzling other drivers",
+      "A": "It makes them point higher, potentially dazzling other drivers",
       "B": "It makes them point lower",
       "C": "It makes them switch off",
       "D": "It has no effect"
     },
     "correct": "A",
-    "explanation": "****"
+    "explanation": "A heavy load in the back of the car, causes the front to tip up, aiming the headlights higher and dazzling oncoming traffic."
   },
   {
     "id": "755",
@@ -9765,7 +9765,7 @@
   {
     "id": "759",
     "category": "Vehicle Loading",
-    "question": "When using a roof rack,  when should you check the security of the load?",
+    "question": "When using a roof rack, when should you check the security of the load?",
     "choices": {
       "A": "Only when you arrive",
       "B": "After a few miles and at every rest stop",
@@ -9773,7 +9773,7 @@
       "D": "Once a year"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "Loads can shift during travel.  You should check the security shortly after starting and then at every break in the journey."
   },
   {
     "id": "760",
@@ -9871,13 +9871,13 @@
     "category": "Vehicle Loading",
     "question": "Can you carry a passenger in a caravan while it is being towed?",
     "choices": {
-      "A": "Yes,  if they have a seatbelt",
-      "B": "No,  it is illegal and very dangerous",
+      "A": "Yes, if they have a seatbelt",
+      "B": "No, it is illegal and very dangerous",
       "C": "Only if the caravan is large",
       "D": "Only at slow speeds"
     },
-    "correct": "****",
-    "explanation": "****"
+    "correct": "B",
+    "explanation": "It is illegal and highly dangerous to carry passengers in a caravan or trailer while it is being towed on a public road."
   },
   {
     "id": "768",
@@ -9908,7 +9908,7 @@
   {
     "id": "770",
     "category": "Vehicle Loading",
-    "question": "If you have a roof rack,  what is the 'maximum roof load'?",
+    "question": "If you have a roof rack, what is the 'maximum roof load'?",
     "choices": {
       "A": "The weight of the car's roof",
       "B": "The total weight (rack + load) allowed by the manufacturer",
@@ -9916,7 +9916,7 @@
       "D": "Unlimited"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "You must never exceed the weight limit specified by the vehicle manufacturer, as it affects the cars stability and handling. "
   },
   {
     "id": "771",
@@ -10223,12 +10223,12 @@
     "question": "What is the 'unladen weight' of a vehicle?",
     "choices": {
       "A": "The weight with a full load",
-      "B": "The weight of the vehicle without passengers,  fuel,  or cargo",
+      "B": "The weight of the vehicle without passengers, fuel, or cargo",
       "C": "The weight of the trailer",
       "D": "The weight of the driver"
     },
-    "correct": "****",
-    "explanation": "****"
+    "correct": "B",
+    "explanation": "Unladen weight refers to the weight of the vehicle itself when it is not carrying any passengers, goods or fuel."
   },
   {
     "id": "795",
