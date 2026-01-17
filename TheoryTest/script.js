@@ -1,4 +1,10 @@
-const SCRIPT_VERSION = "v1.9.9";
+/**
+ * File: script.js
+ * Version: v2.1.0
+ * Feature: Dynamic Option Shuffling to ensure randomness
+ */
+
+const SCRIPT_VERSION = "v2.1.0";
 
 if (!sessionStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -14,22 +20,68 @@ async function init() {
         const response = await fetch('questions.json');
         allQuestions = await response.json();
         const saved = localStorage.getItem('orion_current_session');
-        if (saved) { document.getElementById('resume-modal').style.display = 'flex'; } 
-        else { startFreshSession(); }
+        if (saved) { 
+            document.getElementById('resume-modal').style.display = 'flex'; 
+        } else { 
+            startFreshSession(); 
+        }
     } catch (e) { console.error(e); }
 }
 
 function startFreshSession() {
-    // Add originalIndex to each question object to maintain numbering
-    sessionQuestions = [...allQuestions]
+    // 1. Pick 50 random questions
+    let selected = [...allQuestions]
         .sort(() => 0.5 - Math.random())
-        .slice(0, 50)
-        .map((q, idx) => ({ ...q, originalIndex: idx + 1 }));
+        .slice(0, 50);
+
+    // 2. Shuffle the options for EACH question and update the 'correct' key
+    sessionQuestions = selected.map((q, idx) => {
+        return shuffleQuestionOptions(q, idx + 1);
+    });
     
     originalSessionQuestions = [...sessionQuestions];
     currentIndex = 0;
     testData = { selections: {}, flagged: [], seenIndices: [0] };
     renderQuestion();
+}
+
+/**
+ * Pairs answers with their correct status, shuffles them, 
+ * and re-assigns A, B, C, D and the 'correct' letter.
+ */
+function shuffleQuestionOptions(q, displayIndex) {
+    // Map the current choices to an array with a "correct" flag
+    let optionsArray = [
+        { text: q.choices.A, correct: q.correct === "A" },
+        { text: q.choices.B, correct: q.correct === "B" },
+        { text: q.choices.C, correct: q.correct === "C" },
+        { text: q.choices.D, correct: q.correct === "D" }
+    ].filter(opt => opt.text); // Filter out empty choices if any
+
+    // Shuffle the options
+    for (let i = optionsArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [optionsArray[i], optionsArray[j]] = [optionsArray[j], optionsArray[i]];
+    }
+
+    // Reconstruct the choices and find the new correct letter
+    const newChoices = {};
+    let newCorrectLetter = "";
+    const letters = ["A", "B", "C", "D"];
+
+    optionsArray.forEach((opt, i) => {
+        const letter = letters[i];
+        newChoices[letter] = opt.text;
+        if (opt.correct) newCorrectLetter = letter;
+    });
+
+    // Return a clone of the question with the new scrambled data
+    return {
+        ...q,
+        choices: newChoices,
+        correct: newCorrectLetter,
+        originalIndex: displayIndex
+    };
 }
 
 function resumeTest(shouldResume) {
@@ -61,7 +113,6 @@ function renderQuestion() {
         imgElement.onclick = () => openModal(imgElement.src);
     }
 
-    // Displays the original stored index
     document.getElementById('q-number').innerText = `Question ${q.originalIndex} of ${originalSessionQuestions.length}`;
     document.getElementById('q-category').innerText = q.category;
     document.getElementById('q-text').innerText = q.question;
@@ -84,23 +135,8 @@ function renderQuestion() {
 
     const flagBtn = document.getElementById('flag-btn');
     const isFlagged = testData.flagged.includes(q.id);
-    const hasSelection = !!testData.selections[q.id];
-    const isLastViewed = testData.seenIndices.includes(currentIndex);
-
-    flagBtn.style.boxShadow = "none";
-    flagBtn.style.color = "#444";
-    flagBtn.style.background = "#bdc3c7"; 
-    flagBtn.innerText = "FLAG";
-
-    if (isFlagged) {
-        flagBtn.style.background = "#f1c40f"; 
-        flagBtn.style.color = "#000";
-        flagBtn.style.boxShadow = "inset 0 4px 6px rgba(0,0,0,0.2)";
-        flagBtn.innerText = "FLAGGED";
-    } else if (!hasSelection && isLastViewed && currentIndex !== testData.seenIndices[testData.seenIndices.length-1]) {
-        flagBtn.style.background = "#e67e22"; 
-        flagBtn.style.color = "#fff";
-    }
+    flagBtn.style.background = isFlagged ? "#f1c40f" : "#bdc3c7";
+    flagBtn.innerText = isFlagged ? "FLAGGED" : "FLAG";
 
     saveProgress();
 }
@@ -166,12 +202,11 @@ function retrySubset(type) {
     }
 
     if (sessionQuestions.length === 0) {
-        alert("No questions found for this category.");
+        alert("No questions found.");
         return;
     }
 
     currentIndex = 0;
-    // Clear seen states for the retry list
     testData.seenIndices = [0];
     document.getElementById('summary-ui').style.display = 'none';
     document.getElementById('test-ui').style.display = 'block';
