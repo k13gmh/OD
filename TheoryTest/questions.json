@@ -3594,11 +3594,11 @@
     "choices": {
       "A": "Check your tyre pressures and have the brakes checked by a professional",
       "B": "Speed up",
-      "C": "Nothing,  it's normal on old cars",
+      "C": "Nothing, it's normal on old cars",
       "D": "Brake harder"
     },
     "correct": "A",
-    "explanation": "****"
+    "explanation": "Pulling to one side under braking indicates a fault with the braking system or  uneven tyre pressures.  It must be checked immediately."
   },
   {
     "id": "284",
@@ -4529,12 +4529,12 @@
     "question": "When you are following a large vehicle,  why is it important to see its mirrors?",
     "choices": {
       "A": "So you can see what the driver looks like",
-      "B": "If you can see the mirrors,  the driver can see you",
+      "B": "If you can see the mirrors, the driver can see you",
       "C": "To check if the mirrors are clean",
       "D": "To see the traffic behind the lorry"
     },
-    "correct": "****",
-    "explanation": "****"
+    "correct": "B",
+    "explanation": "Large vehicles have big blind spots.  If you cannot see the driver’s mirrors, they almost certainly can’t see you."
   },
   {
     "id": "356",
@@ -5348,12 +5348,12 @@
     "question": "What is the main danger of driving in high winds?",
     "choices": {
       "A": "The car will get dirty",
-      "B": "The car could be blown out of its lane,  particularly high-sided vehicles",
+      "B": "The car could be blown out of its lane, particularly high-sided vehicles",
       "C": "The engine will stall",
       "D": "The radio won't work"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "Strong winds can push vehicles off course.  High-sided vehicles, cyclists and motorcyclists are the most vulnerable."
   },
   {
     "id": "419",
@@ -5678,7 +5678,7 @@
       "D": "By staying close to the vehicle in front"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "Bridges are often exposed to high side winds.  A roof box increases the surface area of your car, making it more likely to be affected."
   },
   {
     "id": "444",
@@ -6445,7 +6445,7 @@
       "D": "Only between 10 PM and 6 AM"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "Learner drivers are only allowed in motorways in England, Scotland and Wales if they are with an ADI if they are in a dual controlled car."
   },
   {
     "id": "503",
@@ -8147,8 +8147,8 @@
       "C": "Only if you get a speeding ticket",
       "D": "Every year"
     },
-    "correct": "****",
-    "explanation": "****"
+    "correct": "B",
+    "explanation": "You must tell the DVLA immediately if you change your name or address, or if you develop a medical condition that affects your driving."
   },
   {
     "id": "634",
@@ -8226,7 +8226,7 @@
       "D": "To the shops and back"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "If a car has failed it’s MOT, it can only be driven to a garage for repairs or to a pre- booked MOT retest."
   },
   {
     "id": "640",
@@ -8247,12 +8247,12 @@
     "question": "How often should you update your vehicle's logbook (V5C)?",
     "choices": {
       "A": "Every time you have a service",
-      "B": "When the vehicle is sold,  scrapped,  or the keeper changes details",
+      "B": "When the vehicle is sold, scrapped, or the keeper changes details",
       "C": "Every 12 months",
       "D": "Only if the color of the car changes"
     },
-    "correct": "****",
-    "explanation": "****"
+    "correct": "B",
+    "explanation": "The V5C must be updated whenever the registered keeper’s details change or when the vehicle is sold or destroyed."
   },
   {
     "id": "642",
@@ -8317,7 +8317,7 @@
       "D": "Your school records"
     },
     "correct": "B",
-    "explanation": "****"
+    "explanation": "Following an accident, you must be able to produce your driving licence, valid insurance and MOT certificate if requested."
   },
   {
     "id": "647",
@@ -8442,12 +8442,12 @@
     "question": "What information is on a photocard driving license?",
     "choices": {
       "A": "Your height",
-      "B": "Your name,  address,  and the categories of vehicles you can drive",
+      "B": "Your name, address, and the categories of vehicles you can drive",
       "C": "Your blood type",
       "D": "Your bank details"
     },
-    "correct": "****",
-    "explanation": "****"
+    "correct": "B",
+    "explanation": "Your licence shows your personal details and lists the specific types of vehicles (categories) you are legally allowed to drive."
   },
   {
     "id": "657",
@@ -8675,25 +8675,25 @@
     "category": "Essential Documents",
     "question": "Can you use a vehicle on the road if it is SORN?",
     "choices": {
-      "A": "Yes,  for one day a week",
-      "B": "No,  not under any circumstances",
-      "C": "Yes,  if you only drive at night",
-      "D": "****"
+      "A": "Yes, for one day a week",
+      "B": "No, not under any circumstances",
+      "C": "Yes, if you only drive at night",
+      "D": "Yes, if you are driving to a pre-arranged MOT appointment"
     },
-    "correct": "****",
-    "explanation": "****"
+    "correct": "D",
+    "explanation": "A vehicle with a Statutory Off-Road Notification (SORN) can only be driven on a public road to a pre-booked MOT appointment"
   },
   {
     "id": "675",
     "category": "Essential Documents",
-    "question": "What must you do if you change the color of your car?",
+    "question": "What must you do if you change the color of your car?, Tell your friends",
     "choices": {
-      "A": "Tell your friends",
-      "B": "Notify the DVLA and update the V5C",
-      "C": "Nothing,  it's your car",
-      "D": "Buy new insurance only"
+      "A": "Notify the DVLA and update the V5C",
+      "B": "Nothing,  it's your car",
+      "C": "Buy new insurance only",
+      "D": "B"
     },
-    "correct": "B",
+    "correct": "****",
     "explanation": "****"
   },
   {
