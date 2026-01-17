@@ -1,10 +1,17 @@
-const SCRIPT_VERSION = "v2.0.1";
+/**
+ * File: timed.js
+ * Version: v2.0.2
+ * Refactored for iPad Safari Compatibility
+ */
 
-// Ensure session exists
-if (!sessionStorage.getItem('orion_session_token')) {
-    console.warn("No session token found, redirecting...");
-    window.location.href = 'mainmenu.html';
-}
+const SCRIPT_VERSION = "v2.0.2";
+
+// Global error catcher for iPad debugging
+window.onerror = function(msg, url, line) {
+    const display = document.getElementById('q-text');
+    if (display) display.innerText = "JS Error: " + msg + "\nLine: " + line;
+    return false;
+};
 
 let allQuestions = [], sessionQuestions = [], currentIndex = 0, originalSessionQuestions = []; 
 let testData = { selections: {}, flagged: [], seenIndices: [] };
@@ -14,10 +21,17 @@ let totalSeconds = 57 * 60;
 async function init() {
     const tag = document.getElementById('v-tag-top');
     if (tag) tag.innerText = SCRIPT_VERSION;
+
+    // Check session
+    if (!sessionStorage.getItem('orion_session_token')) {
+        document.getElementById('q-text').innerText = "No session token. Redirecting...";
+        setTimeout(() => { window.location.href = 'mainmenu.html'; }, 2000);
+        return;
+    }
     
     try {
         const response = await fetch('questions.json');
-        if (!response.ok) throw new Error("Could not load questions.json");
+        if (!response.ok) throw new Error("questions.json not found on server");
         
         allQuestions = await response.json();
         const saved = localStorage.getItem('orion_current_session');
@@ -28,14 +42,15 @@ async function init() {
             startFreshSession(); 
         }
     } catch (e) { 
-        console.error("Initialization error:", e);
-        document.getElementById('q-text').innerText = "Error: questions.json not found or corrupted.";
-        alert("Check if questions.json exists in the same folder.");
+        document.getElementById('q-text').innerText = "Load Error: " + e.message;
     }
 }
 
 function startFreshSession() {
-    if (allQuestions.length === 0) return;
+    if (allQuestions.length === 0) {
+        document.getElementById('q-text').innerText = "Error: Question bank is empty.";
+        return;
+    }
     
     sessionQuestions = [...allQuestions]
         .sort(() => 0.5 - Math.random())
@@ -64,10 +79,9 @@ function startTimer() {
 
         let mins = Math.floor(totalSeconds / 60);
         let secs = totalSeconds % 60;
-        display.textContent = (mins < 10 ? "0" + mins : mins) + ":" + (secs < 10 ? "0" + secs : secs);
-
-        if (totalSeconds <= 120) {
-            display.style.color = "#ff0000";
+        if (display) {
+            display.textContent = (mins < 10 ? "0" + mins : mins) + ":" + (secs < 10 ? "0" + secs : secs);
+            if (totalSeconds <= 120) display.style.color = "#ff0000";
         }
     }, 1000);
 }
@@ -89,9 +103,10 @@ function resumeTest(shouldResume) {
 }
 
 function renderQuestion() {
-    if (!sessionQuestions[currentIndex]) return;
     const q = sessionQuestions[currentIndex];
+    if (!q) return;
 
+    // Image handling
     const imgElement = document.getElementById('q-image');
     if (imgElement) {
         imgElement.style.display = 'none'; 
@@ -121,7 +136,6 @@ function renderQuestion() {
         }
     });
 
-    // Flag logic
     const flagBtn = document.getElementById('flag-btn');
     const isFlagged = testData.flagged.includes(q.id);
     flagBtn.style.background = isFlagged ? "#f1c40f" : "#bdc3c7";
@@ -133,7 +147,6 @@ function renderQuestion() {
 function changeQuestion(step) {
     const newIndex = currentIndex + step;
     if (newIndex >= 0 && newIndex < sessionQuestions.length) {
-        if (!testData.seenIndices.includes(currentIndex)) testData.seenIndices.push(currentIndex);
         currentIndex = newIndex;
         renderQuestion();
     }
@@ -196,5 +209,5 @@ function reviewAnswers() {
     window.location.href = 'review.html'; 
 }
 
-// Start the engine
-init();
+// Ensure DOM is ready before init
+window.addEventListener('load', init);
