@@ -1,137 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Orion Drive - Main Menu</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background-color: #000; color: #e0e0e0; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; min-height: 100vh; }
-        .container { text-align: center; width: 100%; max-width: 400px; margin-top: 30px; }
-        
-        h1 { color: #fff; margin-bottom: 5px; letter-spacing: 2px; font-weight: bold; }
-        h2 { color: #ffffff; margin-top: 0; font-weight: bold; font-size: 1.2rem; margin-bottom: 25px; }
-        
-        #status-msg { color: #28a745; font-size: 0.85rem; margin-bottom: 20px; font-weight: bold; display: none; }
-        
-        .menu-box { 
-            background: #1c1c1e; 
-            padding: 20px; 
-            border-radius: 20px; 
-            border: 1px solid #2c2c2e; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-            box-sizing: border-box; 
-            position: relative;
-            text-align: left;
-        }
-        
-        .sub-header {
-            color: #8e8e93;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 20px 0 10px 5px;
-            font-weight: bold;
-            border-bottom: 1px solid #2c2c2e;
-            padding-bottom: 5px;
-        }
-        .sub-header:first-of-type { margin-top: 5px; }
-
-        .lock-screen input { background: #000; border: 1px solid #444; color: #007bff; padding: 12px; font-size: 1.2rem; width: 100%; box-sizing: border-box; text-align: center; border-radius: 8px; margin-bottom: 15px; font-family: monospace; }
-        
-        .btn { background: #007bff; color: #fff; border: none; padding: 14px; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; margin-top: 8px; display: block; text-decoration: none; box-sizing: border-box; font-size: 0.9rem; text-align: center; }
-        .btn-grey { background: #333; color: #aaa; }
-        
-        #debug-box { margin-top: 20px; padding: 15px; border: 1px dashed #444; font-family: monospace; font-size: 0.8rem; color: #8e8e93; width: 100%; box-sizing: border-box; }
-        .v-tag { position: absolute; bottom: 10px; right: 15px; font-size: 0.65rem; color: #555; font-family: monospace; }
+        body { font-family: -apple-system, sans-serif; background: #f4f7f9; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .menu-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; width: 80%; max-width: 300px; }
+        .btn { background: #007bff; color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; margin: 10px 0; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .btn-timed { background: #d9534f; }
+        h1 { color: #2c3e50; margin-bottom: 20px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>ORION DRIVE</h1>
-        <h2>Theory Test</h2>
-        <div id="status-msg">● System Unlocked</div>
-
-        <div class="menu-box">
-            <div id="lock-ui">
-                <div class="sub-header">Security Access</div>
-                <p style="font-size: 0.8rem; color: #8e8e93; margin-left: 5px;">Monthly Token Required</p>
-                <input type="text" id="passCode" placeholder="ENTER CODE" autocomplete="off">
-                <button class="btn" onclick="verifyAccess()">Unlock System</button>
-            </div>
-
-            <div id="menu-options" style="display:none;">
-                <div class="sub-header">Mock Tests</div>
-                <a href="untimed.html" class="btn">Untimed Practice</a>
-                
-                <div class="sub-header">System Manager</div>
-                <a href="maintain.html" class="btn btn-grey">Database Maintainer</a>
-                <a href="gatekeeper.html" class="btn btn-grey">Gatekeeper</a>
-                <a href="review.html" class="btn btn-grey">Review Result</a>
-                <a href="review_detail.html" class="btn btn-grey">Detailed Review</a>
-            </div>
-            
-            <span class="v-tag">v1.6.7</span>
-        </div>
-
-        <div id="debug-box" style="display:none"></div>
+    <div class="menu-card">
+        <h1>Orion Drive</h1>
+        <button class="btn" onclick="startTest('untimed')">Practice (Untimed)</button>
+        <button class="btn btn-timed" onclick="startTest('timed')">Mock Test (Timed)</button>
+        <button class="btn" style="background:#666;" onclick="window.location.href='maintain.html'">Maintenance</button>
     </div>
 
     <script>
-        const DEBUGZ = 1; 
-        const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
+        async function startTest(mode) {
+            // Set session token
+            sessionStorage.setItem('orion_session_token', 'active_' + Date.now());
+            
+            const response = await fetch('questions.json');
+            const allQuestions = await response.json();
+            const sessionQs = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 50);
+            
+            const sessionData = {
+                questions: sessionQs.map((q, idx) => ({ ...q, originalIndex: idx + 1 })),
+                data: { selections: {}, flagged: [], seenIndices: [0] },
+                currentIndex: 0
+            };
 
-        function calcKey() {
-            const d = new Date(); 
-            const s = new Date(Date.UTC(d.getFullYear(), d.getMonth(), 1, 0, 0, 0));
-            const e = new Date(Date.UTC(1900, 0, 1, 0, 0, 0)); 
-            const m = Math.floor((s.getTime() - e.getTime()) / 60000);
-            let v = m % Math.pow(32, 4); 
-            let r = ""; 
-            for (let j = 0; j < 4; j++) { r = ALPH.charAt(v % 32) + r; v = Math.floor(v / 32); }
-            while (r.length < 4) { r = ALPH.charAt(0) + r; }
-            let t = 0; 
-            let ra = r.split('').reverse();
-            for (let j = 0; j < ra.length; j++) { 
-                let x = ALPH.indexOf(ra[j]); 
-                if (j % 2 === 0) { x *= 2; if (x >= 32) x = (x % 32) + Math.floor(x / 32); } 
-                t += x; 
-            }
-            let ci = (32 - (t % 32)) % 32; 
-            return r + (ALPH[ci] || ALPH[0]);
-        }
-
-        const targetKey = calcKey(); 
-        const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
-
-        function init() {
-            const savedStamp = localStorage.getItem('gatekeeper_stamp');
-            if (savedStamp === curMonthYear) { showMenu(); }
-            if (DEBUGZ) { 
-                const db = document.getElementById('debug-box'); 
-                db.style.display = 'block'; 
-                db.innerHTML = `DEBUG: Expected [${targetKey}]<br><br><button onclick="localStorage.clear();sessionStorage.clear();location.reload();" style="background:#444;font-size:0.7rem;color:#fff;padding:5px;border-radius:4px;border:none;cursor:pointer">RESET SYSTEM STAMP</button>`; 
+            if (mode === 'timed') {
+                sessionData.timeLeft = 3420; // 57 Minutes in seconds
+                localStorage.setItem('orion_timed_session', JSON.stringify(sessionData));
+                window.location.href = 'timed.html';
+            } else {
+                localStorage.setItem('orion_current_session', JSON.stringify(sessionData));
+                window.location.href = 'untimed.html';
             }
         }
-
-        function verifyAccess() {
-            const input = document.getElementById('passCode').value.toUpperCase();
-            if (input === targetKey) { 
-                localStorage.setItem('gatekeeper_stamp', curMonthYear); 
-                showMenu(); 
-            } else { 
-                localStorage.removeItem('gatekeeper_stamp'); 
-                alert("Incorrect Code."); 
-            }
-        }
-
-        function showMenu() { 
-            sessionStorage.setItem('orion_session_token', 'active-' + Date.now());
-            document.getElementById('lock-ui').style.display = 'none'; 
-            document.getElementById('menu-options').style.display = 'block'; 
-            document.getElementById('status-msg').style.display = 'block'; 
-        }
-        
-        window.onload = init;
     </script>
 </body>
 </html>
