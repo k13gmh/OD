@@ -1,10 +1,10 @@
 /**
  * File: timed.js
- * Version: v2.0.3
- * Fix: Early finish logic and resume state clearing.
+ * Version: v2.0.4
+ * Fix: Total termination of timer upon submission to prevent ghost clocks in review.
  */
 
-const SCRIPT_VERSION = "v2.0.3";
+const SCRIPT_VERSION = "v2.0.4";
 
 // Global error catcher for iPad debugging
 window.onerror = function(msg, url, line) {
@@ -62,24 +62,38 @@ function startFreshSession() {
 }
 
 function startTimer() {
-    if (timerInterval) clearInterval(timerInterval);
+    // Clear any existing interval before starting a new one
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    
     const display = document.getElementById('timer-display');
 
     timerInterval = setInterval(() => {
         totalSeconds--;
+        
         if (totalSeconds < 0) {
-            clearInterval(timerInterval);
-            forceFinish(); // Automatic end when time is up
+            stopTimerInternal();
+            forceFinish();
             return;
         }
 
         let mins = Math.floor(totalSeconds / 60);
         let secs = totalSeconds % 60;
+        
         if (display) {
             display.textContent = (mins < 10 ? "0" + mins : mins) + ":" + (secs < 10 ? "0" + secs : secs);
             if (totalSeconds <= 120) display.style.color = "#ff0000";
         }
     }, 1000);
+}
+
+function stopTimerInternal() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
 }
 
 function resumeTest(shouldResume) {
@@ -192,15 +206,14 @@ function retrySubset(type) {
 }
 
 function forceFinish() {
-    if (timerInterval) clearInterval(timerInterval);
+    stopTimerInternal();
     alert("TIME EXPIRED!");
     finalSubmission();
 }
 
 function finalSubmission() {
-    if (timerInterval) clearInterval(timerInterval);
+    stopTimerInternal(); // Ensure the clock is killed before storage/redirect
     
-    // Calculate final score for storage
     let score = 0;
     originalSessionQuestions.forEach(q => {
         if (testData.selections[q.id] === q.correct) score++;
@@ -213,7 +226,6 @@ function finalSubmission() {
         data: testData 
     }));
 
-    // IMPORTANT: Clear current session so user cannot resume a finished test
     localStorage.removeItem('orion_current_session');
     window.location.href = 'review.html';
 }
