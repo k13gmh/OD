@@ -6,11 +6,10 @@
     <title>Orion Drive - Review Detail</title>
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; padding: 10px; margin: 0; }
-        .sticky-nav { position: sticky; top: 0; background: #fff; padding: 10px; display: grid; grid-template-columns: 1fr; border-bottom: 1px solid #ddd; z-index: 10; }
-        .q-card { background: #fff; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e1e8ed; }
-        .question-text { font-weight: 600; margin-bottom: 10px; }
+        .sticky-nav { position: sticky; top: 0; background: #fff; padding: 10px; display: grid; grid-template-columns: 1fr; border-bottom: 1px solid #ddd; z-index: 10; margin-bottom: 10px; }
+        .q-card { background: #fff; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e1e8ed; position: relative; }
+        .question-text { font-weight: 600; margin-bottom: 10px; padding-right: 100px; }
         
-        /* Small icon for review list */
         .q-img-review { 
             display: none; 
             width: 50px; 
@@ -26,9 +25,17 @@
         .ans-correct { background: #e8f5e9; border-color: #a5d6a7; color: #2e7d32; }
         .ans-wrong { background: #ffebee; border-color: #ef9a9a; color: #c62828; }
         .explanation-box { background: #f8f9fa; border-left: 4px solid #007bff; padding: 10px; margin-top: 10px; font-size: 0.85rem; }
-        .btn { padding: 14px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; background: #007bff; color: white; text-transform: uppercase; }
         
-        /* Modal for Detail View */
+        /* Status Badge */
+        .status-badge { position: absolute; top: 15px; right: 15px; font-size: 0.65rem; font-weight: bold; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; }
+        .badge-correct { background: #e8f5e9; color: #2e7d32; }
+        .badge-wrong { background: #ffebee; color: #c62828; }
+        .badge-skipped { background: #fff3e0; color: #e67e22; }
+        
+        /* JSON ID Display */
+        .q-id-footer { text-align: right; font-size: 0.65rem; color: #bdc3c7; font-family: monospace; margin-top: 10px; }
+
+        .btn { padding: 14px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; background: #007bff; color: white; text-transform: uppercase; }
         #img-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; justify-content:center; align-items:center; }
         #img-modal-content { max-width:260px; max-height:260px; border-radius:10px; border:3px solid white; }
     </style>
@@ -38,7 +45,7 @@
         <img id="img-modal-content" src="">
     </div>
     <div class="sticky-nav">
-        <button class="btn" onclick="window.location.href='mainmenu.html'">Back to Menu</button>
+        <button class="btn" onclick="window.location.href='review.html'">Back to Summary</button>
     </div>
     <div id="review-container"></div>
 
@@ -47,15 +54,36 @@
             const results = JSON.parse(localStorage.getItem('orion_final_results'));
             const mode = localStorage.getItem('orion_review_mode');
             const container = document.getElementById('review-container');
+            if (!results) return;
 
             results.questions.forEach((q, idx) => {
                 const userAns = results.data.selections[q.id];
+                const isFlagged = results.data.flagged && results.data.flagged.includes(q.id);
                 const isCorrect = userAns === q.correct;
-                if (mode === 'wrong' && isCorrect) return;
+                const isSkipped = !userAns;
+
+                // Mode Logic: If 'wrong' mode, only show skipped or incorrect items
+                if (mode === 'wrong' && isCorrect && !isSkipped) return;
+
+                // Determine Status Label
+                let statusText = "";
+                let badgeClass = "";
+                
+                if (isSkipped) {
+                    statusText = isFlagged ? "FLAGGED-SKIPPED" : "SKIPPED";
+                    badgeClass = "badge-skipped";
+                } else if (isCorrect) {
+                    statusText = isFlagged ? "FLAGGED-CORRECT" : "CORRECT";
+                    badgeClass = "badge-correct";
+                } else {
+                    statusText = isFlagged ? "FLAGGED-WRONG" : "WRONG";
+                    badgeClass = "badge-wrong";
+                }
 
                 const card = document.createElement('div');
                 card.className = 'q-card';
                 card.innerHTML = `
+                    <div class="status-badge ${badgeClass}">${statusText}</div>
                     <div class="question-text">Q${idx+1}: ${q.question}</div>
                     <img class="q-img-review" src="images/${q.id}.jpeg" 
                          onload="this.style.display='block'" 
@@ -63,11 +91,13 @@
                          onerror="this.style.display='none'">
                     <div id="ans-${q.id}"></div>
                     <div class="explanation-box"><strong>Explanation:</strong> ${q.explanation || "N/A"}</div>
+                    <div class="q-id-footer">ID: ${q.id}</div>
                 `;
                 container.appendChild(card);
                 renderAns(`ans-${q.id}`, q, userAns);
             });
         }
+
         function renderAns(id, q, userAns) {
             const div = document.getElementById(id);
             ["A", "B", "C", "D"].forEach(l => {
@@ -78,11 +108,13 @@
                 div.innerHTML += `<div class="${cls}">${l}: ${q.choices[l]}</div>`;
             });
         }
+
         function openModal(src) {
             const modal = document.getElementById('img-modal');
             document.getElementById('img-modal-content').src = src;
             modal.style.display = 'flex';
         }
+
         window.onload = initDetail;
     </script>
 </body>
