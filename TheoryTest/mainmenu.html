@@ -8,10 +8,7 @@
         body { font-family: -apple-system, sans-serif; background-color: #000; color: #e0e0e0; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; min-height: 100vh; }
         .container { text-align: center; width: 100%; max-width: 400px; margin-top: 50px; }
         
-        /* Main Header */
         h1 { color: #fff; margin-bottom: 5px; letter-spacing: 2px; font-weight: bold; }
-        
-        /* Sub Header - Now Bold White */
         h2 { color: #ffffff; margin-top: 0; font-weight: bold; font-size: 1.2rem; margin-bottom: 5px; }
         
         #status-msg { color: #28a745; font-size: 0.85rem; margin-bottom: 20px; font-weight: bold; display: none; }
@@ -23,27 +20,29 @@
             border: 1px solid #2c2c2e; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
             box-sizing: border-box; 
-            position: relative; /* Container for version tag */
+            position: relative;
             min-height: 180px;
+        }
+
+        .section-label { 
+            color: #8e8e93; 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            margin: 15px 0 8px 0; 
+            text-align: left; 
+            font-weight: bold; 
+            letter-spacing: 1px;
         }
         
         .lock-screen input { background: #000; border: 1px solid #444; color: #007bff; padding: 12px; font-size: 1.2rem; width: 100%; box-sizing: border-box; text-align: center; border-radius: 8px; margin-bottom: 15px; font-family: monospace; }
         
-        .btn { background: #007bff; color: #fff; border: none; padding: 15px 0; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; margin-top: 10px; display: block; text-decoration: none; box-sizing: border-box; }
+        .btn { background: #007bff; color: #fff; border: none; padding: 15px 0; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; margin-top: 10px; display: block; text-decoration: none; box-sizing: border-box; text-align: center; font-size: 0.85rem; }
         
-        .btn-locked { background: #333; cursor: not-allowed; color: #666; }
+        .btn-secondary { background: #3a3a3c; color: #fff; }
         
         #debug-box { margin-top: 40px; padding: 15px; border: 1px dashed #444; font-family: monospace; font-size: 0.8rem; color: #8e8e93; width: 100%; box-sizing: border-box; }
         
-        /* Visible Version Tag */
-        .v-tag { 
-            position: absolute; 
-            bottom: 10px; 
-            right: 15px; 
-            font-size: 0.65rem; 
-            color: #555; 
-            font-family: monospace; 
-        }
+        .v-tag { position: absolute; bottom: 10px; right: 15px; font-size: 0.65rem; color: #555; font-family: monospace; }
     </style>
 </head>
 <body>
@@ -60,11 +59,17 @@
             </div>
 
             <div id="menu-options" style="display:none;">
-                <a href="untimed.html" class="btn">Option 1 - Untimed</a>
-                <button class="btn btn-locked" disabled>Option 2 - (Coming Soon)</button>
+                <div class="section-label">Mock Tests</div>
+                <button class="btn" onclick="prepSession('untimed')">Untimed Practice</button>
+                <button class="btn" onclick="prepSession('timed')">Timed Mock Test</button>
+
+                <div class="section-label" style="margin-top: 25px;">Data & Management</div>
+                <a href="maintain.html" class="btn btn-secondary">Maintain Database</a>
+                <a href="review.html" class="btn btn-secondary">Review Results</a>
+                <a href="review_detail.html" class="btn btn-secondary">Review Data</a>
             </div>
             
-            <span class="v-tag">v1.6.5</span>
+            <span class="v-tag">v1.6.6</span>
         </div>
 
         <div id="debug-box" style="display:none"></div>
@@ -119,12 +124,39 @@
         }
 
         function showMenu() { 
-            // Handshake: Create temporary session token
             sessionStorage.setItem('orion_session_token', 'active-' + Date.now());
-
             document.getElementById('lock-ui').style.display = 'none'; 
             document.getElementById('menu-options').style.display = 'block'; 
             document.getElementById('status-msg').style.display = 'block'; 
+        }
+
+        async function prepSession(mode) {
+            try {
+                const response = await fetch('questions.json');
+                const allQuestions = await response.json();
+                
+                // Randomly pick 50 and inject original numbering
+                const sessionQs = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 50)
+                                    .map((q, idx) => ({ ...q, originalIndex: idx + 1 }));
+                
+                const sessionData = {
+                    questions: sessionQs,
+                    data: { selections: {}, flagged: [], seenIndices: [0] },
+                    currentIndex: 0
+                };
+
+                if (mode === 'timed') {
+                    sessionData.timeLeft = 3420; // 57 mins
+                    localStorage.setItem('orion_timed_session', JSON.stringify(sessionData));
+                    window.location.href = 'timed.html';
+                } else {
+                    localStorage.setItem('orion_current_session', JSON.stringify(sessionData));
+                    window.location.href = 'untimed.html';
+                }
+            } catch (e) {
+                alert("Error loading questions. Check questions.json exists.");
+                console.error(e);
+            }
         }
         
         window.onload = init;
