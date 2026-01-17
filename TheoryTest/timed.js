@@ -1,25 +1,41 @@
-const SCRIPT_VERSION = "v1.0.0 (Timed)";
+/* timed_script.js - v1.0.1 */
 let sessionQuestions = [], currentIndex = 0, originalSessionQuestions = []; 
-let testData = { selections: {}, flagged: [], seenIndices: [] };
-let timeLeft = 3420; // Seconds
+let testData = { selections: {}, flagged: [], seenIndices: [0] };
+let timeLeft = 3420; 
 let timerInterval;
 
 async function init() {
     const saved = localStorage.getItem('orion_timed_session');
-    if (!saved) { window.location.href = 'mainmenu.html'; return; }
     
-    const parsed = JSON.parse(saved);
-    sessionQuestions = parsed.questions;
-    originalSessionQuestions = [...sessionQuestions];
-    testData = parsed.data;
-    currentIndex = parsed.currentIndex || 0;
-    timeLeft = parsed.timeLeft;
+    if (saved) {
+        const parsed = JSON.parse(saved);
+        sessionQuestions = parsed.questions;
+        originalSessionQuestions = [...sessionQuestions];
+        testData = parsed.data || { selections: {}, flagged: [], seenIndices: [0] };
+        currentIndex = parsed.currentIndex || 0;
+        timeLeft = parsed.timeLeft || 3420;
+    } else {
+        // Fallback: If no session found, try to create one or boot to menu
+        try {
+            const response = await fetch('questions.json');
+            const all = await response.json();
+            sessionQuestions = all.sort(() => 0.5 - Math.random()).slice(0, 50)
+                                .map((q, idx) => ({ ...q, originalIndex: idx + 1 }));
+            originalSessionQuestions = [...sessionQuestions];
+            saveProgress();
+        } catch (e) {
+            alert("Session Error. Returning to Menu.");
+            window.location.href = 'mainmenu.html';
+            return;
+        }
+    }
 
     startTimer();
     renderQuestion();
 }
 
 function startTimer() {
+    if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         timeLeft--;
         updateTimerDisplay();
@@ -28,7 +44,6 @@ function startTimer() {
             alert("TIME EXPIRED!");
             showSummary();
         }
-        if (timeLeft % 5 === 0) saveProgress(); // Save every 5 seconds
     }, 1000);
 }
 
@@ -36,30 +51,23 @@ function updateTimerDisplay() {
     const min = Math.floor(timeLeft / 60);
     const sec = timeLeft % 60;
     const display = document.getElementById('timer-display');
+    if (!display) return;
     display.innerText = `${min}:${sec < 10 ? '0' + sec : sec}`;
-    
-    // Red color for last 5 minutes (300 seconds)
-    if (timeLeft <= 300) {
-        display.classList.add('warning');
-    }
+    if (timeLeft <= 300) display.classList.add('warning');
 }
 
 function renderQuestion() {
     const q = sessionQuestions[currentIndex];
-    const imgElement = document.getElementById('q-image');
-    if (imgElement) {
-        imgElement.style.display = 'none'; 
-        imgElement.src = `images/${q.id}.jpeg`;
-        imgElement.onload = () => imgElement.style.display = 'block';
-        imgElement.onerror = () => imgElement.style.display = 'none';
-        imgElement.onclick = () => {
-            document.getElementById('img-modal-content').src = imgElement.src;
-            document.getElementById('img-modal').style.display = 'flex';
-        };
-    }
+    if (!q) return;
 
-    document.getElementById('q-number').innerText = `Q${q.originalIndex} / 50`;
-    document.getElementById('q-category').innerText = q.category;
+    const imgElement = document.getElementById('q-image');
+    imgElement.style.display = 'none'; 
+    imgElement.src = `images/${q.id}.jpeg`;
+    imgElement.onload = () => imgElement.style.display = 'block';
+    imgElement.onerror = () => imgElement.style.display = 'none';
+
+    document.getElementById('q-number').innerText = `Q${currentIndex + 1} / 50`;
+    document.getElementById('q-category').innerText = q.category || "General";
     document.getElementById('q-text').innerText = q.question;
     document.getElementById('q-id-display').innerText = `ID: ${q.id}`;
 
@@ -73,6 +81,7 @@ function renderQuestion() {
             btn.onclick = () => { 
                 testData.selections[q.id] = letter; 
                 renderQuestion(); 
+                saveProgress();
             };
             optionsArea.appendChild(btn);
         }
@@ -82,24 +91,23 @@ function renderQuestion() {
     const isFlagged = testData.flagged.includes(q.id);
     flagBtn.style.background = isFlagged ? "#f1c40f" : "#bdc3c7";
     flagBtn.innerText = isFlagged ? "FLAGGED" : "FLAG";
-    
-    saveProgress();
 }
 
 function toggleFlag() {
     const q = sessionQuestions[currentIndex];
-    const flagIndex = testData.flagged.indexOf(q.id);
-    if (flagIndex > -1) testData.flagged.splice(flagIndex, 1);
+    const flagIdx = testData.flagged.indexOf(q.id);
+    if (flagIdx > -1) testData.flagged.splice(flagIdx, 1);
     else testData.flagged.push(q.id);
     renderQuestion();
+    saveProgress();
 }
 
 function changeQuestion(step) {
-    const newIndex = currentIndex + step;
-    if (newIndex >= 0 && newIndex < sessionQuestions.length) {
-        if (!testData.seenIndices.includes(currentIndex)) testData.seenIndices.push(currentIndex);
-        currentIndex = newIndex;
+    const newIdx = currentIndex + step;
+    if (newIdx >= 0 && newIdx < sessionQuestions.length) {
+        currentIndex = newIdx;
         renderQuestion();
+        saveProgress();
     }
 }
 
@@ -114,14 +122,11 @@ function saveProgress() {
 
 function showSummary() {
     clearInterval(timerInterval);
-    let score = 0;
-    originalSessionQuestions.forEach(q => {
-        if (testData.selections[q.id] === q.correct) score++;
-    });
     localStorage.setItem('orion_final_results', JSON.stringify({ 
-        score, total: 50, questions: originalSessionQuestions, data: testData 
+        questions: originalSessionQuestions, 
+        data: testData 
     }));
     window.location.href = 'review.html';
 }
 
-init();
+window.onload = init;
