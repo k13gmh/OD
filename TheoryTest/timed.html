@@ -7,59 +7,35 @@
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; color: #333; padding: 20px; margin: 0; display: flex; flex-direction: column; align-items: center; }
         .container { width: 100%; max-width: 600px; margin-top: 10px; }
-        
-        /* LCD Timer Styling */
         .header-strip { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; width: 100%; }
-        #timer-display { 
-            font-family: 'Courier New', Courier, monospace; 
-            font-weight: bold; 
-            font-size: 1.4rem; 
-            background: #222; 
-            color: #0f0; 
-            padding: 5px 15px; 
-            border-radius: 5px; 
-            border: 2px solid #444;
-            min-width: 80px;
-            text-align: center;
-        }
-        #timer-display.warning { color: #ff4d4d; border-color: #ff4d4d; animation: blink 1s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
-
+        #timer-display { font-family: monospace; font-weight: bold; font-size: 1.4rem; background: #222; color: #0f0; padding: 5px 15px; border-radius: 5px; border: 2px solid #444; min-width: 80px; text-align: center; }
+        #timer-display.warning { color: #ff4d4d; border-color: #ff4d4d; }
         .card { background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 20px; min-height: 150px; text-align: center; position: relative; }
         #q-number { color: #d9534f; font-weight: bold; }
-        #q-category { color: #5cb85c; font-weight: bold; font-size: 0.9rem; max-width: 30%; text-align: right; }
-        
-        #q-image { display: none; width: 60px; height: 60px; object-fit: cover; margin: 0 auto 15px auto; border-radius: 8px; border: 2px solid #007bff; cursor: pointer; }
+        #q-category { color: #5cb85c; font-weight: bold; font-size: 0.8rem; text-align: right; max-width: 40%; }
+        #q-image { display: none; width: 60px; height: 60px; object-fit: cover; margin: 0 auto 15px auto; border-radius: 8px; border: 2px solid #007bff; }
         .question-text { font-size: 1.25rem; margin-bottom: 25px; line-height: 1.4; color: #1a1a1a; font-weight: 600; text-align: left; }
         .option-btn { background: #fff; color: #007bff; border: 1px solid #d1e3f8; padding: 16px; border-radius: 12px; width: 100%; margin-bottom: 12px; text-align: left; cursor: pointer; font-size: 1.05rem; }
         .option-btn.selected { border-color: #007bff; background: #e7f2ff; border-width: 2px; font-weight: bold; }
-        
         .btn { background: #bdc3c7; color: #444; border: none; padding: 18px; border-radius: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.85rem; width: 100%; }
-        .btn-blue { background: #007bff; color: #fff; }
-        #v-tag-top { position: fixed; top: 10px; right: 15px; font-family: monospace; font-size: 0.8rem; color: #777; }
         #q-id-display { position: absolute; bottom: 8px; right: 12px; font-size: 0.65rem; color: #ddd; font-family: monospace; }
-        #img-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; justify-content:center; align-items:center; }
-        #img-modal-content { max-width:260px; max-height:260px; border-radius:10px; border:3px solid white; }
+        #v-tag-top { position: fixed; top: 10px; right: 15px; font-size: 0.7rem; color: #999; }
     </style>
 </head>
 <body>
-    <div id="v-tag-top">v1.0.0 (Timed)</div>
-    <div id="img-modal" onclick="this.style.display='none'"><img id="img-modal-content"></div>
-
+    <div id="v-tag-top">v1.0.1 (Timed)</div>
     <div class="container">
         <div class="header-strip">
-            <div id="q-number">Q1 / 50</div>
+            <div id="q-number">Q-- / 50</div>
             <div id="timer-display">57:00</div>
-            <div id="q-category">Category</div>
+            <div id="q-category">---</div>
         </div>
-
         <div class="card">
             <img id="q-image" src="">
-            <div id="q-text" class="question-text">Loading Mock Test...</div>
+            <div id="q-text" class="question-text">Loading Questions...</div>
             <div id="options-area"></div>
             <div id="q-id-display">ID: --</div>
         </div>
-
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
             <button class="btn" onclick="changeQuestion(-1)">< BACK</button>
             <button class="btn" onclick="changeQuestion(1)">NEXT ></button>
