@@ -3,91 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timer Interface - v1.0.6</title>
+    <title>Timed Theory Test - v1.0.7</title>
     <style>
         body {
-            font-family: sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #e5e5e5;
             margin: 0;
-            background-color: #f4f4f4;
+            padding: 20px;
         }
-        .container {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            text-align: center;
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px 5px 0 0;
         }
-        #display {
-            font-size: 3rem;
-            font-weight: bold;
-            margin: 1rem 0;
-            color: #333;
+        .question-info { font-weight: bold; font-size: 1.2rem; }
+        
+        /* LED Style Timer */
+        #timer-display {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #000;
+            color: #00ff00; /* Green LED initially */
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 1.5rem;
+            border: 2px solid #555;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            cursor: pointer;
-            background-color: #007bff;
+
+        .category-info { font-style: italic; font-size: 1rem; }
+
+        .content-area {
+            background-color: white;
+            padding: 40px;
+            border: 1px solid #ccc;
+            min-height: 300px;
+        }
+        .footer-bar {
+            background-color: #ddd;
+            padding: 15px;
+            text-align: right;
+            border-radius: 0 0 5px 5px;
+        }
+        button.finish-btn {
+            padding: 10px 25px;
+            background-color: #d9534f;
             color: white;
             border: none;
-            border-radius: 4px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .status {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #666;
+            cursor: pointer;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>System Timer</h2>
-        <div id="display">00</div>
-        <button onclick="runTestTimer()">Start 10s Timer</button>
-        <div id="statusLabel" class="status">Ready</div>
+    <div class="header-bar">
+        <div class="question-info">Question 1 of 50</div>
+        
+        <div id="timer-display">57:00</div>
+        
+        <div class="category-info">Category: Road Signs</div>
+    </div>
+
+    <div class="content-area" id="test-content">
+        <h3>What does this sign mean?</h3>
+        <p>[Question Content Placeholder]</p>
+    </div>
+
+    <div class="footer-bar">
+        <button class="finish-btn" onclick="forceFinish()">Finish Test</button>
     </div>
 
     <script src="timed.js"></script>
-
     <script>
-        /**
-         * Local UI Logic
-         * Version: 1.0.6
-         */
-        function runTestTimer() {
-            const display = document.getElementById('display');
-            const status = document.getElementById('statusLabel');
-            let count = 10;
-
-            display.textContent = count;
-            status.textContent = "Timer Running...";
-
-            // Calling the global object from timed.js
-            window.TimedEvents.startTimer('mainTest', 10, () => {
-                display.textContent = "00";
-                status.textContent = "Time Expired!";
-                alert("Timer Complete");
+        // Start the test with 57 minutes (standard DVSA time)
+        // Change the '57' to '2.1' if you want to test the red color transition quickly
+        window.onload = function() {
+            window.TheoryTimer.start(57, 'timer-display', function() {
+                forceFinish();
             });
+        };
 
-            // Local interval just to update the UI display
-            const uiInterval = setInterval(() => {
-                count--;
-                if (count >= 0) {
-                    display.textContent = count < 10 ? "0" + count : count;
-                }
-                if (count <= 0 || !window.TimedEvents.isActive('mainTest')) {
-                    clearInterval(uiInterval);
-                }
-            }, 1000);
+        function forceFinish() {
+            window.TheoryTimer.stop();
+            alert("Time has expired! Your test is now being submitted.");
+            // Add your results logic here to match your original script.js
+            document.getElementById('test-content').innerHTML = "<h2>Test Submitted.</h2>";
         }
     </script>
 </body>
