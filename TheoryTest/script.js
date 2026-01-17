@@ -1,4 +1,4 @@
-const SCRIPT_VERSION = "v1.9.6";
+const SCRIPT_VERSION = "v1.9.7";
 
 if (!sessionStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -79,24 +79,24 @@ function renderQuestion() {
 
     const flagBtn = document.getElementById('flag-btn');
     const isFlagged = testData.flagged.includes(q.id);
-    const isSkipped = !testData.selections[q.id];
+    const hasSelection = !!testData.selections[q.id];
+    const isLastViewed = testData.seenIndices.includes(currentIndex);
 
-    // Reset styles first
+    // Default button style
     flagBtn.style.boxShadow = "none";
     flagBtn.style.color = "#444";
+    flagBtn.style.background = "#bdc3c7"; 
+    flagBtn.innerText = "FLAG";
 
     if (isFlagged) {
         flagBtn.style.background = "#f1c40f"; // Yellow
         flagBtn.style.color = "#000";
         flagBtn.style.boxShadow = "inset 0 4px 6px rgba(0,0,0,0.2)";
         flagBtn.innerText = "FLAGGED";
-    } else if (isSkipped) {
-        flagBtn.style.background = "#e67e22"; // Orange
+    } else if (!hasSelection && isLastViewed && currentIndex !== testData.seenIndices[testData.seenIndices.length-1]) {
+        // Only show Orange if they've seen it, didn't answer, and moved away/back
+        flagBtn.style.background = "#e67e22"; 
         flagBtn.style.color = "#fff";
-        flagBtn.innerText = "FLAG";
-    } else {
-        flagBtn.style.background = "#bdc3c7"; // Default Grey (consistent with Back/Next)
-        flagBtn.innerText = "FLAG";
     }
 
     saveProgress();
@@ -124,8 +124,9 @@ function openModal(src) {
 function changeQuestion(step) {
     const newIndex = currentIndex + step;
     if (newIndex >= 0 && newIndex < sessionQuestions.length) {
-        currentIndex = newIndex;
+        // Mark current as seen before moving
         if (!testData.seenIndices.includes(currentIndex)) testData.seenIndices.push(currentIndex);
+        currentIndex = newIndex;
         renderQuestion();
     }
 }
