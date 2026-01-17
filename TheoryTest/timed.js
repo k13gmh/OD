@@ -1,32 +1,42 @@
-const SCRIPT_VERSION = "v2.0.0";
+const SCRIPT_VERSION = "v2.0.1";
 
+// Ensure session exists
 if (!sessionStorage.getItem('orion_session_token')) {
+    console.warn("No session token found, redirecting...");
     window.location.href = 'mainmenu.html';
 }
 
 let allQuestions = [], sessionQuestions = [], currentIndex = 0, originalSessionQuestions = []; 
 let testData = { selections: {}, flagged: [], seenIndices: [] };
-
-// Timer Variables
 let timerInterval = null;
-let totalSeconds = 57 * 60; // 57 Minutes for DVSA standard
+let totalSeconds = 57 * 60;
 
 async function init() {
     const tag = document.getElementById('v-tag-top');
     if (tag) tag.innerText = SCRIPT_VERSION;
+    
     try {
         const response = await fetch('questions.json');
+        if (!response.ok) throw new Error("Could not load questions.json");
+        
         allQuestions = await response.json();
         const saved = localStorage.getItem('orion_current_session');
+        
         if (saved) { 
             document.getElementById('resume-modal').style.display = 'flex'; 
         } else { 
             startFreshSession(); 
         }
-    } catch (e) { console.error(e); }
+    } catch (e) { 
+        console.error("Initialization error:", e);
+        document.getElementById('q-text').innerText = "Error: questions.json not found or corrupted.";
+        alert("Check if questions.json exists in the same folder.");
+    }
 }
 
 function startFreshSession() {
+    if (allQuestions.length === 0) return;
+    
     sessionQuestions = [...allQuestions]
         .sort(() => 0.5 - Math.random())
         .slice(0, 50)
@@ -46,22 +56,18 @@ function startTimer() {
 
     timerInterval = setInterval(() => {
         totalSeconds--;
+        if (totalSeconds < 0) {
+            clearInterval(timerInterval);
+            reviewAnswers();
+            return;
+        }
 
         let mins = Math.floor(totalSeconds / 60);
         let secs = totalSeconds % 60;
-        
-        display.textContent = 
-            (mins < 10 ? "0" + mins : mins) + ":" + 
-            (secs < 10 ? "0" + secs : secs);
+        display.textContent = (mins < 10 ? "0" + mins : mins) + ":" + (secs < 10 ? "0" + secs : secs);
 
-        // Turn font RED when 2 minutes (120 seconds) remain
         if (totalSeconds <= 120) {
             display.style.color = "#ff0000";
-        }
-
-        if (totalSeconds <= 0) {
-            clearInterval(timerInterval);
-            reviewAnswers(); // Force finish
         }
     }, 1000);
 }
@@ -76,8 +82,6 @@ function resumeTest(shouldResume) {
             originalSessionQuestions = [...sessionQuestions];
             testData = saved.data;
             currentIndex = saved.currentIndex || 0;
-            // Note: In this version, resuming restarts a full timer. 
-            // If you need to save the remaining time specifically, let me know.
             startTimer(); 
             renderQuestion();
         }
@@ -85,9 +89,8 @@ function resumeTest(shouldResume) {
 }
 
 function renderQuestion() {
+    if (!sessionQuestions[currentIndex]) return;
     const q = sessionQuestions[currentIndex];
-    const tag = document.getElementById('v-tag-top');
-    if (tag) tag.innerText = SCRIPT_VERSION;
 
     const imgElement = document.getElementById('q-image');
     if (imgElement) {
@@ -118,39 +121,13 @@ function renderQuestion() {
         }
     });
 
+    // Flag logic
     const flagBtn = document.getElementById('flag-btn');
     const isFlagged = testData.flagged.includes(q.id);
-    const hasSelection = !!testData.selections[q.id];
-    const isLastViewed = testData.seenIndices.includes(currentIndex);
-
-    flagBtn.style.boxShadow = "none";
-    flagBtn.style.color = "#444";
-    flagBtn.style.background = "#bdc3c7"; 
-    flagBtn.innerText = "FLAG";
-
-    if (isFlagged) {
-        flagBtn.style.background = "#f1c40f"; 
-        flagBtn.style.color = "#000";
-        flagBtn.style.boxShadow = "inset 0 4px 6px rgba(0,0,0,0.2)";
-        flagBtn.innerText = "FLAGGED";
-    } else if (!hasSelection && isLastViewed && currentIndex !== testData.seenIndices[testData.seenIndices.length-1]) {
-        flagBtn.style.background = "#e67e22"; 
-        flagBtn.style.color = "#fff";
-    }
+    flagBtn.style.background = isFlagged ? "#f1c40f" : "#bdc3c7";
+    flagBtn.innerText = isFlagged ? "FLAGGED" : "FLAG";
 
     saveProgress();
-}
-
-function toggleFlag() {
-    const q = sessionQuestions[currentIndex];
-    if (!testData.flagged) testData.flagged = [];
-    const flagIndex = testData.flagged.indexOf(q.id);
-    if (flagIndex > -1) {
-        testData.flagged.splice(flagIndex, 1);
-    } else {
-        testData.flagged.push(q.id);
-    }
-    renderQuestion();
 }
 
 function changeQuestion(step) {
@@ -162,61 +139,48 @@ function changeQuestion(step) {
     }
 }
 
+function toggleFlag() {
+    const q = sessionQuestions[currentIndex];
+    if (!testData.flagged) testData.flagged = [];
+    const idx = testData.flagged.indexOf(q.id);
+    if (idx > -1) testData.flagged.splice(idx, 1);
+    else testData.flagged.push(q.id);
+    renderQuestion();
+}
+
 function showSummary() {
     document.getElementById('test-ui').style.display = 'none';
     const summaryUI = document.getElementById('summary-ui');
     summaryUI.style.display = 'block';
-
-    const skippedQuestions = originalSessionQuestions.filter(q => !testData.selections[q.id]);
-    const flaggedQuestions = originalSessionQuestions.filter(q => testData.flagged.includes(q.id));
+    
+    const skipped = originalSessionQuestions.filter(q => !testData.selections[q.id]).length;
+    const flagged = originalSessionQuestions.filter(q => testData.flagged.includes(q.id)).length;
 
     summaryUI.innerHTML = `
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-            <button class="btn btn-blue" onclick="retrySubset('skipped')">SKIPPED (${skippedQuestions.length})</button>
-            <button class="btn btn-blue" onclick="retrySubset('flagged')">FLAGGED (${flaggedQuestions.length})</button>
+            <button class="btn btn-blue" onclick="retrySubset('skipped')">SKIPPED (${skipped})</button>
+            <button class="btn btn-blue" onclick="retrySubset('flagged')">FLAGGED (${flagged})</button>
             <button class="btn btn-blue" onclick="retrySubset('all')">REVIEW</button>
             <button class="btn" onclick="reviewAnswers()">FINISHED</button>
         </div>
     `;
-
-    let score = 0;
-    originalSessionQuestions.forEach(q => {
-        if (testData.selections[q.id] === q.correct) score++;
-    });
-    
-    localStorage.setItem('orion_final_results', JSON.stringify({ 
-        score, 
-        total: originalSessionQuestions.length, 
-        questions: originalSessionQuestions, 
-        data: testData 
-    }));
 }
 
 function retrySubset(type) {
-    if (type === 'skipped') {
-        sessionQuestions = originalSessionQuestions.filter(q => !testData.selections[q.id]);
-    } else if (type === 'flagged') {
-        sessionQuestions = originalSessionQuestions.filter(q => testData.flagged.includes(q.id));
-    } else {
-        sessionQuestions = [...originalSessionQuestions];
-    }
+    if (type === 'skipped') sessionQuestions = originalSessionQuestions.filter(q => !testData.selections[q.id]);
+    else if (type === 'flagged') sessionQuestions = originalSessionQuestions.filter(q => testData.flagged.includes(q.id));
+    else sessionQuestions = [...originalSessionQuestions];
 
-    if (sessionQuestions.length === 0) {
-        alert("No questions found for this category.");
-        return;
-    }
-
+    if (sessionQuestions.length === 0) { alert("No questions found."); return; }
     currentIndex = 0;
-    testData.seenIndices = [0];
     document.getElementById('summary-ui').style.display = 'none';
     document.getElementById('test-ui').style.display = 'block';
     renderQuestion();
 }
 
 function openModal(src) {
-    const modal = document.getElementById('img-modal');
     document.getElementById('img-modal-content').src = src;
-    modal.style.display = 'flex';
+    document.getElementById('img-modal').style.display = 'flex';
 }
 
 function saveProgress() { 
@@ -232,4 +196,5 @@ function reviewAnswers() {
     window.location.href = 'review.html'; 
 }
 
+// Start the engine
 init();
