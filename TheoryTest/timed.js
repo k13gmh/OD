@@ -1,58 +1,57 @@
 /**
  * File: timed.js
- * Version: 1.0.5
+ * Version: 1.0.7
  */
 
 (function() {
     'use strict';
 
-    const TimedEvents = {
-        version: "1.0.5",
-        activeTimers: {},
+    const TheoryTimer = {
+        version: "1.0.7",
+        timerInterval: null,
+        totalSeconds: 0,
 
         /**
-         * Initializes a countdown.
-         * @param {string} id - Unique identifier for the timer.
-         * @param {number} seconds - Duration in seconds.
-         * @param {function} onComplete - Callback function when time expires.
+         * Initialize the countdown
+         * @param {number} minutes - Total minutes for the test
+         * @param {string} displayId - ID of the element to update
+         * @param {function} onExpire - Function to call when time is up
          */
-        startTimer: function(id, seconds, onComplete) {
-            if (this.activeTimers[id]) {
-                clearInterval(this.activeTimers[id]);
-            }
+        start: function(minutes, displayId, onExpire) {
+            this.totalSeconds = minutes * 60;
+            const displayElement = document.getElementById(displayId);
 
-            let timeLeft = seconds;
+            if (this.timerInterval) clearInterval(this.timerInterval);
 
-            this.activeTimers[id] = setInterval(() => {
-                timeLeft--;
-                
-                if (timeLeft <= 0) {
-                    this.stopTimer(id);
-                    if (typeof onComplete === 'function') {
-                        onComplete();
+            this.timerInterval = setInterval(() => {
+                this.totalSeconds--;
+
+                // Format time as MM:SS
+                let mins = Math.floor(this.totalSeconds / 60);
+                let secs = this.totalSeconds % 60;
+                displayElement.textContent = 
+                    (mins < 10 ? "0" + mins : mins) + ":" + 
+                    (secs < 10 ? "0" + secs : secs);
+
+                // Change font color to red when 2 minutes (120 seconds) remain
+                if (this.totalSeconds <= 120) {
+                    displayElement.style.color = "#ff0000";
+                }
+
+                // Force finish when timer expires
+                if (this.totalSeconds <= 0) {
+                    clearInterval(this.timerInterval);
+                    if (typeof onExpire === 'function') {
+                        onExpire();
                     }
                 }
             }, 1000);
         },
 
-        /**
-         * Stops and clears a specific timer.
-         * @param {string} id - The ID of the timer to stop.
-         */
-        stopTimer: function(id) {
-            if (this.activeTimers[id]) {
-                clearInterval(this.activeTimers[id]);
-                delete this.activeTimers[id];
-            }
-        },
-
-        /**
-         * Check if a specific timer is currently running.
-         */
-        isActive: function(id) {
-            return !!this.activeTimers[id];
+        stop: function() {
+            clearInterval(this.timerInterval);
         }
     };
 
-    window.TimedEvents = TimedEvents;
+    window.TheoryTimer = TheoryTimer;
 })();
