@@ -24,7 +24,7 @@
                     <button class="btn" style="background-color: #ff3b30; margin-bottom: 12px;" onclick="clearShame()">
                         CONFIRM CLEAR SHAME
                     </button>
-                    <button class="btn" onclick="window.location.href='sysadmin.html'">
+                    <button class="btn" onclick="window.location.href='sysmenu.html'">
                         CANCEL / RETURN
                     </button>
                 </div>
@@ -45,7 +45,7 @@
             if (confirm("Are you sure? This cannot be undone.")) {
                 localStorage.removeItem('orion_shame_tally');
                 alert("Wall of Shame cleared successfully.");
-                window.location.href = 'sysadmin.html';
+                window.location.href = 'sysmenu.html';
             }
         }
 
