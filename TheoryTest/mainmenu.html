@@ -1,95 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Orion Drive - Main Menu</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background-color: #000; color: #fff; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-        .container { width: 100%; max-width: 400px; text-align: center; }
-        h1 { font-size: 2rem; letter-spacing: 2px; margin-bottom: 5px; }
-        h2 { font-size: 1.1rem; font-weight: 300; margin-bottom: 20px; }
+        body { font-family: -apple-system, sans-serif; background-color: #000; color: #e0e0e0; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; min-height: 100vh; }
+        .container { text-align: center; width: 100%; max-width: 400px; margin-top: 50px; }
         
-        /* Status Colors */
-        .status { font-size: 0.9rem; margin-bottom: 30px; }
-        .status.unlocked { color: #2ecc71; }
-        .status.locked { color: #e74c3c; }
-        .status::before { content: "● "; }
+        /* Main Header */
+        h1 { color: #fff; margin-bottom: 5px; letter-spacing: 2px; font-weight: bold; }
         
-        .menu-card { background: #1c1c1e; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .sub-heading { color: #8e8e93; font-size: 0.75rem; text-align: left; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        /* Sub Header - Now Bold White */
+        h2 { color: #ffffff; margin-top: 0; font-weight: bold; font-size: 1.2rem; margin-bottom: 5px; }
         
-        #dynamic-buttons { display: flex; flex-direction: column; gap: 12px; }
+        #status-msg { color: #28a745; font-size: 0.85rem; margin-bottom: 20px; font-weight: bold; display: none; }
         
-        .btn-blue { background: #007aff; color: #fff; border: none; padding: 18px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.9rem; width: 100%; text-transform: uppercase; transition: opacity 0.2s; }
-        .btn-blue:active { opacity: 0.7; }
+        .menu-box { 
+            background: #1c1c1e; 
+            padding: 25px; 
+            border-radius: 20px; 
+            border: 1px solid #2c2c2e; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            box-sizing: border-box; 
+            position: relative; /* Container for version tag */
+            min-height: 180px;
+        }
         
-        #v-tag { position: fixed; bottom: 15px; right: 20px; font-size: 0.7rem; color: #444; font-family: monospace; }
+        .lock-screen input { background: #000; border: 1px solid #444; color: #007bff; padding: 12px; font-size: 1.2rem; width: 100%; box-sizing: border-box; text-align: center; border-radius: 8px; margin-bottom: 15px; font-family: monospace; }
+        
+        .btn { background: #007bff; color: #fff; border: none; padding: 15px 0; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; margin-top: 10px; display: block; text-decoration: none; box-sizing: border-box; }
+        
+        .btn-locked { background: #333; cursor: not-allowed; color: #666; }
+        
+        #debug-box { margin-top: 40px; padding: 15px; border: 1px dashed #444; font-family: monospace; font-size: 0.8rem; color: #8e8e93; width: 100%; box-sizing: border-box; }
+        
+        /* Visible Version Tag */
+        .v-tag { 
+            position: absolute; 
+            bottom: 10px; 
+            right: 15px; 
+            font-size: 0.65rem; 
+            color: #555; 
+            font-family: monospace; 
+        }
     </style>
 </head>
 <body>
-
     <div class="container">
         <h1>ORION DRIVE</h1>
         <h2>Theory Test</h2>
-        <div id="status-text" class="status unlocked">Checking System...</div>
+        <div id="status-msg">● System Unlocked</div>
 
-        <div class="menu-card">
-            <div class="sub-heading">Mock Tests</div>
-            <div id="dynamic-buttons">
-                <div style="color: #666; font-size: 0.8rem;">Loading options...</div>
+        <div class="menu-box">
+            <div id="lock-ui">
+                <p style="font-size: 0.8rem; color: #8e8e93;">Monthly Security Token Required</p>
+                <input type="text" id="passCode" placeholder="ENTER CODE" autocomplete="off">
+                <button class="btn" onclick="verifyAccess()">Unlock System</button>
             </div>
+
+            <div id="menu-options" style="display:none;">
+                <a href="untimed.html" class="btn">Option 1 - Untimed</a>
+                <button class="btn btn-locked" disabled>Option 2 - (Coming Soon)</button>
+            </div>
+            
+            <span class="v-tag">v1.6.4</span>
         </div>
+
+        <div id="debug-box" style="display:none"></div>
     </div>
 
-    <div id="v-tag">v2.2.0</div>
-
     <script>
-        /**
-         * Logic: Reads from options.json and removes all auto-redirects [cite: 2026-01-11, 2026-01-17]
-         */
-        async function loadMenu() {
-            const container = document.getElementById('dynamic-buttons');
-            const statusDiv = document.getElementById('status-text');
+        const DEBUGZ = 1; 
+        const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 
-            // Check security - looks in both storage types for iPad compatibility [cite: 2026-01-11]
-            const token = localStorage.getItem('orion_session_token') || sessionStorage.getItem('orion_session_token');
-
-            if (!token) {
-                // If no token, show locked message instead of redirecting to 404 [cite: 2026-01-13]
-                statusDiv.innerText = "System Locked";
-                statusDiv.className = "status locked";
-                container.innerHTML = `<div style="color: #e74c3c; font-size: 0.85rem; padding: 15px; border: 1px dashed #e74c3c; border-radius: 10px;">
-                    SECURITY TOKEN REQUIRED<br><span style="font-size: 0.7rem; opacity: 0.8;">Access denied.</span></div>`;
-                return;
+        function calcKey() {
+            const d = new Date(); 
+            const s = new Date(Date.UTC(d.getFullYear(), d.getMonth(), 1, 0, 0, 0));
+            const e = new Date(Date.UTC(1900, 0, 1, 0, 0, 0)); 
+            const m = Math.floor((s.getTime() - e.getTime()) / 60000);
+            let v = m % Math.pow(32, 4); 
+            let r = ""; 
+            for (let j = 0; j < 4; j++) { r = ALPH.charAt(v % 32) + r; v = Math.floor(v / 32); }
+            while (r.length < 4) { r = ALPH.charAt(0) + r; }
+            let t = 0; 
+            let ra = r.split('').reverse();
+            for (let j = 0; j < ra.length; j++) { 
+                let x = ALPH.indexOf(ra[j]); 
+                if (j % 2 === 0) { x *= 2; if (x >= 32) x = (x % 32) + Math.floor(x / 32); } 
+                t += x; 
             }
+            let ci = (32 - (t % 32)) % 32; 
+            return r + (ALPH[ci] || ALPH[0]);
+        }
 
-            try {
-                // Set status to green
-                statusDiv.innerText = "System Unlocked";
-                statusDiv.className = "status unlocked";
+        const targetKey = calcKey(); 
+        const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 
-                // Load your options.json file [cite: 2026-01-11]
-                const response = await fetch('options.json');
-                if (!response.ok) throw new Error("options.json not found");
-                
-                const options = await response.json();
-                container.innerHTML = ''; 
-
-                options.forEach(opt => {
-                    const btn = document.createElement('button');
-                    btn.className = 'btn-blue';
-                    btn.innerText = opt.description;
-                    btn.onclick = () => { window.location.href = opt.htmlName; };
-                    container.appendChild(btn);
-                });
-            } catch (err) {
-                container.innerHTML = `<div style="color: #ff3b30; font-size: 0.8rem;">Error: ${err.message}</div>`;
-                console.error(err);
+        function init() {
+            const savedStamp = localStorage.getItem('gatekeeper_stamp');
+            if (savedStamp === curMonthYear) { showMenu(); }
+            if (DEBUGZ) { 
+                const db = document.getElementById('debug-box'); 
+                db.style.display = 'block'; 
+                db.innerHTML = `DEBUG: Expected [${targetKey}]<br><br><button onclick="localStorage.clear();location.reload();" style="background:#444;font-size:0.7rem;color:#fff;padding:5px;border-radius:4px;border:none;cursor:pointer">RESET SYSTEM STAMP</button>`; 
             }
         }
 
-        window.onload = loadMenu;
+        function verifyAccess() {
+            const input = document.getElementById('passCode').value.toUpperCase();
+            if (input === targetKey) { 
+                localStorage.setItem('gatekeeper_stamp', curMonthYear); 
+                showMenu(); 
+            } else { 
+                localStorage.removeItem('gatekeeper_stamp'); 
+                alert("Incorrect Code."); 
+            }
+        }
+
+        function showMenu() { 
+            document.getElementById('lock-ui').style.display = 'none'; 
+            document.getElementById('menu-options').style.display = 'block'; 
+            document.getElementById('status-msg').style.display = 'block'; 
+        }
+        
+        window.onload = init;
     </script>
 </body>
 </html>
