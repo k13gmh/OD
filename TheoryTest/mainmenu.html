@@ -23,7 +23,7 @@
             border: 1px solid #2c2c2e; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
             box-sizing: border-box; 
-            position: relative; /* Container for version tag */
+            position: relative; 
             min-height: 180px;
         }
         
@@ -60,11 +60,9 @@
             </div>
 
             <div id="menu-options" style="display:none;">
-                <a href="untimed.html" class="btn">Option 1 - Untimed</a>
-                <button class="btn btn-locked" disabled>Option 2 - (Coming Soon)</button>
-            </div>
+                </div>
             
-            <span class="v-tag">v1.6.4</span>
+            <span class="v-tag">v2.2.1</span>
         </div>
 
         <div id="debug-box" style="display:none"></div>
@@ -118,10 +116,28 @@
             }
         }
 
-        function showMenu() { 
+        async function showMenu() { 
             document.getElementById('lock-ui').style.display = 'none'; 
-            document.getElementById('menu-options').style.display = 'block'; 
+            const menuOptions = document.getElementById('menu-options');
+            menuOptions.style.display = 'block'; 
             document.getElementById('status-msg').style.display = 'block'; 
+
+            try {
+                const response = await fetch('options.json');
+                if (!response.ok) throw new Error("Could not load options.json");
+                const options = await response.json();
+                
+                menuOptions.innerHTML = ''; // Clear hardcoded options
+                options.forEach(opt => {
+                    const anchor = document.createElement('a');
+                    anchor.href = opt.htmlName;
+                    anchor.className = 'btn';
+                    anchor.innerText = opt.description;
+                    menuOptions.appendChild(anchor);
+                });
+            } catch (err) {
+                menuOptions.innerHTML = `<p style="color:#ff3b30; font-size:0.8rem;">Error: ${err.message}</p>`;
+            }
         }
         
         window.onload = init;
