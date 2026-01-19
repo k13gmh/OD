@@ -1,94 +1,141 @@
-const JS_VERSION = "v2.4.1";
-
-let questions = [];
-let currentQuestionIndex = 0;
-let userAnswers = [];
-let timerInterval;
-let timeLeft = 3420;
-
 /**
- * Simplified initialization [cite: 2026-01-17]
+ * File: timed.js
+ * Version: v2.4.2
+ * Feature: Timed Test with Wall of Shame Weighting
  */
+
+const JS_VERSION = "v2.4.2";
+const HTML_VERSION = "v2.4.2";
+
+if (!localStorage.getItem('orion_session_token')) {
+    window.location.href = 'mainmenu.html';
+}
+
+let allQuestions = [], sessionQuestions = [], currentIndex = 0;
+let testData = { selections: {}, flagged: [] };
+let timeLeft = 3420; // 57 minutes
+let timerInterval;
+
 async function init() {
-    const jsVerText = document.getElementById('js-version-text');
-    if (jsVerText) jsVerText.innerText = `JS: ${JS_VERSION}`;
+    const vTag = document.getElementById('version-tag');
+    if (vTag) vTag.innerText = `HTML: ${HTML_VERSION} | JS: ${JS_VERSION}`;
 
     try {
-        // Simple fetch without aggressive error trapping [cite: 2026-01-17]
         const response = await fetch('questions.json');
-        const data = await response.json();
-        
-        // Pick 50 random questions
-        questions = data.sort(() => 0.5 - Math.random()).slice(0, 50);
-        userAnswers = new Array(questions.length).fill(null);
-        
-        startTimer();
-        showQuestion();
-    } catch (e) {
-        console.error("Load failed", e);
-        document.getElementById('question-text').innerText = "Database connection error.";
+        allQuestions = await response.json();
+        startTimed();
+    } catch (e) { 
+        console.error(e); 
+        document.getElementById('q-text').innerText = "Error loading questions.";
     }
 }
 
-function showQuestion() {
-    const q = questions[currentQuestionIndex];
-    if (!q) return;
-
-    document.getElementById('question-text').innerText = q.question;
-    document.getElementById('question-id').innerText = `ID: ${q.id}`;
+function startTimed() {
+    // Standard random selection for Timed Test (50 questions) [cite: 2026-01-11]
+    sessionQuestions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 50);
+    currentIndex = 0;
     
-    const container = document.getElementById('options-container');
-    container.innerHTML = '';
-
-    q.choices.forEach((choice, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerText = choice;
-        btn.onclick = () => handleAnswer(index);
-        container.appendChild(btn);
-    });
-}
-
-function handleAnswer(selectedIndex) {
-    const currentQuestion = questions[currentQuestionIndex];
-    const isCorrect = (selectedIndex === currentQuestion.correct);
-    userAnswers[currentQuestionIndex] = selectedIndex;
-
-    // Wall of Shame logic [cite: 2026-01-11]
-    let tally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
-    if (!isCorrect) {
-        tally[currentQuestion.id] = (tally[currentQuestion.id] || 0) + 1;
-    } else if (tally[currentQuestion.id]) {
-        tally[currentQuestion.id] -= 1;
-        if (tally[currentQuestion.id] <= 0) delete tally[currentQuestion.id];
-    }
-    localStorage.setItem('orion_shame_tally', JSON.stringify(tally));
-
-    if (currentQuestionIndex < questions.length - 1) {
-        currentQuestionIndex++;
-        showQuestion();
-    } else {
-        finishTest();
-    }
+    startTimer();
+    renderQuestion();
 }
 
 function startTimer() {
+    const timerDisplay = document.getElementById('timer');
     timerInterval = setInterval(() => {
         timeLeft--;
         const mins = Math.floor(timeLeft / 60);
         const secs = timeLeft % 60;
-        document.getElementById('timer').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        if (timeLeft <= 0) finishTest();
+        timerDisplay.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            finishTest();
+        }
     }, 1000);
+}
+
+function renderQuestion() {
+    const q = sessionQuestions[currentIndex];
+    const imgElement = document.getElementById('q-image');
+    
+    if (imgElement) {
+        imgElement.style.display = 'none'; 
+        imgElement.src = `images/${q.id}.jpeg`;
+        imgElement.onload = () => { imgElement.style.display = 'block'; };
+        imgElement.onerror = () => { imgElement.style.display = 'none'; };
+    }
+
+    document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
+    document.getElementById('q-category').innerText = q.category;
+    document.getElementById('q-text').innerText = q.question;
+    document.getElementById('q-id-display').innerText = `ID: ${q.id}`;
+
+    const optionsArea = document.getElementById('options-area');
+    optionsArea.innerHTML = '';
+    
+    ["A", "B", "C", "D"].forEach(letter => {
+        if (q.choices && q.choices[letter]) {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn' + (testData.selections[q.id] === letter ? ' selected' : '');
+            btn.innerHTML = `<strong>${letter}:</strong> ${q.choices[letter]}`;
+            btn.onclick = () => { 
+                testData.selections[q.id] = letter; 
+                renderQuestion(); 
+            };
+            optionsArea.appendChild(btn);
+        }
+    });
+
+    const flagBtn = document.getElementById('flag-btn');
+    flagBtn.style.background = testData.flagged.includes(q.id) ? "#f1c40f" : "#bdc3c7";
+}
+
+function changeQuestion(step) {
+    const newIndex = currentIndex + step;
+    if (newIndex >= 0 && newIndex < sessionQuestions.length) {
+        currentIndex = newIndex;
+        renderQuestion();
+    }
+}
+
+function toggleFlag() {
+    const q = sessionQuestions[currentIndex];
+    const idx = testData.flagged.indexOf(q.id);
+    if (idx > -1) testData.flagged.splice(idx, 1);
+    else testData.flagged.push(q.id);
+    renderQuestion();
 }
 
 function finishTest() {
     clearInterval(timerInterval);
-    localStorage.setItem('orion_last_results', JSON.stringify({
-        questions: questions,
-        userAnswers: userAnswers
+    let shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
+    let score = 0;
+
+    sessionQuestions.forEach(q => {
+        const userSelection = testData.selections[q.id];
+        const isCorrect = (userSelection === q.correct);
+
+        if (isCorrect) {
+            score++;
+            // Redemption logic [cite: 2026-01-11]
+            if (shameTally[q.id]) {
+                shameTally[q.id] -= 1;
+                if (shameTally[q.id] <= 0) delete shameTally[q.id];
+            }
+        } else if (userSelection) {
+            // Add to Wall of Shame [cite: 2026-01-11]
+            shameTally[q.id] = (shameTally[q.id] || 0) + 1;
+        }
+    });
+
+    localStorage.setItem('orion_shame_tally', JSON.stringify(shameTally));
+    localStorage.setItem('orion_final_results', JSON.stringify({ 
+        score, 
+        total: sessionQuestions.length, 
+        questions: sessionQuestions, 
+        data: testData 
     }));
-    window.location.href = 'results.html';
+    window.location.href = 'review.html';
 }
 
 window.onload = init;
