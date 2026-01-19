@@ -1,52 +1,68 @@
 const JS_VERSION = "v2.3.8";
 
-// ... [Existing initialization code] ...
-
+/**
+ * Handle user answer selection in Timed Mode
+ * Integrates with Wall of Shame weighting system
+ */
 function handleAnswer(selectedIndex) {
     const currentQuestion = questions[currentQuestionIndex];
-    const isCorrect = selectedIndex === currentQuestion.correct;
+    const isCorrect = (selectedIndex === currentQuestion.correct);
+
+    // Save user choice for final results
+    userAnswers[currentQuestionIndex] = selectedIndex;
 
     if (isCorrect) {
-        handleCorrectAnswer(currentQuestion.id);
+        // Redemption: Decrease weight if question was previously on the wall
+        updateShameWeight(currentQuestion.id, -1);
     } else {
-        handleIncorrectAnswer(currentQuestion.id);
+        // Add to Wall: Increase weight for incorrect answers
+        updateShameWeight(currentQuestion.id, 1);
     }
-    
-    // ... [Existing answer processing code] ...
+
+    // Move to next question automatically after short delay
+    setTimeout(() => {
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            showQuestion();
+        } else {
+            finishTest();
+        }
+    }, 300);
 }
 
 /**
- * Updates the Wall of Shame for incorrect answers [cite: 2026-01-11]
+ * Core Wall of Shame Logic
+ * Adjusts the 'error weight' of a question based on performance
  */
-function handleIncorrectAnswer(questionId) {
+function updateShameWeight(questionId, adjustment) {
+    // Retrieve existing tally or create new object
     let tally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
     
-    // Increase weight by 1 for every error [cite: 2026-01-11]
-    if (tally[questionId]) {
-        tally[questionId] += 1;
-    } else {
-        tally[questionId] = 1;
-    }
-    
-    localStorage.setItem('orion_shame_tally', JSON.stringify(tally));
-}
-
-/**
- * Reduces weight for correct answers (Redemption logic) [cite: 2026-01-11]
- */
-function handleCorrectAnswer(questionId) {
-    let tally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
-    
-    if (tally[questionId]) {
-        tally[questionId] -= 1;
+    if (adjustment > 0) {
+        // Increase weight for incorrect answers
+        tally[questionId] = (tally[questionId] || 0) + adjustment;
+    } else if (tally[questionId]) {
+        // Decrease weight for correct answers (Redemption)
+        tally[questionId] += adjustment;
         
-        // Remove from wall if weight hits 0 [cite: 2026-01-11]
+        // Remove from wall if weight hits zero or below
         if (tally[questionId] <= 0) {
             delete tally[questionId];
         }
-        
-        localStorage.setItem('orion_shame_tally', JSON.stringify(tally));
     }
+    
+    // Save updated wall data back to storage
+    localStorage.setItem('orion_shame_tally', JSON.stringify(tally));
 }
 
-// ... [Remainder of existing file] ...
+// Ensure results calculation still works as expected
+function finishTest() {
+    stopTimer();
+    // Logic to calculate final score and redirect to results page
+    const score = userAnswers.reduce((total, ans, idx) => {
+        return (ans === questions[idx].correct) ? total + 1 : total;
+    }, 0);
+    
+    localStorage.setItem('orion_last_score', score);
+    window.location.href = 'results.html';
+}
