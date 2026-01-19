@@ -24,15 +24,7 @@
             align-items: center;
             padding: 0 20px;
             box-sizing: border-box;
-        }
-
-        /* Fixed the button width to match cards [cite: 2026-01-11] */
-        .button-container {
-            max-width: 600px;
-            margin: 10px auto 0 auto;
-            padding: 0 20px;
-            box-sizing: border-box;
-            width: 100%;
+            position: relative;
         }
 
         .title-group { text-align: left; }
@@ -40,6 +32,27 @@
         h2 { color: #ff3b30; margin: 0; font-size: 0.9rem; text-transform: uppercase; }
         
         #version-tag { color: #bdc3c7; font-size: 0.6rem; font-family: monospace; margin-top: 4px; }
+
+        /* Info Button Styling [cite: 2026-01-11] */
+        .info-btn {
+            position: absolute;
+            top: -5px;
+            right: 10px;
+            background: #007bff;
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: serif;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
         .shame-speed-sign {
             width: 70px; height: 70px;
@@ -50,9 +63,43 @@
             color: #000; font-weight: 900; font-size: 1.8rem;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             flex-shrink: 0;
+            margin-right: 15px;
         }
 
-        /* Category Warning Style [cite: 2026-01-11] */
+        /* Modal Overlay [cite: 2026-01-17] */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .modal-content h3 { margin-top: 0; color: #333; }
+        .modal-content p { font-size: 0.9rem; line-height: 1.5; color: #555; }
+        .modal-content ul { padding-left: 20px; font-size: 0.85rem; color: #555; }
+        .modal-content li { margin-bottom: 8px; }
+
+        .button-container {
+            max-width: 600px;
+            margin: 10px auto 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
         #category-insight {
             max-width: 600px;
             margin: 10px auto 0 auto;
@@ -91,12 +138,25 @@
 </head>
 <body>
 
+    <div id="info-modal" class="modal-overlay" onclick="closeInfo()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3>About the Wall</h3>
+            <p>This page tracks questions you've answered incorrectly to help you focus your revision.</p>
+            <ul>
+                <li><strong>Weight:</strong> Every time you get a question wrong, its weight increases. Questions with higher weight appear more often in your tests. [cite: 2026-01-11]</li>
+                <li><strong>Redemption:</strong> Every time you get a "shame" question right, its weight drops. Get it right twice, and it is removed from the wall. [cite: 2026-01-11]</li>
+            </ul>
+            <button class="btn btn-blue" onclick="closeInfo()" style="padding:10px; margin-top:10px;">CLOSE</button>
+        </div>
+    </div>
+
     <div class="sticky-header">
         <div class="header-content">
+            <div class="info-btn" onclick="openInfo()">i</div>
             <div class="title-group">
                 <h1>ORION DRIVE</h1>
                 <h2>Wall of Shame</h2>
-                <div id="version-tag">HTML: v2.3.5 | JS: Loading...</div>
+                <div id="version-tag">HTML: v2.3.6 | JS: Loading...</div>
             </div>
             <div id="shame-total-sign" class="shame-speed-sign">0</div>
         </div>
@@ -109,17 +169,15 @@
     </div>
 
     <div class="container">
-        <div id="shame-list" class="shame-container">
-            </div>
+        <div id="shame-list" class="shame-container"></div>
     </div>
 
     <script>
-        const JS_VERSION = "v2.3.5";
-        const HTML_VERSION = "v2.3.5";
+        const JS_VERSION = "v2.3.6";
+        const HTML_VERSION = "v2.3.6";
 
-        if (!localStorage.getItem('orion_session_token')) {
-            window.location.href = 'mainmenu.html';
-        }
+        function openInfo() { document.getElementById('info-modal').style.display = 'flex'; }
+        function closeInfo() { document.getElementById('info-modal').style.display = 'none'; }
 
         async function init() {
             const vTag = document.getElementById('version-tag');
@@ -143,7 +201,6 @@
                 const response = await fetch('questions.json');
                 const allQuestions = await response.json();
 
-                // Group by Category to find the highest error count [cite: 2026-01-11]
                 let catCounts = {};
                 ids.forEach(id => {
                     const q = allQuestions.find(item => item.id == id);
@@ -155,7 +212,6 @@
                 let topCat = Object.keys(catCounts).reduce((a, b) => catCounts[a] > catCounts[b] ? a : b);
                 insightBox.innerHTML = `Category to pay attention to: <span class="highlight-cat">${topCat}</span>`;
 
-                // Sort cards by Error Weight [cite: 2026-01-11]
                 const sortedIds = ids.sort((a, b) => tallyData[b] - tallyData[a]);
 
                 shameList.innerHTML = '';
@@ -164,7 +220,6 @@
                     if (q) {
                         const card = document.createElement('div');
                         card.className = 'shame-card';
-                        
                         card.innerHTML = `
                             <div class="shame-header">
                                 <span class="discreet-label">ID: ${id}</span>
