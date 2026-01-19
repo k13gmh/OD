@@ -33,7 +33,6 @@
         
         #version-tag { color: #bdc3c7; font-size: 0.6rem; font-family: monospace; margin-top: 4px; }
 
-        /* Info Button Styling [cite: 2026-01-11] */
         .info-btn {
             position: absolute;
             top: -5px;
@@ -66,7 +65,6 @@
             margin-right: 15px;
         }
 
-        /* Modal Overlay [cite: 2026-01-17] */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -143,8 +141,8 @@
             <h3>About the Wall</h3>
             <p>This page tracks questions you've answered incorrectly to help you focus your revision.</p>
             <ul>
-                <li><strong>Weight:</strong> Every time you get a question wrong, its weight increases. Questions with higher weight appear more often in your tests. [cite: 2026-01-11]</li>
-                <li><strong>Redemption:</strong> Every time you get a "shame" question right, its weight drops. Get it right twice, and it is removed from the wall. [cite: 2026-01-11]</li>
+                <li><strong>Weight:</strong> Every time you get a question wrong, its weight increases. Questions with higher weight appear more often in your tests.</li>
+                <li><strong>Redemption:</strong> Every time you get a "shame" question right, its weight drops. Get it right twice, and it is removed from the wall.</li>
             </ul>
             <button class="btn btn-blue" onclick="closeInfo()" style="padding:10px; margin-top:10px;">CLOSE</button>
         </div>
@@ -156,7 +154,7 @@
             <div class="title-group">
                 <h1>ORION DRIVE</h1>
                 <h2>Wall of Shame</h2>
-                <div id="version-tag">HTML: v2.3.6 | JS: Loading...</div>
+                <div id="version-tag">HTML: v2.3.7 | JS: Loading...</div>
             </div>
             <div id="shame-total-sign" class="shame-speed-sign">0</div>
         </div>
@@ -173,8 +171,8 @@
     </div>
 
     <script>
-        const JS_VERSION = "v2.3.6";
-        const HTML_VERSION = "v2.3.6";
+        const JS_VERSION = "v2.3.7";
+        const HTML_VERSION = "v2.3.7";
 
         function openInfo() { document.getElementById('info-modal').style.display = 'flex'; }
         function closeInfo() { document.getElementById('info-modal').style.display = 'none'; }
