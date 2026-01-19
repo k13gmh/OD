@@ -10,5 +10,9 @@
   {
     "description": "CATEGORY TEST",
     "htmlName": "category.html"
+  },
+  {
+    "description": "WALL OF SHAME",
+    "htmlName": "shame.html"
   }
 ]
