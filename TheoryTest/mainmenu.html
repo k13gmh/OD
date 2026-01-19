@@ -2,71 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orion Drive - Main Menu</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; color: #333; padding: 20px; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
-        .container { width: 100%; max-width: 600px; }
-        .card { background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; text-align: center; }
-        h1 { font-size: 1.8rem; color: #1a1a1a; margin-bottom: 5px; }
-        h2 { font-size: 1rem; color: #666; font-weight: 400; margin-bottom: 20px; }
+        body { font-family: -apple-system, sans-serif; background-color: #000; color: #fff; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        .container { width: 100%; max-width: 400px; text-align: center; }
+        h1 { font-size: 2rem; letter-spacing: 2px; margin-bottom: 5px; }
+        h2 { font-size: 1.1rem; font-weight: 300; margin-bottom: 20px; }
+        .status { color: #2ecc71; font-size: 0.9rem; margin-bottom: 30px; }
+        .status::before { content: "● "; }
         
-        /* Status Bar Styles */
-        .status-bar { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 25px; }
-        .status-unlocked { background: #e8f5e9; color: #2e7d32; }
-        .status-locked { background: #ffebee; color: #c62828; }
-        .status-bar::before { content: "● "; }
-
-        .sub-heading { color: #d9534f; font-size: 0.85rem; font-weight: bold; text-align: left; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .menu-card { background: #1c1c1e; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .sub-heading { color: #8e8e93; font-size: 0.75rem; text-align: left; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        
         #dynamic-buttons { display: flex; flex-direction: column; gap: 12px; }
-        .btn-blue { background: #007bff; color: #fff; border: none; padding: 18px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.95rem; width: 100%; text-transform: uppercase; }
         
-        .error-msg { background: #fff3f3; color: #d9534f; padding: 20px; border-radius: 12px; border: 1px solid #ffcdd2; font-weight: bold; }
+        .btn-blue { background: #007aff; color: #fff; border: none; padding: 18px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.9rem; width: 100%; text-transform: uppercase; transition: opacity 0.2s; }
+        .btn-blue:active { opacity: 0.7; }
         
-        #v-tag-top { position: fixed; top: 10px; right: 15px; font-family: monospace; font-size: 0.9rem; color: #fff; background: rgba(0, 122, 255, 0.9); padding: 4px 8px; border-radius: 4px; z-index: 1000; }
+        #v-tag { position: fixed; bottom: 15px; right: 20px; font-size: 0.7rem; color: #444; font-family: monospace; }
     </style>
 </head>
 <body>
-    <div id="v-tag-top">v2.1.8</div>
 
     <div class="container">
-        <div class="card">
-            <h1>ORION DRIVE</h1>
-            <h2>Theory Test</h2>
-            <div id="status-indicator" class="status-bar status-unlocked">System Unlocked</div>
+        <h1>ORION DRIVE</h1>
+        <h2>Theory Test</h2>
+        <div class="status">System Unlocked</div>
 
+        <div class="menu-card">
             <div class="sub-heading">Mock Tests</div>
             <div id="dynamic-buttons">
-                </div>
+                <div style="color: #666; font-size: 0.8rem;">Loading options...</div>
+            </div>
         </div>
     </div>
 
-    <script>
-        /**
-         * Logic: Checks security and loads menu without redirecting
-         */
-        async function initMenu() {
-            const container = document.getElementById('dynamic-buttons');
-            const status = document.getElementById('status-indicator');
-            
-            // 1. Check for Security Token [cite: 2026-01-11]
-            const token = localStorage.getItem('orion_session_token') || sessionStorage.getItem('orion_session_token');
+    <div id="v-tag">v2.1.0</div>
 
-            if (!token) {
-                // Update UI to show locked status [cite: 2026-01-13]
-                status.innerText = "System Locked";
-                status.className = "status-bar status-locked";
-                container.innerHTML = `<div class="error-msg">ACCESS DENIED<br><span style="font-size:0.8rem; font-weight:normal;">Monthly Security Token Required. Please use the Admin System to unlock.</span></div>`;
+    <script>
+        async function loadMenu() {
+            // Security check from your previous sessions
+            if (!sessionStorage.getItem('orion_session_token')) {
+                window.location.href = 'index.html';
                 return;
             }
 
-            // 2. If token exists, load the menu [cite: 2026-01-11, 2026-01-17]
             try {
                 const response = await fetch('options.json');
-                if (!response.ok) throw new Error("options.json missing");
+                if (!response.ok) throw new Error("Could not load options");
                 
                 const options = await response.json();
-                container.innerHTML = ''; 
+                const container = document.getElementById('dynamic-buttons');
+                container.innerHTML = ''; // Clear loading text
 
                 options.forEach(opt => {
                     const btn = document.createElement('button');
@@ -76,11 +64,13 @@
                     container.appendChild(btn);
                 });
             } catch (err) {
-                container.innerHTML = `<div class="error-msg">Configuration Error: ${err.message}</div>`;
+                document.getElementById('dynamic-buttons').innerHTML = 
+                    `<div style="color: #ff3b30; font-size: 0.8rem;">Error loading menu options.</div>`;
+                console.error(err);
             }
         }
 
-        window.onload = initMenu;
+        window.onload = loadMenu;
     </script>
 </body>
 </html>
