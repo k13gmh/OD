@@ -6,43 +6,53 @@
     <title>Orion Drive - Wall Reset</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body style="background-color: #000; color: #fff;"> <div class="container">
-        <div id="test-ui" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 80vh;">
-            
-            <h1 style="color: #FFA500; margin-bottom: 5px;">ORION DRIVE</h1>
-            <h2 style="color: #FFA500; margin-bottom: 30px; font-size: 1.2rem;">System Administration</h2>
+<body class="admin-body"> <div class="container">
+        <div id="test-ui">
+            <div class="card">
+                <div class="q-header">
+                    <div id="q-number">SYSTEM ADMIN</div>
+                    <div id="q-category">WALL RESET</div>
+                </div>
 
-            <div class="card" style="width: 100%; max-width: 400px; padding: 30px; text-align: center; background: #1a1a1a; border: 1px solid #333;">
-                <p style="color: #ff3b30; font-weight: bold; margin-bottom: 20px;">
-                    WARNING: This will permanently clear all "Wall of Shame" weightings.
-                </p>
-                
-                <button class="btn" style="background-color: #ff3b30; margin-bottom: 15px;" onclick="clearShame()">
-                    CLEAR WALL RESET
-                </button>
-                
-                <button class="btn" onclick="window.location.href='sysadmin.html'">
-                    RETURN TO ADMIN
-                </button>
-            </div>
+                <div class="question-text" style="text-align: center; padding: 40px 10px;">
+                    <p style="color: #ff3b30; font-weight: bold;">
+                        WARNING: This will permanently clear all "Wall of Shame" weightings.
+                    </p>
+                </div>
 
-            <div style="margin-top: 20px;">
-                <span style="font-family: monospace; color: #444; font-size: 0.8rem;">
-                    HTML: v1.0.3 | JS: v1.0.3
-                </span>
+                <div id="options-area" style="padding: 0 20px 20px 20px;">
+                    <button class="btn" style="background-color: #ff3b30; margin-bottom: 12px;" onclick="clearShame()">
+                        CONFIRM CLEAR SHAME
+                    </button>
+                    <button class="btn" onclick="window.location.href='sysadmin.html'">
+                        CANCEL / RETURN
+                    </button>
+                </div>
+                
+                <div class="card-footer">
+                    <span id="version-tag">HTML: v1.0.4 | JS: v1.0.4</span>
+                    <span id="q-id-display">ADMIN TOOL</span>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        /**
+         * Logic to clear the specific tally from localStorage [cite: 2026-01-11]
+         */
         function clearShame() {
-            // Standard safety check [cite: 2026-01-17]
             if (confirm("Are you sure? This cannot be undone.")) {
                 localStorage.removeItem('orion_shame_tally');
                 alert("Wall of Shame cleared successfully.");
                 window.location.href = 'sysadmin.html';
             }
         }
+
+        // Ensure version tag is visible on load [cite: 2026-01-11]
+        window.onload = function() {
+            console.log("Wall Reset Tool v1.0.4 Loaded");
+        };
     </script>
 </body>
 </html>
