@@ -1,10 +1,10 @@
 /**
  * File: untimed.js
  * Version: v2.2.7
- * Feature: Wall of Shame Weighted Selection & Redemption
+ * Feature: Wall of Shame Tracking & Dual Version Display
  */
 
-const SCRIPT_VERSION = "v2.2.7";
+const JS_VERSION = "v2.2.7";
 
 // Security Check [cite: 2026-01-11, 2026-01-17]
 if (!localStorage.getItem('orion_session_token')) {
@@ -12,11 +12,13 @@ if (!localStorage.getItem('orion_session_token')) {
 }
 
 let allQuestions = [], sessionQuestions = [], currentIndex = 0;
-let testData = { selections: {}, flagged: [], seenIndices: [] };
+let testData = { selections: {}, flagged: [] };
 
 async function init() {
-    const tag = document.getElementById('v-tag-top');
-    if (tag) tag.innerText = SCRIPT_VERSION;
+    // Inject JS version into the HTML header box [cite: 2026-01-11]
+    const jsTag = document.getElementById('js-version-tag');
+    if (jsTag) jsTag.innerText = `JS: ${JS_VERSION}`;
+
     try {
         const response = await fetch('questions.json');
         allQuestions = await response.json();
@@ -25,37 +27,29 @@ async function init() {
 }
 
 function startUntimed() {
-    // 1. Get Shame Tally from LocalStorage [cite: 2026-01-17]
     const shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
-
-    // 2. Weighted Selection Logic [cite: 2026-01-11]
     let weightedPool = [];
+
     allQuestions.forEach(q => {
         const tally = shameTally[q.id] || 0;
-        // Base weight is 1. Each tally adds +2 to the weight.
         const weight = 1 + (tally * 2); 
         for (let i = 0; i < weight; i++) {
             weightedPool.push(q);
         }
     });
 
-    // 3. Draw 50 unique questions from the weighted pool
     let selected = [];
     while (selected.length < 50 && weightedPool.length > 0) {
         const randomIndex = Math.floor(Math.random() * weightedPool.length);
         const picked = weightedPool[randomIndex];
-        // Ensure no duplicates in the 50-set
         if (!selected.find(s => s.id === picked.id)) {
             selected.push(picked);
         }
-        // Remove all instances of this picked question from pool to avoid re-picking
         weightedPool = weightedPool.filter(p => p.id !== picked.id);
     }
 
-    // Shuffle and Prepare
     sessionQuestions = selected.sort(() => 0.5 - Math.random());
     currentIndex = 0;
-    testData = { selections: {}, flagged: [], seenIndices: [0] };
     renderQuestion();
 }
 
@@ -66,7 +60,6 @@ function renderQuestion() {
         imgElement.style.display = 'none'; 
         imgElement.src = `images/${q.id}.jpeg`;
         imgElement.onload = () => { imgElement.style.display = 'block'; };
-        imgElement.onerror = () => { imgElement.style.display = 'none'; };
     }
 
     document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
@@ -90,8 +83,7 @@ function renderQuestion() {
     });
 
     const flagBtn = document.getElementById('flag-btn');
-    const isFlagged = testData.flagged.includes(q.id);
-    flagBtn.style.background = isFlagged ? "#f1c40f" : "#bdc3c7";
+    flagBtn.style.background = testData.flagged.includes(q.id) ? "#f1c40f" : "#bdc3c7";
 }
 
 function changeQuestion(step) {
@@ -111,7 +103,6 @@ function toggleFlag() {
 }
 
 function finishTest() {
-    // 1. Load Shame Tally [cite: 2026-01-17]
     let shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
     let score = 0;
 
@@ -121,30 +112,23 @@ function finishTest() {
 
         if (isCorrect) {
             score++;
-            // Redemption Logic: If it was on the Wall of Shame, decrease tally by 0.5
-            // (Getting it right twice removes it) [cite: 2026-01-11]
             if (shameTally[q.id]) {
-                shameTally[q.id] -= 0.5;
+                shameTally[q.id] -= 0.5; // Two-right redemption [cite: 2026-01-11]
                 if (shameTally[q.id] <= 0) delete shameTally[q.id];
             }
         } else if (userSelection) {
-            // Error Logic: If wrong, increase tally by 1
-            shameTally[q.id] = (shameTally[q.id] || 0) + 1;
+            shameTally[q.id] = (shameTally[q.id] || 0) + 1; // Add to shame [cite: 2026-01-11]
         }
     });
 
-    // 2. Save Tally back to LocalStorage [cite: 2026-01-17]
     localStorage.setItem('orion_shame_tally', JSON.stringify(shameTally));
-
-    // Save final results for review [cite: 2026-01-11]
     localStorage.setItem('orion_final_results', JSON.stringify({ 
         score, 
         total: sessionQuestions.length, 
         questions: sessionQuestions, 
         data: testData 
     }));
-    
     window.location.href = 'review.html';
 }
 
-init();
+window.onload = init;
