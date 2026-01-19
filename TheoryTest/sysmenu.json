@@ -1,0 +1,18 @@
+[
+  {
+    "description": "MAINTAIN DATABASE",
+    "htmlName": "maintain.html"
+  },
+  {
+    "description": "GATEKEEPER SETTINGS",
+    "htmlName": "gatekeeper.html"
+  },
+  {
+    "description": "REVIEW ALL RESULTS",
+    "htmlName": "review.html"
+  },
+  {
+    "description": "REVIEW DETAIL",
+    "htmlName": "review_detail.html"
+  }
+]
