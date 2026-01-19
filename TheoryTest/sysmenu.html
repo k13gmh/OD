@@ -11,9 +11,8 @@
         h2 { color: #ff9500; margin-top: 0; font-weight: bold; font-size: 1.2rem; margin-bottom: 20px; }
         .menu-box { background: #1c1c1e; padding: 20px; border-radius: 20px; border: 1px solid #2c2c2e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 100%; box-sizing: border-box; position: relative; }
         .section-label { color: #8e8e93; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin: 15px 0 10px 0; text-align: left; border-bottom: 1px solid #2c2c2e; padding-bottom: 5px; }
-        .btn { background: #007bff; color: #fff; border: none; padding: 14px 0; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; margin-top: 10px; display: block; text-decoration: none; box-sizing: border-box; font-size: 0.9rem; }
+        .btn { background: #007bff; color: #fff; border: none; padding: 14px 0; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; margin-top: 10px; display: block; text-decoration: none; box-sizing: border-box; font-size: 0.9rem; text-align: center; }
         .btn-admin { background: #323234; border: 1px solid #444; }
-        .btn-admin:hover { background: #444; }
         .v-tag { position: absolute; bottom: 10px; right: 15px; font-size: 0.65rem; color: #555; font-family: monospace; }
         #status-msg { color: #28a745; font-size: 0.85rem; margin-bottom: 15px; font-weight: bold; }
     </style>
@@ -27,17 +26,47 @@
 
         <div class="menu-box">
             <div class="section-label">Theory Test Options</div>
-            <div id="test-options">
-                </div>
+            <div id="test-options"></div>
 
             <div class="section-label" style="margin-top:25px; color: #ff9500;">Administration</div>
-            <div id="admin-options">
-                </div>
+            <div id="admin-options"></div>
             
-            <span class="v-tag">v1.0.1</span>
+            <span class="v-tag">v1.0.3</span>
         </div>
     </div>
 
-    <script src="sysmenu.js"></script>
+    <script>
+        // Check security IMMEDIATELY before doing anything else [cite: 2026-01-11, 2026-01-17]
+        if (!localStorage.getItem('orion_session_token')) {
+            window.location.href = 'mainmenu.html';
+        }
+
+        async function loadMenus() {
+            // Load standard tests [cite: 2025-09-18]
+            await fetchAndBuild('options.json', 'test-options', 'btn');
+            // Load admin tools
+            await fetchAndBuild('sysmenu.json', 'admin-options', 'btn btn-admin');
+        }
+
+        async function fetchAndBuild(file, targetId, cssClass) {
+            const area = document.getElementById(targetId);
+            try {
+                const response = await fetch(file);
+                const data = await response.json();
+                area.innerHTML = '';
+                data.forEach(item => {
+                    const a = document.createElement('a');
+                    a.href = item.htmlName;
+                    a.className = cssClass;
+                    a.innerText = item.description;
+                    area.appendChild(a);
+                });
+            } catch (e) {
+                area.innerHTML = `<p style="color:red; font-size:0.7rem;">Error loading ${file}</p>`;
+            }
+        }
+
+        window.onload = loadMenus;
+    </script>
 </body>
 </html>
