@@ -1,12 +1,13 @@
 /**
  * File: untimed.js
- * Version: v2.1.0
+ * Version: v2.1.1
  * Feature: Dynamic Option Shuffling to ensure randomness
  */
 
-const SCRIPT_VERSION = "v2.1.0";
+const SCRIPT_VERSION = "v2.1.1";
 
-if (!sessionStorage.getItem('orion_session_token')) {
+// FIX: Checking localStorage instead of sessionStorage [cite: 2026-01-11, 2026-01-17]
+if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
 }
 
@@ -29,12 +30,10 @@ async function init() {
 }
 
 function startFreshSession() {
-    // 1. Pick 50 random questions
     let selected = [...allQuestions]
         .sort(() => 0.5 - Math.random())
         .slice(0, 50);
 
-    // 2. Shuffle the options for EACH question and update the 'correct' key
     sessionQuestions = selected.map((q, idx) => {
         return shuffleQuestionOptions(q, idx + 1);
     });
@@ -45,12 +44,7 @@ function startFreshSession() {
     renderQuestion();
 }
 
-/**
- * Pairs answers with their correct status, shuffles them, 
- * and re-assigns A, B, C, D and the 'correct' letter.
- */
 function shuffleQuestionOptions(q, displayIndex) {
-    // Map current choices into a temporary array with their 'correct' status
     let optionsArray = [
         { text: q.choices.A, correct: q.correct === "A" },
         { text: q.choices.B, correct: q.correct === "B" },
@@ -58,7 +52,6 @@ function shuffleQuestionOptions(q, displayIndex) {
         { text: q.choices.D, correct: q.correct === "D" }
     ].filter(opt => opt.text);
 
-    // Fisher-Yates shuffle
     for (let i = optionsArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [optionsArray[i], optionsArray[j]] = [optionsArray[j], optionsArray[i]];
