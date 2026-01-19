@@ -1,12 +1,12 @@
 /**
  * File: untimed.js
- * Version: v2.2.7
- * Feature: Wall of Shame Tracking & Dual Version Display
+ * Version: v2.2.8
+ * Feature: Wall of Shame & Footer Version Display
  */
 
-const JS_VERSION = "v2.2.7";
+const JS_VERSION = "v2.2.8";
+const HTML_VERSION = "v2.2.8"; // To keep track of the HTML it expects
 
-// Security Check [cite: 2026-01-11, 2026-01-17]
 if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
 }
@@ -15,9 +15,9 @@ let allQuestions = [], sessionQuestions = [], currentIndex = 0;
 let testData = { selections: {}, flagged: [] };
 
 async function init() {
-    // Inject JS version into the HTML header box [cite: 2026-01-11]
-    const jsTag = document.getElementById('js-version-tag');
-    if (jsTag) jsTag.innerText = `JS: ${JS_VERSION}`;
+    // Update the discreet footer version [cite: 2026-01-11]
+    const vTag = document.getElementById('version-tag');
+    if (vTag) vTag.innerText = `HTML: ${HTML_VERSION} | JS: ${JS_VERSION}`;
 
     try {
         const response = await fetch('questions.json');
@@ -113,21 +113,16 @@ function finishTest() {
         if (isCorrect) {
             score++;
             if (shameTally[q.id]) {
-                shameTally[q.id] -= 0.5; // Two-right redemption [cite: 2026-01-11]
+                shameTally[q.id] -= 0.5;
                 if (shameTally[q.id] <= 0) delete shameTally[q.id];
             }
         } else if (userSelection) {
-            shameTally[q.id] = (shameTally[q.id] || 0) + 1; // Add to shame [cite: 2026-01-11]
+            shameTally[q.id] = (shameTally[q.id] || 0) + 1;
         }
     });
 
     localStorage.setItem('orion_shame_tally', JSON.stringify(shameTally));
-    localStorage.setItem('orion_final_results', JSON.stringify({ 
-        score, 
-        total: sessionQuestions.length, 
-        questions: sessionQuestions, 
-        data: testData 
-    }));
+    localStorage.setItem('orion_final_results', JSON.stringify({ score, total: sessionQuestions.length, questions: sessionQuestions, data: testData }));
     window.location.href = 'review.html';
 }
 
