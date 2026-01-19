@@ -1,68 +1,105 @@
 const JS_VERSION = "v2.3.8";
 
+let questions = [];
+let currentQuestionIndex = 0;
+let userAnswers = [];
+let timerInterval;
+let timeLeft = 3420; // 57 minutes
+
+async function init() {
+    // Update version display [cite: 2026-01-11]
+    const jsVerText = document.getElementById('js-version-text');
+    if (jsVerText) jsVerText.innerText = `JS: ${JS_VERSION}`;
+
+    try {
+        const response = await fetch('questions.json');
+        const allQuestions = await response.json();
+        
+        // Randomly select 50 questions [cite: 2026-01-11]
+        questions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 50);
+        userAnswers = new Array(questions.length).fill(null);
+        
+        startTimer();
+        showQuestion();
+    } catch (error) {
+        console.error("Failed to load questions:", error);
+    }
+}
+
+function showQuestion() {
+    const q = questions[currentQuestionIndex];
+    const textElem = document.getElementById('question-text');
+    const optionsContainer = document.getElementById('options-container');
+    const idElem = document.getElementById('question-id');
+
+    textElem.innerText = q.question;
+    idElem.innerText = `ID: ${q.id}`;
+    optionsContainer.innerHTML = '';
+
+    q.choices.forEach((choice, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = choice;
+        btn.onclick = () => handleAnswer(index);
+        optionsContainer.appendChild(btn);
+    });
+}
+
 /**
- * Handle user answer selection in Timed Mode
- * Integrates with Wall of Shame weighting system
+ * Handles answer selection and Wall of Shame weighting [cite: 2026-01-11, 2026-01-17]
  */
 function handleAnswer(selectedIndex) {
     const currentQuestion = questions[currentQuestionIndex];
     const isCorrect = (selectedIndex === currentQuestion.correct);
-
-    // Save user choice for final results
     userAnswers[currentQuestionIndex] = selectedIndex;
 
-    if (isCorrect) {
-        // Redemption: Decrease weight if question was previously on the wall
-        updateShameWeight(currentQuestion.id, -1);
-    } else {
-        // Add to Wall: Increase weight for incorrect answers
-        updateShameWeight(currentQuestion.id, 1);
-    }
+    // Wall of Shame logic [cite: 2026-01-11]
+    let tally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
+    const qId = currentQuestion.id;
 
-    // Move to next question automatically after short delay
-    setTimeout(() => {
-        if (currentQuestionIndex < questions.length - 1) {
-            currentQuestionIndex++;
-            showQuestion();
-        } else {
+    if (!isCorrect) {
+        // Increase error weight [cite: 2026-01-11]
+        tally[qId] = (tally[qId] || 0) + 1;
+    } else {
+        // Redemption: decrease weight [cite: 2026-01-11]
+        if (tally[qId]) {
+            tally[qId] -= 1;
+            if (tally[qId] <= 0) delete tally[qId];
+        }
+    }
+    localStorage.setItem('orion_shame_tally', JSON.stringify(tally));
+
+    // Progress to next question [cite: 2026-01-17]
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        showQuestion();
+    } else {
+        finishTest();
+    }
+}
+
+function startTimer() {
+    const timerDisplay = document.getElementById('timer');
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        const mins = Math.floor(timeLeft / 60);
+        const secs = timeLeft % 60;
+        timerDisplay.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
             finishTest();
         }
-    }, 300);
+    }, 1000);
 }
 
-/**
- * Core Wall of Shame Logic
- * Adjusts the 'error weight' of a question based on performance
- */
-function updateShameWeight(questionId, adjustment) {
-    // Retrieve existing tally or create new object
-    let tally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
-    
-    if (adjustment > 0) {
-        // Increase weight for incorrect answers
-        tally[questionId] = (tally[questionId] || 0) + adjustment;
-    } else if (tally[questionId]) {
-        // Decrease weight for correct answers (Redemption)
-        tally[questionId] += adjustment;
-        
-        // Remove from wall if weight hits zero or below
-        if (tally[questionId] <= 0) {
-            delete tally[questionId];
-        }
-    }
-    
-    // Save updated wall data back to storage
-    localStorage.setItem('orion_shame_tally', JSON.stringify(tally));
-}
-
-// Ensure results calculation still works as expected
 function finishTest() {
-    stopTimer();
-    // Logic to calculate final score and redirect to results page
-    const score = userAnswers.reduce((total, ans, idx) => {
-        return (ans === questions[idx].correct) ? total + 1 : total;
-    }, 0);
-    
-    localStorage.setItem('orion_last_score', score);
+    clearInterval(timerInterval);
+    localStorage.setItem('orion_last_results', JSON.stringify({
+        questions: questions,
+        userAnswers: userAnswers
+    }));
     window.location.href = 'results.html';
 }
+
+window.onload = init;
