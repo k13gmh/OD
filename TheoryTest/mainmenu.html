@@ -10,45 +10,62 @@
         .card { background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; text-align: center; }
         h1 { font-size: 1.8rem; color: #1a1a1a; margin-bottom: 5px; }
         h2 { font-size: 1rem; color: #666; font-weight: 400; margin-bottom: 20px; }
-        .status-bar { display: inline-block; background: #e8f5e9; color: #2e7d32; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 25px; }
+        
+        /* Status Bar Styles */
+        .status-bar { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 25px; }
+        .status-unlocked { background: #e8f5e9; color: #2e7d32; }
+        .status-locked { background: #ffebee; color: #c62828; }
         .status-bar::before { content: "● "; }
+
         .sub-heading { color: #d9534f; font-size: 0.85rem; font-weight: bold; text-align: left; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         #dynamic-buttons { display: flex; flex-direction: column; gap: 12px; }
         .btn-blue { background: #007bff; color: #fff; border: none; padding: 18px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 0.95rem; width: 100%; text-transform: uppercase; }
-        #v-tag-top { position: fixed; top: 10px; right: 15px; font-family: monospace; font-size: 0.9rem; color: #fff; background: rgba(0, 122, 255, 0.9); padding: 4px 8px; border-radius: 4px; }
+        
+        .error-msg { background: #fff3f3; color: #d9534f; padding: 20px; border-radius: 12px; border: 1px solid #ffcdd2; font-weight: bold; }
+        
+        #v-tag-top { position: fixed; top: 10px; right: 15px; font-family: monospace; font-size: 0.9rem; color: #fff; background: rgba(0, 122, 255, 0.9); padding: 4px 8px; border-radius: 4px; z-index: 1000; }
     </style>
 </head>
 <body>
-    <div id="v-tag-top">v2.1.6</div>
+    <div id="v-tag-top">v2.1.8</div>
 
     <div class="container">
         <div class="card">
             <h1>ORION DRIVE</h1>
             <h2>Theory Test</h2>
-            <div class="status-bar">System Unlocked</div>
+            <div id="status-indicator" class="status-bar status-unlocked">System Unlocked</div>
 
             <div class="sub-heading">Mock Tests</div>
             <div id="dynamic-buttons">
-                <div style="color: #999; padding: 20px;">Loading...</div>
-            </div>
+                </div>
         </div>
     </div>
 
     <script>
+        /**
+         * Logic: Checks security and loads menu without redirecting
+         */
         async function initMenu() {
-            // UPDATED: Check localStorage for iPad stability [cite: 2026-01-11]
-            // UPDATED: Redirecting specifically to gatekeeper.html to avoid 404 [cite: 2026-01-11]
-            if (!localStorage.getItem('orion_session_token')) {
-                window.location.replace('gatekeeper.html'); 
+            const container = document.getElementById('dynamic-buttons');
+            const status = document.getElementById('status-indicator');
+            
+            // 1. Check for Security Token [cite: 2026-01-11]
+            const token = localStorage.getItem('orion_session_token') || sessionStorage.getItem('orion_session_token');
+
+            if (!token) {
+                // Update UI to show locked status [cite: 2026-01-13]
+                status.innerText = "System Locked";
+                status.className = "status-bar status-locked";
+                container.innerHTML = `<div class="error-msg">ACCESS DENIED<br><span style="font-size:0.8rem; font-weight:normal;">Monthly Security Token Required. Please use the Admin System to unlock.</span></div>`;
                 return;
             }
 
+            // 2. If token exists, load the menu [cite: 2026-01-11, 2026-01-17]
             try {
                 const response = await fetch('options.json');
-                if (!response.ok) throw new Error("options.json not found");
+                if (!response.ok) throw new Error("options.json missing");
                 
                 const options = await response.json();
-                const container = document.getElementById('dynamic-buttons');
                 container.innerHTML = ''; 
 
                 options.forEach(opt => {
@@ -59,8 +76,7 @@
                     container.appendChild(btn);
                 });
             } catch (err) {
-                document.getElementById('dynamic-buttons').innerHTML = 
-                    `<div style="color: #d9534f; padding: 10px;">Menu Error: ${err.message}</div>`;
+                container.innerHTML = `<div class="error-msg">Configuration Error: ${err.message}</div>`;
             }
         }
 
