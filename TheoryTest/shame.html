@@ -16,7 +16,6 @@
             border-bottom: 1px solid #e1e8ed;
         }
 
-        /* Fixed the alignment here [cite: 2026-01-17] */
         .header-content {
             max-width: 600px;
             margin: 0 auto;
@@ -27,40 +26,43 @@
             box-sizing: border-box;
         }
 
+        /* Fixed the button width to match cards [cite: 2026-01-11] */
         .button-container {
             max-width: 600px;
             margin: 10px auto 0 auto;
             padding: 0 20px;
             box-sizing: border-box;
+            width: 100%;
         }
 
         .title-group { text-align: left; }
-        
         h1 { color: #333; margin: 0; letter-spacing: 2px; font-size: 1.4rem; }
         h2 { color: #ff3b30; margin: 0; font-size: 0.9rem; text-transform: uppercase; }
         
-        #version-tag { 
-            color: #bdc3c7; 
-            font-size: 0.6rem; 
-            font-family: monospace; 
-            margin-top: 4px;
-        }
+        #version-tag { color: #bdc3c7; font-size: 0.6rem; font-family: monospace; margin-top: 4px; }
 
         .shame-speed-sign {
-            width: 70px;
-            height: 70px;
+            width: 70px; height: 70px;
             background-color: white;
             border: 8px solid #ff3b30;
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #000;
-            font-weight: 900;
-            font-size: 1.8rem;
+            display: flex; justify-content: center; align-items: center;
+            color: #000; font-weight: 900; font-size: 1.8rem;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             flex-shrink: 0;
         }
+
+        /* Category Warning Style [cite: 2026-01-11] */
+        #category-insight {
+            max-width: 600px;
+            margin: 10px auto 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #333;
+        }
+        .highlight-cat { color: #ff3b30; font-weight: bold; text-transform: uppercase; }
 
         .shame-container { width: 100%; max-width: 600px; padding: 20px 0; display: flex; flex-direction: column; gap: 15px; }
         
@@ -79,24 +81,11 @@
         .q-text-shame { color: #1a1a1a; font-size: 1.1rem; margin-bottom: 15px; line-height: 1.4; font-weight: 600; }
         
         .answer-box { 
-            background: rgba(92, 184, 92, 0.1); 
-            border: 1px solid #5cb85c; 
-            color: #2e7d32; 
-            padding: 12px; 
-            border-radius: 12px; 
-            font-weight: bold; 
-            font-size: 1rem;
-            margin-bottom: 10px;
+            background: rgba(92, 184, 92, 0.1); border: 1px solid #5cb85c; color: #2e7d32; 
+            padding: 12px; border-radius: 12px; font-weight: bold; font-size: 1rem; margin-bottom: 10px;
         }
 
-        .explanation-box {
-            font-size: 0.9rem;
-            color: #555;
-            line-height: 1.4;
-            padding: 0 5px;
-            font-style: italic;
-        }
-
+        .explanation-box { font-size: 0.9rem; color: #555; line-height: 1.4; padding: 0 5px; font-style: italic; }
         .no-shame { text-align: center; padding: 40px; color: #5cb85c; font-weight: bold; background: #fff; border-radius: 20px; border: 1px solid #e1e8ed; }
     </style>
 </head>
@@ -107,12 +96,15 @@
             <div class="title-group">
                 <h1>ORION DRIVE</h1>
                 <h2>Wall of Shame</h2>
-                <div id="version-tag">HTML: v2.3.4 | JS: Loading...</div>
+                <div id="version-tag">HTML: v2.3.5 | JS: Loading...</div>
             </div>
             <div id="shame-total-sign" class="shame-speed-sign">0</div>
         </div>
+
+        <div id="category-insight"></div>
+
         <div class="button-container">
-            <a href="mainmenu.html" class="btn btn-blue" style="text-decoration: none; text-align: center; display: block; padding: 12px;">RETURN TO MENU</a>
+            <a href="mainmenu.html" class="btn btn-blue" style="text-decoration: none; text-align: center; display: block; padding: 14px; width: 100%; box-sizing: border-box;">RETURN TO MENU</a>
         </div>
     </div>
 
@@ -122,8 +114,8 @@
     </div>
 
     <script>
-        const JS_VERSION = "v2.3.4";
-        const HTML_VERSION = "v2.3.4";
+        const JS_VERSION = "v2.3.5";
+        const HTML_VERSION = "v2.3.5";
 
         if (!localStorage.getItem('orion_session_token')) {
             window.location.href = 'mainmenu.html';
@@ -135,6 +127,7 @@
 
             const shameList = document.getElementById('shame-list');
             const totalSign = document.getElementById('shame-total-sign');
+            const insightBox = document.getElementById('category-insight');
             const tallyData = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
             
             const ids = Object.keys(tallyData);
@@ -142,6 +135,7 @@
 
             if (ids.length === 0) {
                 shameList.innerHTML = '<div class="no-shame">Excellent! Your Wall of Shame is empty.</div>';
+                insightBox.innerHTML = "No errors to analyze.";
                 return;
             }
 
@@ -149,7 +143,19 @@
                 const response = await fetch('questions.json');
                 const allQuestions = await response.json();
 
-                // Sort by Error Weight [cite: 2026-01-11]
+                // Group by Category to find the highest error count [cite: 2026-01-11]
+                let catCounts = {};
+                ids.forEach(id => {
+                    const q = allQuestions.find(item => item.id == id);
+                    if (q) {
+                        catCounts[q.category] = (catCounts[q.category] || 0) + tallyData[id];
+                    }
+                });
+
+                let topCat = Object.keys(catCounts).reduce((a, b) => catCounts[a] > catCounts[b] ? a : b);
+                insightBox.innerHTML = `Category to pay attention to: <span class="highlight-cat">${topCat}</span>`;
+
+                // Sort cards by Error Weight [cite: 2026-01-11]
                 const sortedIds = ids.sort((a, b) => tallyData[b] - tallyData[a]);
 
                 shameList.innerHTML = '';
@@ -159,21 +165,14 @@
                         const card = document.createElement('div');
                         card.className = 'shame-card';
                         
-                        const correctText = q.choices[q.correct];
-                        const explanation = q.explanation || "No further explanation provided.";
-
                         card.innerHTML = `
                             <div class="shame-header">
                                 <span class="discreet-label">ID: ${id}</span>
                                 <span class="discreet-label">Error Weight: ${tallyData[id]}</span>
                             </div>
                             <div class="q-text-shame">${q.question}</div>
-                            <div class="answer-box">
-                                ${correctText}
-                            </div>
-                            <div class="explanation-box">
-                                <strong>Tip:</strong> ${explanation}
-                            </div>
+                            <div class="answer-box">${q.choices[q.correct]}</div>
+                            <div class="explanation-box"><strong>Tip:</strong> ${q.explanation || "Review this topic."}</div>
                         `;
                         shameList.appendChild(card);
                     }
