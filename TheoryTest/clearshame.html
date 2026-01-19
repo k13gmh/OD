@@ -40,21 +40,22 @@
             CLEAR ALL SHAME
         </button>
         
-        <button class="btn" style="width: 250px;" onclick="window.location.href='mainmenu.html'">
-            RETURN TO MENU
+        <button class="btn" style="width: 250px;" onclick="window.location.href='sysadmin.html'">
+            RETURN TO ADMIN
         </button>
     </div>
 
-    <div class="v-tag">v1.0.0</div>
+    <div class="v-tag">v1.0.2</div>
 
     <script>
         function clearShame() {
-            // Confirm with user before deleting [cite: 2026-01-17]
+            // Confirmation dialog to prevent accidental deletion [cite: 2026-01-17]
             if (confirm("Are you sure? This cannot be undone.")) {
-                // Remove the specific tally from storage [cite: 2026-01-11]
+                // Deletes the weighted tally from local storage [cite: 2026-01-11]
                 localStorage.removeItem('orion_shame_tally');
                 alert("The Wall of Shame has been cleared.");
-                window.location.href = 'mainmenu.html';
+                // Redirect back to the system admin menu [cite: 2026-01-17]
+                window.location.href = 'sysadmin.html';
             }
         }
     </script>
