@@ -3,58 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Reset System - Orion Drive</title>
+    <title>Orion Drive - Wall Reset</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .reset-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            padding: 20px;
-        }
-        .warning-text {
-            color: #ff3b30;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .v-tag {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            font-family: monospace;
-            font-size: 0.7rem;
-            color: #bdc3c7;
-        }
-    </style>
 </head>
-<body>
+<body style="background-color: #000; color: #fff;"> <div class="container">
+        <div id="test-ui" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 80vh;">
+            
+            <h1 style="color: #FFA500; margin-bottom: 5px;">ORION DRIVE</h1>
+            <h2 style="color: #FFA500; margin-bottom: 30px; font-size: 1.2rem;">System Administration</h2>
 
-    <div class="reset-container">
-        <h1 style="margin-bottom: 10px;">WALL OF SHAME</h1>
-        <p class="warning-text">CAUTION: This will reset all question weights to zero.</p>
-        
-        <button class="btn" style="background-color: #ff3b30; color: white; width: 250px; margin-bottom: 15px;" onclick="clearShame()">
-            CLEAR ALL SHAME
-        </button>
-        
-        <button class="btn" style="width: 250px;" onclick="window.location.href='sysadmin.html'">
-            RETURN TO ADMIN
-        </button>
+            <div class="card" style="width: 100%; max-width: 400px; padding: 30px; text-align: center; background: #1a1a1a; border: 1px solid #333;">
+                <p style="color: #ff3b30; font-weight: bold; margin-bottom: 20px;">
+                    WARNING: This will permanently clear all "Wall of Shame" weightings.
+                </p>
+                
+                <button class="btn" style="background-color: #ff3b30; margin-bottom: 15px;" onclick="clearShame()">
+                    CLEAR WALL RESET
+                </button>
+                
+                <button class="btn" onclick="window.location.href='sysadmin.html'">
+                    RETURN TO ADMIN
+                </button>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <span style="font-family: monospace; color: #444; font-size: 0.8rem;">
+                    HTML: v1.0.3 | JS: v1.0.3
+                </span>
+            </div>
+        </div>
     </div>
-
-    <div class="v-tag">v1.0.2</div>
 
     <script>
         function clearShame() {
-            // Confirmation dialog to prevent accidental deletion [cite: 2026-01-17]
+            // Standard safety check [cite: 2026-01-17]
             if (confirm("Are you sure? This cannot be undone.")) {
-                // Deletes the weighted tally from local storage [cite: 2026-01-11]
                 localStorage.removeItem('orion_shame_tally');
-                alert("The Wall of Shame has been cleared.");
-                // Redirect back to the system admin menu [cite: 2026-01-17]
+                alert("Wall of Shame cleared successfully.");
                 window.location.href = 'sysadmin.html';
             }
         }
