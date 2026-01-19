@@ -16,6 +16,7 @@
             border-bottom: 1px solid #e1e8ed;
         }
 
+        /* Fixed the alignment here [cite: 2026-01-17] */
         .header-content {
             max-width: 600px;
             margin: 0 auto;
@@ -23,6 +24,14 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .button-container {
+            max-width: 600px;
+            margin: 10px auto 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
 
         .title-group { text-align: left; }
@@ -37,7 +46,6 @@
             margin-top: 4px;
         }
 
-        /* Speed Sign Style Counter [cite: 2026-01-11] */
         .shame-speed-sign {
             width: 70px;
             height: 70px;
@@ -99,11 +107,11 @@
             <div class="title-group">
                 <h1>ORION DRIVE</h1>
                 <h2>Wall of Shame</h2>
-                <div id="version-tag">HTML: v2.3.3 | JS: Loading...</div>
+                <div id="version-tag">HTML: v2.3.4 | JS: Loading...</div>
             </div>
             <div id="shame-total-sign" class="shame-speed-sign">0</div>
         </div>
-        <div class="container" style="margin-top:10px;">
+        <div class="button-container">
             <a href="mainmenu.html" class="btn btn-blue" style="text-decoration: none; text-align: center; display: block; padding: 12px;">RETURN TO MENU</a>
         </div>
     </div>
@@ -114,8 +122,8 @@
     </div>
 
     <script>
-        const JS_VERSION = "v2.3.3";
-        const HTML_VERSION = "v2.3.3";
+        const JS_VERSION = "v2.3.4";
+        const HTML_VERSION = "v2.3.4";
 
         if (!localStorage.getItem('orion_session_token')) {
             window.location.href = 'mainmenu.html';
@@ -141,10 +149,8 @@
                 const response = await fetch('questions.json');
                 const allQuestions = await response.json();
 
-                // SORTING LOGIC: Largest Error Weight First [cite: 2026-01-11]
-                const sortedIds = ids.sort((a, b) => {
-                    return tallyData[b] - tallyData[a];
-                });
+                // Sort by Error Weight [cite: 2026-01-11]
+                const sortedIds = ids.sort((a, b) => tallyData[b] - tallyData[a]);
 
                 shameList.innerHTML = '';
                 sortedIds.forEach(id => {
