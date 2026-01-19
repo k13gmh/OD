@@ -10,7 +10,7 @@
         h1 { font-size: 2rem; letter-spacing: 2px; margin-bottom: 5px; }
         h2 { font-size: 1.1rem; font-weight: 300; margin-bottom: 20px; }
         
-        /* Dynamic Status Colors */
+        /* Status Colors */
         .status { font-size: 0.9rem; margin-bottom: 30px; }
         .status.unlocked { color: #2ecc71; }
         .status.locked { color: #e74c3c; }
@@ -32,7 +32,7 @@
     <div class="container">
         <h1>ORION DRIVE</h1>
         <h2>Theory Test</h2>
-        <div id="status-text" class="status unlocked">System Unlocked</div>
+        <div id="status-text" class="status unlocked">Checking System...</div>
 
         <div class="menu-card">
             <div class="sub-heading">Mock Tests</div>
@@ -42,32 +42,36 @@
         </div>
     </div>
 
-    <div id="v-tag">v2.1.9</div>
+    <div id="v-tag">v2.2.0</div>
 
     <script>
         /**
-         * Logic: Reads options from options.json [cite: 2026-01-11]
-         * Displays error message instead of redirecting on failure [cite: 2026-01-13]
+         * Logic: Reads from options.json and removes all auto-redirects [cite: 2026-01-11, 2026-01-17]
          */
         async function loadMenu() {
             const container = document.getElementById('dynamic-buttons');
             const statusDiv = document.getElementById('status-text');
 
-            // Security check using localStorage for iPad stability [cite: 2026-01-11, 2026-01-17]
+            // Check security - looks in both storage types for iPad compatibility [cite: 2026-01-11]
             const token = localStorage.getItem('orion_session_token') || sessionStorage.getItem('orion_session_token');
 
             if (!token) {
+                // If no token, show locked message instead of redirecting to 404 [cite: 2026-01-13]
                 statusDiv.innerText = "System Locked";
                 statusDiv.className = "status locked";
-                container.innerHTML = `<div style="color: #e74c3c; font-size: 0.85rem; padding: 10px; border: 1px solid #e74c3c; border-radius: 10px;">
-                    ACCESS DENIED<br>Security Token Required</div>`;
+                container.innerHTML = `<div style="color: #e74c3c; font-size: 0.85rem; padding: 15px; border: 1px dashed #e74c3c; border-radius: 10px;">
+                    SECURITY TOKEN REQUIRED<br><span style="font-size: 0.7rem; opacity: 0.8;">Access denied.</span></div>`;
                 return;
             }
 
             try {
-                // Fetching from options.json as requested [cite: 2026-01-11]
+                // Set status to green
+                statusDiv.innerText = "System Unlocked";
+                statusDiv.className = "status unlocked";
+
+                // Load your options.json file [cite: 2026-01-11]
                 const response = await fetch('options.json');
-                if (!response.ok) throw new Error("Could not load options.json");
+                if (!response.ok) throw new Error("options.json not found");
                 
                 const options = await response.json();
                 container.innerHTML = ''; 
