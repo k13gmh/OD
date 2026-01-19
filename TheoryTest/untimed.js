@@ -1,17 +1,17 @@
 /**
  * File: untimed.js
- * Version: v2.1.1
- * Feature: Dynamic Option Shuffling to ensure randomness
+ * Version: v2.2.7
+ * Feature: Wall of Shame Weighted Selection & Redemption
  */
 
-const SCRIPT_VERSION = "v2.1.1";
+const SCRIPT_VERSION = "v2.2.7";
 
-// FIX: Checking localStorage instead of sessionStorage [cite: 2026-01-11, 2026-01-17]
+// Security Check [cite: 2026-01-11, 2026-01-17]
 if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
 }
 
-let allQuestions = [], sessionQuestions = [], currentIndex = 0, originalSessionQuestions = []; 
+let allQuestions = [], sessionQuestions = [], currentIndex = 0;
 let testData = { selections: {}, flagged: [], seenIndices: [] };
 
 async function init() {
@@ -20,91 +20,56 @@ async function init() {
     try {
         const response = await fetch('questions.json');
         allQuestions = await response.json();
-        const saved = localStorage.getItem('orion_current_session');
-        if (saved) { 
-            document.getElementById('resume-modal').style.display = 'flex'; 
-        } else { 
-            startFreshSession(); 
-        }
+        startUntimed();
     } catch (e) { console.error(e); }
 }
 
-function startFreshSession() {
-    let selected = [...allQuestions]
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 50);
+function startUntimed() {
+    // 1. Get Shame Tally from LocalStorage [cite: 2026-01-17]
+    const shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
 
-    sessionQuestions = selected.map((q, idx) => {
-        return shuffleQuestionOptions(q, idx + 1);
+    // 2. Weighted Selection Logic [cite: 2026-01-11]
+    let weightedPool = [];
+    allQuestions.forEach(q => {
+        const tally = shameTally[q.id] || 0;
+        // Base weight is 1. Each tally adds +2 to the weight.
+        const weight = 1 + (tally * 2); 
+        for (let i = 0; i < weight; i++) {
+            weightedPool.push(q);
+        }
     });
-    
-    originalSessionQuestions = [...sessionQuestions];
+
+    // 3. Draw 50 unique questions from the weighted pool
+    let selected = [];
+    while (selected.length < 50 && weightedPool.length > 0) {
+        const randomIndex = Math.floor(Math.random() * weightedPool.length);
+        const picked = weightedPool[randomIndex];
+        // Ensure no duplicates in the 50-set
+        if (!selected.find(s => s.id === picked.id)) {
+            selected.push(picked);
+        }
+        // Remove all instances of this picked question from pool to avoid re-picking
+        weightedPool = weightedPool.filter(p => p.id !== picked.id);
+    }
+
+    // Shuffle and Prepare
+    sessionQuestions = selected.sort(() => 0.5 - Math.random());
     currentIndex = 0;
     testData = { selections: {}, flagged: [], seenIndices: [0] };
     renderQuestion();
 }
 
-function shuffleQuestionOptions(q, displayIndex) {
-    let optionsArray = [
-        { text: q.choices.A, correct: q.correct === "A" },
-        { text: q.choices.B, correct: q.correct === "B" },
-        { text: q.choices.C, correct: q.correct === "C" },
-        { text: q.choices.D, correct: q.correct === "D" }
-    ].filter(opt => opt.text);
-
-    for (let i = optionsArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [optionsArray[i], optionsArray[j]] = [optionsArray[j], optionsArray[i]];
-    }
-
-    const newChoices = {};
-    let newCorrectLetter = "";
-    const letters = ["A", "B", "C", "D"];
-
-    optionsArray.forEach((opt, i) => {
-        const letter = letters[i];
-        newChoices[letter] = opt.text;
-        if (opt.correct) newCorrectLetter = letter;
-    });
-
-    return {
-        ...q,
-        choices: newChoices,
-        correct: newCorrectLetter,
-        originalIndex: displayIndex
-    };
-}
-
-function resumeTest(shouldResume) {
-    document.getElementById('resume-modal').style.display = 'none';
-    if (shouldResume) {
-        const savedValue = localStorage.getItem('orion_current_session');
-        if (savedValue) {
-            const saved = JSON.parse(savedValue);
-            sessionQuestions = saved.questions;
-            originalSessionQuestions = [...sessionQuestions];
-            testData = saved.data;
-            currentIndex = saved.currentIndex || 0;
-            renderQuestion();
-        }
-    } else { startFreshSession(); }
-}
-
 function renderQuestion() {
     const q = sessionQuestions[currentIndex];
-    const tag = document.getElementById('v-tag-top');
-    if (tag) tag.innerText = SCRIPT_VERSION;
-
     const imgElement = document.getElementById('q-image');
     if (imgElement) {
         imgElement.style.display = 'none'; 
         imgElement.src = `images/${q.id}.jpeg`;
         imgElement.onload = () => { imgElement.style.display = 'block'; };
         imgElement.onerror = () => { imgElement.style.display = 'none'; };
-        imgElement.onclick = () => openModal(imgElement.src);
     }
 
-    document.getElementById('q-number').innerText = `Question ${q.originalIndex} of ${originalSessionQuestions.length}`;
+    document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
     document.getElementById('q-category').innerText = q.category;
     document.getElementById('q-text').innerText = q.question;
     document.getElementById('q-id-display').innerText = `ID: ${q.id}`;
@@ -127,100 +92,59 @@ function renderQuestion() {
     const flagBtn = document.getElementById('flag-btn');
     const isFlagged = testData.flagged.includes(q.id);
     flagBtn.style.background = isFlagged ? "#f1c40f" : "#bdc3c7";
-    flagBtn.innerText = isFlagged ? "FLAGGED" : "FLAG";
-
-    saveProgress();
-}
-
-function toggleFlag() {
-    const q = sessionQuestions[currentIndex];
-    if (!testData.flagged) testData.flagged = [];
-    const flagIndex = testData.flagged.indexOf(q.id);
-    if (flagIndex > -1) {
-        testData.flagged.splice(flagIndex, 1);
-    } else {
-        testData.flagged.push(q.id);
-    }
-    renderQuestion();
 }
 
 function changeQuestion(step) {
     const newIndex = currentIndex + step;
     if (newIndex >= 0 && newIndex < sessionQuestions.length) {
-        if (!testData.seenIndices.includes(currentIndex)) testData.seenIndices.push(currentIndex);
         currentIndex = newIndex;
         renderQuestion();
     }
 }
 
-function showSummary() {
-    document.getElementById('test-ui').style.display = 'none';
-    const summaryUI = document.getElementById('summary-ui');
-    summaryUI.style.display = 'block';
-
-    const skippedQuestions = originalSessionQuestions.filter(q => !testData.selections[q.id]);
-    const flaggedQuestions = originalSessionQuestions.filter(q => testData.flagged.includes(q.id));
-
-    summaryUI.innerHTML = `
-        <h3>Summary</h3>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-            <button class="btn btn-blue" onclick="retrySubset('skipped')">SKIPPED (${skippedQuestions.length})</button>
-            <button class="btn btn-blue" onclick="retrySubset('flagged')">FLAGGED (${flaggedQuestions.length})</button>
-            <button class="btn btn-blue" onclick="retrySubset('all')">REVIEW</button>
-            <button class="btn" onclick="reviewAnswers()">FINISHED</button>
-        </div>
-    `;
-
-    let score = 0;
-    originalSessionQuestions.forEach(q => {
-        if (testData.selections[q.id] === q.correct) score++;
-    });
-    
-    localStorage.setItem('orion_final_results', JSON.stringify({ 
-        score, 
-        total: originalSessionQuestions.length, 
-        questions: originalSessionQuestions, 
-        data: testData 
-    }));
-}
-
-function retrySubset(type) {
-    if (type === 'skipped') {
-        sessionQuestions = originalSessionQuestions.filter(q => !testData.selections[q.id]);
-    } else if (type === 'flagged') {
-        sessionQuestions = originalSessionQuestions.filter(q => testData.flagged.includes(q.id));
-    } else {
-        sessionQuestions = [...originalSessionQuestions];
-    }
-
-    if (sessionQuestions.length === 0) {
-        alert("No questions found.");
-        return;
-    }
-
-    currentIndex = 0;
-    testData.seenIndices = [0];
-    document.getElementById('summary-ui').style.display = 'none';
-    document.getElementById('test-ui').style.display = 'block';
+function toggleFlag() {
+    const q = sessionQuestions[currentIndex];
+    const idx = testData.flagged.indexOf(q.id);
+    if (idx > -1) testData.flagged.splice(idx, 1);
+    else testData.flagged.push(q.id);
     renderQuestion();
 }
 
-function openModal(src) {
-    const modal = document.getElementById('img-modal');
-    document.getElementById('img-modal-content').src = src;
-    modal.style.display = 'flex';
-}
+function finishTest() {
+    // 1. Load Shame Tally [cite: 2026-01-17]
+    let shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
+    let score = 0;
 
-function saveProgress() { 
-    localStorage.setItem('orion_current_session', JSON.stringify({ 
-        questions: originalSessionQuestions, 
-        data: testData, 
-        currentIndex 
-    })); 
-}
+    sessionQuestions.forEach(q => {
+        const userSelection = testData.selections[q.id];
+        const isCorrect = (userSelection === q.correct);
 
-function reviewAnswers() { 
-    window.location.href = 'review.html'; 
+        if (isCorrect) {
+            score++;
+            // Redemption Logic: If it was on the Wall of Shame, decrease tally by 0.5
+            // (Getting it right twice removes it) [cite: 2026-01-11]
+            if (shameTally[q.id]) {
+                shameTally[q.id] -= 0.5;
+                if (shameTally[q.id] <= 0) delete shameTally[q.id];
+            }
+        } else if (userSelection) {
+            // Error Logic: If wrong, increase tally by 1
+            shameTally[q.id] = (shameTally[q.id] || 0) + 1;
+        }
+    });
+
+    // 2. Save Tally back to LocalStorage [cite: 2026-01-17]
+    localStorage.setItem('orion_shame_tally', JSON.stringify(shameTally));
+
+    // Save final results for review [cite: 2026-01-11]
+    localStorage.setItem('orion_final_results', JSON.stringify({ 
+        score, 
+        total: sessionQuestions.length, 
+        questions: sessionQuestions, 
+        data: testData 
+    }));
+    
+    window.location.href = 'review.html';
 }
 
 init();
