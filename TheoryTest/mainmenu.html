@@ -9,7 +9,11 @@
         .container { width: 100%; max-width: 400px; text-align: center; }
         h1 { font-size: 2rem; letter-spacing: 2px; margin-bottom: 5px; }
         h2 { font-size: 1.1rem; font-weight: 300; margin-bottom: 20px; }
-        .status { color: #2ecc71; font-size: 0.9rem; margin-bottom: 30px; }
+        
+        /* Dynamic Status Colors */
+        .status { font-size: 0.9rem; margin-bottom: 30px; }
+        .status.unlocked { color: #2ecc71; }
+        .status.locked { color: #e74c3c; }
         .status::before { content: "● "; }
         
         .menu-card { background: #1c1c1e; padding: 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
@@ -28,7 +32,7 @@
     <div class="container">
         <h1>ORION DRIVE</h1>
         <h2>Theory Test</h2>
-        <div class="status">System Unlocked</div>
+        <div id="status-text" class="status unlocked">System Unlocked</div>
 
         <div class="menu-card">
             <div class="sub-heading">Mock Tests</div>
@@ -38,23 +42,35 @@
         </div>
     </div>
 
-    <div id="v-tag">v2.1.0</div>
+    <div id="v-tag">v2.1.9</div>
 
     <script>
+        /**
+         * Logic: Reads options from options.json [cite: 2026-01-11]
+         * Displays error message instead of redirecting on failure [cite: 2026-01-13]
+         */
         async function loadMenu() {
-            // Security check from your previous sessions
-            if (!sessionStorage.getItem('orion_session_token')) {
-                window.location.href = 'index.html';
+            const container = document.getElementById('dynamic-buttons');
+            const statusDiv = document.getElementById('status-text');
+
+            // Security check using localStorage for iPad stability [cite: 2026-01-11, 2026-01-17]
+            const token = localStorage.getItem('orion_session_token') || sessionStorage.getItem('orion_session_token');
+
+            if (!token) {
+                statusDiv.innerText = "System Locked";
+                statusDiv.className = "status locked";
+                container.innerHTML = `<div style="color: #e74c3c; font-size: 0.85rem; padding: 10px; border: 1px solid #e74c3c; border-radius: 10px;">
+                    ACCESS DENIED<br>Security Token Required</div>`;
                 return;
             }
 
             try {
+                // Fetching from options.json as requested [cite: 2026-01-11]
                 const response = await fetch('options.json');
-                if (!response.ok) throw new Error("Could not load options");
+                if (!response.ok) throw new Error("Could not load options.json");
                 
                 const options = await response.json();
-                const container = document.getElementById('dynamic-buttons');
-                container.innerHTML = ''; // Clear loading text
+                container.innerHTML = ''; 
 
                 options.forEach(opt => {
                     const btn = document.createElement('button');
@@ -64,8 +80,7 @@
                     container.appendChild(btn);
                 });
             } catch (err) {
-                document.getElementById('dynamic-buttons').innerHTML = 
-                    `<div style="color: #ff3b30; font-size: 0.8rem;">Error loading menu options.</div>`;
+                container.innerHTML = `<div style="color: #ff3b30; font-size: 0.8rem;">Error: ${err.message}</div>`;
                 console.error(err);
             }
         }
