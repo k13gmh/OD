@@ -1,11 +1,11 @@
 /**
  * File: timed.js
- * Version: v2.4.2
- * Feature: Timed Test with Wall of Shame Weighting
+ * Version: v2.4.3
+ * Exact match to untimed.js logic with Timer added [cite: 2026-01-11]
  */
 
-const JS_VERSION = "v2.4.2";
-const HTML_VERSION = "v2.4.2";
+const JS_VERSION = "v2.4.3";
+const HTML_VERSION = "v2.4.3";
 
 if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -13,7 +13,7 @@ if (!localStorage.getItem('orion_session_token')) {
 
 let allQuestions = [], sessionQuestions = [], currentIndex = 0;
 let testData = { selections: {}, flagged: [] };
-let timeLeft = 3420; // 57 minutes
+let timeLeft = 3420; // 57 minutes [cite: 2026-01-11]
 let timerInterval;
 
 async function init() {
@@ -24,14 +24,11 @@ async function init() {
         const response = await fetch('questions.json');
         allQuestions = await response.json();
         startTimed();
-    } catch (e) { 
-        console.error(e); 
-        document.getElementById('q-text').innerText = "Error loading questions.";
-    }
+    } catch (e) { console.error(e); }
 }
 
 function startTimed() {
-    // Standard random selection for Timed Test (50 questions) [cite: 2026-01-11]
+    // Timed test picks 50 random questions [cite: 2026-01-11]
     sessionQuestions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 50);
     currentIndex = 0;
     
@@ -45,7 +42,9 @@ function startTimer() {
         timeLeft--;
         const mins = Math.floor(timeLeft / 60);
         const secs = timeLeft % 60;
-        timerDisplay.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        if (timerDisplay) {
+            timerDisplay.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
         
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
@@ -57,7 +56,6 @@ function startTimer() {
 function renderQuestion() {
     const q = sessionQuestions[currentIndex];
     const imgElement = document.getElementById('q-image');
-    
     if (imgElement) {
         imgElement.style.display = 'none'; 
         imgElement.src = `images/${q.id}.jpeg`;
@@ -72,7 +70,6 @@ function renderQuestion() {
 
     const optionsArea = document.getElementById('options-area');
     optionsArea.innerHTML = '';
-    
     ["A", "B", "C", "D"].forEach(letter => {
         if (q.choices && q.choices[letter]) {
             const btn = document.createElement('button');
@@ -117,24 +114,17 @@ function finishTest() {
 
         if (isCorrect) {
             score++;
-            // Redemption logic [cite: 2026-01-11]
             if (shameTally[q.id]) {
-                shameTally[q.id] -= 1;
+                shameTally[q.id] -= 1; // Simplified weighting reduction [cite: 2026-01-11]
                 if (shameTally[q.id] <= 0) delete shameTally[q.id];
             }
         } else if (userSelection) {
-            // Add to Wall of Shame [cite: 2026-01-11]
-            shameTally[q.id] = (shameTally[q.id] || 0) + 1;
+            shameTally[q.id] = (shameTally[q.id] || 0) + 1; // Add to Wall of Shame [cite: 2026-01-11]
         }
     });
 
     localStorage.setItem('orion_shame_tally', JSON.stringify(shameTally));
-    localStorage.setItem('orion_final_results', JSON.stringify({ 
-        score, 
-        total: sessionQuestions.length, 
-        questions: sessionQuestions, 
-        data: testData 
-    }));
+    localStorage.setItem('orion_final_results', JSON.stringify({ score, total: sessionQuestions.length, questions: sessionQuestions, data: testData }));
     window.location.href = 'review.html';
 }
 
