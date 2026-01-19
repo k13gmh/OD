@@ -1,12 +1,13 @@
 /**
  * File: category.js
- * Version: v2.1.0
+ * Version: v2.1.1
  * Feature: Filtered Category Mock with Option Shuffling
  */
 
-const SCRIPT_VERSION = "v2.1.0";
+const SCRIPT_VERSION = "v2.1.1";
 
-if (!sessionStorage.getItem('orion_session_token')) {
+// FIX: Switched to localStorage for mobile stability [cite: 2026-01-11, 2026-01-17]
+if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
 }
 
