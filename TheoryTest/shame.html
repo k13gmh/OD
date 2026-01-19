@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Wall of Shame - Orion Drive</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background-color: #000; color: #e0e0e0; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 600px; }
+        h1 { color: #fff; text-align: center; letter-spacing: 2px; }
+        h2 { color: #ff3b30; text-align: center; margin-top: 0; font-size: 1rem; text-transform: uppercase; }
+        .shame-card { background: #1c1c1e; border: 1px solid #2c2c2e; border-radius: 12px; padding: 15px; margin-bottom: 20px; position: relative; }
+        .id-badge { font-family: monospace; font-size: 0.7rem; color: #8e8e93; border: 1px solid #444; padding: 2px 6px; border-radius: 4px; }
+        .tally-badge { float: right; color: #ff3b30; font-weight: bold; font-size: 0.8rem; }
+        .question-text { margin: 15px 0; line-height: 1.4; font-size: 1rem; }
+        .correct-answer { background: rgba(40, 167, 69, 0.2); border: 1px solid #28a745; color: #28a745; padding: 10px; border-radius: 6px; font-weight: bold; }
+        .no-shame { text-align: center; padding: 40px; color: #28a745; font-weight: bold; }
+        .btn-back { display: block; width: 100%; background: #323234; color: #fff; text-align: center; padding: 12px 0; border-radius: 8px; text-decoration: none; margin-bottom: 20px; font-weight: bold; }
+        .v-tag { text-align: center; font-size: 0.6rem; color: #444; margin-top: 20px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ORION DRIVE</h1>
+        <h2>Wall of Shame</h2>
+        
+        <a href="mainmenu.html" class="btn-back">RETURN TO MENU</a>
+
+        <div id="shame-list">
+            </div>
+
+        <div class="v-tag">v1.0.0</div>
+    </div>
+
+    <script>
+        // 1. SECURITY CHECK: Local Storage Only [cite: 2026-01-11, 2026-01-17]
+        if (!localStorage.getItem('orion_session_token')) {
+            window.location.href = 'mainmenu.html';
+        }
+
+        async function init() {
+            const shameList = document.getElementById('shame-list');
+            const tallyData = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
+            
+            // Check if there is anything to show
+            const ids = Object.keys(tallyData);
+            if (ids.length === 0) {
+                shameList.innerHTML = '<div class="no-shame">Excellent! Your Wall of Shame is empty.</div>';
+                return;
+            }
+
+            try {
+                // Fetch the questions database [cite: 2026-01-17]
+                const response = await fetch('questions.json');
+                const allQuestions = await response.json();
+
+                // Sort IDs by highest tally first [cite: 2026-01-11]
+                const sortedIds = ids.sort((a, b) => tallyData[b] - tallyData[a]);
+
+                shameList.innerHTML = '';
+                sortedIds.forEach(id => {
+                    const q = allQuestions.find(item => item.id == id);
+                    if (q) {
+                        const tally = tallyData[id];
+                        const correctLetter = q.correct;
+                        const correctText = q.choices[correctLetter];
+
+                        const card = document.createElement('div');
+                        card.className = 'shame-card';
+                        card.innerHTML = `
+                            <span class="id-badge">ID: ${id}</span>
+                            <span class="tally-badge">ERROR WEIGHT: ${tally}</span>
+                            <div class="question-text">${q.question}</div>
+                            <div class="correct-answer">
+                                <strong>CORRECT:</strong> ${correctText}
+                            </div>
+                        `;
+                        shameList.appendChild(card);
+                    }
+                });
+            } catch (e) {
+                shameList.innerHTML = '<p style="color:red">Error loading question data.</p>';
+            }
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
