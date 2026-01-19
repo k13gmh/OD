@@ -6,19 +6,21 @@
     <title>Orion Drive - Timed Test</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .timer-display {
+        /* Added only the timer styling to match your existing theme */
+        .timer-row {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #timer {
             background: #000;
             color: #0f0;
-            padding: 8px 20px;
-            border-radius: 8px;
+            padding: 5px 15px;
+            border-radius: 5px;
             font-family: monospace;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            text-align: center;
-            margin-bottom: 15px;
             display: inline-block;
         }
-        .header-center { text-align: center; width: 100%; }
     </style>
 </head>
 <body>
@@ -27,8 +29,8 @@
     </div>
 
     <div class="container">
-        <div class="header-center">
-            <div id="timer" class="timer-display">57:00</div>
+        <div class="timer-row">
+            <div id="timer">57:00</div>
         </div>
 
         <div id="test-ui">
@@ -42,7 +44,7 @@
                 <div id="options-area"></div>
                 
                 <div class="card-footer">
-                    <span id="version-tag">HTML: v2.4.2 | JS: Loading...</span>
+                    <span id="version-tag">HTML: v2.4.3 | JS: Loading...</span>
                     <span id="q-id-display">ID: --</span>
                 </div>
             </div>
