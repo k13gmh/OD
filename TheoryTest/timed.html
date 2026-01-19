@@ -1,120 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Timed Test - Orion Drive</title>
+    <title>Orion Drive - Timed Test</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Stacked Header to prevent overlapping on iPad [cite: 2026-01-11] */
-        .header-stack {
-            background: #f4f7f9;
-            border-bottom: 1px solid #e1e8ed;
-            padding: 15px 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        .top-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
-
-        .title-group { text-align: left; }
-        h1 { margin: 0; font-size: 1.2rem; letter-spacing: 1px; color: #333; }
-        h2 { margin: 0; font-size: 0.75rem; color: #ff3b30; text-transform: uppercase; }
-
-        .version-tag {
-            text-align: right;
-            font-size: 0.6rem;
-            font-family: monospace;
-            line-height: 1.2;
-        }
-
-        /* Timer in its own row to stop it covering the title [cite: 2026-01-11] */
-        .timer-container {
-            display: flex;
-            justify-content: center;
-            padding: 5px 0;
-        }
-
-        #timer {
+        .timer-display {
             background: #000;
             color: #0f0;
             padding: 8px 20px;
             border-radius: 8px;
             font-family: monospace;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: bold;
-        }
-
-        #question-box {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             text-align: center;
-            min-height: 150px;
+            margin-bottom: 15px;
+            display: inline-block;
         }
-
-        .option-btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            margin: 12px 0;
-            border: 1px solid #e1e8ed;
-            border-radius: 12px;
-            background: #ffffff;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-        
-        .discreet-id { color: #bdc3c7; font-size: 0.7rem; font-family: monospace; margin-top: 15px; }
-
-        .footer-btns {
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+        .header-center { text-align: center; width: 100%; }
     </style>
 </head>
 <body>
-
-    <div class="header-stack">
-        <div class="top-row">
-            <div class="title-group">
-                <h1>ORION DRIVE</h1>
-                <h2>Timed Test</h2>
-            </div>
-            <div class="version-tag">
-                <span style="color: #007bff;">HTML: v2.4.1</span><br>
-                <span style="color: #bdc3c7;" id="js-version-text">JS: Loading...</span>
-            </div>
-        </div>
-        
-        <div class="timer-container">
-            <div id="timer">57:00</div>
-        </div>
+    <div id="img-modal" onclick="this.style.display='none'">
+        <img id="img-modal-content" alt="Full view">
     </div>
 
     <div class="container">
-        <div id="question-box">
-            <div id="question-text" style="font-size: 1.15rem; font-weight: 600; color: #1a1a1a;">Ready to start?</div>
-            <div id="options-container" style="margin-top: 20px;"></div>
-            <div id="question-id" class="discreet-id"></div>
+        <div class="header-center">
+            <div id="timer" class="timer-display">57:00</div>
         </div>
 
-        <div class="footer-btns">
-            <button class="btn btn-blue" onclick="window.location.href='mainmenu.html'" style="background-color: #6c757d;">QUIT</button>
-            <button class="btn btn-blue" id="flag-btn">FLAG</button>
+        <div id="test-ui">
+            <div class="card">
+                <div class="q-header">
+                    <div id="q-number">...</div>
+                    <div id="q-category">...</div>
+                </div>
+                <img id="q-image" src="" alt="Thumbnail" onclick="document.getElementById('img-modal').style.display='flex'; document.getElementById('img-modal-content').src=this.src;">
+                <div id="q-text" class="question-text">Loading...</div>
+                <div id="options-area"></div>
+                
+                <div class="card-footer">
+                    <span id="version-tag">HTML: v2.4.2 | JS: Loading...</span>
+                    <span id="q-id-display">ID: --</span>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <button class="btn" onclick="changeQuestion(-1)">< BACK</button>
+                <button class="btn" onclick="changeQuestion(1)">NEXT ></button>
+                <button id="flag-btn" class="btn" onclick="toggleFlag()">FLAG</button>
+                <button class="btn" onclick="finishTest()">FINISH</button>
+            </div>
         </div>
     </div>
-
     <script src="timed.js"></script>
 </body>
 </html>
