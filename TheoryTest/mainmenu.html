@@ -31,7 +31,7 @@
             </div>
 
             <div id="menu-options" style="display:none;"></div>
-            <span class="v-tag">v2.2.5</span>
+            <span class="v-tag">v2.2.6</span>
         </div>
         <div id="debug-box" style="display:none"></div>
     </div>
@@ -84,7 +84,7 @@
             const input = document.getElementById('passCode').value.toUpperCase();
             if (input === targetKey) { 
                 localStorage.setItem('gatekeeper_stamp', curMonthYear);
-                localStorage.setItem('orion_session_token', getMMYY()); // LOCAL STORAGE ONLY [cite: 2026-01-11]
+                localStorage.setItem('orion_session_token', getMMYY());
                 showMenu(); 
             } else { 
                 localStorage.removeItem('gatekeeper_stamp'); 
