@@ -1,11 +1,11 @@
 /**
  * File: timed.js
- * Version: v2.4.3
- * Exact match to untimed.js logic with Timer added [cite: 2026-01-11]
+ * Version: v2.4.5
+ * Layout: Timer in card header
  */
 
-const JS_VERSION = "v2.4.3";
-const HTML_VERSION = "v2.4.3";
+const JS_VERSION = "v2.4.5";
+const HTML_VERSION = "v2.4.5";
 
 if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -13,7 +13,7 @@ if (!localStorage.getItem('orion_session_token')) {
 
 let allQuestions = [], sessionQuestions = [], currentIndex = 0;
 let testData = { selections: {}, flagged: [] };
-let timeLeft = 3420; // 57 minutes [cite: 2026-01-11]
+let timeLeft = 3420; 
 let timerInterval;
 
 async function init() {
@@ -28,7 +28,7 @@ async function init() {
 }
 
 function startTimed() {
-    // Timed test picks 50 random questions [cite: 2026-01-11]
+    // 50 random questions for timed mode [cite: 2026-01-11]
     sessionQuestions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 50);
     currentIndex = 0;
     
@@ -44,6 +44,11 @@ function startTimer() {
         const secs = timeLeft % 60;
         if (timerDisplay) {
             timerDisplay.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            
+            // Visual warning at 5 minutes [cite: 2026-01-11]
+            if (timeLeft < 300) {
+                timerDisplay.style.color = (timeLeft % 2 === 0) ? "#ff3b30" : "#0f0";
+            }
         }
         
         if (timeLeft <= 0) {
@@ -115,11 +120,11 @@ function finishTest() {
         if (isCorrect) {
             score++;
             if (shameTally[q.id]) {
-                shameTally[q.id] -= 1; // Simplified weighting reduction [cite: 2026-01-11]
+                shameTally[q.id] -= 1;
                 if (shameTally[q.id] <= 0) delete shameTally[q.id];
             }
         } else if (userSelection) {
-            shameTally[q.id] = (shameTally[q.id] || 0) + 1; // Add to Wall of Shame [cite: 2026-01-11]
+            shameTally[q.id] = (shameTally[q.id] || 0) + 1;
         }
     });
 
