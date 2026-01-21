@@ -7192,13 +7192,14 @@
     "id": "560",
     "category": "Road and Traffic Signs",
     "question": "What does this yellow sign mean?",
+    "choices": {
       "A": "Move into the left lane",
       "B": "End of lane closure",
       "C": "You may overtake on the left",
       "D": "You may not overtake on the left"
     },
     "correct": "B",
-    "explanation": "This is a temporary roadwork sign to show the end of a previous lane closure. It indicates that the lane that was previously blocked off is now re-opening for use.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "This is a temporary roadwork sign to show the end of a previous lane closure. It indicates that the lane that was previously blocked off is now re-opening for use."
   },
   {
     "id": "561",
