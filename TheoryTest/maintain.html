@@ -1,188 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Orion Drive - Maintain Database</title>
+    <title>Orion Drive - Maintenance</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        body { font-family: -apple-system, sans-serif; background-color: #000; color: #e0e0e0; padding: 20px; margin: 0; display: flex; flex-direction: column; align-items: center; }
-        .container { width: 100%; max-width: 600px; }
-        h1 { color: #fff; text-align: center; letter-spacing: 1px; font-size: 1.5rem; }
-        .card { background: #1c1c1e; padding: 20px; border-radius: 15px; border: 1px solid #2c2c2e; margin-bottom: 20px; }
-        label { display: block; font-size: 0.8rem; color: #8e8e93; margin-bottom: 5px; margin-top: 10px; }
-        input, textarea, select { width: 100%; background: #000; border: 1px solid #444; color: #fff; padding: 10px; border-radius: 8px; box-sizing: border-box; font-size: 0.9rem; }
-        textarea { height: 80px; resize: vertical; }
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        .btn { flex: 1; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; text-align: center; text-decoration: none; }
-        .btn-primary { background: #007bff; color: white; }
-        .btn-secondary { background: #3a3a3c; color: white; }
-        .btn-danger { background: #ff3b30; color: white; }
-        .q-list { margin-top: 20px; max-height: 400px; overflow-y: auto; border: 1px solid #2c2c2e; border-radius: 8px; }
-        .q-item { padding: 15px; border-bottom: 1px solid #2c2c2e; display: flex; justify-content: space-between; align-items: center; }
-        .q-item:last-child { border-bottom: none; }
-        .q-info { font-size: 0.85rem; color: #fff; }
-        .q-meta { font-size: 0.7rem; color: #8e8e93; }
-        .v-tag { text-align: center; font-size: 0.65rem; color: #555; margin-top: 20px; font-family: monospace; }
-        .nav-link { display: inline-block; margin-bottom: 20px; color: #007bff; text-decoration: none; font-size: 0.9rem; }
+        .edit-grid { display: grid; gap: 15px; margin-top: 15px; }
+        .input-group { display: flex; flex-direction: column; }
+        .input-group label { font-size: 0.8em; color: var(--primary-color); margin-bottom: 4px; }
+        .choice-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        #q-image-preview { 
+            max-width: 200px; 
+            margin: 10px auto; 
+            display: block; 
+            border: 2px solid #444; 
+            cursor: pointer;
+        }
+        .maintenance-footer { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="nav-link">← Back to Menu</a>
-        <h1>Maintain Database</h1>
-
-        <div class="card">
-            <h3 style="margin-top:0">Add / Edit Question</h3>
-            <input type="hidden" id="edit-index" value="-1">
-            
-            <label>Question Text</label>
-            <textarea id="q-text" placeholder="Enter the driving theory question..."></textarea>
-            
-            <label>Options (One per line)</label>
-            <textarea id="q-options" placeholder="Option 1&#10;Option 2&#10;Option 3&#10;Option 4"></textarea>
-            
-            <label>Correct Answer Index (0-3)</label>
-            <input type="number" id="q-correct" min="0" max="3" value="0">
-            
-            <label>Explanation / Hint</label>
-            <textarea id="q-hint" placeholder="Why is this the correct answer?"></textarea>
-
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="saveQuestion()">Save Question</button>
-                <button class="btn btn-secondary" onclick="clearForm()">Clear</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <h3 style="margin-top:0">Database Actions</h3>
-            <div class="btn-group">
-                <button class="btn btn-secondary" onclick="exportJSON()">Export JSON</button>
-                <label class="btn btn-secondary" style="margin-top:0; padding-top:14px">
-                    Import JSON <input type="file" id="importFile" style="display:none" onchange="importJSON(event)">
-                </label>
-            </div>
-            <p style="font-size: 0.7rem; color: #8e8e93; margin-top: 10px;">Total Questions: <span id="q-count">0</span></p>
-            
-            <div class="q-list" id="questions-container">
-                </div>
-        </div>
-
-        <div class="v-tag">ORION DRIVE SYSTEM v1.6.8</div>
+    <div id="img-modal" onclick="this.style.display='none'">
+        <img id="img-modal-content" alt="Full view">
     </div>
 
-    <script>
-        let questions = [];
+    <div class="container">
+        <div class="card">
+            <div class="q-header">
+                <div id="m-status">Maintenance Mode</div>
+                <div>ID Search</div>
+            </div>
 
-        async function init() {
-            try {
-                const response = await fetch('questions.json');
-                if (response.ok) {
-                    questions = await response.json();
-                    renderList();
-                }
-            } catch (e) {
-                console.log("No existing database found.");
-            }
-        }
+            <div class="input-group">
+                <input type="text" id="search-id" placeholder="Enter Question ID..." style="padding:12px; border-radius:8px; border:1px solid #444; background:#222; color:white;">
+                <button class="btn" onclick="loadQuestionById()" style="margin-top:8px;">LOAD QUESTION</button>
+            </div>
 
-        function renderList() {
-            const container = document.getElementById('questions-container');
-            const countSpan = document.getElementById('q-count');
-            container.innerHTML = '';
-            countSpan.innerText = questions.length;
-
-            questions.forEach((q, index) => {
-                const div = document.createElement('div');
-                div.className = 'q-item';
-                div.innerHTML = `
-                    <div class="q-info">
-                        <div>${q.question.substring(0, 50)}...</div>
-                        <div class="q-meta">Options: ${q.options.length} | Correct: ${q.answer}</div>
+            <div id="edit-form" style="display:none;">
+                <div class="edit-grid">
+                    <img id="q-image-preview" src="" alt="Thumbnail" onclick="document.getElementById('img-modal').style.display='flex'; document.getElementById('img-modal-content').src=this.src;">
+                    
+                    <div class="input-group">
+                        <label>Question Text</label>
+                        <textarea id="edit-q-text" rows="3"></textarea>
                     </div>
-                    <div>
-                        <button class="btn btn-secondary" style="padding: 5px 10px; font-size: 0.7rem;" onclick="editQuestion(${index})">Edit</button>
-                        <button class="btn btn-danger" style="padding: 5px 10px; font-size: 0.7rem;" onclick="deleteQuestion(${index})">Del</button>
+
+                    <div class="choice-row">
+                        <div class="input-group"><label>Choice A</label><input type="text" id="edit-a"></div>
+                        <div class="input-group"><label>Choice B</label><input type="text" id="edit-b"></div>
+                        <div class="input-group"><label>Choice C</label><input type="text" id="edit-c"></div>
+                        <div class="input-group"><label>Choice D</label><input type="text" id="edit-d"></div>
                     </div>
-                `;
-                container.appendChild(div);
-            });
-        }
 
-        function saveQuestion() {
-            const text = document.getElementById('q-text').value;
-            const options = document.getElementById('q-options').value.split('\n').filter(o => o.trim() !== "");
-            const answer = parseInt(document.getElementById('q-correct').value);
-            const hint = document.getElementById('q-hint').value;
-            const editIndex = parseInt(document.getElementById('edit-index').value);
+                    <div class="input-group">
+                        <label>Correct Answer (A, B, C, or D)</label>
+                        <input type="text" id="edit-correct">
+                    </div>
 
-            if (!text || options.length < 2) {
-                alert("Please provide a question and at least 2 options.");
-                return;
-            }
+                    <div class="input-group">
+                        <label>Explanation</label>
+                        <textarea id="edit-explanation" rows="3"></textarea>
+                    </div>
+                </div>
 
-            const newQ = { question: text, options, answer, hint };
+                <div class="maintenance-footer">
+                    <button class="btn" style="background:#27ae60;" onclick="saveChanges()">SAVE CHANGES TO MEMORY</button>
+                    <button class="btn" style="background:#2980b9;" onclick="copySingleJSON()">COPY THIS QUESTION</button>
+                    <button class="btn" style="background:#8e44ad;" onclick="copyFullJSON()">COPY FULL JSON (questions.json)</button>
+                </div>
+            </div>
 
-            if (editIndex > -1) {
-                questions[editIndex] = newQ;
-            } else {
-                questions.push(newQ);
-            }
+            <div class="card-footer">
+                <span id="version-tag">HTML: v2.2.8 | JS: v2.2.8</span>
+                <span id="q-id-display">ID: --</span>
+            </div>
+        </div>
+        <button class="btn" onclick="window.location.href='mainmenu.html'" style="margin-top:15px; width:100%;">BACK TO MENU</button>
+    </div>
 
-            clearForm();
-            renderList();
-        }
-
-        function editQuestion(index) {
-            const q = questions[index];
-            document.getElementById('q-text').value = q.question;
-            document.getElementById('q-options').value = q.options.join('\n');
-            document.getElementById('q-correct').value = q.answer;
-            document.getElementById('q-hint').value = q.hint || "";
-            document.getElementById('edit-index').value = index;
-            window.scrollTo(0, 0);
-        }
-
-        function deleteQuestion(index) {
-            if (confirm("Delete this question?")) {
-                questions.splice(index, 1);
-                renderList();
-            }
-        }
-
-        function clearForm() {
-            document.getElementById('q-text').value = '';
-            document.getElementById('q-options').value = '';
-            document.getElementById('q-correct').value = '0';
-            document.getElementById('q-hint').value = '';
-            document.getElementById('edit-index').value = '-1';
-        }
-
-        function exportJSON() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(questions, null, 2));
-            const downloadAnchorNode = document.createElement('a');
-            downloadAnchorNode.setAttribute("href", dataStr);
-            downloadAnchorNode.setAttribute("download", "questions.json");
-            document.body.appendChild(downloadAnchorNode);
-            downloadAnchorNode.click();
-            downloadAnchorNode.remove();
-        }
-
-        function importJSON(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    questions = JSON.parse(e.target.result);
-                    renderList();
-                } catch (err) {
-                    alert("Invalid JSON file.");
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        window.onload = init;
-    </script>
+    <script src="maintain.js"></script>
 </body>
 </html>
