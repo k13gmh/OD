@@ -7156,7 +7156,7 @@
     "choices": {
       "A": "Low bridge ahead",
       "B": "Tunnel ahead",
-      "C": "Ancient momument ahead",
+      "C": "Ancient monument ahead",
       "D": "Narrow archway ahead"
     },
     "correct": "B",
