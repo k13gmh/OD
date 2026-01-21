@@ -7113,12 +7113,12 @@
   {
     "id": "554",
     "category": "Road and Traffic Signs",
-    "question": "What does a 'red circle with a black van' and a '3.5t' inside mean?",
+    "question": "What does a 'red circle with a black van' and a '7.5t' inside mean?",
     "choices": {
       "A": "No vans allowed",
-      "B": "Vans over 3.5 tonnes maximum authorized mass prohibited",
+      "B": "Vans over 7.5 tonnes maximum authorized mass prohibited",
       "C": "Vans only",
-      "D": "Speed limit is 3.5 mph"
+      "D": "Speed limit is 7.5 mph"
     },
     "correct": "B",
     "explanation": "This prevents heavy goods vehicles from using unsuitable roads.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
@@ -7152,15 +7152,15 @@
   {
     "id": "557",
     "category": "Road and Traffic Signs",
-    "question": "What does a blue square sign with a 'white bed' symbol mean?",
+    "question": "What does this sign mean?",
     "choices": {
-      "A": "A furniture shop",
-      "B": "A hotel or overnight accommodation",
-      "C": "A hospital",
-      "D": "A rest area"
+      "A": "Low bridge ahead",
+      "B": "Tunnel ahead",
+      "C": "Ancient momument ahead",
+      "D": "Narrow archway ahead"
     },
     "correct": "B",
-    "explanation": "This is an information sign for travelers.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "This is a warning sign alerting you to a tunnel. You should switch on your dipped headlights before entering to ensure you can see and be seen by others.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "558",
@@ -7191,39 +7191,41 @@
   {
     "id": "560",
     "category": "Road and Traffic Signs",
-    "question": "What does a sign with a 'blue rectangle and a white 'i'' mean?",
-    "choices": {
-      "A": "An internet cafe",
-      "B": "An information center",
-      "C": "A library",
-      "D": "A school"
+    "question": "What does this yellow sign mean?"
+      "A": "Move into the left lane",
+      "B": "End of lane closure",
+      "C": "You may overtake on the left",
+      "D": "You may not overtake on the left"
     },
     "correct": "B",
-    "explanation": "This guides you to local tourist or travel information.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "This is a temporary roadwork sign to show the end of a previous lane closure. It indicates that the lane that was previously blocked off is now re-opening for use.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "561",
     "category": "Road and Traffic Signs",
-    "question": "A sign shows a 'red triangle with a bicycle'. What does it mean?",
+    "question": "What does this sign mean?",
     "choices": {
-      "A": "A cycle race",
-      "B": "A warning that a cycle route crosses the road",
-      "C": "No cycling",
-      "D": "A bike shop"
+      "A": "Walking route only",
+      "B": "Approaching a football ground",
+      "C": "Public park or garden",
+      "D": "A youth hostel"
     },
-    "correct": "B",
-    "explanation": "Drivers should watch for cyclists crossing the main road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "correct": "C",
+    "explanation": "This brown sign features the official tourist symbol for a Country Park in England and Wales. Brown signs are used to direct drivers to tourist attractions and facilities, helping them find leisure destinations like country parks that might be off the main road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
-    "id": "562",
-    "category": "Road and Traffic Signs",
-    "question": "What does a 'red circle with a red car and a red motorcycle' mean?",
-    "choices": {
-      "A": "All motor vehicles allowed",
-      "B": "No motor vehicles allowed",
-      "C": "Cars and bikes only",
-      "D": "No parking"
-    },
+  "id": "881A",
+  "category": "Road and Traffic Signs",
+  "question": "What does this blue rectangular sign mean?",
+  "choices": {
+    "A": "Residential parking only",
+    "B": "People share the road with vehicles",
+    "C": "People are prohibited from using this road",
+    "D": "No through road for motor vehicles"
+  },
+  "correct": "B",
+  "explanation": "This sign marks the entrance to a Home Zone. These are residential areas designed to be shared safely by pedestrians, cyclists, and low-speed motor vehicles. Drivers should be particularly careful as children may be playing in the street."
+  },
     "correct": "B",
     "explanation": "This sign prohibits both cars and motorcycles.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
