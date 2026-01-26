@@ -8,15 +8,18 @@
 </head>
 <body>
     <div class="container">
-        <div class="logo-container">
-            <img src="images/logo.jpeg" alt="Orion Drive Logo">
+        <div style="margin-bottom: 20px; text-align: center;">
+            <img src="images/logo.jpeg" alt="Orion Drive Logo" style="width: 280px; height: auto;">
         </div>
 
-        <h2>Theory Test System</h2>
-        <div id="status-msg">● System Unlocked</div>
+        <h2 style="text-align: center; color: #666; font-size: 1.1rem; margin-top: 0; margin-bottom: 20px;">Theory Test System</h2>
+        
+        <div id="status-msg" style="color: #5cb85c; font-size: 0.85rem; margin-bottom: 15px; font-weight: bold; display: none; text-align: center;">
+            ● System Unlocked
+        </div>
 
         <div class="card">
-            <div id="lock-ui" class="lock-screen">
+            <div id="lock-ui">
                 <p style="font-size: 0.85rem; color: #8e8e93; margin-bottom: 15px;">Monthly Security Token Required</p>
                 <input type="text" id="passCode" placeholder="ENTER CODE" autocomplete="off" 
                        style="background: #fff; border: 1px solid #d1e3f8; color: #007bff; padding: 15px; font-size: 1.3rem; width: 100%; box-sizing: border-box; text-align: center; border-radius: 12px; margin-bottom: 15px; font-family: monospace;">
@@ -25,7 +28,10 @@
 
             <div id="menu-options" style="display:none;"></div>
             
-            <span class="v-tag">v2.3.0</span>
+            <div class="card-footer">
+                <span>ORION DRIVE</span>
+                <span>v2.3.0</span>
+            </div>
         </div>
     </div>
 
@@ -88,7 +94,10 @@
                 options.forEach(opt => {
                     const anchor = document.createElement('a');
                     anchor.href = opt.htmlName;
+                    // Applying your classes from style.css
                     anchor.className = 'btn btn-blue';
+                    anchor.style.textDecoration = 'none';
+                    anchor.style.marginBottom = '12px';
                     anchor.innerText = opt.description;
                     menuOptions.appendChild(anchor);
                 });
