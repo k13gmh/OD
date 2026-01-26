@@ -3,40 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Orion Drive - Theory Test</title>
+    <title>Orion Drive - Main Menu</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background-color: #000; color: #e0e0e0; display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; min-height: 100vh; }
-        .container { text-align: center; width: 100%; max-width: 400px; margin-top: 50px; }
-        h1 { color: #fff; margin-bottom: 5px; letter-spacing: 2px; font-weight: bold; }
-        h2 { color: #ffffff; margin-top: 0; font-weight: bold; font-size: 1.2rem; margin-bottom: 5px; }
-        #status-msg { color: #28a745; font-size: 0.85rem; margin-bottom: 20px; font-weight: bold; display: none; }
-        .menu-box { background: #1c1c1e; padding: 25px; border-radius: 20px; border: 1px solid #2c2c2e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); box-sizing: border-box; position: relative; min-height: 180px; }
-        .lock-screen input { background: #000; border: 1px solid #444; color: #007bff; padding: 12px; font-size: 1.2rem; width: 100%; box-sizing: border-box; text-align: center; border-radius: 8px; margin-bottom: 15px; font-family: monospace; }
-        .btn { background: #007bff; color: #fff; border: none; padding: 15px 0; border-radius: 8px; cursor: pointer; font-weight: bold; text-transform: uppercase; width: 100%; margin-top: 10px; display: block; text-decoration: none; box-sizing: border-box; text-align: center; }
-        .v-tag { position: absolute; bottom: 10px; right: 15px; font-size: 0.65rem; color: #555; font-family: monospace; }
+        /* Orion Drive Standard Styles [cite: 2026-01-11] */
+        body { 
+            font-family: -apple-system, sans-serif; 
+            background-color: #f4f7f9; 
+            color: #333; 
+            padding: 20px; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh;
+        }
+
+        .container { 
+            width: 100%; 
+            max-width: 400px; 
+            margin-top: 10px; 
+            text-align: center;
+        }
+
+        /* Logo Styling to match your provided image */
+        .logo-container {
+            margin-bottom: 20px;
+        }
+        .logo-container img {
+            width: 180px; /* Adjust based on your logo file */
+            height: auto;
+        }
+
+        h1 { color: #1a1a1a; margin-bottom: 5px; font-size: 1.5rem; letter-spacing: 1px; }
+        h2 { color: #666; margin-top: 0; font-size: 1rem; margin-bottom: 20px; }
+
+        #status-msg { 
+            color: #5cb85c; 
+            font-size: 0.85rem; 
+            margin-bottom: 15px; 
+            font-weight: bold; 
+            display: none; 
+        }
+
+        .card { 
+            background: #fff; 
+            padding: 25px; 
+            border-radius: 20px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            border: 1px solid #e1e8ed; 
+            margin-bottom: 20px; 
+            min-height: 180px; 
+            position: relative; 
+            box-sizing: border-box;
+        }
+
+        .lock-screen input { 
+            background: #fff; 
+            border: 1px solid #d1e3f8; 
+            color: #007bff; 
+            padding: 15px; 
+            font-size: 1.2rem; 
+            width: 100%; 
+            box-sizing: border-box; 
+            text-align: center; 
+            border-radius: 12px; 
+            margin-bottom: 15px; 
+            font-family: monospace; 
+        }
+
+        .btn { 
+            background: #007bff; 
+            color: #fff; 
+            border: none; 
+            padding: 16px 0; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            width: 100%; 
+            margin-top: 10px; 
+            display: block; 
+            text-decoration: none; 
+            box-sizing: border-box; 
+            text-align: center; 
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #0056b3; }
+
+        /* Discreet Footer Info [cite: 2026-01-11] */
+        .v-tag { 
+            position: absolute; 
+            bottom: 10px; 
+            right: 15px; 
+            font-size: 0.65rem; 
+            color: #ccc; 
+            font-family: monospace; 
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="logo-container">
+            <img src="logo.png" alt="Orion Drive Logo">
+        </div>
+
         <h1>ORION DRIVE</h1>
-        <h2>Theory Test</h2>
+        <h2>Theory Test System</h2>
         <div id="status-msg">● System Unlocked</div>
 
-        <div class="menu-box">
+        <div class="card">
             <div id="lock-ui">
-                <p style="font-size: 0.8rem; color: #8e8e93;">Monthly Security Token Required</p>
+                <p style="font-size: 0.85rem; color: #8e8e93; margin-bottom: 15px;">Monthly Security Token Required</p>
                 <input type="text" id="passCode" placeholder="ENTER CODE" autocomplete="off">
                 <button class="btn" onclick="verifyAccess()">Unlock System</button>
             </div>
 
-            <div id="menu-options" style="display:none;"></div>
+            <div id="menu-options" style="display:none;">
+                </div>
+            
             <span class="v-tag">v2.3.0</span>
         </div>
     </div>
 
     <script>
-        // Security logic remains 100% local storage [cite: 2026-01-11, 2026-01-17]
         const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
+        const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 
         function getMMYY() {
             const d = new Date();
@@ -65,10 +157,7 @@
             return r + (ALPH[ci] || ALPH[0]);
         }
 
-        const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
-
         function init() {
-            // Check if already unlocked for this month [cite: 2026-01-17]
             if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
                 showMenu(); 
             }
@@ -76,7 +165,6 @@
 
         function verifyAccess() {
             const input = document.getElementById('passCode').value.toUpperCase();
-            // Still uses the internal calcKey to verify, but provides no visual hints [cite: 2026-01-11]
             if (input === calcKey()) { 
                 localStorage.setItem('gatekeeper_stamp', curMonthYear);
                 localStorage.setItem('orion_session_token', getMMYY());
