@@ -1,111 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Orion Drive - Main Menu</title>
-    <style>
-        /* Orion Drive Standard Styles [cite: 2026-01-11] */
-        body { 
-            font-family: -apple-system, sans-serif; 
-            background-color: #f4f7f9; 
-            color: #333; 
-            padding: 20px; 
-            margin: 0; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 100vh;
-        }
-
-        .container { 
-            width: 100%; 
-            max-width: 400px; 
-            margin-top: 10px; 
-            text-align: center;
-        }
-
-        /* Relative Path for GitHub: images/logo.jpeg */
-        .logo-container {
-            margin-bottom: 20px;
-        }
-        .logo-container img {
-            width: 220px; 
-            height: auto;
-            border-radius: 10px;
-        }
-
-        h1 { color: #1a1a1a; margin-bottom: 5px; font-size: 1.6rem; letter-spacing: 1px; font-weight: bold; }
-        h2 { color: #666; margin-top: 0; font-size: 1.1rem; margin-bottom: 25px; font-weight: 500; }
-
-        #status-msg { 
-            color: #5cb85c; 
-            font-size: 0.85rem; 
-            margin-bottom: 15px; 
-            font-weight: bold; 
-            display: none; 
-        }
-
-        .card { 
-            background: #fff; 
-            padding: 30px 25px; 
-            border-radius: 20px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            border: 1px solid #e1e8ed; 
-            margin-bottom: 20px; 
-            min-height: 200px; 
-            position: relative; 
-            box-sizing: border-box;
-        }
-
-        .lock-screen p {
-            font-size: 0.9rem;
-            color: #7f8c8d;
-            margin-bottom: 20px;
-        }
-
-        .lock-screen input { 
-            background: #fff; 
-            border: 1px solid #d1e3f8; 
-            color: #007bff; 
-            padding: 15px; 
-            font-size: 1.3rem; 
-            width: 100%; 
-            box-sizing: border-box; 
-            text-align: center; 
-            border-radius: 12px; 
-            margin-bottom: 15px; 
-            font-family: monospace; 
-            outline: none;
-        }
-
-        .btn { 
-            background: #007bff; 
-            color: #fff; 
-            border: none; 
-            padding: 18px 0; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            width: 100%; 
-            margin-top: 12px; 
-            display: block; 
-            text-decoration: none; 
-            box-sizing: border-box; 
-            text-align: center; 
-            font-size: 0.95rem;
-        }
-
-        .v-tag { 
-            position: absolute; 
-            bottom: 10px; 
-            right: 15px; 
-            font-size: 0.65rem; 
-            color: #d1d8dd; 
-            font-family: monospace; 
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -113,15 +12,15 @@
             <img src="images/logo.jpeg" alt="Orion Drive Logo">
         </div>
 
-        <h1>ORION DRIVE</h1>
         <h2>Theory Test System</h2>
         <div id="status-msg">● System Unlocked</div>
 
         <div class="card">
             <div id="lock-ui" class="lock-screen">
-                <p>Monthly Security Token Required</p>
-                <input type="text" id="passCode" placeholder="ENTER CODE" autocomplete="off">
-                <button class="btn" onclick="verifyAccess()">Unlock System</button>
+                <p style="font-size: 0.85rem; color: #8e8e93; margin-bottom: 15px;">Monthly Security Token Required</p>
+                <input type="text" id="passCode" placeholder="ENTER CODE" autocomplete="off" 
+                       style="background: #fff; border: 1px solid #d1e3f8; color: #007bff; padding: 15px; font-size: 1.3rem; width: 100%; box-sizing: border-box; text-align: center; border-radius: 12px; margin-bottom: 15px; font-family: monospace;">
+                <button class="btn btn-blue" onclick="verifyAccess()">Unlock System</button>
             </div>
 
             <div id="menu-options" style="display:none;"></div>
@@ -136,9 +35,7 @@
 
         function getMMYY() {
             const d = new Date();
-            const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
-            const yy = String(d.getUTCFullYear()).slice(-2);
-            return mm + yy;
+            return String(d.getUTCMonth() + 1).padStart(2, '0') + String(d.getUTCFullYear()).slice(-2);
         }
 
         function calcKey() {
@@ -185,14 +82,13 @@
             document.getElementById('status-msg').style.display = 'block'; 
 
             try {
-                // Fetching options.json from the same GitHub folder
                 const response = await fetch('options.json');
                 const options = await response.json();
                 menuOptions.innerHTML = ''; 
                 options.forEach(opt => {
                     const anchor = document.createElement('a');
                     anchor.href = opt.htmlName;
-                    anchor.className = 'btn';
+                    anchor.className = 'btn btn-blue';
                     anchor.innerText = opt.description;
                     menuOptions.appendChild(anchor);
                 });
