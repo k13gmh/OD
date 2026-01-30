@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Orion Drive - Raw Memory Dump</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .mem-table { width: 100%; border-collapse: collapse; margin-top: 10px; table-layout: fixed; }
+        .mem-table th, .mem-table td { 
+            border: 1px solid #e1e8ed; 
+            padding: 12px 8px; 
+            text-align: left; 
+            font-size: 0.75rem; 
+            word-wrap: break-word;
+            vertical-align: top;
+        }
+        .mem-table th { background-color: #f8f9fa; color: #333; text-transform: uppercase; }
+        .raw-val { font-family: monospace; color: #d9534f; background: #fffcfc; display: block; padding: 5px; }
+        .key-name { font-weight: bold; color: #1a1a1a; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="margin-bottom: 20px; text-align: center;">
+            <img src="images/logo.jpeg" alt="Orion Drive Logo" style="width: 180px; height: auto;">
+        </div>
+
+        <h2>Complete Local Storage Dump</h2>
+
+        <div class="card">
+            <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">Displaying all data strings currently held in browser memory.</p>
+            
+            <table class="mem-table">
+                <thead>
+                    <tr>
+                        <th style="width: 35%;">Storage Key</th>
+                        <th style="width: 65%;">Raw Data Value</th>
+                    </tr>
+                </thead>
+                <tbody id="mem-body">
+                    </tbody>
+            </table>
+
+            <a href="sysmenu.html" class="btn btn-blue" style="margin-top:25px; text-decoration:none;">Back to System Menu</a>
+            
+            <div class="card-footer">
+                <span>TOTAL KEYS: <span id="key-count">0</span></span>
+                <span>v2.3.0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function dumpMemory() {
+            const tbody = document.getElementById('mem-body');
+            const countDisplay = document.getElementById('key-count');
+            tbody.innerHTML = '';
+            
+            const totalKeys = localStorage.length;
+            countDisplay.innerText = totalKeys;
+
+            if (totalKeys === 0) {
+                tbody.innerHTML = '<tr><td colspan="2" style="text-align:center; padding: 20px;">Memory is currently empty.</td></tr>';
+                return;
+            }
+
+            // Iterate through every single item in localStorage
+            for (let i = 0; i < totalKeys; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="key-name">${key}</td>
+                    <td><code class="raw-val">${value}</code></td>
+                `;
+                tbody.appendChild(row);
+            }
+        }
+
+        // Run on load
+        window.onload = dumpMemory;
+    </script>
+</body>
+</html>
