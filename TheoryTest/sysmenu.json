@@ -19,5 +19,9 @@
   {
     "description": "REVIEW DETAIL",
     "htmlName": "review_detail.html"
+  },
+   {
+    "description": "LOCAL MEMORY",
+    "htmlName": "showmem.html"
   }
 ]
