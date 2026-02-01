@@ -1,18 +1,18 @@
 /**
  * File: category.js
- * Version: v2.1.1
- * Feature: Filtered Category Mock with Option Shuffling
+ * Version: v2.1.4
+ * Feature: Default 50 Quantity Selector & Wall of Shame Update
  */
 
-const SCRIPT_VERSION = "v2.1.1";
+const SCRIPT_VERSION = "v2.1.4";
 
-// FIX: Switched to localStorage for mobile stability [cite: 2026-01-11, 2026-01-17]
 if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
 }
 
 let allQuestions = [], sessionQuestions = [], currentIndex = 0, originalSessionQuestions = []; 
 let testData = { selections: {}, flagged: [], seenIndices: [] };
+let selectedCategory = "";
 
 async function init() {
     const tag = document.getElementById('v-tag-top');
@@ -27,15 +27,51 @@ async function init() {
 function buildCategoryMenu() {
     const categories = [...new Set(allQuestions.map(q => q.category))].sort();
     const listArea = document.getElementById('category-list');
-    listArea.innerHTML = '';
+    listArea.innerHTML = '<h2 style="text-align: center;">Select Category</h2>';
 
     categories.forEach(cat => {
         const btn = document.createElement('button');
         btn.className = 'cat-btn';
         btn.innerText = cat;
-        btn.onclick = () => startCategoryTest(cat);
+        btn.onclick = () => showQuantitySelector(cat);
         listArea.appendChild(btn);
     });
+}
+
+function showQuantitySelector(categoryName) {
+    selectedCategory = categoryName;
+    const count = allQuestions.filter(q => q.category === categoryName).length;
+    const listArea = document.getElementById('category-list');
+    
+    // Default to 50, but don't exceed the total available
+    const defaultVal = count < 50 ? count : 50;
+
+    listArea.innerHTML = `
+        <h2 style="text-align: center;">${categoryName}</h2>
+        <p style="text-align:center; color:#666;">There are ${count} questions available.</p>
+        
+        <button class="btn btn-blue" style="margin-bottom: 20px; padding: 20px;" onclick="startCategoryTest(${defaultVal})">
+            START TEST (${defaultVal} Questions)
+        </button>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <button class="cat-btn" onclick="startCategoryTest(10)">Try 10</button>
+            <button class="cat-btn" onclick="startCategoryTest(20)">Try 20</button>
+            <button class="cat-btn" onclick="startCategoryTest(${count})">Try ALL (${count})</button>
+            <button class="cat-btn" onclick="promptCustomCount(${count})">Custom Number</button>
+        </div>
+        <button class="btn" style="margin-top:20px; background:#bdc3c7;" onclick="buildCategoryMenu()">BACK</button>
+    `;
+}
+
+function promptCustomCount(max) {
+    let num = prompt(`Enter number of questions (1 - ${max}):`, "25");
+    if (num !== null) {
+        let val = parseInt(num);
+        if (!isNaN(val) && val > 0) {
+            startCategoryTest(Math.min(val, max));
+        }
+    }
 }
 
 function shuffleQuestionOptions(q, displayIndex) {
@@ -69,16 +105,15 @@ function shuffleQuestionOptions(q, displayIndex) {
     };
 }
 
-function startCategoryTest(categoryName) {
+function startCategoryTest(limit) {
     document.getElementById('menu-ui').style.display = 'none';
     document.getElementById('test-ui').style.display = 'block';
 
-    // Filter by category, then shuffle question order
     let selected = allQuestions
-        .filter(q => q.category === categoryName)
-        .sort(() => 0.5 - Math.random());
+        .filter(q => q.category === selectedCategory)
+        .sort(() => 0.5 - Math.random())
+        .slice(0, limit);
 
-    // Scramble the options for each question
     sessionQuestions = selected.map((q, idx) => {
         return shuffleQuestionOptions(q, idx + 1);
     });
@@ -100,7 +135,7 @@ function renderQuestion() {
         imgElement.onclick = () => openModal(imgElement.src);
     }
 
-    document.getElementById('q-number').innerText = `Question ${q.originalIndex} of ${originalSessionQuestions.length}`;
+    document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
     document.getElementById('q-category').innerText = q.category;
     document.getElementById('q-text').innerText = q.question;
     document.getElementById('q-id-display').innerText = `ID: ${q.id}`;
@@ -161,18 +196,6 @@ function showSummary() {
             <button class="btn" onclick="reviewAnswers()">FINISHED</button>
         </div>
     `;
-
-    let score = 0;
-    originalSessionQuestions.forEach(q => {
-        if (testData.selections[q.id] === q.correct) score++;
-    });
-    
-    localStorage.setItem('orion_final_results', JSON.stringify({ 
-        score, 
-        total: originalSessionQuestions.length, 
-        questions: originalSessionQuestions, 
-        data: testData 
-    }));
 }
 
 function retrySubset(type) {
@@ -193,6 +216,32 @@ function openModal(src) {
 }
 
 function reviewAnswers() { 
+    let shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
+    let score = 0;
+
+    originalSessionQuestions.forEach(q => {
+        const userSelection = testData.selections[q.id];
+        const isCorrect = (userSelection === q.correct);
+
+        if (isCorrect) {
+            score++;
+            if (shameTally[q.id]) {
+                shameTally[q.id] -= 0.5;
+                if (shameTally[q.id] <= 0) delete shameTally[q.id];
+            }
+        } else if (userSelection) {
+            shameTally[q.id] = (shameTally[q.id] || 0) + 1;
+        }
+    });
+
+    localStorage.setItem('orion_shame_tally', JSON.stringify(shameTally));
+    localStorage.setItem('orion_final_results', JSON.stringify({ 
+        score, 
+        total: originalSessionQuestions.length, 
+        questions: originalSessionQuestions, 
+        data: testData 
+    }));
+
     window.location.href = 'review.html'; 
 }
 
