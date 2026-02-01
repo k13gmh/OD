@@ -27,22 +27,69 @@
             </div>
 
             <div id="menu-options" style="display:none; width: 100%; flex-direction: column;">
-                </div>
+            </div>
             
             <div class="card-footer">
                 <span>ORION DRIVE</span>
-                <span>v2.3.0</span>
+                <span>v2.3.1</span>
             </div>
         </div>
     </div>
 
     <script>
-        // ... (Security logic remains the same)
+        const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
+        const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
+
+        function getMMYY() {
+            const d = new Date();
+            const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+            const yy = String(d.getUTCFullYear()).slice(-2);
+            return mm + yy;
+        }
+
+        function calcKey() {
+            const d = new Date(); 
+            const s = new Date(Date.UTC(d.getFullYear(), d.getMonth(), 1, 0, 0, 0));
+            const e = new Date(Date.UTC(1900, 0, 1, 0, 0, 0)); 
+            const m = Math.floor((s.getTime() - e.getTime()) / 60000);
+            let v = m % Math.pow(32, 4); 
+            let r = ""; 
+            for (let j = 0; j < 4; j++) { r = ALPH.charAt(v % 32) + r; v = Math.floor(v / 32); }
+            while (r.length < 4) { r = ALPH.charAt(0) + r; }
+            let t = 0; 
+            let ra = r.split('').reverse();
+            for (let j = 0; j < ra.length; j++) { 
+                let x = ALPH.indexOf(ra[j]); 
+                if (j % 2 === 0) { x *= 2; if (x >= 32) x = (x % 32) + Math.floor(x / 32); } 
+                t += x; 
+            }
+            let ci = (32 - (t % 32)) % 32; 
+            return r + (ALPH[ci] || ALPH[0]);
+        }
+
+        const targetKey = calcKey();
+
+        function init() {
+            if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
+                showMenu(); 
+            }
+        }
+
+        function verifyAccess() {
+            const input = document.getElementById('passCode').value.toUpperCase();
+            if (input === targetKey) { 
+                localStorage.setItem('gatekeeper_stamp', curMonthYear);
+                localStorage.setItem('orion_session_token', getMMYY());
+                showMenu(); 
+            } else { 
+                alert("Incorrect Code."); 
+            }
+        }
 
         async function showMenu() { 
             document.getElementById('lock-ui').style.display = 'none'; 
             const menuOptions = document.getElementById('menu-options');
-            menuOptions.style.display = 'flex'; // Use flex to allow vertical stacking
+            menuOptions.style.display = 'flex'; 
             menuOptions.style.flexDirection = 'column';
             document.getElementById('status-msg').style.display = 'block'; 
 
@@ -55,7 +102,7 @@
                     anchor.href = opt.htmlName;
                     anchor.className = 'btn btn-blue';
                     anchor.style.textDecoration = 'none';
-                    anchor.style.marginBottom = '12px'; // Spacing between stacked buttons
+                    anchor.style.marginBottom = '12px';
                     anchor.style.display = 'block';
                     anchor.style.width = '100%';
                     anchor.innerText = opt.description;
