@@ -1,11 +1,11 @@
 /**
  * File: untimed.js
- * Version: v2.2.8
- * Feature: Wall of Shame & Footer Version Display
+ * Version: v2.2.9
+ * Feature: Resume/Restart Session Logic
  */
 
-const JS_VERSION = "v2.2.8";
-const HTML_VERSION = "v2.2.8"; // To keep track of the HTML it expects
+const JS_VERSION = "v2.2.9";
+const HTML_VERSION = "v2.2.8"; 
 
 if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -15,18 +15,33 @@ let allQuestions = [], sessionQuestions = [], currentIndex = 0;
 let testData = { selections: {}, flagged: [] };
 
 async function init() {
-    // Update the discreet footer version [cite: 2026-01-11]
     const vTag = document.getElementById('version-tag');
     if (vTag) vTag.innerText = `HTML: ${HTML_VERSION} | JS: ${JS_VERSION}`;
 
     try {
         const response = await fetch('questions.json');
         allQuestions = await response.json();
-        startUntimed();
+        
+        // Check for existing session [cite: 2026-02-02]
+        const savedSession = localStorage.getItem('orion_current_session');
+        if (savedSession) {
+            const confirmed = confirm("An existing session was found. Would you like to RESUME?\n\n(Cancel will RESTART)");
+            if (confirmed) {
+                const session = JSON.parse(savedSession);
+                sessionQuestions = session.questions;
+                testData = session.data;
+                currentIndex = session.index || 0;
+                renderQuestion();
+            } else {
+                startNewUntimed();
+            }
+        } else {
+            startNewUntimed();
+        }
     } catch (e) { console.error(e); }
 }
 
-function startUntimed() {
+function startNewUntimed() {
     const shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
     let weightedPool = [];
 
@@ -50,7 +65,18 @@ function startUntimed() {
 
     sessionQuestions = selected.sort(() => 0.5 - Math.random());
     currentIndex = 0;
+    testData = { selections: {}, flagged: [] };
+    saveProgress();
     renderQuestion();
+}
+
+function saveProgress() {
+    const session = {
+        questions: sessionQuestions,
+        data: testData,
+        index: currentIndex
+    };
+    localStorage.setItem('orion_current_session', JSON.stringify(session));
 }
 
 function renderQuestion() {
@@ -60,6 +86,7 @@ function renderQuestion() {
         imgElement.style.display = 'none'; 
         imgElement.src = `images/${q.id}.jpeg`;
         imgElement.onload = () => { imgElement.style.display = 'block'; };
+        imgElement.onerror = () => { imgElement.style.display = 'none'; };
     }
 
     document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
@@ -76,6 +103,7 @@ function renderQuestion() {
             btn.innerHTML = `<strong>${letter}:</strong> ${q.choices[letter]}`;
             btn.onclick = () => { 
                 testData.selections[q.id] = letter; 
+                saveProgress();
                 renderQuestion(); 
             };
             optionsArea.appendChild(btn);
@@ -90,6 +118,7 @@ function changeQuestion(step) {
     const newIndex = currentIndex + step;
     if (newIndex >= 0 && newIndex < sessionQuestions.length) {
         currentIndex = newIndex;
+        saveProgress();
         renderQuestion();
     }
 }
@@ -99,6 +128,7 @@ function toggleFlag() {
     const idx = testData.flagged.indexOf(q.id);
     if (idx > -1) testData.flagged.splice(idx, 1);
     else testData.flagged.push(q.id);
+    saveProgress();
     renderQuestion();
 }
 
@@ -121,6 +151,9 @@ function finishTest() {
         }
     });
 
+    // Clear session so it doesn't prompt to resume next time
+    localStorage.removeItem('orion_current_session');
+    
     localStorage.setItem('orion_shame_tally', JSON.stringify(shameTally));
     localStorage.setItem('orion_final_results', JSON.stringify({ score, total: sessionQuestions.length, questions: sessionQuestions, data: testData }));
     window.location.href = 'review.html';
