@@ -8,7 +8,6 @@
         body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; color: #333; padding: 8px; margin: 0; display: flex; flex-direction: column; align-items: center; }
         .container { width: 100%; max-width: 600px; }
         
-        /* Ultra-compact result banner */
         .result-card { background: #fff; padding: 8px 15px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
         .result-status { font-size: 1.4rem; font-weight: bold; display: flex; align-items: center; gap: 8px; margin: 0; }
         .result-detail { font-size: 1rem; font-weight: 700; margin: 0; }
@@ -31,6 +30,7 @@
         .btn-exit { grid-column: span 2; background: #6c757d; color: #fff; }
         .btn:active { opacity: 0.8; }
         
+        /* Discreet Version Tag */
         .v-tag { position: fixed; bottom: 5px; right: 10px; font-family: monospace; font-size: 0.6rem; color: #bdc3c7; }
     </style>
 </head>
@@ -63,10 +63,15 @@
         </div>
     </div>
 
-    <span class="v-tag">v2.0 (Review)</span>
+    <span class="v-tag" id="version-display">v2.0.1</span>
 
     <script>
+        const REVIEW_VERSION = "v2.0.1";
+
         function initReview() {
+            // Ensure version is visible
+            document.getElementById('version-display').innerText = REVIEW_VERSION;
+
             const rawData = localStorage.getItem('orion_final_results');
             if (!rawData) { window.location.href = 'mainmenu.html'; return; }
             
@@ -139,7 +144,8 @@
         }
 
         function exitToMenu() { 
-            // FIXED: Removed the clearing of orion_current_session [cite: 2026-02-02]
+            // ONLY remove the final results (the summary)
+            // NEVER remove orion_current_session here so Untimed can resume
             localStorage.removeItem('orion_final_results'); 
             window.location.href = 'mainmenu.html'; 
         }
