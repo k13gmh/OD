@@ -18,7 +18,19 @@
         .stat-label { font-size: 0.55rem; color: #7f8c8d; text-transform: uppercase; display: block; margin-bottom: 2px; }
         .stat-val { font-size: 0.9rem; font-weight: bold; color: #2d3748; }
         
-        .cat-header { font-size: 0.75rem; font-weight: bold; color: #a0aec0; margin-bottom: 6px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 4px;}
+        /* Updated header to house the version tag on the same line */
+        .cat-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            font-size: 0.75rem; 
+            font-weight: bold; 
+            color: #a0aec0; 
+            margin-bottom: 6px; 
+            text-transform: uppercase; 
+            border-bottom: 1px solid #eee; 
+            padding-bottom: 4px;
+        }
         .cat-item { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dotted #f1f1f1; font-size: 0.8rem; }
         
         .pass-text { color: #5cb85c; }
@@ -30,8 +42,7 @@
         .btn-exit { grid-column: span 2; background: #6c757d; color: #fff; }
         .btn:active { opacity: 0.8; }
         
-        /* Discreet Version Tag */
-        .v-tag { position: fixed; bottom: 5px; right: 10px; font-family: monospace; font-size: 0.6rem; color: #bdc3c7; }
+        .v-tag { font-family: monospace; font-size: 0.65rem; color: #cbd5e0; }
     </style>
 </head>
 <body>
@@ -52,7 +63,10 @@
                 <div class="stat-box"><span class="stat-label">WRONG</span><span id="stat-wrong" class="stat-val" style="color:#d9534f;">0</span></div>
             </div>
 
-            <div class="cat-header">Category Analysis</div>
+            <div class="cat-header">
+                <span>Category Analysis</span>
+                <span class="v-tag" id="version-display">v2.0.2</span>
+            </div>
             <div id="category-data"></div>
         </div>
 
@@ -63,13 +77,10 @@
         </div>
     </div>
 
-    <span class="v-tag" id="version-display">v2.0.1</span>
-
     <script>
-        const REVIEW_VERSION = "v2.0.1";
+        const REVIEW_VERSION = "v2.0.2";
 
         function initReview() {
-            // Ensure version is visible
             document.getElementById('version-display').innerText = REVIEW_VERSION;
 
             const rawData = localStorage.getItem('orion_final_results');
@@ -144,8 +155,7 @@
         }
 
         function exitToMenu() { 
-            // ONLY remove the final results (the summary)
-            // NEVER remove orion_current_session here so Untimed can resume
+            // Ensures current session data remains for resumption
             localStorage.removeItem('orion_final_results'); 
             window.location.href = 'mainmenu.html'; 
         }
