@@ -1,10 +1,10 @@
 /**
  * File: untimed.js
- * Version: v2.2.9
- * Feature: Resume/Restart Session Logic
+ * Version: v2.3.1
+ * Feature: Persistent Resume (even after Finish)
  */
 
-const JS_VERSION = "v2.2.9";
+const JS_VERSION = "v2.3.1";
 const HTML_VERSION = "v2.2.8"; 
 
 if (!localStorage.getItem('orion_session_token')) {
@@ -22,7 +22,6 @@ async function init() {
         const response = await fetch('questions.json');
         allQuestions = await response.json();
         
-        // Check for existing session [cite: 2026-02-02]
         const savedSession = localStorage.getItem('orion_current_session');
         if (savedSession) {
             const confirmed = confirm("An existing session was found. Would you like to RESUME?\n\n(Cancel will RESTART)");
@@ -151,8 +150,7 @@ function finishTest() {
         }
     });
 
-    // Clear session so it doesn't prompt to resume next time
-    localStorage.removeItem('orion_current_session');
+    // PROGRESS SAVED: We no longer remove orion_current_session here.
     
     localStorage.setItem('orion_shame_tally', JSON.stringify(shameTally));
     localStorage.setItem('orion_final_results', JSON.stringify({ score, total: sessionQuestions.length, questions: sessionQuestions, data: testData }));
