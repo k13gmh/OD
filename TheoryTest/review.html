@@ -7,25 +7,28 @@
     <style>
         body { font-family: -apple-system, sans-serif; background-color: #f4f7f9; color: #333; padding: 10px; margin: 0; display: flex; flex-direction: column; align-items: center; }
         .container { width: 100%; max-width: 600px; margin-top: 5px; }
-        .result-card { background: #fff; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 15px; }
-        .result-status { font-size: 2.2rem; font-weight: bold; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 15px; }
-        .result-detail { font-size: 1.2rem; font-weight: 600; }
+        /* Made this more compact to prevent scrolling */
+        .result-card { background: #fff; padding: 12px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 12px; }
+        .result-status { font-size: 1.8rem; font-weight: bold; margin-bottom: 2px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .result-detail { font-size: 1.1rem; font-weight: 600; }
+        
         .card { background: #fff; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; margin-bottom: 15px; }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .stat-box { background: #f8fafc; padding: 10px; border-radius: 10px; text-align: center; border: 1px solid #edf2f7; }
-        .stat-label { font-size: 0.7rem; color: #7f8c8d; text-transform: uppercase; display: block; }
-        .stat-val { font-size: 1.1rem; font-weight: bold; color: #2d3748; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+        .stat-box { background: #f8fafc; padding: 8px; border-radius: 10px; text-align: center; border: 1px solid #edf2f7; }
+        .stat-label { font-size: 0.65rem; color: #7f8c8d; text-transform: uppercase; display: block; }
+        .stat-val { font-size: 1rem; font-weight: bold; color: #2d3748; }
+        
         .cat-header { font-size: 0.8rem; font-weight: bold; color: #a0aec0; margin-bottom: 8px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 5px;}
         .cat-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dotted #f1f1f1; font-size: 0.85rem; }
+        
         .pass-text { color: #5cb85c; }
         .fail-text { color: #d9534f; }
-        .neutral { color: #cbd5e0; }
         
-        /* 2x2 Button Grid */
         .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
-        .btn { border: none; padding: 12px 5px; border-radius: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.75rem; transition: opacity 0.2s; }
+        .btn { border: none; padding: 14px 5px; border-radius: 10px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.75rem; transition: opacity 0.2s; }
         .btn-blue { background: #007bff; color: #fff; }
         .btn-grey { background: #bdc3c7; color: #2c3e50; }
+        .btn-exit { grid-column: span 2; background: #6c757d; color: #fff; }
         .btn:active { opacity: 0.8; }
 
         .v-tag { position: fixed; bottom: 8px; right: 12px; font-family: monospace; font-size: 0.65rem; color: #bdc3c7; }
@@ -56,12 +59,11 @@
         <div class="menu-grid">
             <button class="btn btn-blue" onclick="startReview('all')">Review All</button>
             <button class="btn btn-blue" onclick="startReview('wrong')">Review Wrong</button>
-            <button class="btn btn-grey" onclick="exitToMenu(false)">Save & Exit</button>
-            <button class="btn btn-grey" onclick="exitToMenu(true)">Clear & Exit</button>
+            <button class="btn btn-exit" onclick="exitToMenu()">Exit to Menu</button>
         </div>
     </div>
 
-    <span class="v-tag">v1.6 (Review)</span>
+    <span class="v-tag">v1.7 (Review)</span>
 
     <script>
         function initReview() {
@@ -93,6 +95,7 @@
                 }
             });
 
+            // FIXED: Percentage now calculated against the FULL question count
             const total = questions.length;
             const percent = total > 0 ? Math.round((correct / total) * 100) : 0;
             const hasPassed = percent >= 86;
@@ -131,11 +134,10 @@
             window.location.href = 'review_detail.html'; 
         }
 
-        function exitToMenu(clearData) { 
-            if (clearData) {
-                localStorage.removeItem('orion_current_session'); 
-                localStorage.removeItem('orion_final_results'); 
-            }
+        function exitToMenu() { 
+            // Simplified into one step
+            localStorage.removeItem('orion_current_session'); 
+            localStorage.removeItem('orion_final_results'); 
             window.location.href = 'mainmenu.html'; 
         }
         window.onload = initReview;
