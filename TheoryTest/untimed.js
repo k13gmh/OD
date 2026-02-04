@@ -1,10 +1,10 @@
 /**
  * File: untimed.js
- * Version: v2.3.1
- * Feature: Persistent Resume (even after Finish)
+ * Version: v2.3.2
+ * Feature: Custom Blue Styled Resume Modal
  */
 
-const JS_VERSION = "v2.3.1";
+const JS_VERSION = "v2.3.2";
 const HTML_VERSION = "v2.2.8"; 
 
 if (!localStorage.getItem('orion_session_token')) {
@@ -18,26 +18,61 @@ async function init() {
     const vTag = document.getElementById('version-tag');
     if (vTag) vTag.innerText = `HTML: ${HTML_VERSION} | JS: ${JS_VERSION}`;
 
+    // Inject Custom Modal CSS for the blue buttons and clean look
+    const style = document.createElement('style');
+    style.innerHTML = `
+        #resume-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); align-items:center; justify-content:center; z-index:9999; }
+        .modal-box { background:#fff; padding:25px; border-radius:15px; width:85%; max-width:400px; text-align:center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .modal-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; color: #333; }
+        .modal-text { font-size: 0.95rem; color: #555; margin-bottom: 25px; line-height: 1.4; }
+        .modal-btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .m-btn { border:none; padding:14px; border-radius:8px; font-weight:bold; cursor:pointer; text-transform:uppercase; font-size:0.8rem; transition: opacity 0.2s; }
+        .m-btn-blue { background:#007bff; color:#fff; }
+        .m-btn-grey { background:#6c757d; color:#fff; }
+        .m-btn:active { opacity: 0.8; }
+    `;
+    document.head.appendChild(style);
+
+    // Inject the Modal HTML
+    const modalDiv = document.createElement('div');
+    modalDiv.id = "resume-modal";
+    modalDiv.innerHTML = `
+        <div class="modal-box">
+            <div class="modal-title">Resume Test?</div>
+            <div class="modal-text">An existing session was found. Would you like to resume where you left off?</div>
+            <div class="modal-btn-grid">
+                <button class="m-btn m-btn-grey" onclick="handleResumeChoice(false)">Restart</button>
+                <button class="m-btn m-btn-blue" onclick="handleResumeChoice(true)">Resume</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modalDiv);
+
     try {
         const response = await fetch('questions.json');
         allQuestions = await response.json();
         
         const savedSession = localStorage.getItem('orion_current_session');
         if (savedSession) {
-            const confirmed = confirm("An existing session was found. Would you like to RESUME?\n\n(Cancel will RESTART)");
-            if (confirmed) {
-                const session = JSON.parse(savedSession);
-                sessionQuestions = session.questions;
-                testData = session.data;
-                currentIndex = session.index || 0;
-                renderQuestion();
-            } else {
-                startNewUntimed();
-            }
+            // Show our custom blue modal instead of the browser confirm
+            document.getElementById('resume-modal').style.display = 'flex';
         } else {
             startNewUntimed();
         }
     } catch (e) { console.error(e); }
+}
+
+function handleResumeChoice(shouldResume) {
+    document.getElementById('resume-modal').style.display = 'none';
+    if (shouldResume) {
+        const session = JSON.parse(localStorage.getItem('orion_current_session'));
+        sessionQuestions = session.questions;
+        testData = session.data;
+        currentIndex = session.index || 0;
+        renderQuestion();
+    } else {
+        startNewUntimed();
+    }
 }
 
 function startNewUntimed() {
@@ -150,8 +185,7 @@ function finishTest() {
         }
     });
 
-    // PROGRESS SAVED: We no longer remove orion_current_session here.
-    
+    // We keep the current session saved so it can be resumed even after a review
     localStorage.setItem('orion_shame_tally', JSON.stringify(shameTally));
     localStorage.setItem('orion_final_results', JSON.stringify({ score, total: sessionQuestions.length, questions: sessionQuestions, data: testData }));
     window.location.href = 'review.html';
