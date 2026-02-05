@@ -1,0 +1,730 @@
+ [
+   {
+    "id": "58",
+    "category": "Attitude",
+    "question": "You are being tailgated by a driver behind. What should you do?",
+    "choices": {
+      "A": "Brake sharply to show your annoyance",
+      "B": "Speed up to get away from them",
+      "C": "Increase your following distance from the vehicle in front",
+      "D": "Switch on your hazard warning lights"
+    },
+    "correct": "C",
+    "explanation": "Increasing the gap in front gives you more time to react and allows you to brake more gently"
+  },
+  {
+    "id": "59",
+    "category": "Attitude",
+    "question": "What should you do when you see an emergency vehicle with flashing blue lights?",
+    "choices": {
+      "A": "Pull over as soon as it is safe to do so",
+      "B": "Speed up to stay ahead of it",
+      "C": "Stop in the middle of the road immediately",
+      "D": "Maintain your speed and stay in your lane"
+    },
+    "correct": "A",
+    "explanation": "You must help emergency vehicles by moving out of their way"
+  },
+  {
+    "id": "60",
+    "category": "Attitude",
+    "question": "What is the correct way to use your headlights to signal other road users?",
+    "choices": {
+      "A": "Flash them to show you are giving way",
+      "B": "Flash them to show you are annoyed",
+      "C": "Flash them only to let others know you are there",
+      "D": "Use them to signal that it is safe for others to emerge"
+    },
+    "correct": "C",
+    "explanation": "The Highway Code states that you should only flash your headlights to let other road users know that you are there.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "61",
+    "category": "Attitude",
+    "question": "When should you use your horn in a built-up area?",
+    "choices": {
+      "A": "Between 11:30 PM and 7:00 AM",
+      "B": "To greet a friend on the pavement",
+      "C": "To warn others of your presence when it is necessary",
+      "D": "To signal your frustration at a traffic jam"
+    },
+    "correct": "C",
+    "explanation": "The horn should only be used as a warning of danger. It is illegal to use it in built-up areas at night unless a moving vehicle poses a danger.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "62",
+    "category": "Attitude",
+    "question": "A pedestrian is waiting to cross at a zebra crossing. What should you do?",
+    "choices": {
+      "A": "Wave them across to show it is safe",
+      "B": "Stop and allow them to cross",
+      "C": "Sound your horn to tell them to hurry up",
+      "D": "Maintain your speed if they haven't stepped onto the road"
+    },
+    "correct": "B",
+    "explanation": "You should be prepared to stop for pedestrians waiting at a zebra crossing and you must stop once they have stepped onto it.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "63",
+    "category": "Attitude",
+    "question": "You are driving in a slow-moving traffic queue. What should you do before changing lanes?",
+    "choices": {
+      "A": "Check your mirrors and signal your intention early",
+      "B": "Sound your horn to warn other drivers",
+      "C": "Force your way into the next lane",
+      "D": "Wait for another driver to flash their lights at you"
+    },
+    "correct": "A",
+    "explanation": "In congested traffic"
+  },
+  {
+    "id": "64",
+    "category": "Attitude",
+    "question": "How should you react to a driver who is acting aggressively?",
+    "choices": {
+      "A": "Shout back at them",
+      "B": "Follow them to complain",
+      "C": "Stay calm and do not react to their behavior",
+      "D": "Gesture at them to show they are wrong"
+    },
+    "correct": "C",
+    "explanation": "Road rage is dangerous. Staying calm and ignoring aggression keeps the situation from escalating.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "65",
+    "category": "Attitude",
+    "question": "What should you do if a driver pulls out in front of you unexpectedly?",
+    "choices": {
+      "A": "Sound your horn and flash your lights",
+      "B": "Brake hard and stay calm",
+      "C": "Follow them closely to show your disapproval",
+      "D": "Overtake them immediately"
+    },
+    "correct": "B",
+    "explanation": "Anticipate that others will make mistakes. Stay calm and take the necessary action to stay safe.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "66",
+    "category": "Attitude",
+    "question": "You are following a learner driver who stalls at a junction. What should you do?",
+    "choices": {
+      "A": "Sound your horn to encourage them",
+      "B": "Drive up very close to their rear bumper",
+      "C": "Be patient and give them time to restart",
+      "D": "Flash your headlights repeatedly"
+    },
+    "correct": "C",
+    "explanation": "Everyone was a learner once. Give them space and time to recover without adding to their pressure.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "67",
+    "category": "Attitude",
+    "question": "Which type of vehicle should you give extra room to when it is windy?",
+    "choices": {
+      "A": "A tractor",
+      "B": "A high-sided lorry or a cyclist",
+      "C": "A small car",
+      "D": "A motorcycle with a sidecar"
+    },
+    "correct": "B",
+    "explanation": "Wind can cause large vehicles to drift and can blow cyclists off course. Give them plenty of space.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "68",
+    "category": "Attitude",
+    "question": "When should you avoid using your horn?",
+    "choices": {
+      "A": "Near a hospital or in a built-up area at night",
+      "B": "On a narrow country lane",
+      "C": "When approaching a blind bend",
+      "D": "When a car is reversing into a side road"
+    },
+    "correct": "A",
+    "explanation": "To minimize noise pollution"
+  },
+  {
+    "id": "69",
+    "category": "Attitude",
+    "question": "What does it mean if a driver flashes their lights at you?",
+    "choices": {
+      "A": "They are giving you the right of way",
+      "B": "They are warning you of a police speed trap",
+      "C": "They are letting you know they are there",
+      "D": "They are telling you that your lights are broken"
+    },
+    "correct": "C",
+    "explanation": "Do not assume a flash of lights is an invitation to proceed. It simply means they are there.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "70",
+    "category": "Attitude",
+    "question": "You are turning right into a side road. A pedestrian is already crossing that road. What should you do?",
+    "choices": {
+      "A": "Sound your horn so they stop",
+      "B": "Wait and give way to the pedestrian",
+      "C": "Drive around them quickly",
+      "D": "Flash your lights to tell them to hurry"
+    },
+    "correct": "B",
+    "explanation": "Pedestrians who have already started crossing a side road have priority.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "71",
+    "category": "Attitude",
+    "question": "Why should you keep a safe distance from the vehicle in front?",
+    "choices": {
+      "A": "To improve your fuel economy",
+      "B": "To allow you to see further down the road",
+      "C": "To stop other drivers from overtaking you",
+      "D": "To make it easier to change the radio"
+    },
+    "correct": "B",
+    "explanation": "A good following distance gives you a better view of the road ahead and more time to react to hazards.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "72",
+    "category": "Attitude",
+    "question": "A car is following you with its high beam lights on. What should you do?",
+    "choices": {
+      "A": "Turn your own high beams on to see better",
+      "B": "Brake hard to tell them to turn them off",
+      "C": "Flick your interior mirror to the anti-dazzle position",
+      "D": "Slow down and stop in the middle of the road"
+    },
+    "correct": "C",
+    "explanation": "Use the anti-dazzle setting on your mirror to avoid being blinded while maintaining your focus on the road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "73",
+    "category": "Attitude",
+    "question": "When is it acceptable to drive on the pavement?",
+    "choices": {
+      "A": "When you need to park and the road is narrow",
+      "B": "When you are turning into a driveway or property",
+      "C": "When you are in a hurry to get past traffic",
+      "D": "Never"
+    },
+    "correct": "B",
+    "explanation": "You may only cross a pavement to reach a property. Driving on it otherwise is illegal and dangerous to pedestrians.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "74",
+    "category": "Attitude",
+    "question": "What should you do if you see a bus trying to pull away from a stop?",
+    "choices": {
+      "A": "Speed up to pass it before it moves",
+      "B": "Give way to the bus if it is safe to do so",
+      "C": "Sound your horn to warn the driver you are there",
+      "D": "Drive as close as possible to the bus"
+    },
+    "correct": "B",
+    "explanation": "You should give priority to buses whenever it is safe to do so to help public transport stay on schedule.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "75",
+    "category": "Attitude",
+    "question": "You see a person carrying a white cane with a red band. What does this tell you?",
+    "choices": {
+      "A": "They are a blind person",
+      "B": "They are a deaf person",
+      "C": "They are both deaf and blind",
+      "D": "They are a senior citizen"
+    },
+    "correct": "C",
+    "explanation": "A white cane with a red band indicates that the pedestrian has both hearing and visual impairments.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "77",
+    "category": "Attitude",
+    "question": "Who has priority at an unmarked crossroads?",
+    "choices": {
+      "A": "Traffic coming from the right",
+      "B": "Traffic on the wider road",
+      "C": "The driver who is traveling fastest",
+      "D": "No one has priority"
+    },
+    "correct": "D",
+    "explanation": "At an unmarked junction"
+  },
+  {
+    "id": "78",
+    "category": "Attitude",
+    "question": "Why should you never wave a pedestrian across the road?",
+    "choices": {
+      "A": "They might not see you",
+      "B": "It may be taken as an invitation to cross when another vehicle is coming",
+      "C": "It is against the law to wave at pedestrians",
+      "D": "It makes you look impatient"
+    },
+    "correct": "B",
+    "explanation": "Waving can lead a pedestrian into the path of another vehicle that you haven't seen or that hasn't seen them.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "79",
+    "category": "Attitude",
+    "question": "You are waiting at a junction. A driver on the main road flashes their lights. What should you do?",
+    "choices": {
+      "A": "Move out immediately",
+      "B": "Wait and make sure it is safe before moving",
+      "C": "Flash your lights back and then go",
+      "D": "Assume their lights have flickered by mistake"
+    },
+    "correct": "B",
+    "explanation": "A flash of lights does not mean the road is safe. You must still perform your own safety checks before emerging.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "80",
+    "category": "Attitude",
+    "question": "Which of these is a sign of a considerate driver?",
+    "choices": {
+      "A": "Using the horn to tell people to move",
+      "B": "Flashing lights to claim right of way",
+      "C": "Allowing others to merge in heavy traffic",
+      "D": "Tailgating to keep traffic moving"
+    },
+    "correct": "C",
+    "explanation": "Considerate drivers help the flow of traffic by being patient and allowing others to move when appropriate.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "81",
+    "category": "Attitude",
+    "question": "What should you do if a driver is following you too closely in the rain?",
+    "choices": {
+      "A": "Brake hard to make them stay back",
+      "B": "Increase your following distance to at least four seconds",
+      "C": "Turn your rear fog lights on",
+      "D": "Speed up until they are no longer behind you"
+    },
+    "correct": "B",
+    "explanation": "In wet weather"
+  },
+  {
+    "id": "82",
+    "category": "Attitude",
+    "question": "How can you help the environment while driving?",
+    "choices": {
+      "A": "By accelerating quickly every time",
+      "B": "By using the air conditioning constantly",
+      "C": "By looking ahead and driving smoothly",
+      "D": "By staying in a lower gear"
+    },
+    "correct": "C",
+    "explanation": "Smooth driving with less heavy braking and acceleration uses less fuel and reduces emissions.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "83",
+    "category": "Attitude",
+    "question": "You are driving a slow vehicle on a narrow winding road. What should you do?",
+    "choices": {
+      "A": "Maintain your speed and ignore the queue",
+      "B": "Pull in safely when you can to let others pass",
+      "C": "Speed up even if it feels unsafe",
+      "D": "Drive in the middle of the road to prevent overtaking"
+    },
+    "correct": "B",
+    "explanation": "Pulling over to let a queue pass prevents other drivers from making risky overtaking maneuvers out of frustration.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "84",
+    "category": "Attitude",
+    "question": "What is the most common cause of collisions?",
+    "choices": {
+      "A": "Mechanical failure",
+      "B": "Bad weather",
+      "C": "Poor driver attitude and errors",
+      "D": "Poor road surfaces"
+    },
+    "correct": "C",
+    "explanation": "The majority of accidents are caused by human error"
+  },
+  {
+    "id": "85",
+    "category": "Attitude",
+    "question": "When should you use your hazard warning lights while driving?",
+    "choices": {
+      "A": "When you are parked illegally",
+      "B": "To thank another driver",
+      "C": "To warn traffic behind of a sudden hazard on a motorway",
+      "D": "When you are driving in heavy rain"
+    },
+    "correct": "C",
+    "explanation": "Hazard lights should only be used while moving to warn drivers on a motorway or unrestricted dual carriageway of a hazard ahead.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "86",
+    "category": "Attitude",
+    "question": "You want to turn right at a box junction. There is oncoming traffic but the exit is clear. What should you do?",
+    "choices": {
+      "A": "Wait behind the first line",
+      "B": "Enter the box and wait for a gap in traffic",
+      "C": "Drive through even if the exit isn't clear",
+      "D": "Wait for the lights to change to red"
+    },
+    "correct": "B",
+    "explanation": "You are allowed to enter a yellow box junction to wait if you want to turn right and are only stopped by oncoming traffic.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "87",
+    "category": "Attitude",
+    "question": "What should you do if you see a sheep or a horse on the road?",
+    "choices": {
+      "A": "Sound your horn to move them",
+      "B": "Slow down and be ready to stop",
+      "C": "Rev your engine to scare them away",
+      "D": "Flash your lights at the animal"
+    },
+    "correct": "B",
+    "explanation": "Animals are unpredictable. Slow down"
+  },
+  {
+    "id": "88",
+    "category": "Attitude",
+    "question": "What should you do if an older person is crossing the road in front of you?",
+    "choices": {
+      "A": "Flash your lights to warn them",
+      "B": "Be patient and allow them to finish crossing",
+      "C": "Sound your horn if they are too slow",
+      "D": "Drive around them closely"
+    },
+    "correct": "B",
+    "explanation": "Older pedestrians may take longer to cross. Give them the time they need without rushing them.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "89",
+    "category": "Attitude",
+    "question": "A car is stopped at a zebra crossing. Why should you not overtake it?",
+    "choices": {
+      "A": "It is illegal to overtake in a town",
+      "B": "The car might be broken down",
+      "C": "A pedestrian you can't see may be crossing",
+      "D": "The driver might be turning right"
+    },
+    "correct": "C",
+    "explanation": "Never overtake the vehicle closest to a crossing; they are often stopped for a pedestrian you cannot see yet.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "90",
+    "category": "Attitude",
+    "question": "What is the best way to handle 'competitive' drivers?",
+    "choices": {
+      "A": "Try to beat them at the next set of lights",
+      "B": "Ignore them and drive safely",
+      "C": "Block them from changing lanes",
+      "D": "Follow them to report them"
+    },
+    "correct": "B",
+    "explanation": "Don't get drawn into a competition. It only increases the risk of an accident.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "91",
+    "category": "Attitude",
+    "question": "When are you allowed to use your fog lights?",
+    "choices": {
+      "A": "Whenever it is dark",
+      "B": "Only when visibility is seriously reduced (less than 100m)",
+      "C": "When it is raining lightly",
+      "D": "To make your car look better"
+    },
+    "correct": "B",
+    "explanation": "Fog lights dazzle other drivers and should only be used in very thick fog or falling snow.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "92",
+    "category": "Attitude",
+    "question": "You are at a junction and a driver flashes their lights at you. What is the first thing you should do?",
+    "choices": {
+      "A": "Move out quickly before they change their mind",
+      "B": "Check that there are no other hazards or vehicles approaching",
+      "C": "Flash your lights back as a thank you",
+      "D": "Assume they are flashing someone else"
+    },
+    "correct": "B",
+    "explanation": "You must always verify that the road is clear yourself"
+  },
+  {
+    "id": "93",
+    "category": "Attitude",
+    "question": "What should you do if you are driving on a road with parked cars and a car is coming towards you?",
+    "choices": {
+      "A": "Speed up to get through first",
+      "B": "Stop and wait if the obstruction is on your side",
+      "C": "Sound your horn and keep going",
+      "D": "Drive onto the pavement to let them past"
+    },
+    "correct": "B",
+    "explanation": "If the parked cars are on your side of the road"
+  },
+  {
+    "id": "94",
+    "category": "Attitude",
+    "question": "How can you avoid dazzling the driver behind you when stopped in traffic at night?",
+    "choices": {
+      "A": "Keep your foot on the brake pedal",
+      "B": "Use the parking brake (handbrake) and take your foot off the footbrake",
+      "C": "Turn your lights off",
+      "D": "Switch to sidelights only"
+    },
+    "correct": "B",
+    "explanation": "The bright red glare of brake lights can be very dazzling to drivers behind"
+  },
+  {
+    "id": "95",
+    "category": "Attitude",
+    "question": "What should you do if a driver is trying to overtake you?",
+    "choices": {
+      "A": "Speed up so they can't get past",
+      "B": "Maintain your speed or slow down slightly to help them",
+      "C": "Move to the right to block them",
+      "D": "Sound your horn to warn them off"
+    },
+    "correct": "B",
+    "explanation": "Be helpful. If someone wants to pass"
+  },
+  {
+    "id": "96",
+    "category": "Attitude",
+    "question": "You are entering a roundabout. Who should you generally give way to?",
+    "choices": {
+      "A": "Traffic from the left",
+      "B": "Traffic already on the roundabout from the right",
+      "C": "No one,  it is first come first served",
+      "D": "Only buses and lorries"
+    },
+    "correct": "B",
+    "explanation": "You should generally give way to traffic already in the roundabout coming from your right, unless signs or markings tell you otherwise."
+  },
+  {
+    "id": "97",
+    "category": "Attitude",
+    "question": "What should you do if you realize you are in the wrong lane at a busy roundabout?",
+    "choices": {
+      "A": "Cut across the traffic to the correct exit",
+      "B": "Stop and wait for a gap",
+      "C": "Continue to the next exit or go all the way around",
+      "D": "Reverse to the previous junction"
+    },
+    "correct": "C",
+    "explanation": "Changing lanes suddenly on a roundabout is dangerous. Just go around again or find a safe way back later.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "98",
+    "category": "Attitude",
+    "question": "How should you drive when passing a school?",
+    "choices": {
+      "A": "At the maximum speed limit to get past quickly",
+      "B": "With extra caution and at a lower speed",
+      "C": "Sounding your horn to warn children",
+      "D": "Following the car in front very closely"
+    },
+    "correct": "B",
+    "explanation": "Schools are high-risk areas for children. Slow down and stay extremely alert.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "99",
+    "category": "Attitude",
+    "question": "A cyclist is signaling to turn right at a large roundabout. What should you do?",
+    "choices": {
+      "A": "Overtake them on the right",
+      "B": "Give them plenty of room and stay behind them",
+      "C": "Sound your horn to tell them to move over",
+      "D": "Flash your lights to tell them to go"
+    },
+    "correct": "B",
+    "explanation": "Cyclists may stay in the left-hand lane even when turning right. Give them the space to do so safely.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "100",
+    "category": "Attitude",
+    "question": "What is the main benefit of being a patient driver?",
+    "choices": {
+      "A": "You will arrive at your destination faster",
+      "B": "It reduces stress and makes the road safer for everyone",
+      "C": "It makes your car last longer",
+      "D": "You will never get a speeding fine"
+    },
+    "correct": "B",
+    "explanation": "Patience reduces the likelihood of making mistakes or causing road rage.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "101",
+    "category": "Attitude",
+    "question": "What should you do if you are being dazzled by the sun?",
+    "choices": {
+      "A": "Speed up to get into the shade",
+      "B": "Use your sun visor and wear sunglasses if necessary",
+      "C": "Close your eyes for a second",
+      "D": "Stop in the middle of the road"
+    },
+    "correct": "B",
+    "explanation": "Be prepared for sun glare"
+  },
+  {
+    "id": "102",
+    "category": "Attitude",
+    "question": "A driver pulls up alongside you and starts shouting. What should you do?",
+    "choices": {
+      "A": "Shout back at them",
+      "B": "Keep your windows closed and avoid eye contact",
+      "C": "Get out of the car to see what is wrong",
+      "D": "Follow them to see where they are going"
+    },
+    "correct": "B",
+    "explanation": "Avoiding confrontation is the best way to deal with road rage.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "103",
+    "category": "Attitude",
+    "question": "When may you use your hazard warning lights to thank someone?",
+    "choices": {
+      "A": "Only when you are on a motorway",
+      "B": "It is not recommended; a brief wave is better",
+      "C": "Whenever you feel like it",
+      "D": "When it is dark"
+    },
+    "correct": "B",
+    "explanation": "Hazard lights are for warning of danger"
+  },
+  {
+    "id": "104",
+    "category": "Attitude",
+    "question": "What should you do if you are waiting to emerge from a side road and your view is blocked by parked cars?",
+    "choices": {
+      "A": "Pull out quickly and hope for the best",
+      "B": "Creep forward slowly until you can see clearly",
+      "C": "Wait for someone to flash their lights",
+      "D": "Ask a passenger to run out and check"
+    },
+    "correct": "B",
+    "explanation": "Moving forward very slowly allows you to see without putting your car in danger.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "105",
+    "category": "Attitude",
+    "question": "Which of these is most likely to cause a distraction?",
+    "choices": {
+      "A": "Listening to the radio at a low volume",
+      "B": "Using a hand-held mobile phone",
+      "C": "Checking your mirrors",
+      "D": "Using your windscreen wipers"
+    },
+    "correct": "B",
+    "explanation": "Hand-held phones are a major source of physical and mental distraction.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "106",
+    "category": "Attitude",
+    "question": "How can you show consideration for a horse and rider?",
+    "choices": {
+      "A": "Speed up to get past them quickly",
+      "B": "Pass wide and slow",
+      "C": "Sound your horn as you pass",
+      "D": "Flash your headlights to let them know you are there"
+    },
+    "correct": "B",
+    "explanation": "Horses are easily spooked. Pass them with as much room as possible and at a very low speed.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "107",
+    "category": "Attitude",
+    "question": "What should you do if you are following a learner and they are driving very slowly?",
+    "choices": {
+      "A": "Tailgate them to make them go faster",
+      "B": "Be patient and stay back",
+      "C": "Overtake them on a blind bend",
+      "D": "Sound your horn repeatedly"
+    },
+    "correct": "B",
+    "explanation": "Learners need space and patience to build their confidence.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "108",
+    "category": "Attitude",
+    "question": "You are at a railway level crossing. The red lights continue to flash after a train has passed. What should you do?",
+    "choices": {
+      "A": "Drive across quickly",
+      "B": "Wait, as another train may be coming",
+      "C": "Get out and check the tracks",
+      "D": "Sound your horn to warn others"
+    },
+    "correct": "B",
+    "explanation": "If the lights continue to flash, it means another train is approaching.  You must stay behind the stop line until the lights go out."
+  },
+  {
+    "id": "109",
+    "category": "Attitude",
+    "question": "What does 'dry steering' mean?",
+    "choices": {
+      "A": "Steering while the car is moving",
+      "B": "Steering while the car is stationary",
+      "C": "Steering without using the indicators",
+      "D": "Steering with only one hand"
+    },
+    "correct": "B",
+    "explanation": "Turning the steering wheel while the car is not moving causes unnecessary wear to the tyres and steering mechanism.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "110",
+    "category": "Attitude",
+    "question": "Why should you never follow a large vehicle too closely?",
+    "choices": {
+      "A": "It makes it easier to overtake",
+      "B": "The driver cannot see you in their mirrors",
+      "C": "You will get better fuel economy",
+      "D": "It protects your car from the wind"
+    },
+    "correct": "B",
+    "explanation": "If you can't see the driver's mirrors"
+  },
+  {
+    "id": "111",
+    "category": "Attitude",
+    "question": "What should you do if a driver flashes their headlights at you at night?",
+    "choices": {
+      "A": "Flash yours back",
+      "B": "Check your own lights are on and not on high beam",
+      "C": "Turn your lights off briefly",
+      "D": "Stop immediately"
+    },
+    "correct": "B",
+    "explanation": "They may be trying to tell you that your own lights are dazzling them or that you have forgotten to turn them on.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "112",
+    "category": "Attitude",
+    "question": "You are driving on a dual carriageway. A car is joined from a slip road. What should you do?",
+    "choices": {
+      "A": "Maintain your speed and stay in your lane",
+      "B": "Move to the right-hand lane if it is safe to do so",
+      "C": "Speed up to block them",
+      "D": "Brake hard to let them in"
+    },
+    "correct": "B",
+    "explanation": "Helping others to merge safely improves the flow of traffic for everyone.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "113",
+    "category": "Attitude",
+    "question": "What should you do if you have to pull up on a pavement to allow an emergency vehicle through?",
+    "choices": {
+      "A": "Drive as fast as you can",
+      "B": "Be careful not to endanger any pedestrians",
+      "C": "Stay there until the police arrive",
+      "D": "Keep your hazard lights on for the rest of the day"
+    },
+    "correct": "B",
+    "explanation": "Pedestrians are the most vulnerable road users. Even in an emergency"
+  },
+  {
+    "id": "114",
+    "category": "Attitude",
+    "question": "How can you prevent your car from being a nuisance to others?",
+    "choices": {
+      "A": "By using a loud exhaust",
+      "B": "By parking in a way that doesn't block driveways or pavements",
+      "C": "By playing music very loudly",
+      "D": "By using your horn to say goodbye"
+    },
+    "correct": "B",
+    "explanation": "Considerate parking is a key part of being a good driver.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  }
+]
