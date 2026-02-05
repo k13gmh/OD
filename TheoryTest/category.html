@@ -8,19 +8,18 @@
 </head>
 <body>
     <div class="container">
-        <div id="v-tag-top" style="position: absolute; top: 5px; right: 10px; font-size: 0.6rem; color: #ccc;">v2.2.0</div>
+        <div id="v-tag-top" style="position: absolute; top: 5px; right: 10px; font-size: 0.6rem; color: #ccc;">v2.2.3</div>
 
         <div id="menu-ui">
             <div id="category-list" class="card">
                 <p style="text-align:center; color:#8e8e93; font-size:0.8rem;">Loading Categories...</p>
-            </div>
-            <a href="sysmenu.html" class="btn" style="margin-top:20px; background:#bdc3c7; text-decoration:none; display:block; text-align:center;">Back to Menu</a>
+                </div>
         </div>
 
         <div id="test-ui" style="display:none;">
             <div class="card">
                 <div class="card-header">
-                    <span id="q-number">Question 1 of 50</span>
+                    <span id="q-number">Question 1 of 0</span>
                     <span id="q-category" style="font-weight:bold; color:#007bff;">Category</span>
                 </div>
 
@@ -36,12 +35,12 @@
                     </div>
 
                 <div style="display: flex; justify-content: space-between; margin-top: 25px; gap: 10px;">
-                    <button class="btn btn-grey" onclick="changeQuestion(-1)">Prev</button>
-                    <button id="flag-btn" class="btn btn-grey" onclick="toggleFlag()">Flag</button>
-                    <button class="btn btn-blue" onclick="changeQuestion(1)">Next</button>
+                    <button class="btn btn-grey" onclick="changeQuestion(-1)">PREV</button>
+                    <button id="flag-btn" class="btn btn-grey" onclick="toggleFlag()">FLAG</button>
+                    <button class="btn btn-grey" onclick="changeQuestion(1)">NEXT</button>
                 </div>
 
-                <button class="btn btn-blue" style="margin-top:15px; background:#5cb85c;" onclick="showSummary()">Finish & Review</button>
+                <button class="btn btn-blue" style="margin-top:15px;" onclick="showSummary()">FINISH & REVIEW</button>
                 
                 <div id="q-id-display" style="text-align:center; font-size:0.6rem; color:#ccc; margin-top:15px;">ID: 000</div>
             </div>
