@@ -27,11 +27,12 @@
             </div>
 
             <div id="menu-options" style="display:none; width: 100%; flex-direction: column;">
+                <p style="text-align:center; color:#8e8e93; font-size:0.8rem;">Initialising Data...</p>
             </div>
             
             <div class="card-footer">
                 <span>ORION DRIVE</span>
-                <span>v2.3.1</span>
+                <span>v2.4.0</span>
             </div>
         </div>
     </div>
@@ -39,6 +40,13 @@
     <script>
         const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
         const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
+
+        // New Category List for Merging
+        const categoryFiles = [
+            'alertness', 'attitude', 'safety', 'hazard', 'margins', 
+            'vulnerable', 'other', 'conditions', 'motorway', 
+            'signs', 'documents', 'incidents', 'loading'
+        ];
 
         function getMMYY() {
             const d = new Date();
@@ -86,6 +94,31 @@
             }
         }
 
+        async function buildMasterDatabase() {
+            let masterPool = [];
+            console.log("Orion Drive: Building orion_master.json...");
+            
+            try {
+                for (const cat of categoryFiles) {
+                    const response = await fetch(`${cat}.json`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        masterPool = masterPool.concat(data);
+                    } else {
+                        console.warn(`Could not fetch ${cat}.json`);
+                    }
+                }
+                
+                // Save the merged result locally
+                localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
+                console.log("Orion Drive: Master Database Sync Complete.");
+                return true;
+            } catch (err) {
+                console.error("Database Build Error:", err);
+                return false;
+            }
+        }
+
         async function showMenu() { 
             document.getElementById('lock-ui').style.display = 'none'; 
             const menuOptions = document.getElementById('menu-options');
@@ -93,10 +126,18 @@
             menuOptions.style.flexDirection = 'column';
             document.getElementById('status-msg').style.display = 'block'; 
 
+            // Trigger the download and merge process
+            const dbReady = await buildMasterDatabase();
+
             try {
                 const response = await fetch('options.json');
                 const options = await response.json();
                 menuOptions.innerHTML = ''; 
+                
+                if (!dbReady) {
+                    menuOptions.innerHTML = `<p style="color:#ff3b30; font-size:0.8rem; text-align:center;">Data Sync Failed. Check connection.</p>`;
+                }
+
                 options.forEach(opt => {
                     const anchor = document.createElement('a');
                     anchor.href = opt.htmlName;
