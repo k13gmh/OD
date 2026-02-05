@@ -1,10 +1,10 @@
 /**
  * File: category.js
- * Version: v2.2.1
- * Feature: Enhanced UI styling for buttons
+ * Version: v2.2.2
+ * Feature: Corrected Menu Link and Version Display
  */
 
-const SCRIPT_VERSION = "v2.2.1";
+const SCRIPT_VERSION = "v2.2.2";
 
 if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -15,8 +15,11 @@ let testData = { selections: {}, flagged: [], seenIndices: [] };
 let selectedCategory = "";
 
 async function init() {
+    // Inject version number into the HTML tag
     const tag = document.getElementById('v-tag-top');
-    if (tag) tag.innerText = SCRIPT_VERSION;
+    if (tag) {
+        tag.innerText = SCRIPT_VERSION;
+    }
     
     try {
         const localData = localStorage.getItem('orion_master.json');
@@ -48,6 +51,20 @@ function buildCategoryMenu() {
         btn.onclick = () => showQuantitySelector(cat);
         listArea.appendChild(btn);
     });
+
+    // Add a Back button specifically for the Category Menu
+    const backBtn = document.createElement('a');
+    backBtn.href = "mainmenu.html"; // Corrected link
+    backBtn.className = 'btn';
+    backBtn.style.marginTop = '10px';
+    backBtn.style.background = '#bdc3c7';
+    backBtn.style.display = 'block';
+    backBtn.style.textDecoration = 'none';
+    backBtn.style.textAlign = 'center';
+    backBtn.style.borderRadius = '12px';
+    backBtn.style.padding = '15px';
+    backBtn.innerText = "BACK TO MAIN MENU";
+    listArea.appendChild(backBtn);
 }
 
 function showQuantitySelector(categoryName) {
