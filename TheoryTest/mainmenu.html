@@ -35,15 +35,16 @@
                     <span>ORION DRIVE</span>
                     <span id="sync-progress" style="margin-left: 10px; color: #8e8e93; font-weight: normal; font-size: 0.7rem;"></span>
                 </div>
-                <span>v2.4.3</span>
+                <span>v2.5.0</span>
             </div>
         </div>
     </div>
 
     <script>
-        // Version Check: v2.4.3
+        // Version Check: v2.5.0
         const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
         const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
+        const IMAGE_CACHE_NAME = 'orion-image-cache';
 
         const categoryFiles = [
             'alertness', 'attitude', 'safety', 'hazard', 'margins', 
@@ -100,13 +101,14 @@
         async function buildMasterDatabase() {
             let masterPool = [];
             const progressDisplay = document.getElementById('sync-progress');
-            const total = categoryFiles.length;
+            const totalCats = categoryFiles.length;
             
             try {
-                for (let i = 0; i < total; i++) {
+                // 1. Sync JSON Data
+                for (let i = 0; i < totalCats; i++) {
                     const cat = categoryFiles[i];
-                    const percent = Math.round(((i + 1) / total) * 100);
-                    progressDisplay.innerText = `[${cat}.json ${percent}%]`;
+                    const percent = Math.round(((i + 1) / totalCats) * 50); // First 50% for JSON
+                    progressDisplay.innerText = `[Data: ${percent}%]`;
                     
                     const response = await fetch(`${cat}.json`);
                     if (response.ok) {
@@ -114,12 +116,40 @@
                         masterPool = masterPool.concat(data);
                     }
                 }
+                
                 localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
                 localStorage.removeItem('orion_current_session');
-                progressDisplay.innerText = "";
+
+                // 2. Sync Images to Cache API (The PWA Way)
+                const cache = await caches.open(IMAGE_CACHE_NAME);
+                const totalImgs = masterPool.length;
+
+                for (let j = 0; j < totalImgs; j++) {
+                    const q = masterPool[j];
+                    const imgUrl = `images/${q.id}.jpeg`;
+                    
+                    // Update progress for second 50%
+                    if (j % 10 === 0) { // Update every 10 images to save resources
+                        const imgPercent = 50 + Math.round((j / totalImgs) * 50);
+                        progressDisplay.innerText = `[Assets: ${imgPercent}%]`;
+                    }
+
+                    // Check if already in cache, if not, fetch and put
+                    const cachedResponse = await cache.match(imgUrl);
+                    if (!cachedResponse) {
+                        try {
+                            const imgFetch = await fetch(imgUrl);
+                            if (imgFetch.ok) await cache.put(imgUrl, imgFetch);
+                        } catch (e) { /* Some questions might not have images */ }
+                    }
+                }
+                
+                progressDisplay.innerText = "● Ready";
+                setTimeout(() => { progressDisplay.innerText = ""; }, 3000);
                 return true;
             } catch (err) {
                 progressDisplay.innerText = "Sync Error";
+                console.error(err);
                 return false;
             }
         }
@@ -142,7 +172,6 @@
                     const anchor = document.createElement('a');
                     anchor.href = opt.htmlName;
                     anchor.className = 'btn btn-blue';
-                    // Inline style fixes to ensure buttons look like the original design
                     anchor.style.textDecoration = 'none';
                     anchor.style.marginBottom = '12px';
                     anchor.style.display = 'flex';
@@ -150,13 +179,13 @@
                     anchor.style.justifyContent = 'center';
                     anchor.style.width = '100%';
                     anchor.style.boxSizing = 'border-box';
-                    anchor.style.borderRadius = '12px'; // Matching your passcode input
-                    anchor.style.padding = '15px';      // Consistent sizing
+                    anchor.style.borderRadius = '12px';
+                    anchor.style.padding = '15px';
                     anchor.innerText = opt.description;
                     menuOptions.appendChild(anchor);
                 });
             } catch (err) {
-                menuOptions.innerHTML = `<p style="color:#ff3b30; font-size:0.8rem;">Error loading options.json</p>`;
+                menuOptions.innerHTML = `<p style="color:#ff3b30; font-size:0.8rem;">Error loading menu.</p>`;
             }
         }
         window.onload = init;
