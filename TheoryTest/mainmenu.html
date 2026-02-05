@@ -31,8 +31,11 @@
             </div>
             
             <div class="card-footer">
-                <span>ORION DRIVE</span>
-                <span>v2.4.0</span>
+                <div>
+                    <span>ORION DRIVE</span>
+                    <span id="sync-progress" style="margin-left: 10px; color: #8e8e93; font-weight: normal; font-size: 0.7rem;"></span>
+                </div>
+                <span>v2.4.1</span>
             </div>
         </div>
     </div>
@@ -41,7 +44,6 @@
         const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
         const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 
-        // New Category List for Merging
         const categoryFiles = [
             'alertness', 'attitude', 'safety', 'hazard', 'margins', 
             'vulnerable', 'other', 'conditions', 'motorway', 
@@ -96,10 +98,17 @@
 
         async function buildMasterDatabase() {
             let masterPool = [];
-            console.log("Orion Drive: Building orion_master.json...");
+            const progressDisplay = document.getElementById('sync-progress');
+            const total = categoryFiles.length;
             
             try {
-                for (const cat of categoryFiles) {
+                for (let i = 0; i < total; i++) {
+                    const cat = categoryFiles[i];
+                    const percent = Math.round(((i + 1) / total) * 100);
+                    
+                    // Update discrete progress text
+                    progressDisplay.innerText = `[${cat}.json ${percent}%]`;
+                    
                     const response = await fetch(`${cat}.json`);
                     if (response.ok) {
                         const data = await response.json();
@@ -109,11 +118,13 @@
                     }
                 }
                 
-                // Save the merged result locally
                 localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
-                console.log("Orion Drive: Master Database Sync Complete.");
+                
+                // Clear progress text when done
+                progressDisplay.innerText = "";
                 return true;
             } catch (err) {
+                progressDisplay.innerText = "Sync Error";
                 console.error("Database Build Error:", err);
                 return false;
             }
@@ -126,7 +137,6 @@
             menuOptions.style.flexDirection = 'column';
             document.getElementById('status-msg').style.display = 'block'; 
 
-            // Trigger the download and merge process
             const dbReady = await buildMasterDatabase();
 
             try {
@@ -135,7 +145,7 @@
                 menuOptions.innerHTML = ''; 
                 
                 if (!dbReady) {
-                    menuOptions.innerHTML = `<p style="color:#ff3b30; font-size:0.8rem; text-align:center;">Data Sync Failed. Check connection.</p>`;
+                    menuOptions.innerHTML = `<p style="color:#ff3b30; font-size:0.8rem; text-align:center;">Data Sync Failed.</p>`;
                 }
 
                 options.forEach(opt => {
