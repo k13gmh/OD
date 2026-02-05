@@ -142,9 +142,9 @@
             <p>This page tracks questions you've answered incorrectly to help you focus your revision.</p>
             <ul>
                 <li><strong>Weight:</strong> Every time you get a question wrong, its weight increases.</li>
-                <li><strong>Redemption:</strong> Get a "shame" question right to drop its weight. Get it right twice, and it's removed.</li>
+                <li><strong>Redemption:</strong> You have to get it right twice as many times as you got it wrong. (e.g., If you get a question wrong 2 times, you must answer it correctly 4 times to clear it).</li>
             </ul>
-            <button class="btn btn-blue" onclick="closeInfo()" style="padding:10px; margin-top:10px;">CLOSE</button>
+            <button class="btn btn-blue" onclick="closeInfo()" style="padding:15px; margin-top:10px; width: 100%; border-radius: 12px;">CLOSE</button>
         </div>
     </div>
 
@@ -154,7 +154,7 @@
             <div class="title-group">
                 <h1>ORION DRIVE</h1>
                 <h2>Wall of Shame</h2>
-                <div id="version-tag">HTML: v2.3.8 | JS: Loading...</div>
+                <div id="version-tag">HTML: v2.3.12 | JS: Loading...</div>
             </div>
             <div id="shame-total-sign" class="shame-speed-sign">0</div>
         </div>
@@ -171,8 +171,8 @@
     </div>
 
     <script>
-        const JS_VERSION = "v2.3.8";
-        const HTML_VERSION = "v2.3.8";
+        const JS_VERSION = "v2.3.12";
+        const HTML_VERSION = "v2.3.12";
 
         function openInfo() { document.getElementById('info-modal').style.display = 'flex'; }
         function closeInfo() { document.getElementById('info-modal').style.display = 'none'; }
@@ -196,7 +196,6 @@
             }
 
             try {
-                // FIXED: Using localStorage instead of fetch
                 const localData = localStorage.getItem('orion_master.json');
                 if (!localData) throw new Error("Database not synced");
                 
@@ -234,7 +233,7 @@
                     }
                 });
             } catch (e) {
-                shameList.innerHTML = `<p style="color:red; text-align:center;">Error: ${e.message}. Please sync from Main Menu.</p>`;
+                shameList.innerHTML = `<p style="color:red; text-align:center;">Error: ${e.message}.</p>`;
             }
         }
 
