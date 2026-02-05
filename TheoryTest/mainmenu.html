@@ -27,21 +27,32 @@
             </div>
 
             <div id="menu-options" style="display:none; width: 100%; flex-direction: column;">
-                <p style="text-align:center; color:#8e8e93; font-size:0.8rem;">Initialising Data...</p>
             </div>
             
+            <div id="sync-ui" style="display:none; text-align:center; padding: 20px;">
+                <p style="color:#8e8e93; font-size:0.8rem; margin-bottom:10px;">Syncing Assets for Offline Use...</p>
+                <div style="width:100%; background:#eee; height:8px; border-radius:4px; overflow:hidden;">
+                    <div id="sync-bar" style="width:0%; background:#007bff; height:100%; transition: width 0.2s;"></div>
+                </div>
+                <p id="sync-status-text" style="color:#8e8e93; font-size:0.7rem; margin-top:8px;">0%</p>
+            </div>
+
             <div class="card-footer">
                 <div>
                     <span>ORION DRIVE</span>
-                    <span id="sync-progress" style="margin-left: 10px; color: #8e8e93; font-weight: normal; font-size: 0.7rem;"></span>
+                    <span id="sync-indicator" style="margin-left: 10px; color: #8e8e93; font-size: 0.7rem;"></span>
                 </div>
-                <span>v2.5.0</span>
+                <span>v2.5.1</span>
             </div>
         </div>
+        
+        <p style="text-align:center; margin-top:15px;">
+            <button onclick="triggerManualSync()" style="background:none; border:none; color:#ccc; font-size:0.65rem; cursor:pointer; text-decoration:underline;">Force Database Refresh</button>
+        </p>
     </div>
 
     <script>
-        // Version Check: v2.5.0
+        // Version Check: v2.5.1
         const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
         const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
         const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -52,11 +63,24 @@
             'signs', 'documents', 'incidents', 'loading'
         ];
 
+        function init() {
+            if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
+                showMenu(); 
+            }
+        }
+
+        function verifyAccess() {
+            const input = document.getElementById('passCode').value.toUpperCase();
+            if (input === calcKey()) { 
+                localStorage.setItem('gatekeeper_stamp', curMonthYear);
+                localStorage.setItem('orion_session_token', getMMYY());
+                showMenu(); 
+            } else { alert("Incorrect Code."); }
+        }
+
         function getMMYY() {
             const d = new Date();
-            const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
-            const yy = String(d.getUTCFullYear()).slice(-2);
-            return mm + yy;
+            return String(d.getUTCMonth() + 1).padStart(2, '0') + String(d.getUTCFullYear()).slice(-2);
         }
 
         function calcKey() {
@@ -67,7 +91,6 @@
             let v = m % Math.pow(32, 4); 
             let r = ""; 
             for (let j = 0; j < 4; j++) { r = ALPH.charAt(v % 32) + r; v = Math.floor(v / 32); }
-            while (r.length < 4) { r = ALPH.charAt(0) + r; }
             let t = 0; 
             let ra = r.split('').reverse();
             for (let j = 0; j < ra.length; j++) { 
@@ -79,77 +102,65 @@
             return r + (ALPH[ci] || ALPH[0]);
         }
 
-        const targetKey = calcKey();
-
-        function init() {
-            if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
-                showMenu(); 
-            }
-        }
-
-        function verifyAccess() {
-            const input = document.getElementById('passCode').value.toUpperCase();
-            if (input === targetKey) { 
-                localStorage.setItem('gatekeeper_stamp', curMonthYear);
-                localStorage.setItem('orion_session_token', getMMYY());
-                showMenu(); 
-            } else { 
-                alert("Incorrect Code."); 
+        async function triggerManualSync() {
+            if (confirm("Refresh all question data and images? This may take a moment.")) {
+                localStorage.removeItem('orion_master.json');
+                showMenu();
             }
         }
 
         async function buildMasterDatabase() {
+            // IF ALREADY LOADED, SKIP
+            if (localStorage.getItem('orion_master.json')) {
+                console.log("Orion: Database already local. Skipping sync.");
+                return true;
+            }
+
+            const syncUI = document.getElementById('sync-ui');
+            const menuOptions = document.getElementById('menu-options');
+            const bar = document.getElementById('sync-bar');
+            const statusText = document.getElementById('sync-status-text');
+
+            menuOptions.style.display = 'none';
+            syncUI.style.display = 'block';
+
             let masterPool = [];
-            const progressDisplay = document.getElementById('sync-progress');
-            const totalCats = categoryFiles.length;
-            
             try {
-                // 1. Sync JSON Data
-                for (let i = 0; i < totalCats; i++) {
-                    const cat = categoryFiles[i];
-                    const percent = Math.round(((i + 1) / totalCats) * 50); // First 50% for JSON
-                    progressDisplay.innerText = `[Data: ${percent}%]`;
-                    
-                    const response = await fetch(`${cat}.json`);
-                    if (response.ok) {
-                        const data = await response.json();
-                        masterPool = masterPool.concat(data);
-                    }
+                // 1. JSON Data
+                for (let i = 0; i < categoryFiles.length; i++) {
+                    const res = await fetch(`${categoryFiles[i]}.json`);
+                    if (res.ok) masterPool = masterPool.concat(await res.json());
+                    let p = Math.round(((i + 1) / categoryFiles.length) * 20);
+                    bar.style.width = p + "%";
+                    statusText.innerText = `Loading Data: ${p}%`;
                 }
                 
                 localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
                 localStorage.removeItem('orion_current_session');
 
-                // 2. Sync Images to Cache API (The PWA Way)
+                // 2. Images
                 const cache = await caches.open(IMAGE_CACHE_NAME);
-                const totalImgs = masterPool.length;
-
-                for (let j = 0; j < totalImgs; j++) {
-                    const q = masterPool[j];
-                    const imgUrl = `images/${q.id}.jpeg`;
-                    
-                    // Update progress for second 50%
-                    if (j % 10 === 0) { // Update every 10 images to save resources
-                        const imgPercent = 50 + Math.round((j / totalImgs) * 50);
-                        progressDisplay.innerText = `[Assets: ${imgPercent}%]`;
-                    }
-
-                    // Check if already in cache, if not, fetch and put
-                    const cachedResponse = await cache.match(imgUrl);
-                    if (!cachedResponse) {
+                for (let j = 0; j < masterPool.length; j++) {
+                    const imgUrl = `images/${masterPool[j].id}.jpeg`;
+                    const cached = await cache.match(imgUrl);
+                    if (!cached) {
                         try {
-                            const imgFetch = await fetch(imgUrl);
-                            if (imgFetch.ok) await cache.put(imgUrl, imgFetch);
-                        } catch (e) { /* Some questions might not have images */ }
+                            const imgRes = await fetch(imgUrl);
+                            if (imgRes.ok) await cache.put(imgUrl, imgRes);
+                        } catch (e) {}
+                    }
+                    if (j % 20 === 0) {
+                        let p = 20 + Math.round((j / masterPool.length) * 80);
+                        bar.style.width = p + "%";
+                        statusText.innerText = `Caching Assets: ${p}%`;
                     }
                 }
                 
-                progressDisplay.innerText = "● Ready";
-                setTimeout(() => { progressDisplay.innerText = ""; }, 3000);
+                syncUI.style.display = 'none';
+                menuOptions.style.display = 'flex';
                 return true;
             } catch (err) {
-                progressDisplay.innerText = "Sync Error";
-                console.error(err);
+                statusText.innerText = "Sync Failed.";
                 return false;
             }
         }
@@ -161,13 +172,12 @@
             menuOptions.style.flexDirection = 'column';
             document.getElementById('status-msg').style.display = 'block'; 
 
-            const dbReady = await buildMasterDatabase();
+            await buildMasterDatabase();
 
             try {
                 const response = await fetch('options.json');
                 const options = await response.json();
                 menuOptions.innerHTML = ''; 
-                
                 options.forEach(opt => {
                     const anchor = document.createElement('a');
                     anchor.href = opt.htmlName;
@@ -185,7 +195,7 @@
                     menuOptions.appendChild(anchor);
                 });
             } catch (err) {
-                menuOptions.innerHTML = `<p style="color:#ff3b30; font-size:0.8rem;">Error loading menu.</p>`;
+                menuOptions.innerHTML = `<p style="color:#ff3b30;">Menu Error</p>`;
             }
         }
         window.onload = init;
