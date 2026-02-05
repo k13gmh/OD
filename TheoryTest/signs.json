@@ -1028,7 +1028,7 @@
   {
     "id": "593",
     "category": "Road and Traffic Signs",
-    "question": "What does a 'blue rectangle with a white car and a red line' mean?",
+    "question": "What does a 'blue rectangle with a white bridge over two roads and a red line' mean?",
     "choices": {
       "A": "No cars allowed",
       "B": "End of a motorway",
@@ -1043,9 +1043,9 @@
     "category": "Road and Traffic Signs",
     "question": "What does a sign showing a 'red triangle with a toad' mean?",
     "choices": {
-      "A": "A pet shop",
-      "B": "A migration route for toads or small animals",
-      "C": "A swamp",
+      "A": "A pet shop or zoo is ahead",
+      "B": "A migration route for toads",
+      "C": "You are approaching a swamp",
       "D": "No driving in wet weather"
     },
     "correct": "B",
@@ -1054,7 +1054,7 @@
   {
     "id": "595",
     "category": "Road and Traffic Signs",
-    "question": "What does a red circle with 'No' over a 'Right Arrow' mean?",
+    "question": "What does a red circle with a red diagonal over a 'Right Arrow' mean?",
     "choices": {
       "A": "No left turn",
       "B": "No right turn",
@@ -1067,7 +1067,7 @@
   {
     "id": "596",
     "category": "Road and Traffic Signs",
-    "question": "What does a green rectangular sign with a 'white phone' and 'SOS' mean?",
+    "question": "What does a blue and yellow rectangular sign with a 'black phone' and 'SOS' mean?",
     "choices": {
       "A": "A public phone",
       "B": "An emergency roadside telephone",
@@ -1093,20 +1093,20 @@
   {
     "id": "598",
     "category": "Road and Traffic Signs",
-    "question": "What does a 'blue circle with a white moped' mean?",
+    "question": "What does a blue sign with a white bicycle and red number mean?",
     "choices": {
-      "A": "No mopeds",
-      "B": "A route for mopeds only",
-      "C": "A motorcycle shop",
-      "D": "Mopeds must stay in the middle of the road"
+      "A": "Direction of parking for 4 cycles only",
+      "B": "Direction of a cycle route number 4",
+      "C": "Cycles must not exceed 4 mph",
+      "D": "Cycles must stay in the middle of the road"
     },
     "correct": "B",
-    "explanation": "This is a dedicated path or lane for low-powered motorcycles.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "This is a regional cycle route.  Number of the route is in red.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "599",
     "category": "Road and Traffic Signs",
-    "question": "What does a 'white square sign with a black 'C' in a red circle' mean?",
+    "question": "What does a white 'C' in a red circle' mean?",
     "choices": {
       "A": "A car park",
       "B": "Congestion charging zone",
