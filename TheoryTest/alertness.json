@@ -1,0 +1,678 @@
+[
+  {
+    "id": "1",
+    "category": "Alertness",
+    "question": "What should you do before making a U-turn?",
+    "choices": {
+      "A": "Give an arm signal",
+      "B": "Check road markings",
+      "C": "Look over your shoulder for a final check",
+      "D": "Select a higher gear than normal"
+    },
+    "correct": "C",
+    "explanation": "Always do a final head check to ensure your blind spots are clear before starting the turn.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "2",
+    "category": "Alertness",
+    "question": "What should you do as you approach a bridge that is narrow and has no pavement?",
+    "choices": {
+      "A": "Sound your horn and continue",
+      "B": "Slow down and be prepared to stop",
+      "C": "Speed up to get across quickly",
+      "D": "Stay in the middle of the road"
+    },
+    "correct": "B",
+    "explanation": "Narrow bridges often have limited visibility; slowing down allows you to react to oncoming traffic or pedestrians.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "3",
+    "category": "Alertness",
+    "question": "Where should you avoid overtaking?",
+    "choices": {
+      "A": "On a 40mph road",
+      "B": "Approaching a dip in the road",
+      "C": "In a one-way street",
+      "D": "On a dual carriageway"
+    },
+    "correct": "B",
+    "explanation": "Dips in the road hide oncoming vehicles. You should only overtake when you have a clear view of the road ahead.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "4",
+    "category": "Alertness",
+    "question": "What does a curved arrow road marking mean?",
+    "choices": {
+      "A": "The road curves ahead",
+      "B": "Overtaking is allowed",
+      "C": "Turn left at the next junction",
+      "D": "Drivers should move back to the left"
+    },
+    "correct": "D",
+    "explanation": "These arrows warn you that a hazard (like a solid white line) is approaching and you must return to your side of the road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "5",
+    "category": "Alertness",
+    "question": "What should you do if your mobile phone rings while you are driving?",
+    "choices": {
+      "A": "Answer it quickly",
+      "B": "Ignore it and pull over later when safe",
+      "C": "Use a hand-held headset",
+      "D": "Check the caller ID first"
+    },
+    "correct": "B",
+    "explanation": "Any distraction can cause an accident. Wait until you are safely parked before checking your phone.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "7",
+    "category": "Alertness",
+    "question": "What should you do when approaching traffic lights that have been green for some time?",
+    "choices": {
+      "A": "Accelerate to get through",
+      "B": "Maintain your speed",
+      "C": "Be ready to stop",
+      "D": "Brake hard immediately"
+    },
+    "correct": "C",
+    "explanation": "Lights that have been green for a while are likely to change soon. Anticipate the amber light.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "8",
+    "category": "Alertness",
+    "question": "What should you do before slowing down or stopping?",
+    "choices": {
+      "A": "Check your mirrors",
+      "B": "Flash your headlights",
+      "C": "Select a higher gear",
+      "D": "Sound your horn"
+    },
+    "correct": "A",
+    "explanation": "You need to know how your actions will affect the drivers behind you before you change speed.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "9",
+    "category": "Alertness",
+    "question": "You are following a large vehicle. Why should you stay well back?",
+    "choices": {
+      "A": "To help the driver see you in their mirrors",
+      "B": "To get a better view of the road signs",
+      "C": "To avoid the vehicle's exhaust fumes",
+      "D": "To stop other drivers from cutting in"
+    },
+    "correct": "A",
+    "explanation": "If you stay too close"
+  },
+  {
+    "id": "10",
+    "category": "Alertness",
+    "question": "Why should you use your mirrors when you see a hazard ahead?",
+    "choices": {
+      "A": "To check your speed",
+      "B": "To see how the hazard will affect traffic behind you",
+      "C": "To check if you need to signal",
+      "D": "To help you steer away"
+    },
+    "correct": "B",
+    "explanation": "Mirror checks help you judge if a sudden stop will cause a rear-end collision.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "12",
+    "category": "Alertness",
+    "question": "Why are objects hanging from your interior mirror a hazard?",
+    "choices": {
+      "A": "They could distract your attention",
+      "B": "They could damage the mirror",
+      "C": "They could obscure your speedometer",
+      "D": "They are illegal in all cars"
+    },
+    "correct": "A",
+    "explanation": "Movement in your peripheral vision can distract you or hide a small hazard like a cyclist.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "13",
+    "category": "Alertness",
+    "question": "You feel sleepy on a motorway. What is the best thing to do?",
+    "choices": {
+      "A": "Turn up the radio",
+      "B": "Open the window and leave at the next exit",
+      "C": "Drive faster to reach home",
+      "D": "Stop on the hard shoulder for a nap"
+    },
+    "correct": "B",
+    "explanation": "Fresh air is a temporary fix; you must leave the motorway and find a safe"
+  },
+  {
+    "id": "14",
+    "category": "Alertness",
+    "question": "When should you switch your headlights on?",
+    "choices": {
+      "A": "Only when street lights are on",
+      "B": "When it first starts to get dark",
+      "C": "Only when it is raining",
+      "D": "When you are driving over 30mph"
+    },
+    "correct": "B",
+    "explanation": "Turning lights on at dusk helps other drivers see you even if you can see perfectly fine.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "15",
+    "category": "Alertness",
+    "question": "What is most likely to distract you while driving?",
+    "choices": {
+      "A": "Using the windscreen wipers",
+      "B": "Looking at a map or sat-nav",
+      "C": "Checking the mirrors",
+      "D": "Using the car's heater"
+    },
+    "correct": "B",
+    "explanation": "Looking away from the road for even a second to check a map significantly increases risk.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "16",
+    "category": "Alertness",
+    "question": "When may you use a hand-held mobile phone?",
+    "choices": {
+      "A": "When you are stopped at traffic lights",
+      "B": "In a genuine emergency",
+      "C": "When driving on a quiet road",
+      "D": "When you are in a traffic queue"
+    },
+    "correct": "B",
+    "explanation": "The only exception for using a hand-held phone while driving is to call 999 or 112 in an emergency.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "17",
+    "category": "Alertness",
+    "question": "What should you do when moving off from behind a parked car?",
+    "choices": {
+      "A": "Signal and pull out",
+      "B": "Look around and check mirrors and blind spots",
+      "C": "Sound your horn to warn others",
+      "D": "Check your interior mirror only"
+    },
+    "correct": "B",
+    "explanation": "A full 360-degree check is vital to ensure no one is approaching from your blind spots.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "18",
+    "category": "Alertness",
+    "question": "How should you pass a cyclist on a narrow road?",
+    "choices": {
+      "A": "Pass as close as possible",
+      "B": "Sound your horn to move them",
+      "C": "Wait until there is plenty of room to pass safely",
+      "D": "Speed up to get past quickly"
+    },
+    "correct": "C",
+    "explanation": "Cyclists may need to wobble or avoid potholes; give them as much room as you would a car.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "19",
+    "category": "Alertness",
+    "question": "When do windscreen pillars cause a serious obstruction?",
+    "choices": {
+      "A": "When driving on a straight road",
+      "B": "When approaching bends or junctions",
+      "C": "When you are reversing",
+      "D": "When you are parking"
+    },
+    "correct": "B",
+    "explanation": "Pillars can hide pedestrians or cyclists"
+  },
+  {
+    "id": "20",
+    "category": "Alertness",
+    "question": "What does the term 'blind spot' mean?",
+    "choices": {
+      "A": "An area not visible in your mirrors",
+      "B": "An area covered by your side mirrors",
+      "C": "The area directly in front of the car",
+      "D": "The area blocked by your headlights"
+    },
+    "correct": "A",
+    "explanation": "You must check over your shoulders to see what the mirrors cannot.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "21",
+    "category": "Alertness",
+    "question": "What is the risk of using a hands-free phone?",
+    "choices": {
+      "A": "It is completely safe",
+      "B": "It will still distract your attention",
+      "C": "It will improve your reaction time",
+      "D": "It is illegal to use"
+    },
+    "correct": "B",
+    "explanation": "The mental effort of a conversation is what causes the distraction"
+  },
+  {
+    "id": "22",
+    "category": "Alertness",
+    "question": "You are turning right onto a dual carriageway. What is most important?",
+    "choices": {
+      "A": "Checking the speed limit",
+      "B": "Ensuring the central reservation is wide enough",
+      "C": "Signaling for at least 5 seconds",
+      "D": "Staying in a high gear"
+    },
+    "correct": "B",
+    "explanation": "If the reservation isn't wide enough for your car"
+  },
+  {
+    "id": "23",
+    "category": "Alertness",
+    "question": "How can you prevent a sat-nav from distracting you?",
+    "choices": {
+      "A": "Set the destination before you start",
+      "B": "Place it in your direct line of sight",
+      "C": "Turn the volume to maximum",
+      "D": "Check it every 30 seconds"
+    },
+    "correct": "A",
+    "explanation": "Programming a sat-nav while driving is dangerous. Do it while parked.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "24",
+    "category": "Alertness",
+    "question": "What should you do if a passenger is being distracting?",
+    "choices": {
+      "A": "Tell them to get out",
+      "B": "Ignore them and keep driving",
+      "C": "Ask them to stop or pull over safely",
+      "D": "Turn up the radio to drown them out"
+    },
+    "correct": "C",
+    "explanation": "The driver is responsible for the safety of the vehicle; do not allow passengers to interfere with your focus.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "25",
+    "category": "Alertness",
+    "question": "How does loud music affect your driving?",
+    "choices": {
+      "A": "It helps you stay awake",
+      "B": "It improves your concentration",
+      "C": "It may mask other sounds like sirens",
+      "D": "It has no effect on driving"
+    },
+    "correct": "C",
+    "explanation": "Loud music can prevent you from hearing emergency vehicles or mechanical issues with your car.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "26",
+    "category": "Alertness",
+    "question": "You are approaching a hump-backed bridge. What should you do?",
+    "choices": {
+      "A": "Stay in the middle of the road",
+      "B": "Keep to the left and be wary of oncoming traffic",
+      "C": "Speed up to see over the top",
+      "D": "Sound your horn and maintain speed"
+    },
+    "correct": "B",
+    "explanation": "Hump bridges are often narrow; staying left ensures you don't collide with oncoming cars.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "27",
+    "category": "Alertness",
+    "question": "What is a common sign of driver fatigue?",
+    "choices": {
+      "A": "Increased concentration",
+      "B": "Yawning and heavy eyelids",
+      "C": "Faster reaction times",
+      "D": "Better mirror awareness"
+    },
+    "correct": "B",
+    "explanation": "If you start yawning"
+  },
+  {
+    "id": "28",
+    "category": "Alertness",
+    "question": "Why should you check your mirrors before turning?",
+    "choices": {
+      "A": "To see if your indicators are working",
+      "B": "To check for following or overtaking traffic",
+      "C": "To see if the road is clear ahead",
+      "D": "To check the status of your passengers"
+    },
+    "correct": "B",
+    "explanation": "Someone may be trying to overtake you just as you are about to turn right.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "29",
+    "category": "Alertness",
+    "question": "What should you do if you cannot see clearly while reversing?",
+    "choices": {
+      "A": "Open your door and look out",
+      "B": "Ask someone to guide you",
+      "C": "Reverse as fast as possible",
+      "D": "Rely solely on your mirrors"
+    },
+    "correct": "B",
+    "explanation": "If your view is restricted"
+  },
+  {
+    "id": "30",
+    "category": "Alertness",
+    "question": "What's the best way to stay alert on a long journey?",
+    "choices": {
+      "A": "Drink plenty of water",
+      "B": "Take regular breaks at least every two hours",
+      "C": "Drive at a constant high speed",
+      "D": "Listen to an audiobook"
+    },
+    "correct": "B",
+    "explanation": "A 15-minute break every two hours is the recommended standard to maintain focus.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "31",
+    "category": "Alertness",
+    "question": "How can sun glare affect you?",
+    "choices": {
+      "A": "It makes the road easier to see",
+      "B": "It can dazzle and hide hazards",
+      "C": "It only affects you in the summer",
+      "D": "It improves your mood and focus"
+    },
+    "correct": "B",
+    "explanation": "Keep your windscreen clean and use your sun visor to mitigate dazzling light.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "32",
+    "category": "Alertness",
+    "question": "When approaching a junction, you see a cyclist. What should you expect?",
+    "choices": {
+      "A": "They will always stop for you",
+      "B": "They may swerve or change direction suddenly",
+      "C": "They are faster than cars",
+      "D": "They have no right of way"
+    },
+    "correct": "B",
+    "explanation": "Cyclists are vulnerable and may need to avoid potholes or be affected by wind, causing them to swerve or change direction suddenly."
+  },
+  {
+    "id": "33",
+    "category": "Alertness",
+    "question": "What should you do if you are dazzled by a following vehicle's lights?",
+    "choices": {
+      "A": "Brake hard",
+      "B": "Use your interior 'anti-dazzle' mirror flick",
+      "C": "Turn your own lights off",
+      "D": "Slow down and stop immediately"
+    },
+    "correct": "B",
+    "explanation": "Most mirrors have a small lever to tilt the glass and reduce glare from behind.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "34",
+    "category": "Alertness",
+    "question": "What is the main danger of 'rubbernecking' at an accident?",
+    "choices": {
+      "A": "You will be late for your journey",
+      "B": "It causes further accidents due to distraction",
+      "C": "It is disrespectful to victims",
+      "D": "The police will fine you"
+    },
+    "correct": "B",
+    "explanation": "Looking at an accident scene means your eyes and mind are off the road in front of you.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "35",
+    "category": "Alertness",
+    "question": "Which of these is a distraction inside the car?",
+    "choices": {
+      "A": "A clean windscreen",
+      "B": "A map on the passenger seat",
+      "C": "Working mirrors",
+      "D": "Properly inflated tyres"
+    },
+    "correct": "B",
+    "explanation": "A loose map can fly around or tempt you to look down while the car is moving.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "36",
+    "category": "Alertness",
+    "question": "When should you use your horn to be 'seen'?",
+    "choices": {
+      "A": "To greet friends",
+      "B": "To warn others of your presence at a blind bend",
+      "C": "To show your annoyance",
+      "D": "To signal that you have right of way"
+    },
+    "correct": "B",
+    "explanation": "The horn is a warning device"
+  },
+  {
+    "id": "37",
+    "category": "Alertness",
+    "question": "What should you do if you miss your exit on a motorway?",
+    "choices": {
+      "A": "Reverse back to the exit",
+      "B": "Stop on the hard shoulder",
+      "C": "Continue to the next exit",
+      "D": "Cross the central reservation"
+    },
+    "correct": "C",
+    "explanation": "Never reverse or stop on a motorway. Simply find the next safe turnaround point.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "38",
+    "category": "Alertness",
+    "question": "Why should you avoid driving if you are upset?",
+    "choices": {
+      "A": "You will drive too slowly",
+      "B": "It can affect your judgment and concentration",
+      "C": "You will forget your route",
+      "D": "It is illegal to drive while sad"
+    },
+    "correct": "B",
+    "explanation": "Emotional stress is just as distracting as a mobile phone.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "39",
+    "category": "Alertness",
+    "question": "How does rain affect your alertness?",
+    "choices": {
+      "A": "It makes the road smoother",
+      "B": "It reduces visibility and increases stopping distances",
+      "C": "It helps you stay focused",
+      "D": "It has no effect on your driving"
+    },
+    "correct": "B",
+    "explanation": "Rain requires more mental effort to process the visual information and anticipate hazards.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "40",
+    "category": "Alertness",
+    "question": "What should you do before emerging from a junction in a busy town?",
+    "choices": {
+      "A": "Sound your horn",
+      "B": "Look for pedestrians who may be crossing the side road",
+      "C": "Wait for a driver to flash their lights",
+      "D": "Check your fuel gauge"
+    },
+    "correct": "B",
+    "explanation": "Pedestrians often cross side roads without looking; you must stay alert for them.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "41",
+    "category": "Alertness",
+    "question": "You are driving behind a moped. Why should you stay back?",
+    "choices": {
+      "A": "Mopeds are very fast",
+      "B": "The rider may be inexperienced or wobbly",
+      "C": "Mopeds have very loud exhausts",
+      "D": "To avoid the rider's shadow"
+    },
+    "correct": "B",
+    "explanation": "L-plate riders or mopeds can be less stable; extra space is a safety margin.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "42",
+    "category": "Alertness",
+    "question": "What is the benefit of 'defensive driving'?",
+    "choices": {
+      "A": "You can drive faster",
+      "B": "You anticipate the mistakes of others",
+      "C": "You always have right of way",
+      "D": "It saves money on insurance"
+    },
+    "correct": "B",
+    "explanation": "Defensive driving is about being alert to potential hazards before they happen.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "43",
+    "category": "Alertness",
+    "question": "What should you do if a driver is tailgating you?",
+    "choices": {
+      "A": "Brake sharply to warn them",
+      "B": "Speed up to get away",
+      "C": "Increase your distance from the car in front",
+      "D": "Turn your hazard lights on"
+    },
+    "correct": "C",
+    "explanation": "Increasing the gap in front gives you more time to brake slowly"
+  },
+  {
+    "id": "44",
+    "category": "Alertness",
+    "question": "How can you help an elderly person cross the road?",
+    "choices": {
+      "A": "Flash your lights at them",
+      "B": "Be patient and give them time",
+      "C": "Sound your horn to hurry them",
+      "D": "Wave them across"
+    },
+    "correct": "B",
+    "explanation": "Never wave or flash someone across"
+  },
+  {
+    "id": "45",
+    "category": "Alertness",
+    "question": "What should you do when approaching a school bus?",
+    "choices": {
+      "A": "Speed up to pass it",
+      "B": "Be alert for children emerging from behind it",
+      "C": "Sound your horn continuously",
+      "D": "Ignore it and follow the car in front"
+    },
+    "correct": "B",
+    "explanation": "Children are often distracted when getting off a bus; you must be the alert one.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "46",
+    "category": "Alertness",
+    "question": "Why is it dangerous to drive after taking certain medicines?",
+    "choices": {
+      "A": "They make you more alert",
+      "B": "They can cause drowsiness or blurred vision",
+      "C": "They are all illegal",
+      "D": "They make you drive too fast"
+    },
+    "correct": "B",
+    "explanation": "Always check the label or ask a doctor if a medicine affects your driving.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "48",
+    "category": "Alertness",
+    "question": "What is the 'two-second rule'?",
+    "choices": {
+      "A": "The time it takes to change gear",
+      "B": "The safe following distance in good conditions",
+      "C": "The time you should spend looking in the mirror",
+      "D": "The time it takes to signal"
+    },
+    "correct": "B",
+    "explanation": "In dry conditions"
+  },
+  {
+    "id": "49",
+    "category": "Alertness",
+    "question": "What should you do if you are being blinded by oncoming headlights?",
+    "choices": {
+      "A": "Look directly at them",
+      "B": "Look towards the left-hand edge of the road",
+      "C": "Turn your own high beams on",
+      "D": "Close your eyes briefly"
+    },
+    "correct": "B",
+    "explanation": "Looking at the kerb or road markings on the left helps you stay in lane without being blinded.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "50",
+    "category": "Alertness",
+    "question": "Why should you stay alert for horses on the road?",
+    "choices": {
+      "A": "They are very fast",
+      "B": "They may be easily spooked by noise or speed",
+      "C": "They always have right of way",
+      "D": "They are hard to see in the day"
+    },
+    "correct": "B",
+    "explanation": "Pass horses slowly and wide"
+  },
+  {
+    "id": "51",
+    "category": "Alertness",
+    "question": "What should you do if you see a 'Stop' sign?",
+    "choices": {
+      "A": "Slow down and look",
+      "B": "Stop only if traffic is coming",
+      "C": "Stop completely even if the road is clear",
+      "D": "Slow down and sound your horn"
+    },
+    "correct": "C",
+    "explanation": "A 'Stop' sign is a legal requirement to bring your wheels to a complete halt.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "52",
+    "category": "Alertness",
+    "question": "How can you improve your view when driving at night?",
+    "choices": {
+      "A": "Wear tinted glasses",
+      "B": "Keep your windscreen clean inside and out",
+      "C": "Drive with your interior light on",
+      "D": "Use your hazard lights"
+    },
+    "correct": "B",
+    "explanation": "Dirt on the glass can catch the light from oncoming cars and create a dangerous haze.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "53",
+    "category": "Alertness",
+    "question": "What is 'tunnel vision'?",
+    "choices": {
+      "A": "A condition caused by driving in tunnels",
+      "B": "The loss of peripheral vision due to high speed or stress",
+      "C": "A type of sunglasses",
+      "D": "Looking only at the car in front"
+    },
+    "correct": "B",
+    "explanation": "Stay alert by scanning the whole environment"
+  },
+  {
+    "id": "54",
+    "category": "Alertness",
+    "question": "What should you do if you are unsure of a road sign's meaning?",
+    "choices": {
+      "A": "Ignore it",
+      "B": "Stop in the middle of the road to read it",
+      "C": "Slow down and prepare for a hazard",
+      "D": "Speed up to find a clearer sign"
+    },
+    "correct": "C",
+    "explanation": "If you don't know the sign"
+  },
+  {
+    "id": "57",
+    "category": "Alertness",
+    "question": "Why should you check the road surface ahead?",
+    "choices": {
+      "A": "To see if it's been paved recently",
+      "B": "To look for oil spills or ice that could affect control",
+      "C": "To check for loose coins",
+      "D": "To admire the road work"
+    },
+    "correct": "B",
+    "explanation": "Being alert to the road surface helps you adjust your speed before you lose grip.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  }
+]
