@@ -8,12 +8,15 @@
 </head>
 <body>
     <div class="container">
-        <div id="v-tag-top" style="position: absolute; top: 5px; right: 10px; font-size: 0.6rem; color: #ccc;">v2.2.3</div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding: 0 5px;">
+            <span style="font-size: 0.7rem; color: #8e8e93;">HTML: v2.2.3</span>
+            <span id="v-tag-top" style="font-size: 0.7rem; color: #8e8e93;">JS: Loading...</span>
+        </div>
 
         <div id="menu-ui">
             <div id="category-list" class="card">
                 <p style="text-align:center; color:#8e8e93; font-size:0.8rem;">Loading Categories...</p>
-                </div>
+            </div>
         </div>
 
         <div id="test-ui" style="display:none;">
@@ -31,8 +34,7 @@
                     Question text will appear here.
                 </div>
 
-                <div id="options-area">
-                    </div>
+                <div id="options-area"></div>
 
                 <div style="display: flex; justify-content: space-between; margin-top: 25px; gap: 10px;">
                     <button class="btn btn-grey" onclick="changeQuestion(-1)">PREV</button>
@@ -46,9 +48,7 @@
             </div>
         </div>
 
-        <div id="summary-ui" class="card" style="display:none; text-align:center;">
-            </div>
-
+        <div id="summary-ui" class="card" style="display:none; text-align:center;"></div>
     </div>
 
     <div id="img-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:10000; align-items:center; justify-content:center;" onclick="this.style.display='none'">
