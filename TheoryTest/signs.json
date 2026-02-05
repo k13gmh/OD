@@ -664,15 +664,15 @@
   {
     "id": "565",
     "category": "Road and Traffic Signs",
-    "question": "What does a red circle with a 'white line' through a car and a 5t mean?",
+    "question": "What does it mean, on a motorway, if you see a sign with flashing lights with 50 on it??",
     "choices": {
-      "A": "No cars over 5 tonnes",
-      "B": "No motor vehicles over 5 tonnes maximum gross weight",
-      "C": "Speed limit 5 mph",
-      "D": "No parking for 5 hours"
+      "A": "Temporary minimum speed limit 50 mph",
+      "B": "Temporary maximum speed limit 50 mph",
+      "C": "Fuel station in 50 metres",
+      "D": "No hard shoulder for 50 miles"
     },
     "correct": "B",
-    "explanation": "Weight restrictions protect bridge structures or road surfaces.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "Speed limited is temporarily reduced to a maximum of 50mph.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "566",
