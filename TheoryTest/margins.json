@@ -1,0 +1,743 @@
+[
+{
+    "id": "229",
+    "category": "Safety Margins",
+    "question": "You are following a vehicle on a wet road. What is the minimum time gap you should leave?",
+    "choices": {
+      "A": "Two seconds",
+      "B": "Four seconds",
+      "C": "Six seconds",
+      "D": "Ten seconds"
+    },
+    "correct": "B",
+    "explanation": "In wet weather your stopping distance is doubled"
+  },
+  {
+    "id": "230",
+    "category": "Safety Margins",
+    "question": "What is the typical stopping distance at 50 mph?",
+    "choices": {
+      "A": "36 metres (118 feet)",
+      "B": "53 metres (175 feet)",
+      "C": "75 metres (245 feet)",
+      "D": "96 metres (315 feet)"
+    },
+    "correct": "B",
+    "explanation": "At 50 mph"
+  },
+  {
+    "id": "231",
+    "category": "Safety Margins",
+    "question": "How should you drive when there is surface water on the road?",
+    "choices": {
+      "A": "Brake hard to clear the water",
+      "B": "Speed up to stay on top of the water",
+      "C": "Drive at a lower speed in a high gear",
+      "D": "Drive at a lower speed in a low gear"
+    },
+    "correct": "D",
+    "explanation": "Using a low gear helps maintain traction and control when driving through water.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "232",
+    "category": "Safety Margins",
+    "question": "What should you do if you are being followed too closely by a driver on a icy road?",
+    "choices": {
+      "A": "Brake sharply to warn them",
+      "B": "Speed up to get away",
+      "C": "Increase your following distance from the vehicle in front",
+      "D": "Switch on your hazard lights"
+    },
+    "correct": "C",
+    "explanation": "On ice"
+  },
+  {
+    "id": "233",
+    "category": "Safety Margins",
+    "question": "What is 'thinking distance'?",
+    "choices": {
+      "A": "The distance your car travels while you are braking",
+      "B": "The distance your car travels from the moment you see a hazard until you hit the brakes",
+      "C": "The distance between your car and the car in front",
+      "D": "The length of the car"
+    },
+    "correct": "B",
+    "explanation": "Thinking distance is the time it takes for your brain to react to a hazard and physically move your foot to the brake pedal.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "234",
+    "category": "Safety Margins",
+    "question": "How does 'aquaplaning' happen?",
+    "choices": {
+      "A": "When the tyres are too hot",
+      "B": "When a layer of water builds up between the tyres and the road",
+      "C": "When you use the handbrake while moving",
+      "D": "When the road is dry and dusty"
+    },
+    "correct": "B",
+    "explanation": "This causes the steering to feel light because the tyres are no longer touching the actual road surface.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "235",
+    "category": "Safety Margins",
+    "question": "What should you do if your car starts to aquaplane?",
+    "choices": {
+      "A": "Brake hard and steer into the skid",
+      "B": "Ease off the accelerator and keep the steering wheel straight",
+      "C": "Shift into neutral",
+      "D": "Apply the handbrake gently"
+    },
+    "correct": "B",
+    "explanation": "Do not brake or steer suddenly"
+  },
+  {
+    "id": "236",
+    "category": "Safety Margins",
+    "question": "What is the minimum gap you should leave when following a vehicle on an icy road?",
+    "choices": {
+      "A": "Two seconds",
+      "B": "Four seconds",
+      "C": "Ten seconds",
+      "D": "Twenty seconds"
+    },
+    "correct": "D",
+    "explanation": "The Highway Code recommends increasing your gap by up to ten times in icy conditions.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "237",
+    "category": "Safety Margins",
+    "question": "You are driving in heavy rain. Why is it important to stay well back from a large vehicle?",
+    "choices": {
+      "A": "To help the driver see you",
+      "B": "To avoid the spray from their tyres",
+      "C": "To get a better view of the scenery",
+      "D": "To save fuel"
+    },
+    "correct": "B",
+    "explanation": "Large vehicles throw up massive amounts of spray that can completely blind you if you are too close.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "238",
+    "category": "Safety Margins",
+    "question": "What's the best way to dry your brakes after driving through a deep puddle?",
+    "choices": {
+      "A": "Drive as fast as possible",
+      "B": "Brake hard several times",
+      "C": "Apply gentle pressure to the brake pedal while moving slowly",
+      "D": "Wait for them to dry naturally"
+    },
+    "correct": "C",
+    "explanation": "Gently 'tapping' the brakes helps generate heat to evaporate the moisture.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "239",
+    "category": "Safety Margins",
+    "question": "How much can thinking distance increase if you are tired?",
+    "choices": {
+      "A": "It will not change",
+      "B": "It will be halved",
+      "C": "It can be doubled or more",
+      "D": "It only increases in the rain"
+    },
+    "correct": "C",
+    "explanation": "Tiredness slows your brain's processing speed"
+  },
+  {
+    "id": "240",
+    "category": "Safety Margins",
+    "question": "What is the 'Overall Stopping Distance'?",
+    "choices": {
+      "A": "Thinking distance plus braking distance",
+      "B": "The distance you can see ahead",
+      "C": "The distance you travel in one second",
+      "D": "The braking distance only"
+    },
+    "correct": "A",
+    "explanation": "The total distance it takes to stop is the sum of how long it takes you to react and how long it takes the car to physically stop.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "241",
+    "category": "Safety Margins",
+    "question": "You are overtaking a cyclist. How much room should you give them?",
+    "choices": {
+      "A": "At least as much as you would a car",
+      "B": "About 12 inches",
+      "C": "Only enough to clear their handlebars",
+      "D": "None if they are in a cycle lane"
+    },
+    "correct": "A",
+    "explanation": "Cyclists can be blown off course by a gust of wind or swerve to avoid a pothole.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "242",
+    "category": "Safety Margins",
+    "question": "When should you use your rear fog lights?",
+    "choices": {
+      "A": "Whenever it is raining",
+      "B": "Only when visibility is seriously reduced to less than 100 metres",
+      "C": "When you are driving on a motorway at night",
+      "D": "To warn a tailgater to back off"
+    },
+    "correct": "B",
+    "explanation": "Using fog lights when it isn't foggy can dazzle other drivers and obscure your brake lights.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "243",
+    "category": "Safety Margins",
+    "question": "What should you do before entering a long tunnel?",
+    "choices": {
+      "A": "Turn your radio off",
+      "B": "Switch on your headlights (dipped beam)",
+      "C": "Close all your windows",
+      "D": "Put your hazard lights on"
+    },
+    "correct": "B",
+    "explanation": "Even if the tunnel is lit"
+  },
+  {
+    "id": "244",
+    "category": "Safety Margins",
+    "question": "What does it mean if the steering feels 'light' while driving in heavy rain?",
+    "choices": {
+      "A": "The car is performing well",
+      "B": "The tyres have lost grip on the road (aquaplaning)",
+      "C": "The power steering fluid is low",
+      "D": "The road surface is new"
+    },
+    "correct": "B",
+    "explanation": "If this happens"
+  },
+  {
+    "id": "245",
+    "category": "Safety Margins",
+    "question": "How can you help prevent 'highway hypnosis' on a long motorway journey?",
+    "choices": {
+      "A": "Drive faster to stay awake",
+      "B": "Listen to very loud music",
+      "C": "Take regular breaks at least every two hours",
+      "D": "Keep the heater on high"
+    },
+    "correct": "C",
+    "explanation": "A 15-minute break every two hours is the recommended minimum to stay alert.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "246",
+    "category": "Safety Margins",
+    "question": "What is the danger of 'coasting'?",
+    "choices": {
+      "A": "The car will speed up too much",
+      "B": "It uses more fuel",
+      "C": "You have less steering and braking control",
+      "D": "The engine will overheat"
+    },
+    "correct": "C",
+    "explanation": "Coasting (driving in neutral or with the clutch down) removes engine braking"
+  },
+  {
+    "id": "247",
+    "category": "Safety Margins",
+    "question": "You are driving on a motorway in bridge crosswinds. Which vehicles are most at risk?",
+    "choices": {
+      "A": "Low-slung sports cars",
+      "B": "Motorcyclists and high-sided vehicles",
+      "C": "Large estates",
+      "D": "Tractors"
+    },
+    "correct": "B",
+    "explanation": "Wind can easily blow a bike or a lorry out of its lane. Give them extra space.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "248",
+    "category": "Safety Margins",
+    "question": "What is the 'two-second rule' used for?",
+    "choices": {
+      "A": "To check your reaction time",
+      "B": "To maintain a safe following distance on a dry road",
+      "C": "To see how long it takes to change gear",
+      "D": "To time how long a traffic light stays amber"
+    },
+    "correct": "B",
+    "explanation": "You should pass a stationary object (like a lamp post) at least two seconds after the car in front.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "249",
+    "category": "Safety Margins",
+    "question": "How does your car's weight affect its stopping distance?",
+    "choices": {
+      "A": "It has no effect",
+      "B": "A heavier car takes longer to stop",
+      "C": "A heavier car stops more quickly",
+      "D": "It only affects the thinking distance"
+    },
+    "correct": "B",
+    "explanation": "The more mass a vehicle has"
+  },
+  {
+    "id": "250",
+    "category": "Safety Margins",
+    "question": "What should you do if you are following a car that is spraying your windscreen with mud?",
+    "choices": {
+      "A": "Follow closer so the spray goes over you",
+      "B": "Switch on your wipers and increase your following distance",
+      "C": "Sound your horn and flash your lights",
+      "D": "Turn your lights off"
+    },
+    "correct": "B",
+    "explanation": "Increasing the gap reduces the amount of dirt hitting your screen and gives you better vision.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "251",
+    "category": "Safety Margins",
+    "question": "Which of these would increase your braking distance?",
+    "choices": {
+      "A": "New tyres",
+      "B": "Driving uphill",
+      "C": "A heavy load in the car",
+      "D": "A dry road surface"
+    },
+    "correct": "C",
+    "explanation": "Extra weight in the vehicle increases the momentum"
+  },
+  {
+    "id": "252",
+    "category": "Safety Margins",
+    "question": "What is the main hazard when driving in falling snow?",
+    "choices": {
+      "A": "The car will get dirty",
+      "B": "Reduced visibility and extremely low tyre grip",
+      "C": "The engine will get too cold",
+      "D": "The car will use too much fuel"
+    },
+    "correct": "B",
+    "explanation": "Snow requires very gentle control and much lower speeds than usual.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "253",
+    "category": "Safety Margins",
+    "question": "What should you do if you lose your way in a busy town?",
+    "choices": {
+      "A": "Stop in the middle of the road to check your map",
+      "B": "Turn around in the middle of a junction",
+      "C": "Drive into a side road or quiet area to check your map/GPS",
+      "D": "Ask a pedestrian while moving"
+    },
+    "correct": "C",
+    "explanation": "Don't become a hazard to others because you are lost. Pull over safely.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "254",
+    "category": "Safety Margins",
+    "question": "When descending a steep hill,  how can you control your speed?",
+    "choices": {
+      "A": "By staying in a high gear and braking hard",
+      "B": "By selecting a lower gear and using the brakes carefully",
+      "C": "By switching the engine off",
+      "D": "By using the handbrake"
+    },
+    "correct": "B",
+    "explanation": "Using a lower gear provides engine breaking, which prevents your brakes from overheating and loosing effectiveness on long descents."
+  },
+  {
+    "id": "255",
+    "category": "Safety Margins",
+    "question": "What color are the reflective studs between the motorway and the slip road?",
+    "choices": {
+      "A": "White",
+      "B": "Red",
+      "C": "Green",
+      "D": "Amber"
+    },
+    "correct": "C",
+    "explanation": "Green studs mark the edge of the main carriageway at lay-bys and slip roads.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "256",
+    "category": "Safety Margins",
+    "question": "Why should you keep well back from a large vehicle when approaching a junction?",
+    "choices": {
+      "A": "So the driver can see you in their mirrors",
+      "B": "To allow you to see the road ahead more clearly",
+      "C": "To give the driver room if they need to move across before turning",
+      "D": "All of the above"
+    },
+    "correct": "D",
+    "explanation": "Large vehicles need a lot of space and have large blind spots.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "257",
+    "category": "Safety Margins",
+    "question": "How should you react to a driver who has pulled out in front of you?",
+    "choices": {
+      "A": "Flash your lights and sound your horn",
+      "B": "Stay calm and adjust your speed to keep a safe gap",
+      "C": "Follow them closely to show your annoyance",
+      "D": "Overtake them immediately"
+    },
+    "correct": "B",
+    "explanation": "Anticipate that others will make mistakes and be prepared to give them space.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "258",
+    "category": "Safety Margins",
+    "question": "What should you do if your vehicle breaks down in a tunnel?",
+    "choices": {
+      "A": "Leave the car and run to the exit",
+      "B": "Switch on your hazard lights and use an emergency phone",
+      "C": "Stay in the car with the engine running",
+      "D": "Try to fix it yourself in the middle of the lane"
+    },
+    "correct": "B",
+    "explanation": "Tunnels are dangerous places for breakdowns. Use the hazard lights and find the nearest emergency point.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "259",
+    "category": "Safety Margins",
+    "question": "What is the purpose of 'rumble strips' on the road?",
+    "choices": {
+      "A": "To make the car go faster",
+      "B": "To alert you to a hazard like a roundabout or a dangerous junction",
+      "C": "To prevent the car from skidding",
+      "D": "To clean the tyres"
+    },
+    "correct": "B",
+    "explanation": "Rumble strips provide a physical and audible warning to slow down.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "260",
+    "category": "Safety Margins",
+    "question": "You are driving at night on an unlit road. When should you use your full-beam headlights?",
+    "choices": {
+      "A": "At all times",
+      "B": "Only when there is no oncoming traffic",
+      "C": "Only when you are following another car",
+      "D": "When you are in a built-up area"
+    },
+    "correct": "B",
+    "explanation": "Full beams must be dipped as soon as you see oncoming traffic or are following another vehicle to avoid dazzling them.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "261",
+    "category": "Safety Margins",
+    "question": "What should you do if you are dazzled by the sun?",
+    "choices": {
+      "A": "Speed up to get through the glare",
+      "B": "Slow down or stop if necessary",
+      "C": "Close your eyes until it passes",
+      "D": "Put your hazard lights on"
+    },
+    "correct": "B",
+    "explanation": "If you can't see"
+  },
+  {
+    "id": "262",
+    "category": "Safety Margins",
+    "question": "How much extra room should you give a motorcyclist when it is windy?",
+    "choices": {
+      "A": "None,  it doesn't affect them",
+      "B": "A little bit more than a car",
+      "C": "A lot of extra room as they can be blown across the lane",
+      "D": "Less than a car because they are small"
+    },
+    "correct": "C",
+    "explanation": "Motorcyclists are easily buffeted by side winds and may be blown into your path.  Give them as much room as you would a car."
+  },
+  {
+    "id": "263",
+    "category": "Safety Margins",
+    "question": "What is the first thing you should do if your car skids?",
+    "choices": {
+      "A": "Brake hard",
+      "B": "Turn the steering wheel into the direction of the skid",
+      "C": "Switch off the engine",
+      "D": "Close your eyes"
+    },
+    "correct": "B",
+    "explanation": "Steering 'into' the skid (the way the back of the car is sliding) helps you regain control.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "264",
+    "category": "Safety Margins",
+    "question": "When should you use your horn in a residential area?",
+    "choices": {
+      "A": "To greet a friend",
+      "B": "To warn other road users of your presence if a hazard occurs",
+      "C": "To signal that you are angry",
+      "D": "To tell someone to hurry up at a green light"
+    },
+    "correct": "B",
+    "explanation": "The horn is for safety and warning"
+  },
+  {
+    "id": "265",
+    "category": "Safety Margins",
+    "question": "What is the benefit of a 'Safe System' approach to road safety?",
+    "choices": {
+      "A": "It makes the cars more expensive",
+      "B": "It assumes humans will make mistakes and builds in safety margins to prevent death or injury",
+      "C": "It removes the need for drivers to pay attention",
+      "D": "It is only for motorways"
+    },
+    "correct": "B",
+    "explanation": "The Safe System is about making the whole road environment more forgiving of human error.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "266",
+    "category": "Safety Margins",
+    "question": "You are driving in fog. What should you do?",
+    "choices": {
+      "A": "Keep your lights on full beam",
+      "B": "Follow the tail-lights of the car in front very closely",
+      "C": "Slow down and use dipped headlights and fog lights if needed",
+      "D": "Drive at your usual speed if you know the road well"
+    },
+    "correct": "C",
+    "explanation": "Speed and visibility are your main concerns in fog. Never assume the car in front knows where they are going.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "267",
+    "category": "Safety Margins",
+    "question": "Why should you never follow a large vehicle too closely?",
+    "choices": {
+      "A": "It is better for fuel economy",
+      "B": "The driver cannot see you in their mirrors (the 'blind spot')",
+      "C": "It makes it easier to overtake",
+      "D": "It protects your car from the wind"
+    },
+    "correct": "B",
+    "explanation": "If you are too close"
+  },
+  {
+    "id": "268",
+    "category": "Safety Margins",
+    "question": "What should you do if you see a pedestrian with a dog wearing a yellow or burgundy coat?",
+    "choices": {
+      "A": "The dog is a stray",
+      "B": "The pedestrian is a trainer",
+      "C": "The pedestrian is deaf",
+      "D": "The dog is just cold"
+    },
+    "correct": "C",
+    "explanation": "Specific colored coats/harnesses on dogs often indicate that the owner has a hearing or visual impairment.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "269",
+    "category": "Safety Margins",
+    "question": "What is the main danger of 'tailgating'?",
+    "choices": {
+      "A": "You will use more fuel",
+      "B": "You cannot see the road ahead and won't have time to stop if the car in front brakes",
+      "C": "The car in front will go slower",
+      "D": "It is the best way to keep traffic moving"
+    },
+    "correct": "B",
+    "explanation": "Tailgating is the leading cause of rear-end collisions.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "270",
+    "category": "Safety Margins",
+    "question": "How can you help the driver behind you if they are following too closely?",
+    "choices": {
+      "A": "Brake hard several times",
+      "B": "Speed up significantly",
+      "C": "Increase your gap from the car in front",
+      "D": "Stop in the middle of the road"
+    },
+    "correct": "C",
+    "explanation": "By increasing the gap in front"
+  },
+  {
+    "id": "271",
+    "category": "Safety Margins",
+    "question": "What should you do when approaching a ford after a heavy rainstorm?",
+    "choices": {
+      "A": "Drive through as fast as possible",
+      "B": "Check the depth gauge and use a low gear",
+      "C": "Drive through in a high gear",
+      "D": "Wait for another car to go through first and follow them closely"
+    },
+    "correct": "B",
+    "explanation": "Fords can become deep and fast-moving very quickly after rain.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "272",
+    "category": "Safety Margins",
+    "question": "What should you do if you are driving on a motorway and you miss your exit?",
+    "choices": {
+      "A": "Reverse back up the hard shoulder",
+      "B": "Do a U-turn at the next emergency gap",
+      "C": "Continue to the next exit",
+      "D": "Stop and wait for the police to help you"
+    },
+    "correct": "C",
+    "explanation": "Reversing or U-turning on a motorway is extremely dangerous and illegal.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "273",
+    "category": "Safety Margins",
+    "question": "Why should you be extra careful of motorcyclists at junctions?",
+    "choices": {
+      "A": "They are faster than cars",
+      "B": "They are smaller and can be hidden in your blind spots or by other vehicles",
+      "C": "They don't have to follow traffic lights",
+      "D": "They always have the right of way"
+    },
+    "correct": "B",
+    "explanation": "Always perform a 'double take' at junctions to check for bikes.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "274",
+    "category": "Safety Margins",
+    "question": "How should you use your mirrors when you are planning to change speed or direction?",
+    "choices": {
+      "A": "Check them after you have signaled",
+      "B": "Check them once and then move",
+      "C": "Check them early and often (Mirror-Signal-Manoeuvre)",
+      "D": "Don't check them if you are in a hurry"
+    },
+    "correct": "C",
+    "explanation": "The MSM routine is the foundation of safe driving.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "275",
+    "category": "Safety Margins",
+    "question": "What should you do if you are driving in a town and you see a cyclist looking over their shoulder?",
+    "choices": {
+      "A": "Speed up to pass them quickly",
+      "B": "Be prepared for them to turn or change lanes",
+      "C": "Sound your horn",
+      "D": "Ignore them"
+    },
+    "correct": "B",
+    "explanation": "Looking over the shoulder (the 'lifesaver' check) usually means they are about to make a move.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "276",
+    "category": "Safety Margins",
+    "question": "When is it particularly important to check your oil level?",
+    "choices": {
+      "A": "Every time you get fuel",
+      "B": "Before a long, high-speed journey",
+      "C": "Only during the MOT",
+      "D": "Only if the engine makes a loud noise"
+    },
+    "correct": "B",
+    "explanation": "High-speed driving puts more stress on the engine.  Ensuring the oil level is correct prevents engine damage during long trips."
+  },
+  {
+    "id": "277",
+    "category": "Safety Margins",
+    "question": "How can you reduce the risk of your car's engine overheating in a traffic jam?",
+    "choices": {
+      "A": "Turn the air conditioning up to maximum",
+      "B": "Turn the heater on to draw heat away from the engine",
+      "C": "Keep the engine revving high",
+      "D": "Keep your foot on the brake"
+    },
+    "correct": "B",
+    "explanation": "It might be uncomfortable for you"
+  },
+  {
+    "id": "278",
+    "category": "Safety Margins",
+    "question": "What should you do if your anti-lock brakes (ABS) warning light comes on while driving?",
+    "choices": {
+      "A": "It's a warning to drive faster",
+      "B": "Ignore it as the brakes will still work",
+      "C": "Have it checked immediately as a safety system has failed",
+      "D": "It means the brakes are working perfectly"
+    },
+    "correct": "C",
+    "explanation": "While the normal brakes will likely work"
+  },
+  {
+    "id": "279",
+    "category": "Safety Margins",
+    "question": "Why are 'Level Crossings' a hazard?",
+    "choices": {
+      "A": "There is a risk of collision with a train",
+      "B": "The road is always bumpy",
+      "C": "You have to wait for an hour",
+      "D": "They are only for steam trains"
+    },
+    "correct": "A",
+    "explanation": "Always obey the lights and alarms. Never enter a crossing if your exit isn't clear.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "280",
+    "category": "Safety Margins",
+    "question": "How should you pass a horse and rider?",
+    "choices": {
+      "A": "Pass wide and slow",
+      "B": "Pass as fast as possible to get it over with",
+      "C": "Sound your horn to let them know you are there",
+      "D": "Rev your engine"
+    },
+    "correct": "A",
+    "explanation": "Horses are easily frightened and can be very dangerous if they bolt.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "281",
+    "category": "Safety Margins",
+    "question": "What is the benefit of a safe following distance?",
+    "choices": {
+      "A": "You can see the road ahead better",
+      "B": "You have more time to react to hazards",
+      "C": "You can stop safely if the vehicle in front brakes suddenly",
+      "D": "All of the above"
+    },
+    "correct": "D",
+    "explanation": "Safety margins provide the time and space you need to stay in control.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "282",
+    "category": "Safety Margins",
+    "question": "When should you increase your two-second gap?",
+    "choices": {
+      "A": "In the rain (to 4 seconds)",
+      "B": "In icy weather (to 20 seconds)",
+      "C": "When following a large vehicle",
+      "D": "All of the above"
+    },
+    "correct": "D",
+    "explanation": "Any condition that reduces your grip or your visibility requires a larger safety margin.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "283",
+    "category": "Safety Margins",
+    "question": "What should you do if you feel your car pulling to one side when you brake?",
+    "choices": {
+      "A": "Check your tyre pressures and have the brakes checked by a professional",
+      "B": "Speed up",
+      "C": "Nothing, it's normal on old cars",
+      "D": "Brake harder"
+    },
+    "correct": "A",
+    "explanation": "Pulling to one side under braking indicates a fault with the braking system or  uneven tyre pressures.  It must be checked immediately."
+  },
+  {
+    "id": "284",
+    "category": "Safety Margins",
+    "question": "What is the safest way to carry a load in your car?",
+    "choices": {
+      "A": "On the passenger's lap",
+      "B": "Loose in the footwell",
+      "C": "Securely fastened and ideally in the boot",
+      "D": "On the roof without a rack"
+    },
+    "correct": "C",
+    "explanation": "Loose items can become deadly projectiles in a collision.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "285",
+    "category": "Safety Margins",
+    "question": "What should you do if you are driving on a dual carriageway and a car is trying to join from a slip road?",
+    "choices": {
+      "A": "Speed up to prevent them from joining",
+      "B": "Maintain your speed and ignore them",
+      "C": "Move to the right-hand lane if it is safe to allow them in",
+      "D": "Brake hard"
+    },
+    "correct": "C",
+    "explanation": "Helping others to merge keeps the traffic flowing smoothly and safely.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  }
+]
