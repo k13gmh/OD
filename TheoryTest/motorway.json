@@ -1,0 +1,743 @@
+[
+  {
+    "id": "457",
+    "category": "Motorway Rules",
+    "question": "What is the national speed limit for a car on a motorway?",
+    "choices": {
+      "A": "50 mph",
+      "B": "60 mph",
+      "C": "70 mph",
+      "D": "80 mph"
+    },
+    "correct": "C",
+    "explanation": "The national speed limit for cars and motorcycles on a motorway is 70 mph unless signs state otherwise.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "458",
+    "category": "Motorway Rules",
+    "question": "You are joining the motorway from a slip road. What should you do?",
+    "choices": {
+      "A": "Stop and wait for a gap",
+      "B": "Speed up to match the speed of the traffic in the first lane",
+      "C": "Force your way into the traffic",
+      "D": "Stay on the hard shoulder until it ends"
+    },
+    "correct": "B",
+    "explanation": "Matching the speed allows you to merge smoothly without forcing motorway traffic to brake.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "459",
+    "category": "Motorway Rules",
+    "question": "When should you use the left-hand lane on a motorway?",
+    "choices": {
+      "A": "Only when you are driving slowly",
+      "B": "At all times unless you are overtaking",
+      "C": "Only when the motorway is empty",
+      "D": "Only if you are exiting at the next junction"
+    },
+    "correct": "B",
+    "explanation": "On a motorway"
+  },
+  {
+    "id": "460",
+    "category": "Motorway Rules",
+    "question": "What does a 'Smart Motorway' use to manage traffic?",
+    "choices": {
+      "A": "Police officers on every bridge",
+      "B": "Variable speed limits and active lane management",
+      "C": "A higher speed limit of 80 mph",
+      "D": "Mandatory carpooling lanes"
+    },
+    "correct": "B",
+    "explanation": "Smart motorways use overhead gantries to change speed limits based on congestion or accidents.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "461",
+    "category": "Motorway Rules",
+    "question": "What should you do if you miss your exit on a motorway?",
+    "choices": {
+      "A": "Reverse back to the exit",
+      "B": "Do a U-turn at the next gap in the central reservation",
+      "C": "Carry on to the next exit",
+      "D": "Stop and wait for a police escort"
+    },
+    "correct": "C",
+    "explanation": "It is illegal and incredibly dangerous to reverse or turn around on a motorway.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "462",
+    "category": "Motorway Rules",
+    "question": "What is the purpose of the 'Hard Shoulder'?",
+    "choices": {
+      "A": "For parking and taking a break",
+      "B": "For emergency use only",
+      "C": "For overtaking on the left",
+      "D": "For use by motorcycles in heavy traffic"
+    },
+    "correct": "B",
+    "explanation": "The hard shoulder is only for breakdowns or emergencies unless signs tell you to use it as a running lane.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "463",
+    "category": "Motorway Rules",
+    "question": "What color are the reflective studs between the lanes on a motorway?",
+    "choices": {
+      "A": "Red",
+      "B": "White",
+      "C": "Amber",
+      "D": "Green"
+    },
+    "correct": "B",
+    "explanation": "White studs mark the lanes. (Red is for the left edge"
+  },
+  {
+    "id": "464",
+    "category": "Motorway Rules",
+    "question": "What should you do if your vehicle breaks down on the motorway?",
+    "choices": {
+      "A": "Stay in the car with your seatbelt on",
+      "B": "Get out of the car via the passenger door and wait behind the crash barrier",
+      "C": "Try to fix the car on the hard shoulder",
+      "D": "Walk along the motorway to the nearest exit"
+    },
+    "correct": "B",
+    "explanation": "The safest place is well away from the moving traffic"
+  },
+  {
+    "id": "465",
+    "category": "Motorway Rules",
+    "question": "When are you allowed to stop on a motorway?",
+    "choices": {
+      "A": "When you want to check a map",
+      "B": "In an emergency or when told to do so by signs or the police",
+      "C": "To pick up a hitchhiker",
+      "D": "To stretch your legs"
+    },
+    "correct": "B",
+    "explanation": "Stopping on a motorway is prohibited except in emergencies or for traffic management.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "466",
+    "category": "Motorway Rules",
+    "question": "What does a red cross (X) showing on an overhead gantry mean?",
+    "choices": {
+      "A": "The speed limit is 10 mph",
+      "B": "You must not drive in that lane",
+      "C": "There is a car park ahead",
+      "D": "The lane is for electric cars only"
+    },
+    "correct": "B",
+    "explanation": "A red X means the lane is closed"
+  },
+  {
+    "id": "467",
+    "category": "Motorway Rules",
+    "question": "How should you position yourself when using an emergency telephone?",
+    "choices": {
+      "A": "Facing away from the traffic",
+      "B": "Facing the oncoming traffic",
+      "C": "Sitting on the ground",
+      "D": "With your back to the phone box"
+    },
+    "correct": "B",
+    "explanation": "Facing the traffic allows you to see any vehicle that might be drifting toward the hard shoulder.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "468",
+    "category": "Motorway Rules",
+    "question": "Which vehicle is not allowed on a motorway?",
+    "choices": {
+      "A": "A motorcycle over 125cc",
+      "B": "A learner driver in a car with an instructor",
+      "C": "A farm tractor",
+      "D": "A van"
+    },
+    "correct": "C",
+    "explanation": "Slow-moving vehicles like tractors"
+  },
+  {
+    "id": "469",
+    "category": "Motorway Rules",
+    "question": "What should you do if you are driving in the right-hand lane and a faster car approaches behind?",
+    "choices": {
+      "A": "Speed up to stay ahead",
+      "B": "Move to the left when it is safe to do so",
+      "C": "Brake hard to tell them to back off",
+      "D": "Ignore them"
+    },
+    "correct": "B",
+    "explanation": "The right-hand lane is for overtaking. Once you have finished"
+  },
+  {
+    "id": "470",
+    "category": "Motorway Rules",
+    "question": "What is the purpose of 'climbing lanes' on a motorway?",
+    "choices": {
+      "A": "For racing other cars",
+      "B": "To help slow-moving vehicles on steep uphill gradients",
+      "C": "For emergency vehicles only",
+      "D": "For exiting the motorway"
+    },
+    "correct": "B",
+    "explanation": "Climbing lanes keep slow lorries away from the faster-moving traffic on hills.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "471",
+    "category": "Motorway Rules",
+    "question": "What should you do if you see a 'Stray Animal' warning sign on a motorway?",
+    "choices": {
+      "A": "Speed up to get past",
+      "B": "Slow down and be extra alert",
+      "C": "Sound your horn continuously",
+      "D": "Stop in the middle of the road"
+    },
+    "correct": "B",
+    "explanation": "Animals on a motorway are a major hazard. Be prepared to slow down or stop safely.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "472",
+    "category": "Motorway Rules",
+    "question": "What color are the reflective studs on the right-hand edge of the motorway (next to the central reservation)?",
+    "choices": {
+      "A": "White",
+      "B": "Red",
+      "C": "Amber",
+      "D": "Green"
+    },
+    "correct": "C",
+    "explanation": "Amber studs separate the right-hand lane from the central reservation.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "473",
+    "category": "Motorway Rules",
+    "question": "You are towing a trailer. What is your maximum speed limit on a motorway?",
+    "choices": {
+      "A": "50 mph",
+      "B": "60 mph",
+      "C": "70 mph",
+      "D": "80 mph"
+    },
+    "correct": "B",
+    "explanation": "Vehicles towing trailers are restricted to 60 mph on motorways and dual carriageways.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "474",
+    "category": "Motorway Rules",
+    "question": "Which lane should you use on a motorway if you are towing a trailer?",
+    "choices": {
+      "A": "Any lane",
+      "B": "Only the left-hand and center lanes (not the right-hand lane)",
+      "C": "Only the hard shoulder",
+      "D": "The right-hand lane only"
+    },
+    "correct": "B",
+    "explanation": "Vehicles towing trailers are not allowed in the right-hand lane of a motorway with three or more lanes.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "475",
+    "category": "Motorway Rules",
+    "question": "What should you do if you feel drowsy while driving on the motorway?",
+    "choices": {
+      "A": "Open the window and drive faster",
+      "B": "Stop at the next service station or exit and take a rest",
+      "C": "Drink a sugary drink and keep going",
+      "D": "Slap your face to stay awake"
+    },
+    "correct": "B",
+    "explanation": "A 15-minute rest and a caffeinated drink is the best way to recover before continuing.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "476",
+    "category": "Motorway Rules",
+    "question": "What do 'variable speed limits' help to do?",
+    "choices": {
+      "A": "Make the journey more interesting",
+      "B": "Reduce congestion and prevent stop-start traffic",
+      "C": "Make more money from fines",
+      "D": "Increase the top speed of cars"
+    },
+    "correct": "B",
+    "explanation": "By slowing traffic down before a jam"
+  },
+  {
+    "id": "477",
+    "category": "Motorway Rules",
+    "question": "What should you do if you see a vehicle with amber flashing lights ahead on the motorway?",
+    "choices": {
+      "A": "Speed up and overtake quickly",
+      "B": "Slow down and stay alert as it is a slow-moving or stationary vehicle",
+      "C": "Turn your own hazard lights on and stop",
+      "D": "Ignore it"
+    },
+    "correct": "B",
+    "explanation": "Maintenance vehicles and 'Traffic Officer' vehicles often use amber lights.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "478",
+    "category": "Motorway Rules",
+    "question": "How can you identify where the nearest emergency phone is?",
+    "choices": {
+      "A": "By looking for the nearest bridge",
+      "B": "By following the arrows on the posts at the back of the hard shoulder",
+      "C": "By checking your GPS",
+      "D": "By calling 999"
+    },
+    "correct": "B",
+    "explanation": "The marker posts are spaced every 100 metres and point toward the nearest phone.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "479",
+    "category": "Motorway Rules",
+    "question": "What does a 'Traffic Officer' do?",
+    "choices": {
+      "A": "They can arrest you for speeding",
+      "B": "They assist with breakdowns and clear debris from the motorway",
+      "C": "They manage the toll booths",
+      "D": "They drive the ambulances"
+    },
+    "correct": "B",
+    "explanation": "National Highways Traffic Officers have the power to stop and direct traffic on motorways.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "480",
+    "category": "Motorway Rules",
+    "question": "Why is it dangerous to 'tailgate' on the motorway?",
+    "choices": {
+      "A": "It ruins your fuel economy",
+      "B": "You won't be able to stop in time if the car in front brakes suddenly",
+      "C": "It makes your headlights look dim",
+      "D": "It's only dangerous if it's raining"
+    },
+    "correct": "B",
+    "explanation": "At 70 mph"
+  },
+  {
+    "id": "481",
+    "category": "Motorway Rules",
+    "question": "What is the 'Active Traffic Management' lane?",
+    "choices": {
+      "A": "The lane for buses only",
+      "B": "A system where the hard shoulder is used as a running lane during busy times",
+      "C": "The fast lane",
+      "D": "A lane for autonomous cars"
+    },
+    "correct": "B",
+    "explanation": "In some areas"
+  },
+  {
+    "id": "482",
+    "category": "Motorway Rules",
+    "question": "What color are the studs marking the end of the motorway at a slip road?",
+    "choices": {
+      "A": "White",
+      "B": "Red",
+      "C": "Amber",
+      "D": "Green"
+    },
+    "correct": "D",
+    "explanation": "Green studs signify that you are entering a slip road or a lay-by.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "483",
+    "category": "Motorway Rules",
+    "question": "What should you do if your car's tyre blows out on the motorway?",
+    "choices": {
+      "A": "Brake hard immediately",
+      "B": "Hold the steering wheel firmly and allow the car to slow down naturally",
+      "C": "Turn the engine off",
+      "D": "Switch to the right-hand lane"
+    },
+    "correct": "B",
+    "explanation": "Sudden braking with a flat tyre will cause the car to spin.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "484",
+    "category": "Motorway Rules",
+    "question": "When can you use the right-hand lane of a three-lane motorway?",
+    "choices": {
+      "A": "Only when you are exiting at the next junction",
+      "B": "When you are overtaking slower vehicles in the center lane",
+      "C": "Whenever the road is busy",
+      "D": "Only if you are driving an emergency vehicle"
+    },
+    "correct": "B",
+    "explanation": "The right-hand lane is an overtaking lane"
+  },
+  {
+    "id": "485",
+    "category": "Motorway Rules",
+    "question": "How should you use your indicators on a motorway?",
+    "choices": {
+      "A": "Only if someone is behind you",
+      "B": "Always signal your intentions early when changing lanes",
+      "C": "Indicators are not needed on motorways",
+      "D": "Keep them on the whole time you are in the right-hand lane"
+    },
+    "correct": "B",
+    "explanation": "Clear signaling helps other high-speed drivers anticipate your moves.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "486",
+    "category": "Motorway Rules",
+    "question": "What is a 'Contraflow' system?",
+    "choices": {
+      "A": "A lane for cyclists",
+      "B": "A system where traffic travels in the opposite direction to usual in some lanes",
+      "C": "A way to pay tolls",
+      "D": "When the motorway is turned into a dual carriageway"
+    },
+    "correct": "B",
+    "explanation": "These are common at roadworks. You should slow down and keep a safe distance.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "487",
+    "category": "Motorway Rules",
+    "question": "What is the first thing you should do when you enter a contraflow system?",
+    "choices": {
+      "A": "Speed up to get through it",
+      "B": "Reduce your speed and keep a safe distance from the vehicle in front",
+      "C": "Turn your lights on full beam",
+      "D": "Switch to the right-hand lane"
+    },
+    "correct": "B",
+    "explanation": "Lanes are often narrower in contraflow systems"
+  },
+  {
+    "id": "488",
+    "category": "Motorway Rules",
+    "question": "Why should you check your mirrors frequently on a motorway?",
+    "choices": {
+      "A": "To look at your passengers",
+      "B": "Because traffic speeds are high and situations change very quickly",
+      "C": "To see if your indicators are working",
+      "D": "To check the fuel level"
+    },
+    "correct": "B",
+    "explanation": "You need to be aware of what is happening far behind you.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "489",
+    "category": "Motorway Rules",
+    "question": "What should you do if you are in the left-hand lane and see a large lorry joining from a slip road?",
+    "choices": {
+      "A": "Speed up to block it",
+      "B": "Slow down or move to the center lane if safe to give them room",
+      "C": "Sound your horn",
+      "D": "Ignore them as you have the right of way"
+    },
+    "correct": "B",
+    "explanation": "Helping large vehicles merge safely prevents accidents and traffic jams.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "490",
+    "category": "Motorway Rules",
+    "question": "What should you do if you see a sign 'End of Motorway'?",
+    "choices": {
+      "A": "Speed up",
+      "B": "Check your speed as you may be traveling faster than you realize",
+      "C": "Turn your lights off",
+      "D": "Stop and check your map"
+    },
+    "correct": "B",
+    "explanation": "After driving at 70 mph for a long time"
+  },
+  {
+    "id": "491",
+    "category": "Motorway Rules",
+    "question": "When can you use the hard shoulder as a running lane?",
+    "choices": {
+      "A": "Whenever there is a traffic jam",
+      "B": "Only when overhead signs indicate it is open for use",
+      "C": "Only if you are a motorcyclist",
+      "D": "Never"
+    },
+    "correct": "B",
+    "explanation": "On some Smart Motorways"
+  },
+  {
+    "id": "492",
+    "category": "Motorway Rules",
+    "question": "What should you do if you break down on a motorway where there is no hard shoulder?",
+    "choices": {
+      "A": "Stop in the middle of the lane",
+      "B": "Try to reach an Emergency Area (marked with a blue sign and orange SOS phone)",
+      "C": "Jump out of the car while it's moving",
+      "D": "Switch your lights off"
+    },
+    "correct": "B",
+    "explanation": "Emergency Areas are spaced out for safety on 'All Lane Running' motorways.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "493",
+    "category": "Motorway Rules",
+    "question": "What should you do if you see hazard warning lights flashing on a vehicle in front?",
+    "choices": {
+      "A": "Speed up to pass them",
+      "B": "Slow down as there may be a hazard or stationary traffic ahead",
+      "C": "Sound your horn",
+      "D": "Ignore it"
+    },
+    "correct": "B",
+    "explanation": "Hazard lights on a moving vehicle are a warning to those behind of a sudden hazard.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "494",
+    "category": "Motorway Rules",
+    "question": "What is the maximum speed for a heavy goods vehicle (over 7.5 tonnes) on a motorway?",
+    "choices": {
+      "A": "50 mph",
+      "B": "60 mph",
+      "C": "70 mph",
+      "D": "40 mph"
+    },
+    "correct": "B",
+    "explanation": "Most large lorries are speed-limited to 56 mph or 60 mph.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "495",
+    "category": "Motorway Rules",
+    "question": "Why are 'marker posts' on the motorway useful?",
+    "choices": {
+      "A": "They tell you the temperature",
+      "B": "They give you a reference point for the emergency services",
+      "C": "They are for hanging bags on",
+      "D": "They mark the speed limit"
+    },
+    "correct": "B",
+    "explanation": "If you call for help"
+  },
+  {
+    "id": "496",
+    "category": "Motorway Rules",
+    "question": "What should you do if you are driving on a motorway and a 'Side Wind' sign is displayed?",
+    "choices": {
+      "A": "Close all the windows",
+      "B": "Slow down and be ready for your car to be pushed sideways",
+      "C": "Speed up to stay stable",
+      "D": "Move to the right-hand lane"
+    },
+    "correct": "B",
+    "explanation": "Side winds are most dangerous when passing tall vehicles or crossing open bridges.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "497",
+    "category": "Motorway Rules",
+    "question": "How should you rejoin a motorway from the hard shoulder after a breakdown?",
+    "choices": {
+      "A": "Pull out immediately from a standing start",
+      "B": "Build up speed on the hard shoulder before merging into the first lane",
+      "C": "Wait for a police car to stop the traffic",
+      "D": "Drive in reverse until you find a gap"
+    },
+    "correct": "B",
+    "explanation": "You need to match the speed of the traffic before you steer back onto the road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "498",
+    "category": "Motorway Rules",
+    "question": "What does a flashing amber light on an overhead gantry mean?",
+    "choices": {
+      "A": "The speed limit is 40 mph",
+      "B": "There is a hazard ahead (like fog or an accident)",
+      "C": "The motorway is closed",
+      "D": "You are near a petrol station"
+    },
+    "correct": "B",
+    "explanation": "Amber means 'Caution.' Check the signs for specific instructions or speed limits.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "499",
+    "category": "Motorway Rules",
+    "question": "What should you do if you see a 'Towing' sign on the back of a car on the motorway?",
+    "choices": {
+      "A": "Overtake it as fast as possible",
+      "B": "Be aware that the vehicle may be traveling more slowly",
+      "C": "Sound your horn",
+      "D": "Tailgate it to save fuel"
+    },
+    "correct": "B",
+    "explanation": "Towing vehicles have lower speed limits and are less maneuverable.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "500",
+    "category": "Motorway Rules",
+    "question": "When should you use your hazard warning lights on a motorway?",
+    "choices": {
+      "A": "When you are parked on the hard shoulder or to warn of a hazard ahead",
+      "B": "To thank someone for letting you in",
+      "C": "When it is raining slightly",
+      "D": "To show you are driving fast"
+    },
+    "correct": "A",
+    "explanation": "Hazard lights are for emergencies and warnings only.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "501",
+    "category": "Motorway Rules",
+    "question": "What color is the 'Emergency Area' on a smart motorway usually painted?",
+    "choices": {
+      "A": "Blue",
+      "B": "Orange",
+      "C": "Green",
+      "D": "Yellow"
+    },
+    "correct": "B",
+    "explanation": "The bright orange surface helps drivers identify the safe place to pull in.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "502",
+    "category": "Motorway Rules",
+    "question": "Can you use the motorway if you have a provisional car license?",
+    "choices": {
+      "A": "No",
+      "B": "Only if you are accompanied by an ADI (instructor) in a car with dual controls",
+      "C": "Yes,  as long as you have a passenger",
+      "D": "Only between 10 PM and 6 AM"
+    },
+    "correct": "B",
+    "explanation": "Learner drivers are only allowed in motorways in England, Scotland and Wales if they are with an ADI if they are in a dual controlled car."
+  },
+  {
+    "id": "503",
+    "category": "Motorway Rules",
+    "question": "What should you do if you see a 'Workmen Ahead' sign?",
+    "choices": {
+      "A": "Speed up to get past the dust",
+      "B": "Slow down and obey any temporary speed limits",
+      "C": "Ignore it if no workers are visible",
+      "D": "Sound your horn to warn the workers"
+    },
+    "correct": "B",
+    "explanation": "Speed limits in roadworks are legally enforceable for the safety of the workers.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "504",
+    "category": "Motorway Rules",
+    "question": "What is the danger of 'rubbernecking'?",
+    "choices": {
+      "A": "It helps the police",
+      "B": "It causes further accidents and slows down the flow of traffic",
+      "C": "It is recommended by the Highway Code",
+      "D": "It saves fuel"
+    },
+    "correct": "B",
+    "explanation": "Looking at accidents on the other side of the road causes you to distract yourself and slow down suddenly.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "505",
+    "category": "Motorway Rules",
+    "question": "What should you do if you are in the left-hand lane and see a car broken down on the hard shoulder?",
+    "choices": {
+      "A": "Speed up",
+      "B": "Move to the center lane if it is safe to give the person more space",
+      "C": "Sound your horn",
+      "D": "Stop to help them"
+    },
+    "correct": "B",
+    "explanation": "Moving over provides a 'safety buffer' for the person on the hard shoulder.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "506",
+    "category": "Motorway Rules",
+    "question": "What does a 'diverted' sign on a motorway mean?",
+    "choices": {
+      "A": "You should stop",
+      "B": "A specific route is closed and you should follow symbols for an alternative way",
+      "C": "The motorway is now a dual carriageway",
+      "D": "You have run out of fuel"
+    },
+    "correct": "B",
+    "explanation": "Follow the symbols (squares"
+  },
+  {
+    "id": "507",
+    "category": "Motorway Rules",
+    "question": "What is the main benefit of keeping a safe following distance on the motorway?",
+    "choices": {
+      "A": "You can see the overhead signs better",
+      "B": "You have time to react if the vehicle in front brakes suddenly",
+      "C": "Your car stays cleaner",
+      "D": "You can use the high beam headlights"
+    },
+    "correct": "B",
+    "explanation": "Safety margins are your best defense against high-speed collisions.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "508",
+    "category": "Motorway Rules",
+    "question": "What should you do if you are approaching a roadworks area on a motorway?",
+    "choices": {
+      "A": "Speed up to get through quickly",
+      "B": "Follow the temporary speed limit and watch for merging traffic",
+      "C": "Stay in the right-hand lane the whole time",
+      "D": "Sound your horn"
+    },
+    "correct": "B",
+    "explanation": "Roadworks often involve narrowed lanes and workers close to the traffic.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "509",
+    "category": "Motorway Rules",
+    "question": "How should you signal when leaving the motorway at a junction?",
+    "choices": {
+      "A": "Signal left at the 300-yard marker (three-bar sign)",
+      "B": "Signal left only when you are on the slip road",
+      "C": "Don't signal",
+      "D": "Wait until you reach the 100-yard marker"
+    },
+    "correct": "A",
+    "explanation": "Standard practice is to signal at the first 'countdown' marker to give others plenty of notice.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "510",
+    "category": "Motorway Rules",
+    "question": "What is a 'Crawler' lane?",
+    "choices": {
+      "A": "A lane for animals",
+      "B": "Another name for a climbing lane used by slow vehicles on steep hills",
+      "C": "A lane for broken down cars",
+      "D": "The hard shoulder"
+    },
+    "correct": "B",
+    "explanation": "These allow faster traffic to flow while heavy vehicles struggle with a gradient.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "511",
+    "category": "Motorway Rules",
+    "question": "Why should you use your headlights in a tunnel?",
+    "choices": {
+      "A": "To see the wall",
+      "B": "To help your eyes adjust and make your car visible to others",
+      "C": "To signal to the traffic lights",
+      "D": "Because it is dark"
+    },
+    "correct": "B",
+    "explanation": "Even if the tunnel is well-lit"
+  },
+  {
+    "id": "512",
+    "category": "Motorway Rules",
+    "question": "What should you do if you are driving on a motorway and the traffic stops suddenly?",
+    "choices": {
+      "A": "Sound your horn",
+      "B": "Switch on your hazard warning lights briefly to warn those behind",
+      "C": "Brake as hard as possible and stay in your lane",
+      "D": "Overtake on the hard shoulder"
+    },
+    "correct": "B",
+    "explanation": "This is a universal signal on motorways to warn of a sudden jam ahead.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "513",
+    "category": "Motorway Rules",
+    "question": "What is the speed limit for a car on a motorway when there are no signs?",
+    "choices": {
+      "A": "50 mph",
+      "B": "60 mph",
+      "C": "70 mph",
+      "D": "30 mph"
+    },
+    "correct": "C",
+    "explanation": "The national speed limit for cars on a motorway is always 70 mph unless otherwise indicated.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  }
+]
