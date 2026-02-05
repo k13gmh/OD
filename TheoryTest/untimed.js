@@ -1,10 +1,10 @@
 /**
  * File: untimed.js
- * Version: v2.3.2
- * Feature: Custom Blue Styled Resume Modal
+ * Version: v2.4.0
+ * Feature: Loads from orion_master.json (Local Storage)
  */
 
-const JS_VERSION = "v2.3.2";
+const JS_VERSION = "v2.4.0";
 const HTML_VERSION = "v2.2.8"; 
 
 if (!localStorage.getItem('orion_session_token')) {
@@ -49,17 +49,27 @@ async function init() {
     document.body.appendChild(modalDiv);
 
     try {
-        const response = await fetch('questions.json');
-        allQuestions = await response.json();
+        // CHANGED: Instead of fetching questions.json from server, load from local master pool
+        const localData = localStorage.getItem('orion_master.json');
+        
+        if (!localData) {
+            alert("Master question pool not found. Please return to Main Menu to sync.");
+            window.location.href = 'mainmenu.html';
+            return;
+        }
+
+        allQuestions = JSON.parse(localData);
         
         const savedSession = localStorage.getItem('orion_current_session');
         if (savedSession) {
-            // Show our custom blue modal instead of the browser confirm
             document.getElementById('resume-modal').style.display = 'flex';
         } else {
             startNewUntimed();
         }
-    } catch (e) { console.error(e); }
+    } catch (e) { 
+        console.error("Initialization Error:", e);
+        alert("Error loading question data.");
+    }
 }
 
 function handleResumeChoice(shouldResume) {
@@ -185,7 +195,6 @@ function finishTest() {
         }
     });
 
-    // We keep the current session saved so it can be resumed even after a review
     localStorage.setItem('orion_shame_tally', JSON.stringify(shameTally));
     localStorage.setItem('orion_final_results', JSON.stringify({ score, total: sessionQuestions.length, questions: sessionQuestions, data: testData }));
     window.location.href = 'review.html';
