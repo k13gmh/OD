@@ -846,7 +846,7 @@
   {
     "id": "579",
     "category": "Road and Traffic Signs",
-    "question": "A sign shows a red triangle with a 'fork in the road'. What does it mean?",
+    "question": "A sign shows a red triangle with a 'curved fork in the road'. What does it mean?",
     "choices": {
       "A": "A restaurant ahead",
       "B": "A junction on a bend",
@@ -859,7 +859,7 @@
   {
     "id": "580",
     "category": "Road and Traffic Signs",
-    "question": "What does a sign with a 'black car and two red lines' in a red circle mean?",
+    "question": "What does a sign with a 'black car and red car' in a red circle mean?",
     "choices": {
       "A": "No motor vehicles",
       "B": "No overtaking",
@@ -872,7 +872,7 @@
   {
     "id": "581",
     "category": "Road and Traffic Signs",
-    "question": "What does a yellow rectangle with 'Diversion' and an arrow mean?",
+    "question": "What does a yellow rectangle with a black symbol and an arrow mean?",
     "choices": {
       "A": "Follow the arrow for the temporary route",
       "B": "The road is closed forever",
