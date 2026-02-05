@@ -690,41 +690,41 @@
   {
     "id": "567",
     "category": "Road and Traffic Signs",
-    "question": "A sign shows a blue square with a 'white wheelchair'. What does it mean?",
+    "question": "A white sign shows white cross, like an X, with a red border'. What does it mean?",
     "choices": {
-      "A": "A hospital",
-      "B": "Parking for disabled badge holders only",
-      "C": "A wheelchair ramp",
-      "D": "A pharmacy"
+      "A": "The road is closed ahead, stop do not continue",
+      "B": "Tramway or railway crossing without barrier",
+      "C": "No speed limit applies",
+      "D": "Country road ahead, without kerbs"
     },
     "correct": "B",
-    "explanation": "Only vehicles displaying a valid Blue Badge can park here.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "Level crossings without a barrier may be marked with this sign.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "568",
     "category": "Road and Traffic Signs",
-    "question": "What does a red circle with a '7-6' (7ft 6in) height symbol mean?",
+    "question": "What does a red circle with a red arrow pointing up, black arrow pointing down mean?",
     "choices": {
-      "A": "Vehicles over 7ft 6in tall are prohibited",
-      "B": "The road is 7.6 miles long",
-      "C": "Maximum speed is 7.6 mph",
-      "D": "Parking for 7 hours"
+      "A": "Priority must be given to vehicles in the opposite direction",
+      "B": "Priority must be given to the direction you are travelling",
+      "C": "Prepare for large vehicles approaching in the opposite direction",
+      "D": "Do not proceed.  Return in the opposite direction"
     },
     "correct": "A",
-    "explanation": "This is usually found before low bridges or tunnels.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "You must give way to vehicles approaching in the opposite direction.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "569",
     "category": "Road and Traffic Signs",
-    "question": "What does a sign showing a 'red triangle with a stone flying from a tyre' mean?",
+    "question": "What does a red triangle with a car half on the road mean?",
     "choices": {
-      "A": "A stone quarry",
-      "B": "Loose chippings on the road surface",
-      "C": "A landslide area",
+      "A": "Parking on the pavement allowed",
+      "B": "Soft verges ahead",
+      "C": "Partly made road",
       "D": "No driving on gravel"
     },
     "correct": "B",
-    "explanation": "Slow down to avoid stones hitting your windscreen or other road users.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "Caution, soft verges ahead.  cars might not be able to drive back onto the road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "570",
@@ -732,25 +732,25 @@
     "question": "What does a blue square sign with a 'white telephone' symbol mean?",
     "choices": {
       "A": "A mobile phone shop",
-      "B": "A public telephone nearby",
+      "B": "Direction of emergency telephone",
       "C": "No phones allowed",
       "D": "A call center"
     },
     "correct": "B",
-    "explanation": "Useful if you need to make a call and have no signal.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "The arrow below indicates the direction of an emergency telephone on the same side of the road.t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "571",
     "category": "Road and Traffic Signs",
-    "question": "What does a sign showing a red triangle with a 'steep hill' and '10%' mean?",
+    "question": "What does this sign showing a red triangle with a black triangle and '10%' mean?",
     "choices": {
-      "A": "A hill with a 1 in 10 gradient",
-      "B": "A 10mph speed limit on a hill",
+      "A": "A hill descending with a 1 in 10 gradient",
+      "B": "A hill ascending with a 1 in 10 gradien",
       "C": "10 miles of hills ahead",
       "D": "Parking allowed for 10 cars"
     },
     "correct": "A",
-    "explanation": "The percentage shows the steepness. 10% means the road rises or falls 1 metre for every 10 metres of travel.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "The triangle falls or descends to the right.The percentage shows the steepness. 10% means the road rises or falls 1 metre for every 10 metres of travel.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "572",
