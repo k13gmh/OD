@@ -1,10 +1,10 @@
 /**
  * File: category.js
- * Version: v2.2.3
- * Feature: UI Cleanup & Version Display Fix
+ * Version: v2.2.5
+ * Feature: Removed sysmenu link, Final Grey UI Standardization
  */
 
-const SCRIPT_VERSION = "v2.2.3";
+const SCRIPT_VERSION = "v2.2.5";
 
 if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -15,7 +15,6 @@ let testData = { selections: {}, flagged: [], seenIndices: [] };
 let selectedCategory = "";
 
 async function init() {
-    // UPDATED: Clear and visible version injection
     const tag = document.getElementById('v-tag-top');
     if (tag) {
         tag.innerText = `JS: ${SCRIPT_VERSION}`;
@@ -56,11 +55,11 @@ function buildCategoryMenu() {
         listArea.appendChild(btn);
     });
 
+    // Single Back Button - Only points to Main Menu
     const backBtn = document.createElement('a');
     backBtn.href = "mainmenu.html";
-    backBtn.className = 'btn';
+    backBtn.className = 'btn btn-grey';
     backBtn.style.marginTop = '15px';
-    backBtn.style.background = '#bdc3c7';
     backBtn.style.display = 'block';
     backBtn.style.textDecoration = 'none';
     backBtn.style.textAlign = 'center';
@@ -90,7 +89,7 @@ function showQuantitySelector(categoryName) {
             <button class="btn btn-grey" style="padding: 12px; font-size: 0.85rem;" onclick="startCategoryTest(${count})">Try ALL (${count})</button>
             <button class="btn btn-grey" style="padding: 12px; font-size: 0.85rem;" onclick="promptCustomCount(${count})">Custom</button>
         </div>
-        <button class="btn" style="width:100%; padding: 15px; background:#bdc3c7; border-radius:12px;" onclick="buildCategoryMenu()">BACK</button>
+        <button class="btn btn-grey" style="width:100%; padding: 15px; border-radius:12px;" onclick="buildCategoryMenu()">BACK</button>
     `;
 }
 
@@ -179,7 +178,7 @@ function showSummary() {
             <button class="btn btn-blue" style="padding: 15px; border-radius: 12px;" onclick="retrySubset('skipped')">REVIEW SKIPPED (${skipped})</button>
             <button class="btn btn-blue" style="padding: 15px; border-radius: 12px;" onclick="retrySubset('flagged')">REVIEW FLAGGED (${flagged})</button>
             <button class="btn btn-blue" style="padding: 15px; border-radius: 12px;" onclick="retrySubset('all')">REVIEW ALL</button>
-            <button class="btn btn-blue" style="margin-top: 10px; padding: 15px; border-radius: 12px;" onclick="reviewAnswers()">FINISH TEST</button>
+            <button class="btn btn-grey" style="margin-top: 10px; padding: 15px; border-radius: 12px;" onclick="reviewAnswers()">FINISH TEST</button>
         </div>
     `;
 }
@@ -194,14 +193,6 @@ function retrySubset(type) {
     document.getElementById('summary-ui').style.display = 'none';
     document.getElementById('test-ui').style.display = 'block';
     renderQuestion();
-}
-
-function promptCustomCount(max) {
-    let num = prompt(`Enter number (1 - ${max}):`, "25");
-    if (num !== null) {
-        let val = parseInt(num);
-        if (!isNaN(val) && val > 0) startCategoryTest(Math.min(val, max));
-    }
 }
 
 function shuffleQuestionOptions(q, displayIndex) {
