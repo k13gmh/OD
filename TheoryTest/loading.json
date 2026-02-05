@@ -1,0 +1,743 @@
+[
+  {
+    "id": "742",
+    "category": "Vehicle Loading",
+    "question": "How will a heavy load in the boot affect your vehicle's handling?",
+    "choices": {
+      "A": "It will make the steering feel lighter",
+      "B": "It will make the steering feel heavier and increase stopping distance",
+      "C": "It will make the car accelerate faster",
+      "D": "It will have no effect"
+    },
+    "correct": "B",
+    "explanation": "Weight at the rear can lighten the front of the car and requires more distance to stop safely.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "743",
+    "category": "Vehicle Loading",
+    "question": "What should you do if you are carrying a heavy load on a roof rack?",
+    "choices": {
+      "A": "Drive faster to keep the car stable",
+      "B": "Check the load is secure and be aware that the car may lean more on corners",
+      "C": "Nothing as roof racks are self-securing",
+      "D": "Only drive at night"
+    },
+    "correct": "B",
+    "explanation": "Top-heavy cars are more likely to overturn or sway in high winds.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "744",
+    "category": "Vehicle Loading",
+    "question": "Who is responsible for ensuring a child under 14 years old wears a seatbelt?",
+    "choices": {
+      "A": "The child",
+      "B": "The child's parents",
+      "C": "The driver of the vehicle",
+      "D": "The police"
+    },
+    "correct": "C",
+    "explanation": "The driver is legally responsible for all passengers under the age of 14.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "745",
+    "category": "Vehicle Loading",
+    "question": "How should you adjust your tyre pressures when carrying a heavy load?",
+    "choices": {
+      "A": "Decrease the pressure",
+      "B": "Increase the pressure to the manufacturer's 'heavy load' setting",
+      "C": "Keep them the same as usual",
+      "D": "Only inflate the front tyres"
+    },
+    "correct": "B",
+    "explanation": "Check your vehicle handbook for the correct PSI/Bar settings for full loads.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "746",
+    "category": "Vehicle Loading",
+    "question": "What is the legal minimum depth of tread for a trailer tyre?",
+    "choices": {
+      "A": "1mm",
+      "B": "1.6mm",
+      "C": "2.5mm",
+      "D": "4mm"
+    },
+    "correct": "B",
+    "explanation": "Trailers must follow the same legal minimum tread depth as cars: 1.6mm across the central three-quarters.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "747",
+    "category": "Vehicle Loading",
+    "question": "What should you do if your trailer starts to 'snake' or swerve while you are driving?",
+    "choices": {
+      "A": "Brake hard immediately",
+      "B": "Ease off the accelerator and allow the vehicle to slow down naturally",
+      "C": "Speed up to pull it straight",
+      "D": "Steer sharply in the opposite direction"
+    },
+    "correct": "B",
+    "explanation": "Sudden braking or steering can cause the trailer to jackknife.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "748",
+    "category": "Vehicle Loading",
+    "question": "What is the purpose of a 'breakaway cable' on a trailer?",
+    "choices": {
+      "A": "To keep the trailer from being stolen",
+      "B": "To apply the trailer's brakes if it becomes detached from the car",
+      "C": "To help you hitch the trailer",
+      "D": "To tow another car"
+    },
+    "correct": "B",
+    "explanation": "This is a vital safety feature for trailers fitted with their own braking system.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "749",
+    "category": "Vehicle Loading",
+    "question": "What should you do if you are towing a trailer on a three-lane motorway?",
+    "choices": {
+      "A": "Stay in the right-hand lane",
+      "B": "Use only the left-hand and center lanes",
+      "C": "Use the hard shoulder",
+      "D": "Drive in any lane you like"
+    },
+    "correct": "B",
+    "explanation": "Vehicles towing trailers are prohibited from using the right-hand lane on motorways with three or more lanes.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "750",
+    "category": "Vehicle Loading",
+    "question": "How will carrying a roof box affect your fuel consumption?",
+    "choices": {
+      "A": "It will decrease it",
+      "B": "It will increase it",
+      "C": "It will have no effect",
+      "D": "It only affects fuel if it is empty"
+    },
+    "correct": "B",
+    "explanation": "Roof boxes increase wind resistance (drag)"
+  },
+  {
+    "id": "751",
+    "category": "Vehicle Loading",
+    "question": "What should you do before towing a caravan for the first time?",
+    "choices": {
+      "A": "Fit extended 'towing mirrors' to see past the caravan",
+      "B": "Paint the caravan a bright color",
+      "C": "Install a larger engine",
+      "D": "Only drive on motorways"
+    },
+    "correct": "A",
+    "explanation": "You must be able to see clearly down both sides of the caravan to see traffic behind.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "752",
+    "category": "Vehicle Loading",
+    "question": "Where can you find the maximum weight your car is allowed to tow?",
+    "choices": {
+      "A": "On the car's speedometer",
+      "B": "In the vehicle handbook or on the manufacturer's plate",
+      "C": "On the insurance certificate",
+      "D": "On the MOT certificate"
+    },
+    "correct": "B",
+    "explanation": "Exceeding the towing limit is illegal and dangerous for the car's suspension and brakes.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "753",
+    "category": "Vehicle Loading",
+    "question": "What is the maximum speed limit for a car towing a trailer on a dual carriageway?",
+    "choices": {
+      "A": "50 mph",
+      "B": "60 mph",
+      "C": "70 mph",
+      "D": "40 mph"
+    },
+    "correct": "B",
+    "explanation": "The limit is reduced by 10 mph from the national speed limit when towing.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "754",
+    "category": "Vehicle Loading",
+    "question": "How does a heavy load affect your car's headlights?",
+    "choices": {
+      "A": "It makes them point higher, potentially dazzling other drivers",
+      "B": "It makes them point lower",
+      "C": "It makes them switch off",
+      "D": "It has no effect"
+    },
+    "correct": "A",
+    "explanation": "A heavy load in the back of the car, causes the front to tip up, aiming the headlights higher and dazzling oncoming traffic."
+  },
+  {
+    "id": "755",
+    "category": "Vehicle Loading",
+    "question": "What is the 'noseweight' of a trailer?",
+    "choices": {
+      "A": "The weight of the trailer's front window",
+      "B": "The downward force the trailer's coupling exerts on the car's towball",
+      "C": "The weight of the items in the front of the trailer",
+      "D": "The total weight of the trailer"
+    },
+    "correct": "B",
+    "explanation": "Incorrect noseweight can make the car's steering unstable or lift the front wheels.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "756",
+    "category": "Vehicle Loading",
+    "question": "A passenger is 14 years old or over. Who is responsible for them wearing a seatbelt?",
+    "choices": {
+      "A": "The driver",
+      "B": "The passenger",
+      "C": "The driver's insurance company",
+      "D": "No one"
+    },
+    "correct": "B",
+    "explanation": "Once a passenger is 14"
+  },
+  {
+    "id": "757",
+    "category": "Vehicle Loading",
+    "question": "What should you do if you are carrying a load that overhangs the rear of your car by more than 2 metres?",
+    "choices": {
+      "A": "Nothing",
+      "B": "Mark it with a red and white 'long load' marker board",
+      "C": "Tie a plastic bag to it",
+      "D": "Only drive during the day"
+    },
+    "correct": "B",
+    "explanation": "Significant overhangs must be clearly marked to warn other drivers.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "758",
+    "category": "Vehicle Loading",
+    "question": "How should you distribute the weight inside a caravan or trailer?",
+    "choices": {
+      "A": "All at the back to help it move",
+      "B": "Keep the weight low down and centered over the axle",
+      "C": "All at the very front",
+      "D": "On one side only"
+    },
+    "correct": "B",
+    "explanation": "Keeping weight low and central provides the best stability.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "759",
+    "category": "Vehicle Loading",
+    "question": "When using a roof rack, when should you check the security of the load?",
+    "choices": {
+      "A": "Only when you arrive",
+      "B": "After a few miles and at every rest stop",
+      "C": "Only if you hear a noise",
+      "D": "Once a year"
+    },
+    "correct": "B",
+    "explanation": "Loads can shift during travel.  You should check the security shortly after starting and then at every break in the journey."
+  },
+  {
+    "id": "760",
+    "category": "Vehicle Loading",
+    "question": "What should you do if you are carrying a bicycle on a rear-mounted rack?",
+    "choices": {
+      "A": "Ensure it doesn't block your lights or number plate",
+      "B": "Pedal the bike while driving",
+      "C": "Remove the wheels",
+      "D": "Only carry one bike"
+    },
+    "correct": "A",
+    "explanation": "If the rack blocks the plate or lights"
+  },
+  {
+    "id": "761",
+    "category": "Vehicle Loading",
+    "question": "What is the maximum speed limit for a car towing a trailer on a motorway?",
+    "choices": {
+      "A": "50 mph",
+      "B": "60 mph",
+      "C": "70 mph",
+      "D": "80 mph"
+    },
+    "correct": "B",
+    "explanation": "Even on a motorway"
+  },
+  {
+    "id": "762",
+    "category": "Vehicle Loading",
+    "question": "How will your car's acceleration be affected by a full load of passengers?",
+    "choices": {
+      "A": "It will be faster",
+      "B": "It will be slower",
+      "C": "It will remain the same",
+      "D": "It will only change in reverse"
+    },
+    "correct": "B",
+    "explanation": "Extra weight requires more power from the engine to reach speed.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "763",
+    "category": "Vehicle Loading",
+    "question": "What is the best way to prevent goods from falling out of a trailer?",
+    "choices": {
+      "A": "Drive very slowly",
+      "B": "Cover the load with a net or tarpaulin and secure it firmly",
+      "C": "Stack the goods as high as possible",
+      "D": "Only fill the trailer halfway"
+    },
+    "correct": "B",
+    "explanation": "Loose items can fly out at high speeds"
+  },
+  {
+    "id": "764",
+    "category": "Vehicle Loading",
+    "question": "How can you help the environment when your roof rack is not in use?",
+    "choices": {
+      "A": "Paint it green",
+      "B": "Remove it from the car to reduce wind resistance and save fuel",
+      "C": "Keep it on to show you are active",
+      "D": "Tie a ribbon to it"
+    },
+    "correct": "B",
+    "explanation": "Leaving a rack on when it's not needed wastes fuel.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "765",
+    "category": "Vehicle Loading",
+    "question": "What must you check before towing a trailer?",
+    "choices": {
+      "A": "That the trailer's lights are working and connected to the car",
+      "B": "That the trailer has a radio",
+      "C": "That the car is a diesel",
+      "D": "That the trailer is empty"
+    },
+    "correct": "A",
+    "explanation": "Check indicators"
+  },
+  {
+    "id": "766",
+    "category": "Vehicle Loading",
+    "question": "What should you do if your car is pulling to one side when you brake with a heavy load?",
+    "choices": {
+      "A": "Drive faster",
+      "B": "Check your tyre pressures and have your brakes checked by a professional",
+      "C": "Turn the steering wheel the other way",
+      "D": "Ignore it"
+    },
+    "correct": "B",
+    "explanation": "Weight can highlight existing issues with brakes or tyre balance.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "767",
+    "category": "Vehicle Loading",
+    "question": "Can you carry a passenger in a caravan while it is being towed?",
+    "choices": {
+      "A": "Yes, if they have a seatbelt",
+      "B": "No, it is illegal and very dangerous",
+      "C": "Only if the caravan is large",
+      "D": "Only at slow speeds"
+    },
+    "correct": "B",
+    "explanation": "It is illegal and highly dangerous to carry passengers in a caravan or trailer while it is being towed on a public road."
+  },
+  {
+    "id": "768",
+    "category": "Vehicle Loading",
+    "question": "How does a stabilizer help when towing?",
+    "choices": {
+      "A": "It makes the car faster",
+      "B": "It helps reduce the effects of side winds and swerving",
+      "C": "It improves the radio signal",
+      "D": "It fills the tyres with air"
+    },
+    "correct": "B",
+    "explanation": "A stabilizer helps keep the car and trailer aligned.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "769",
+    "category": "Vehicle Loading",
+    "question": "What is the legal requirement for a 'New Keeper' regarding vehicle loading?",
+    "choices": {
+      "A": "They must check the vehicle's weight limits",
+      "B": "They must buy a trailer",
+      "C": "They must remove the seats",
+      "D": "None"
+    },
+    "correct": "A",
+    "explanation": "Every owner should know the limits of their specific vehicle.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "770",
+    "category": "Vehicle Loading",
+    "question": "If you have a roof rack, what is the 'maximum roof load'?",
+    "choices": {
+      "A": "The weight of the car's roof",
+      "B": "The total weight (rack + load) allowed by the manufacturer",
+      "C": "The weight of the driver",
+      "D": "Unlimited"
+    },
+    "correct": "B",
+    "explanation": "You must never exceed the weight limit specified by the vehicle manufacturer, as it affects the cars stability and handling. "
+  },
+  {
+    "id": "771",
+    "category": "Vehicle Loading",
+    "question": "What should you do if you are carrying an infant in a rear-facing baby seat in the front passenger seat?",
+    "choices": {
+      "A": "Nothing",
+      "B": "Ensure the front passenger airbag is deactivated",
+      "C": "Drive with one hand",
+      "D": "Keep the window open"
+    },
+    "correct": "B",
+    "explanation": "An inflating airbag can strike the baby seat with fatal force.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "772",
+    "category": "Vehicle Loading",
+    "question": "Why should you use a 'dog guard' or crate when traveling with pets?",
+    "choices": {
+      "A": "To stop them from looking out the window",
+      "B": "To prevent them from distracting the driver or being thrown forward in a crash",
+      "C": "To keep the car clean",
+      "D": "Because it's a law for all animals"
+    },
+    "correct": "B",
+    "explanation": "Unrestrained pets can cause accidents or be injured themselves.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "773",
+    "category": "Vehicle Loading",
+    "question": "How does a heavy load affect your fuel economy?",
+    "choices": {
+      "A": "It improves it",
+      "B": "It makes it worse (uses more fuel)",
+      "C": "It has no effect",
+      "D": "It only matters on hills"
+    },
+    "correct": "B",
+    "explanation": "More weight requires more energy to move.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "774",
+    "category": "Vehicle Loading",
+    "question": "What should you do if you notice your trailer's tyres are bulging at the sides?",
+    "choices": {
+      "A": "Speed up",
+      "B": "Inflate them more",
+      "C": "Check for overloading and replace the tyres if they are damaged",
+      "D": "Ignore it"
+    },
+    "correct": "C",
+    "explanation": "Bulging usually indicates the load is too heavy or the pressure is too low.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "775",
+    "category": "Vehicle Loading",
+    "question": "What is the maximum speed limit for a car towing a trailer on a single carriageway (National Speed Limit)?",
+    "choices": {
+      "A": "40 mph",
+      "B": "50 mph",
+      "C": "60 mph",
+      "D": "70 mph"
+    },
+    "correct": "B",
+    "explanation": "On a standard 60 mph road"
+  },
+  {
+    "id": "776",
+    "category": "Vehicle Loading",
+    "question": "Why is it important to have the correct 'noseweight' on your towbar?",
+    "choices": {
+      "A": "To save fuel",
+      "B": "To maintain steering control and stability",
+      "C": "To make the trailer look level",
+      "D": "To prevent the engine from overheating"
+    },
+    "correct": "B",
+    "explanation": "Too much weight on the towbar pushes the car's rear down and lifts the front.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "777",
+    "category": "Vehicle Loading",
+    "question": "What should you do if you are carrying a load that sticks out slightly from the sides?",
+    "choices": {
+      "A": "Paint the load blue",
+      "B": "Ensure it doesn't exceed the legal width limit and is clearly visible",
+      "C": "Only drive in the middle of the road",
+      "D": "Sound your horn at every corner"
+    },
+    "correct": "B",
+    "explanation": "There are strict legal limits on how wide a load can be.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "778",
+    "category": "Vehicle Loading",
+    "question": "How often should you check the security of a trailer hitch during a long journey?",
+    "choices": {
+      "A": "Only at the start",
+      "B": "At every rest stop",
+      "C": "Only if you hit a bump",
+      "D": "Never"
+    },
+    "correct": "B",
+    "explanation": "Hitches can sometimes loosen or develop play over time.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "779",
+    "category": "Vehicle Loading",
+    "question": "Which of these will happen if you overload your vehicle?",
+    "choices": {
+      "A": "The suspension will work better",
+      "B": "The car's handling and braking will be dangerously affected",
+      "C": "The car will be more stable in wind",
+      "D": "The tyres will last longer"
+    },
+    "correct": "B",
+    "explanation": "Overloading puts immense strain on tyres"
+  },
+  {
+    "id": "780",
+    "category": "Vehicle Loading",
+    "question": "What is the 'payload' of a vehicle?",
+    "choices": {
+      "A": "The weight of the fuel",
+      "B": "The maximum weight of passengers and cargo the car can safely carry",
+      "C": "The weight of the engine",
+      "D": "The cost of the car"
+    },
+    "correct": "B",
+    "explanation": "Payload = (Maximum permitted weight) minus (Unladen weight).\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "781",
+    "category": "Vehicle Loading",
+    "question": "What should you do if your view to the rear is blocked by a load?",
+    "choices": {
+      "A": "Open the windows",
+      "B": "Use your side mirrors and consider fitting an interior camera or additional mirrors",
+      "C": "Drive with the boot open",
+      "D": "Guess what is behind you"
+    },
+    "correct": "B",
+    "explanation": "You must always be able to see what is happening behind your vehicle.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "782",
+    "category": "Vehicle Loading",
+    "question": "How does a heavy load affect your stopping distance?",
+    "choices": {
+      "A": "It makes it shorter",
+      "B": "It makes it significantly longer",
+      "C": "It has no effect",
+      "D": "It only changes if it's raining"
+    },
+    "correct": "B",
+    "explanation": "Kinetic energy increases with mass; more weight takes more effort to stop.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "783",
+    "category": "Vehicle Loading",
+    "question": "What should you do if you are towing and a large vehicle overtakes you?",
+    "choices": {
+      "A": "Speed up",
+      "B": "Stay steady and be prepared for a slight 'buffet' or pull from the air pressure",
+      "C": "Brake hard",
+      "D": "Swerve to the left"
+    },
+    "correct": "B",
+    "explanation": "Large vehicles push a lot of air which can cause a trailer to wobble.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "784",
+    "category": "Vehicle Loading",
+    "question": "What color is a 'Long Load' marker board?",
+    "choices": {
+      "A": "Blue and yellow",
+      "B": "Red and white",
+      "C": "Green and black",
+      "D": "Orange"
+    },
+    "correct": "B",
+    "explanation": "These are used for loads that significantly exceed the length of the vehicle.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "785",
+    "category": "Vehicle Loading",
+    "question": "What is the benefit of a 'twin-axle' trailer?",
+    "choices": {
+      "A": "It is easier to park",
+      "B": "It is generally more stable and can carry more weight",
+      "C": "It uses less fuel",
+      "D": "It doesn't need lights"
+    },
+    "correct": "B",
+    "explanation": "Two sets of wheels help distribute the weight and reduce 'snaking'.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "786",
+    "category": "Vehicle Loading",
+    "question": "What should you do if you are unsure about the weight of your loaded van?",
+    "choices": {
+      "A": "Guess",
+      "B": "Take it to a local weighbridge",
+      "C": "Drive it and see how it feels",
+      "D": "Ask a neighbor"
+    },
+    "correct": "B",
+    "explanation": "Public weighbridges provide an accurate certificate of your vehicle's weight.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "787",
+    "category": "Vehicle Loading",
+    "question": "What does 'GTW' stand for on a vehicle's plate?",
+    "choices": {
+      "A": "Great Towing Weight",
+      "B": "Gross Train Weight (the total weight of car and trailer combined)",
+      "C": "Gear Torque Weight",
+      "D": "General Traffic Weight"
+    },
+    "correct": "B",
+    "explanation": "You must never exceed this combined limit.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "788",
+    "category": "Vehicle Loading",
+    "question": "How should you secure a heavy item in the boot?",
+    "choices": {
+      "A": "Just lean it against the seat",
+      "B": "Use dedicated lashing points and strong straps",
+      "C": "Leave it loose so it can move",
+      "D": "Wrap it in a towel"
+    },
+    "correct": "B",
+    "explanation": "In a crash"
+  },
+  {
+    "id": "789",
+    "category": "Vehicle Loading",
+    "question": "What is the legal requirement for a trailer's number plate?",
+    "choices": {
+      "A": "It must be handwritten",
+      "B": "It must match the number plate of the towing vehicle",
+      "C": "It must be a different color",
+      "D": "It is not required"
+    },
+    "correct": "B",
+    "explanation": "The trailer must show the same registration as the car pulling it.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "790",
+    "category": "Vehicle Loading",
+    "question": "When should you use a 'Jockey Wheel' on a trailer?",
+    "choices": {
+      "A": "When you are driving fast",
+      "B": "When the trailer is detached from the car to move it or keep it level",
+      "C": "Only when the trailer is empty",
+      "D": "To help with braking"
+    },
+    "correct": "B",
+    "explanation": "It supports the front of the trailer when it's not on the towball.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "791",
+    "category": "Vehicle Loading",
+    "question": "What should you do if a passenger refuses to wear a seatbelt?",
+    "choices": {
+      "A": "Drive anyway",
+      "B": "Refuse to start the journey until they are buckled in",
+      "C": "Tell them to sit in the footwell",
+      "D": "Give them a cushion instead"
+    },
+    "correct": "B",
+    "explanation": "Safety and legal responsibility lie with you as the driver.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "792",
+    "category": "Vehicle Loading",
+    "question": "How does a heavy load affect a vehicle going uphill?",
+    "choices": {
+      "A": "It makes it easier",
+      "B": "The engine will work harder and you may need a lower gear",
+      "C": "The car will fly",
+      "D": "The brakes will get hot"
+    },
+    "correct": "B",
+    "explanation": "Gravity works against the extra mass"
+  },
+  {
+    "id": "793",
+    "category": "Vehicle Loading",
+    "question": "How does a heavy load affect a vehicle going downhill?",
+    "choices": {
+      "A": "It makes it slower",
+      "B": "The vehicle will pick up speed more quickly and require more braking",
+      "C": "The engine will stop",
+      "D": "It has no effect"
+    },
+    "correct": "B",
+    "explanation": "Be careful of 'brake fade' on long hills when carrying heavy loads.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "794",
+    "category": "Vehicle Loading",
+    "question": "What is the 'unladen weight' of a vehicle?",
+    "choices": {
+      "A": "The weight with a full load",
+      "B": "The weight of the vehicle without passengers, fuel, or cargo",
+      "C": "The weight of the trailer",
+      "D": "The weight of the driver"
+    },
+    "correct": "B",
+    "explanation": "Unladen weight refers to the weight of the vehicle itself when it is not carrying any passengers, goods or fuel."
+  },
+  {
+    "id": "795",
+    "category": "Vehicle Loading",
+    "question": "When must you use a 'secondary coupling' (safety chain) on a small trailer?",
+    "choices": {
+      "A": "Only at night",
+      "B": "On all trailers that do not have a breakaway cable",
+      "C": "Only on motorways",
+      "D": "Never"
+    },
+    "correct": "B",
+    "explanation": "It ensures the trailer stays attached to the car even if the towball fails.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "796",
+    "category": "Vehicle Loading",
+    "question": "What should you do if you are carrying a load of loose sand in an open trailer?",
+    "choices": {
+      "A": "Drive very slowly",
+      "B": "Cover it with a tarpaulin to stop it blowing into other drivers' eyes",
+      "C": "Wet the sand",
+      "D": "Nothing"
+    },
+    "correct": "B",
+    "explanation": "You must prevent any part of your load from falling or blowing onto the road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "797",
+    "category": "Vehicle Loading",
+    "question": "How should you adjust your driving when towing in high winds?",
+    "choices": {
+      "A": "Drive faster",
+      "B": "Slow down and be extra cautious on open bridges or exposed roads",
+      "C": "Drive in the right-hand lane",
+      "D": "Switch your lights off"
+    },
+    "correct": "B",
+    "explanation": "Wind can catch the side of a trailer or caravan like a sail.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "798",
+    "category": "Vehicle Loading",
+    "question": "What is the main danger of an improperly secured roof load?",
+    "choices": {
+      "A": "It makes the car look messy",
+      "B": "It can slide forward under braking or fall off into traffic",
+      "C": "It makes the car too tall",
+      "D": "It attracts birds"
+    },
+    "correct": "B",
+    "explanation": "A load falling off at 70 mph is a fatal hazard to those behind you.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  }
+]
