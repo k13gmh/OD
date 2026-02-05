@@ -1,10 +1,10 @@
 /**
  * File: category.js
- * Version: v2.1.4
- * Feature: Default 50 Quantity Selector & Wall of Shame Update
+ * Version: v2.2.0
+ * Feature: Loads from orion_master.json (Local Storage)
  */
 
-const SCRIPT_VERSION = "v2.1.4";
+const SCRIPT_VERSION = "v2.2.0";
 
 if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -17,11 +17,23 @@ let selectedCategory = "";
 async function init() {
     const tag = document.getElementById('v-tag-top');
     if (tag) tag.innerText = SCRIPT_VERSION;
+    
     try {
-        const response = await fetch('questions.json');
-        allQuestions = await response.json();
+        // CHANGED: Load from local storage master pool instead of server fetch
+        const localData = localStorage.getItem('orion_master.json');
+        
+        if (!localData) {
+            alert("Master question pool not found. Please return to Main Menu to sync.");
+            window.location.href = 'mainmenu.html';
+            return;
+        }
+
+        allQuestions = JSON.parse(localData);
         buildCategoryMenu();
-    } catch (e) { console.error(e); }
+    } catch (e) { 
+        console.error("Initialization Error:", e);
+        alert("Error loading category data.");
+    }
 }
 
 function buildCategoryMenu() {
@@ -156,7 +168,7 @@ function renderQuestion() {
     });
 
     const flagBtn = document.getElementById('flag-btn');
-    const isFlagged = testData.flagged.includes(q.id);
+    const isFlagged = (testData.flagged && testData.flagged.includes(q.id));
     flagBtn.style.background = isFlagged ? "#f1c40f" : "#bdc3c7";
     flagBtn.innerText = isFlagged ? "FLAGGED" : "FLAG";
 }
@@ -245,4 +257,4 @@ function reviewAnswers() {
     window.location.href = 'review.html'; 
 }
 
-init();
+window.onload = init;
