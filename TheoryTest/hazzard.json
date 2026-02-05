@@ -1,0 +1,743 @@
+[
+{
+    "id": "172",
+    "category": "Hazard Awareness",
+    "question": "What is the first sign of 'highway hypnosis'?",
+    "choices": {
+      "A": "Increased alertness",
+      "B": "A feeling of sleepiness or zoning out on long journeys",
+      "C": "Faster reaction times",
+      "D": "Improved mirror awareness"
+    },
+    "correct": "B",
+    "explanation": "Monotonous driving on motorways can cause you to lose focus. Take a break as soon as you feel yourself 'zoning out.'\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "173",
+    "category": "Hazard Awareness",
+    "question": "What should you do when you see a ball bounce into the road?",
+    "choices": {
+      "A": "Speed up to get past quickly",
+      "B": "Stop and sound your horn",
+      "C": "Slow down and be prepared for a child to follow it",
+      "D": "Maintain your speed and look away"
+    },
+    "correct": "C",
+    "explanation": "A bouncing ball is a classic 'hazard'—always assume a child will run out after it without looking.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "174",
+    "category": "Hazard Awareness",
+    "question": "You are driving past parked cars. What is the most likely hazard?",
+    "choices": {
+      "A": "A car door opening suddenly",
+      "B": "The road surface becoming slippery",
+      "C": "A change in the speed limit",
+      "D": "Your car's engine overheating"
+    },
+    "correct": "A",
+    "explanation": "Always keep a car-door's width away from parked vehicles in case someone steps out or opens a door.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "175",
+    "category": "Hazard Awareness",
+    "question": "Why should you slow down when driving past a stationary bus at a bus stop?",
+    "choices": {
+      "A": "The bus might be broken down",
+      "B": "Pedestrians may step out from behind or in front of the bus",
+      "C": "The bus driver might want to talk to you",
+      "D": "The road will be narrower"
+    },
+    "correct": "B",
+    "explanation": "Pedestrians often cross the road immediately after getting off a bus and may be hidden from your view by the bus itself.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "176",
+    "category": "Hazard Awareness",
+    "question": "What should you do when approaching a blind bend?",
+    "choices": {
+      "A": "Stay in the middle of the road",
+      "B": "Slow down and keep to the left",
+      "C": "Sound your horn and maintain speed",
+      "D": "Speed up to see around it sooner"
+    },
+    "correct": "B",
+    "explanation": "Keeping to the left gives you the best view and protects you from oncoming vehicles that might be over the white line.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "177",
+    "category": "Hazard Awareness",
+    "question": "How should you react to a driver who is tailgating you?",
+    "choices": {
+      "A": "Brake hard to warn them",
+      "B": "Speed up to increase the gap",
+      "C": "Increase your following distance from the vehicle in front",
+      "D": "Flash your hazard lights"
+    },
+    "correct": "C",
+    "explanation": "By increasing the gap in front"
+  },
+  {
+    "id": "178",
+    "category": "Hazard Awareness",
+    "question": "What is a 'hidden hazard' at a junction?",
+    "choices": {
+      "A": "The traffic lights",
+      "B": "A cyclist or motorcyclist obscured by the windscreen pillar",
+      "C": "The road markings",
+      "D": "The color of the car in front"
+    },
+    "correct": "B",
+    "explanation": "Windscreen pillars create blind spots. You should move your head to look around them at junctions.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "179",
+    "category": "Hazard Awareness",
+    "question": "You are driving in a town. Why should you be extra careful of 'micro-mobility' users (e.g. e-scooters)?",
+    "choices": {
+      "A": "They are very loud",
+      "B": "They are fast and often difficult to see or hear",
+      "C": "They always have right of way",
+      "D": "They are only allowed on pavements"
+    },
+    "correct": "B",
+    "explanation": "E-scooters and similar devices are quiet and small"
+  },
+  {
+    "id": "180",
+    "category": "Hazard Awareness",
+    "question": "What should you do if you see a pedestrian with a white cane and a red band?",
+    "choices": {
+      "A": "Sound your horn to warn them",
+      "B": "Slow down and be extra patient as they are both deaf and blind",
+      "C": "Flash your lights to show you are there",
+      "D": "Drive past them as quickly as possible"
+    },
+    "correct": "B",
+    "explanation": "A red band on a white cane signifies a dual sensory impairment. They may not hear or see you at all.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "181",
+    "category": "Hazard Awareness",
+    "question": "Why is it dangerous to 'coast' (driving in neutral or with the clutch down)?",
+    "choices": {
+      "A": "It uses more fuel",
+      "B": "You have less steering control and no engine braking",
+      "C": "It wears out the tyres",
+      "D": "It makes the engine too loud"
+    },
+    "correct": "B",
+    "explanation": "Engine braking helps control your speed"
+  },
+  {
+    "id": "182",
+    "category": "Hazard Awareness",
+    "question": "What is the main hazard when following a large vehicle in the rain?",
+    "choices": {
+      "A": "The vehicle's noise",
+      "B": "The spray from the tyres reducing your visibility",
+      "C": "The vehicle's slow speed",
+      "D": "The vehicle's brake lights being too bright"
+    },
+    "correct": "B",
+    "explanation": "Spray can completely block your view of the road ahead. Stay well back to see clearly.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "183",
+    "category": "Hazard Awareness",
+    "question": "You are approaching a bridge. What hazard should you look for?",
+    "choices": {
+      "A": "A change in the fuel price",
+      "B": "High-sided vehicles in the middle of the road",
+      "C": "The radio signal dropping out",
+      "D": "A police speed trap"
+    },
+    "correct": "B",
+    "explanation": "Large vehicles may need to use the center of the road to fit under an arched bridge.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "184",
+    "category": "Hazard Awareness",
+    "question": "How does alcohol affect your driving?",
+    "choices": {
+      "A": "It makes you more confident but less safe",
+      "B": "It improves your coordination",
+      "C": "It helps you react faster",
+      "D": "It has no effect if you only have one drink"
+    },
+    "correct": "A",
+    "explanation": "Alcohol reduces your judgment and reaction speed while often making you feel like you are driving better than you are.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "185",
+    "category": "Hazard Awareness",
+    "question": "What should you do when driving through a residential area at night?",
+    "choices": {
+      "A": "Use full-beam headlights at all times",
+      "B": "Sound your horn at every junction",
+      "C": "Stay alert for pedestrians in dark clothing",
+      "D": "Drive at the maximum speed limit"
+    },
+    "correct": "C",
+    "explanation": "Dark clothing makes pedestrians very hard to see. Drive slowly and use dipped headlights.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "186",
+    "category": "Hazard Awareness",
+    "question": "What is a hazard associated with 'junction hopping' (cutting across lanes)?",
+    "choices": {
+      "A": "It saves fuel",
+      "B": "Other drivers may not expect your move, leading to collisions",
+      "C": "It is the fastest way to travel",
+      "D": "It is recommended by the Highway Code"
+    },
+    "correct": "B",
+    "explanation": "Changing lanes abruptly or cutting across junctions can surprise other road users, significantly increasing the risk of a crash."
+  },
+  {
+    "id": "187",
+    "category": "Hazard Awareness",
+    "question": "You see a cyclist ahead. What should you do as you prepare to overtake?",
+    "choices": {
+      "A": "Sound your horn to move them over",
+      "B": "Give them as much room as you would a car",
+      "C": "Drive as close as possible to save space",
+      "D": "Overtake on a blind bend"
+    },
+    "correct": "B",
+    "explanation": "Cyclists may need to swerve to avoid potholes or wind gusts. Space is their only protection.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "188",
+    "category": "Hazard Awareness",
+    "question": "What is the main danger of driving while tired?",
+    "choices": {
+      "A": "You might get a headache",
+      "B": "You will arrive late",
+      "C": "Your reaction times will be much slower and you could fall asleep",
+      "D": "You will use more fuel"
+    },
+    "correct": "C",
+    "explanation": "Tiredness is a major factor in fatal motorway accidents. Stop and rest.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "189",
+    "category": "Hazard Awareness",
+    "question": "Why should you be careful when passing a row of parked cars on the left?",
+    "choices": {
+      "A": "The road surface is always better there",
+      "B": "A passenger might step out from the 'blind side' of a parked car",
+      "C": "You might get a flat tyre",
+      "D": "There are no hazards in this situation"
+    },
+    "correct": "B",
+    "explanation": "Always look for 'clues' like feet under cars or exhaust smoke that suggest a car or person is about to move.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "190",
+    "category": "Hazard Awareness",
+    "question": "What should you do if you see a hazard ahead?",
+    "choices": {
+      "A": "Speed up to get past it",
+      "B": "Brake hard immediately",
+      "C": "Check your mirrors and assess the risk",
+      "D": "Turn off your engine"
+    },
+    "correct": "C",
+    "explanation": "Mirror checks allow you to see how your reaction to the hazard will affect those behind you.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "191",
+    "category": "Hazard Awareness",
+    "question": "How can you identify a 'clue' that a parked car is about to move?",
+    "choices": {
+      "A": "The car is a bright color",
+      "B": "There is a person in the driver's seat and the front wheels are turned out",
+      "C": "The car is parked on a hill",
+      "D": "The car has a roof rack"
+    },
+    "correct": "B",
+    "explanation": "Wheels turned toward the road and a person in the seat are strong indicators that the vehicle is about to pull out.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "192",
+    "category": "Hazard Awareness",
+    "question": "What is the danger of 'over-driving' your headlights?",
+    "choices": {
+      "A": "The battery will go flat",
+      "B": "You cannot stop within the distance you can see to be clear",
+      "C": "The bulbs will blow",
+      "D": "You will dazzle yourself"
+    },
+    "correct": "B",
+    "explanation": "At night"
+  },
+  {
+    "id": "193",
+    "category": "Hazard Awareness",
+    "question": "What should you do when approaching a ford (water crossing)?",
+    "choices": {
+      "A": "Drive through as fast as possible",
+      "B": "Check the depth and drive through slowly in a low gear",
+      "C": "Drive through in a high gear",
+      "D": "Turn around and find another way even if it's shallow"
+    },
+    "correct": "B",
+    "explanation": "Deep water can stall your engine. Test your brakes immediately after exiting the water.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "194",
+    "category": "Hazard Awareness",
+    "question": "Why are motorcyclists more vulnerable at junctions?",
+    "choices": {
+      "A": "They are faster than cars",
+      "B": "They are smaller and harder to see",
+      "C": "They always have the right of way",
+      "D": "They don't have to stop at junctions"
+    },
+    "correct": "B",
+    "explanation": "The 'Think Bike' campaign highlights that drivers often look but fail to see a motorcycle because of its small profile.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "195",
+    "category": "Hazard Awareness",
+    "question": "You are driving in a tunnel. What is a potential hazard?",
+    "choices": {
+      "A": "Sudden changes in light levels",
+      "B": "The road being perfectly straight",
+      "C": "A lack of traffic signs",
+      "D": "The radio being too loud"
+    },
+    "correct": "A",
+    "explanation": "Your eyes take time to adjust to the dark of a tunnel and the brightness when exiting.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "196",
+    "category": "Hazard Awareness",
+    "question": "What does a 'staggered junction' mean?",
+    "choices": {
+      "A": "The road is uneven",
+      "B": "The side roads do not line up directly opposite each other",
+      "C": "It is a junction for horses only",
+      "D": "The speed limit changes"
+    },
+    "correct": "B",
+    "explanation": "Be careful at these junctions as traffic may be emerging from different angles than a standard crossroads.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "197",
+    "category": "Hazard Awareness",
+    "question": "What is the risk of taking cold remedies before driving?",
+    "choices": {
+      "A": "They make you more focused",
+      "B": "They can cause drowsiness and impaired judgment",
+      "C": "They are illegal to buy",
+      "D": "They have no effect on driving"
+    },
+    "correct": "B",
+    "explanation": "Even 'over-the-counter' medicines can make you unfit to drive. Always read the label.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "198",
+    "category": "Hazard Awareness",
+    "question": "Why should you be cautious of 'bends' in the road during autumn?",
+    "choices": {
+      "A": "The scenery is distracting",
+      "B": "Wet leaves can make the road as slippery as ice",
+      "C": "The sun is always in your eyes",
+      "D": "There is more traffic on the road"
+    },
+    "correct": "B",
+    "explanation": "Wet leaves reduce tyre grip significantly. Slow down before entering the bend.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "199",
+    "category": "Hazard Awareness",
+    "question": "What is the hazard when you see a 'School' sign?",
+    "choices": {
+      "A": "Children may run out into the road",
+      "B": "The road will be closed",
+      "C": "You must stop and wait for 5 minutes",
+      "D": "Only teachers are allowed to drive there"
+    },
+    "correct": "A",
+    "explanation": "Be prepared for unpredictable behavior from children near schools.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "200",
+    "category": "Hazard Awareness",
+    "question": "What should you do if a driver emerges unexpectedly from a side road?",
+    "choices": {
+      "A": "Sound your horn and stay close",
+      "B": "Brake and stay calm",
+      "C": "Speed up to block them",
+      "D": "Flash your lights and shout"
+    },
+    "correct": "B",
+    "explanation": "Do not make a bad situation worse. React safely and move on.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "201",
+    "category": "Hazard Awareness",
+    "question": "Why is it a hazard to drive with your interior light on at night?",
+    "choices": {
+      "A": "It drains the battery instantly",
+      "B": "It reflects in the windscreen and reduces your view outside",
+      "C": "It is illegal in all circumstances",
+      "D": "It makes the car too warm"
+    },
+    "correct": "B",
+    "explanation": "Interior lights cause glare on the glass"
+  },
+  {
+    "id": "202",
+    "category": "Hazard Awareness",
+    "question": "What is the danger of 'following the tail-lights' of the car ahead in fog?",
+    "choices": {
+      "A": "You will get home faster",
+      "B": "You might follow them if they crash or pull off the road",
+      "C": "It is the safest way to drive",
+      "D": "The lights will help you see the road surface"
+    },
+    "correct": "B",
+    "explanation": "If the car in front makes a mistake"
+  },
+  {
+    "id": "203",
+    "category": "Hazard Awareness",
+    "question": "How does 'road rage' affect your hazard awareness?",
+    "choices": {
+      "A": "It makes you more alert to danger",
+      "B": "It narrows your focus and leads to poor decision making",
+      "C": "It improves your reaction time",
+      "D": "It has no effect on your driving"
+    },
+    "correct": "B",
+    "explanation": "Anger takes your mind off the road and makes you ignore potential hazards.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "204",
+    "category": "Hazard Awareness",
+    "question": "What should you do if you see a 'Low Bridge' sign ahead and you are driving a tall vehicle?",
+    "choices": {
+      "A": "Speed up to get under it quickly",
+      "B": "Stop and check your vehicle's height against the sign",
+      "C": "Ignore it if you've been that way before",
+      "D": "Drive in the middle of the road"
+    },
+    "correct": "B",
+    "explanation": "Striking a bridge is a serious incident that causes massive delays and safety risks.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "205",
+    "category": "Hazard Awareness",
+    "question": "What is the main hazard on a country road at night?",
+    "choices": {
+      "A": "A lack of traffic lights",
+      "B": "Animals or pedestrians on the road without pavement",
+      "C": "The road being too wide",
+      "D": "The speed limit being too low"
+    },
+    "correct": "B",
+    "explanation": "Country roads are often unlit and have no pavements; be ready for people or wildlife in the road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "206",
+    "category": "Hazard Awareness",
+    "question": "Why should you check your mirrors before signaling?",
+    "choices": {
+      "A": "To see if your indicators are working",
+      "B": "To see how your signal will affect other road users",
+      "C": "To check the fuel level",
+      "D": "To look at the passengers"
+    },
+    "correct": "B",
+    "explanation": "Never signal without knowing if someone is already trying to overtake you.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "207",
+    "category": "Hazard Awareness",
+    "question": "What is the hazard of 'sun dazzling' in the late afternoon?",
+    "choices": {
+      "A": "It makes the car too hot",
+      "B": "It can completely hide traffic lights or hazards ahead",
+      "C": "It improves visibility",
+      "D": "It only affects older drivers"
+    },
+    "correct": "B",
+    "explanation": "Use your sun visor and keep your windscreen clean to reduce the 'veil' effect of sun glare.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "208",
+    "category": "Hazard Awareness",
+    "question": "You are following a learner. They stall at a green light. What is the hazard?",
+    "choices": {
+      "A": "They might reverse into you",
+      "B": "Traffic behind you might get impatient and take risks",
+      "C": "The lights will turn red",
+      "D": "All of the above"
+    },
+    "correct": "D",
+    "explanation": "A stalled car creates a chain reaction of hazards. Stay back and be patient.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "209",
+    "category": "Hazard Awareness",
+    "question": "What is the risk of using 'hands-free' phones while driving?",
+    "choices": {
+      "A": "The phone might fall on the floor",
+      "B": "The mental distraction still exists",
+      "C": "It is illegal to use them",
+      "D": "They use too much battery"
+    },
+    "correct": "B",
+    "explanation": "The human brain struggles to process a complex conversation and a complex driving environment at the same time.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "210",
+    "category": "Hazard Awareness",
+    "question": "What should you do if you see a sign for 'Cattle'?",
+    "choices": {
+      "A": "Speed up to get past",
+      "B": "Slow down and be prepared to stop",
+      "C": "Sound your horn to move them",
+      "D": "Stop and take a photo"
+    },
+    "correct": "B",
+    "explanation": "Livestock are easily startled and can cause significant damage to your car and themselves.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "211",
+    "category": "Hazard Awareness",
+    "question": "Why is 'aquaplaning' a hazard?",
+    "choices": {
+      "A": "It makes the car easier to steer",
+      "B": "The tyres lose contact with the road and you lose all control",
+      "C": "It cleans the underside of the car",
+      "D": "It only happens to old cars"
+    },
+    "correct": "B",
+    "explanation": "If you feel the steering go light in rain"
+  },
+  {
+    "id": "212",
+    "category": "Hazard Awareness",
+    "question": "What should you do if you are approaching a junction and the lights are on 'Amber'?",
+    "choices": {
+      "A": "Speed up to beat the red light",
+      "B": "Stop unless it is unsafe to do so",
+      "C": "Continue at the same speed",
+      "D": "Sound your horn and go through"
+    },
+    "correct": "B",
+    "explanation": "Amber means 'Stop' at the line. You should only cross if you have already passed the line or are so close that stopping would cause an accident.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "213",
+    "category": "Hazard Awareness",
+    "question": "What is the hazard when you are turning right from a major road into a minor road?",
+    "choices": {
+      "A": "Oncoming traffic",
+      "B": "Traffic overtaking you on the right",
+      "C": "Pedestrians crossing the minor road",
+      "D": "All of the above"
+    },
+    "correct": "D",
+    "explanation": "Right turns are high-risk maneuvers. Check your mirrors and blind spots carefully.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "214",
+    "category": "Hazard Awareness",
+    "question": "Why are 'trams' a specific hazard?",
+    "choices": {
+      "A": "They are very small",
+      "B": "They cannot move out of your way as they are on rails",
+      "C": "They only travel at night",
+      "D": "They have no lights"
+    },
+    "correct": "B",
+    "explanation": "Trams are silent and follow a fixed path. Always give them plenty of room.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "215",
+    "category": "Hazard Awareness",
+    "question": "What is the hazard when driving past a school bus with hazard lights on?",
+    "choices": {
+      "A": "The bus is about to move off",
+      "B": "Children are likely to be crossing the road near the bus",
+      "C": "The bus is broken down",
+      "D": "The driver is changing a tyre"
+    },
+    "correct": "B",
+    "explanation": "Hazard lights on a school bus are a warning that children are boarding or alighting.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "216",
+    "category": "Hazard Awareness",
+    "question": "What should you do if you see a 'Road Works' sign?",
+    "choices": {
+      "A": "Drive faster to get past the dust",
+      "B": "Slow down and obey any temporary speed limits",
+      "C": "Ignore it if no workers are visible",
+      "D": "Turn your lights off"
+    },
+    "correct": "B",
+    "explanation": "Speed limits in road works are for the safety of the workers and because the road surface may be uneven.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "217",
+    "category": "Hazard Awareness",
+    "question": "Why is it a hazard to leave your indicators on after completing a turn?",
+    "choices": {
+      "A": "It will drain the battery",
+      "B": "It misleads other road users about your intentions",
+      "C": "It is a sign of a good driver",
+      "D": "It makes the car go slower"
+    },
+    "correct": "B",
+    "explanation": "A misleading signal can cause someone to pull out in front of you"
+  },
+  {
+    "id": "218",
+    "category": "Hazard Awareness",
+    "question": "What is the danger of a 'soft verge' on a country road?",
+    "choices": {
+      "A": "It is a good place to park",
+      "B": "Your car could sink or you could lose control if you drive on it",
+      "C": "It is softer for the tyres",
+      "D": "It is meant for cyclists only"
+    },
+    "correct": "B",
+    "explanation": "Keep to the paved road. If you have to move over for a wide vehicle"
+  },
+  {
+    "id": "219",
+    "category": "Hazard Awareness",
+    "question": "How can you reduce hazards when driving in the dark?",
+    "choices": {
+      "A": "Use your full beams even when following cars",
+      "B": "Keep your speed down and increase your following distance",
+      "C": "Drive in the middle of the road",
+      "D": "Wear sunglasses to prevent glare"
+    },
+    "correct": "B",
+    "explanation": "Darkness limits your 'hazard window' (how far ahead you can see). Compensate by slowing down.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "220",
+    "category": "Hazard Awareness",
+    "question": "What should you do if you are following a vehicle and you want to see further ahead?",
+    "choices": {
+      "A": "Drive closer to the vehicle",
+      "B": "Drop back further",
+      "C": "Move to the right",
+      "D": "Flash your lights"
+    },
+    "correct": "B",
+    "explanation": "Increasing the gap between you and the vehicle in front is the best way to improve your view of the road ahead.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "221",
+    "category": "Hazard Awareness",
+    "question": "What should you do if you enter a tunnel and your vision is momentarily lost?",
+    "choices": {
+      "A": "Brake hard immediately",
+      "B": "Maintain a steady speed and keep in your lane while your eyes adjust",
+      "C": "Close your eyes to help them adjust faster",
+      "D": "Turn on your hazard lights and stop"
+    },
+    "correct": "B",
+    "explanation": "Abruptly changing speed in a tunnel is dangerous. Trust your lane position and wait for your pupils to dilate.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "222",
+    "category": "Hazard Awareness",
+    "question": "Why is 'tailgating' particularly dangerous for a motorcyclist?",
+    "choices": {
+      "A": "They can stop much faster than cars",
+      "B": "The wind from your car could knock them over",
+      "C": "They cannot see your brake lights",
+      "D": "It is not dangerous"
+    },
+    "correct": "B",
+    "explanation": "Motorcycles are light and easily affected by the air pressure from a car following too closely.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "223",
+    "category": "Hazard Awareness",
+    "question": "What hazard does a 'level crossing' pose?",
+    "choices": {
+      "A": "The risk of a collision with a train",
+      "B": "The road surface is always slippery",
+      "C": "You must always stop for 10 minutes",
+      "D": "There are no hazards if the barriers are up"
+    },
+    "correct": "A",
+    "explanation": "Trains cannot stop quickly. Always obey the lights and barriers.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "224",
+    "category": "Hazard Awareness",
+    "question": "What should you do if you see an elderly person crossing the road slowly?",
+    "choices": {
+      "A": "Sound your horn to hurry them up",
+      "B": "Be patient and wait for them to finish crossing",
+      "C": "Drive around them as quickly as possible",
+      "D": "Flash your lights at them"
+    },
+    "correct": "B",
+    "explanation": "Always give vulnerable road users the time and space they need.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "225",
+    "category": "Hazard Awareness",
+    "question": "What is the hazard of a 'leaking fuel cap'?",
+    "choices": {
+      "A": "It makes the car smell nice",
+      "B": "Spilled fuel (especially diesel) makes the road extremely slippery for others",
+      "C": "It makes the car faster",
+      "D": "It only affects the fuel gauge"
+    },
+    "correct": "B",
+    "explanation": "Diesel spills are like ice for motorcyclists. Ensure your cap is on tight.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "226",
+    "category": "Hazard Awareness",
+    "question": "Why should you check your blind spot before changing lanes?",
+    "choices": {
+      "A": "To see if the indicators are on",
+      "B": "To check for vehicles that are not visible in the mirrors",
+      "C": "To look at the road signs",
+      "D": "To check the tyre pressure"
+    },
+    "correct": "B",
+    "explanation": "A mirror cannot see everything. A quick head check is essential.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "227",
+    "category": "Hazard Awareness",
+    "question": "What hazard is represented by a 'triangular sign' with a red border?",
+    "choices": {
+      "A": "An order you must follow",
+      "B": "A warning of a potential hazard ahead",
+      "C": "Information about the road",
+      "D": "A parking zone"
+    },
+    "correct": "B",
+    "explanation": "Triangles are always warnings. Pay attention to the symbol inside.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "228",
+    "category": "Hazard Awareness",
+    "question": "What should you do if your steering suddenly feels heavy?",
+    "choices": {
+      "A": "Speed up to help the power steering",
+      "B": "Check your tyre pressures and power steering fluid",
+      "C": "Ignore it until the next service",
+      "D": "Turn the radio off"
+    },
+    "correct": "B",
+    "explanation": "Heavy steering usually indicates a mechanical failure or a flat tyre.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  }
+]
