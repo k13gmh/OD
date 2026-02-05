@@ -1,10 +1,11 @@
 /**
  * File: timed.js
- * Version: v2.4.5
+ * Version: v2.5.0
  * Layout: Timer in card header
+ * Update: Loads from orion_master.json (Local Storage)
  */
 
-const JS_VERSION = "v2.4.5";
+const JS_VERSION = "v2.5.0";
 const HTML_VERSION = "v2.4.5";
 
 if (!localStorage.getItem('orion_session_token')) {
@@ -21,14 +22,25 @@ async function init() {
     if (vTag) vTag.innerText = `HTML: ${HTML_VERSION} | JS: ${JS_VERSION}`;
 
     try {
-        const response = await fetch('questions.json');
-        allQuestions = await response.json();
+        // CHANGED: Load from local storage master pool instead of server fetch
+        const localData = localStorage.getItem('orion_master.json');
+        
+        if (!localData) {
+            alert("Master question pool not found. Please return to Main Menu to sync.");
+            window.location.href = 'mainmenu.html';
+            return;
+        }
+
+        allQuestions = JSON.parse(localData);
         startTimed();
-    } catch (e) { console.error(e); }
+    } catch (e) { 
+        console.error("Initialization Error:", e);
+        alert("Error loading question data.");
+    }
 }
 
 function startTimed() {
-    // 50 random questions for timed mode [cite: 2026-01-11]
+    // 50 random questions for timed mode
     sessionQuestions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 50);
     currentIndex = 0;
     
@@ -45,7 +57,7 @@ function startTimer() {
         if (timerDisplay) {
             timerDisplay.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
             
-            // Visual warning at 5 minutes [cite: 2026-01-11]
+            // Visual warning at 5 minutes
             if (timeLeft < 300) {
                 timerDisplay.style.color = (timeLeft % 2 === 0) ? "#ff3b30" : "#0f0";
             }
