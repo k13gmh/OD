@@ -35,13 +35,13 @@
                     <span>ORION DRIVE</span>
                     <span id="sync-progress" style="margin-left: 10px; color: #8e8e93; font-weight: normal; font-size: 0.7rem;"></span>
                 </div>
-                <span>v2.4.2</span>
+                <span>v2.4.3</span>
             </div>
         </div>
     </div>
 
     <script>
-        // Version Check: v2.4.2
+        // Version Check: v2.4.3
         const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
         const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 
@@ -114,18 +114,12 @@
                         masterPool = masterPool.concat(data);
                     }
                 }
-                
-                // Save the Master File
                 localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
-                
-                // CLEANUP: Clear any stale active session data to prevent resume errors
                 localStorage.removeItem('orion_current_session');
-                
                 progressDisplay.innerText = "";
                 return true;
             } catch (err) {
                 progressDisplay.innerText = "Sync Error";
-                console.error("Database Build Error:", err);
                 return false;
             }
         }
@@ -144,18 +138,20 @@
                 const options = await response.json();
                 menuOptions.innerHTML = ''; 
                 
-                if (!dbReady) {
-                    menuOptions.innerHTML = `<p style="color:#ff3b30; font-size:0.8rem; text-align:center;">Data Sync Failed.</p>`;
-                }
-
                 options.forEach(opt => {
                     const anchor = document.createElement('a');
                     anchor.href = opt.htmlName;
                     anchor.className = 'btn btn-blue';
+                    // Inline style fixes to ensure buttons look like the original design
                     anchor.style.textDecoration = 'none';
                     anchor.style.marginBottom = '12px';
-                    anchor.style.display = 'block';
+                    anchor.style.display = 'flex';
+                    anchor.style.alignItems = 'center';
+                    anchor.style.justifyContent = 'center';
                     anchor.style.width = '100%';
+                    anchor.style.boxSizing = 'border-box';
+                    anchor.style.borderRadius = '12px'; // Matching your passcode input
+                    anchor.style.padding = '15px';      // Consistent sizing
                     anchor.innerText = opt.description;
                     menuOptions.appendChild(anchor);
                 });
