@@ -1,0 +1,742 @@
+[  {
+    "id": "400",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do if your car begins to skid when you brake?",
+    "choices": {
+      "A": "Release the footbrake and steer into the skid",
+      "B": "Brake harder to stop the slide",
+      "C": "Select a higher gear",
+      "D": "Apply the handbrake"
+    },
+    "correct": "A",
+    "explanation": "Releasing the brake allows the wheels to turn again and regain traction. Steering into the skid helps straighten the car.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "401",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "In which conditions are your stopping distances likely to be ten times longer?",
+    "choices": {
+      "A": "In heavy rain",
+      "B": "In thick fog",
+      "C": "On icy roads",
+      "D": "On a very hot day"
+    },
+    "correct": "C",
+    "explanation": "Ice provides almost zero grip. You must drive very slowly and leave a massive gap between you and other cars.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "402",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do when driving in thick fog?",
+    "choices": {
+      "A": "Use your full-beam headlights",
+      "B": "Follow the tail-lights of the car in front closely",
+      "C": "Use dipped headlights and fog lights if visibility is under 100m",
+      "D": "Speed up to get through the fog quickly"
+    },
+    "correct": "C",
+    "explanation": "Full beams reflect off the fog and blind you. Dipped lights and fog lights help you see and be seen.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "403",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "Why is it dangerous to drive through deep water?",
+    "choices": {
+      "A": "It will make your tyres dirty",
+      "B": "It can stall the engine and cause the brakes to fail",
+      "C": "It will improve your fuel economy",
+      "D": "It makes the car easier to steer"
+    },
+    "correct": "B",
+    "explanation": "Water can enter the air intake and ruin the engine; wet brakes will not stop the car effectively.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "404",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What is 'aquaplaning'?",
+    "choices": {
+      "A": "When the tyres are too hot",
+      "B": "When a layer of water builds up between the tyre and the road",
+      "C": "When you use the handbrake in the rain",
+      "D": "When you drive on a dusty road"
+    },
+    "correct": "B",
+    "explanation": "This causes the car to 'surf' on the water"
+  },
+  {
+    "id": "405",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How should you dry your brakes after driving through a ford or deep puddle?",
+    "choices": {
+      "A": "Drive at high speed for 5 miles",
+      "B": "Brake hard while stationary",
+      "C": "Gently apply the brakes while driving slowly",
+      "D": "Wait for them to dry naturally"
+    },
+    "correct": "C",
+    "explanation": "Lightly tapping the brakes generates heat which evaporates the water.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "406",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do if you are driving at night and are dazzled by oncoming headlights?",
+    "choices": {
+      "A": "Flash your headlights back",
+      "B": "Slow down or stop if necessary and look towards the left edge of the road",
+      "C": "Switch on your interior light",
+      "D": "Speed up to get past them"
+    },
+    "correct": "B",
+    "explanation": "Looking at the white line on the left helps you stay in lane without looking directly into the glare.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "407",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What is the benefit of 'Engine Braking'?",
+    "choices": {
+      "A": "It makes the car go faster",
+      "B": "It reduces the wear on your footbrakes and helps control speed on hills",
+      "C": "It uses more fuel",
+      "D": "It only works in automatic cars"
+    },
+    "correct": "B",
+    "explanation": "Shifting to a lower gear uses the engine's resistance to slow the car down.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "408",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How can you help prevent your car from skidding in icy weather?",
+    "choices": {
+      "A": "By driving in the highest gear possible at a low speed",
+      "B": "By driving in a low gear with high revs",
+      "C": "By braking hard at every junction",
+      "D": "By turning the steering wheel quickly"
+    },
+    "correct": "A",
+    "explanation": "Using a higher gear helps prevent the wheels from spinning when you try to move or accelerate.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "409",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do if you lose control of the steering due to aquaplaning?",
+    "choices": {
+      "A": "Brake hard immediately",
+      "B": "Ease off the accelerator and do not steer sharply",
+      "C": "Turn the steering wheel from side to side",
+      "D": "Switch off the engine"
+    },
+    "correct": "B",
+    "explanation": "Sudden movements will cause the car to spin once the tyres regain grip on the road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "410",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What is 'coasting'?",
+    "choices": {
+      "A": "Driving in a high gear",
+      "B": "Driving in neutral or with the clutch held down",
+      "C": "Driving with the cruise control on",
+      "D": "Driving with the engine off"
+    },
+    "correct": "B",
+    "explanation": "Coasting is dangerous because you lose engine braking and the car can pick up speed quickly on hills.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "411",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "Why are 'leaf falls' in autumn a hazard?",
+    "choices": {
+      "A": "They look nice and are distracting",
+      "B": "They can make the road surface as slippery as ice",
+      "C": "They block the exhaust pipe",
+      "D": "They make the car's paintwork dirty"
+    },
+    "correct": "B",
+    "explanation": "Wet leaves drastically reduce the amount of grip your tyres have on the road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "412",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do when driving on a narrow country road at night?",
+    "choices": {
+      "A": "Use your full-beam headlights whenever possible",
+      "B": "Stay in the middle of the road",
+      "C": "Drive at the maximum speed limit",
+      "D": "Turn your lights off at junctions"
+    },
+    "correct": "A",
+    "explanation": "You should use full beams to see hazards early"
+  },
+  {
+    "id": "413",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How can you reduce the risk of fire in your vehicle?",
+    "choices": {
+      "A": "By keeping the fuel tank full",
+      "B": "By ensuring there are no fuel or oil leaks",
+      "C": "By driving slowly at all times",
+      "D": "By using a lower gear"
+    },
+    "correct": "B",
+    "explanation": "Most car fires are caused by electrical faults or fuel leaking onto a hot engine.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "414",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What does it mean if your steering feels 'spongy' or heavy?",
+    "choices": {
+      "A": "The car is low on fuel",
+      "B": "The tyres may be under-inflated or there is a power steering fault",
+      "C": "The road is very smooth",
+      "D": "The brakes are brand new"
+    },
+    "correct": "B",
+    "explanation": "Always check your tyre pressures first if the steering feels different than usual.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "415",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "When is the road likely to be most slippery after a long dry spell?",
+    "choices": {
+      "A": "After it has been raining for several hours",
+      "B": "Just as it starts to rain",
+      "C": "When the sun comes out",
+      "D": "At night"
+    },
+    "correct": "B",
+    "explanation": "The first rain on a dry road mixes with oil and dust to create a very greasy"
+  },
+  {
+    "id": "416",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "Why should you use a lower gear when driving down a long steep hill?",
+    "choices": {
+      "A": "To prevent the brakes from overheating and fading",
+      "B": "To save fuel",
+      "C": "To make the engine louder",
+      "D": "To go down the hill faster"
+    },
+    "correct": "A",
+    "explanation": "Continuous braking causes 'brake fade' where the brakes lose their stopping power.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "417",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How should you use the footbrake in an emergency if your car has ABS?",
+    "choices": {
+      "A": "Pump the pedal up and down",
+      "B": "Press it down hard and keep it pressed",
+      "C": "Apply the handbrake at the same time",
+      "D": "Brake gently and then harder"
+    },
+    "correct": "B",
+    "explanation": "Anti-lock Braking Systems (ABS) are designed to handle the 'pumping' for you.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "418",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What is the main danger of driving in high winds?",
+    "choices": {
+      "A": "The car will get dirty",
+      "B": "The car could be blown out of its lane, particularly high-sided vehicles",
+      "C": "The engine will stall",
+      "D": "The radio won't work"
+    },
+    "correct": "B",
+    "explanation": "Strong winds can push vehicles off course.  High-sided vehicles, cyclists and motorcyclists are the most vulnerable."
+  },
+  {
+    "id": "419",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you check before starting a journey in snowy weather?",
+    "choices": {
+      "A": "That you have a full tank of fuel",
+      "B": "That your lights and windows are clear of snow and ice",
+      "C": "That you have a warm coat and a shovel",
+      "D": "All of the above"
+    },
+    "correct": "D",
+    "explanation": "Preparation is key to staying safe and avoiding a breakdown in winter conditions.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "420",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What color are the reflective studs between the motorway and the hard shoulder?",
+    "choices": {
+      "A": "White",
+      "B": "Red",
+      "C": "Amber",
+      "D": "Green"
+    },
+    "correct": "B",
+    "explanation": "Red studs mark the left-hand edge of the road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "421",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do when approaching a ford?",
+    "choices": {
+      "A": "Drive through as fast as possible",
+      "B": "Check the depth and drive through slowly in a low gear",
+      "C": "Drive through in a high gear",
+      "D": "Wait for another car to go first"
+    },
+    "correct": "B",
+    "explanation": "Fords can be deeper than they look. Use a low gear to keep the engine revs up.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "422",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How does alcohol affect your driving?",
+    "choices": {
+      "A": "It makes you react faster",
+      "B": "It increases your confidence but ruins your judgment",
+      "C": "It helps you see better at night",
+      "D": "It has no effect after one hour"
+    },
+    "correct": "B",
+    "explanation": "Even small amounts of alcohol reduce your ability to coordinate and judge speeds.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "423",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "When should you use your hazard warning lights while driving?",
+    "choices": {
+      "A": "When you are being tailgated",
+      "B": "To warn drivers behind of a sudden hazard on a motorway or dual carriageway",
+      "C": "To thank someone for letting you out",
+      "D": "When you are parked on a pavement"
+    },
+    "correct": "B",
+    "explanation": "Hazard lights are for warning others of danger"
+  },
+  {
+    "id": "424",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What is the 'Two-Second Rule'?",
+    "choices": {
+      "A": "The time it takes to change a tyre",
+      "B": "The gap you should leave between you and the car in front on a dry road",
+      "C": "How long you should look in your mirror",
+      "D": "How long a green light stays on"
+    },
+    "correct": "B",
+    "explanation": "If it takes less than two seconds to pass a stationary object after the car in front"
+  },
+  {
+    "id": "425",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What is the purpose of 'Rumble Strips'?",
+    "choices": {
+      "A": "To make the road look better",
+      "B": "To alert you to a hazard or a change in the speed limit through sound and vibration",
+      "C": "To clean your tyres",
+      "D": "To stop you from falling asleep"
+    },
+    "correct": "B",
+    "explanation": "Rumble strips provide a physical and audible warning to slow down.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "426",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How can you stop your windows from misting up in the rain?",
+    "choices": {
+      "A": "By turning the heater off",
+      "B": "By using the air conditioning or demisters",
+      "C": "By opening all the windows fully",
+      "D": "By wiping them with your hand while driving"
+    },
+    "correct": "B",
+    "explanation": "Air conditioning dries the air"
+  },
+  {
+    "id": "427",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do if you have to leave your car on an unlit road at night?",
+    "choices": {
+      "A": "Leave your sidelights on",
+      "B": "Leave your hazard lights on",
+      "C": "Leave your headlights on full beam",
+      "D": "Park facing the traffic"
+    },
+    "correct": "A",
+    "explanation": "If the speed limit is over 30mph"
+  },
+  {
+    "id": "428",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "Why should you keep a pair of sunglasses in the car?",
+    "choices": {
+      "A": "To look fashionable",
+      "B": "To help with glare from a low sun or reflections off a wet road",
+      "C": "To wear at night to stop dazzling",
+      "D": "To use if the interior light is too bright"
+    },
+    "correct": "B",
+    "explanation": "Sun glare can completely blind a driver"
+  },
+  {
+    "id": "429",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do when driving in strong side winds?",
+    "choices": {
+      "A": "Speed up to get through the wind faster",
+      "B": "Keep a steady speed and be ready for the car to be buffeted",
+      "C": "Drive as close to the kerb as possible",
+      "D": "Turn your hazard lights on"
+    },
+    "correct": "B",
+    "explanation": "Be particularly careful when passing gaps in hedges or buildings.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "430",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What is the main hazard when following a salt spreader in winter?",
+    "choices": {
+      "A": "The noise from the machine",
+      "B": "Salt or grit hitting your windscreen and reduced visibility",
+      "C": "The smell of the salt",
+      "D": "The vehicle's slow speed only"
+    },
+    "correct": "B",
+    "explanation": "Stay well back to avoid damage to your car and to see the road ahead clearly.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "431",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How can you help the environment when driving in traffic?",
+    "choices": {
+      "A": "By revving the engine",
+      "B": "By switching off the engine if you are likely to be stationary for a while",
+      "C": "By keeping the car in a low gear",
+      "D": "By using the air conditioning on full"
+    },
+    "correct": "B",
+    "explanation": "Modern cars use less fuel by restarting than they do by idling for long periods.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "432",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do if you feel your car's steering vibrating at high speeds?",
+    "choices": {
+      "A": "Check the oil level",
+      "B": "Have your wheels balanced",
+      "C": "Replace the battery",
+      "D": "Increase your tyre pressure"
+    },
+    "correct": "B",
+    "explanation": "Unbalanced wheels cause the steering wheel to 'wobble' and can damage your suspension.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "433",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What is the main cause of skidding?",
+    "choices": {
+      "A": "The weather",
+      "B": "The driver's actions",
+      "C": "The car's age",
+      "D": "The road surface"
+    },
+    "correct": "B",
+    "explanation": "Skidding is usually caused by the driver braking"
+  },
+  {
+    "id": "434",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How should you use your gears when driving in deep snow?",
+    "choices": {
+      "A": "Use the highest gear possible",
+      "B": "Use a low gear and keep the engine revs high",
+      "C": "Use a high gear and keep the speed very low",
+      "D": "Stay in neutral"
+    },
+    "correct": "C",
+    "explanation": "A high gear helps prevent the wheels from spinning on the slippery surface.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "435",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do if your car starts to skid to the right?",
+    "choices": {
+      "A": "Steer to the left",
+      "B": "Steer to the right",
+      "C": "Brake hard",
+      "D": "Accelerate hard"
+    },
+    "correct": "B",
+    "explanation": "You should always steer into the direction of the skid to help straighten the car.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "436",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "Why is it more dangerous to drive at night?",
+    "choices": {
+      "A": "There are more police on the road",
+      "B": "Visibility is reduced and it is harder to judge speed and distance",
+      "C": "The roads are narrower",
+      "D": "The car's engine works harder"
+    },
+    "correct": "B",
+    "explanation": "You can only see as far as your headlights reach"
+  },
+  {
+    "id": "437",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do before starting a long journey in very cold weather?",
+    "choices": {
+      "A": "Check the heater works",
+      "B": "Ensure you have plenty of fuel and the radiator has anti-freeze",
+      "C": "Drive as fast as possible to warm the engine",
+      "D": "Wait until midday"
+    },
+    "correct": "B",
+    "explanation": "Anti-freeze prevents the engine coolant from freezing and cracking the engine block.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "438",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What is the danger of using 'full beam' headlights in fog?",
+    "choices": {
+      "A": "It will drain the battery",
+      "B": "The light reflects back and makes it even harder to see",
+      "C": "It will blind the car behind you",
+      "D": "It makes the fog thicker"
+    },
+    "correct": "B",
+    "explanation": "Dipped beams are much more effective at lighting the road surface in fog.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "439",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How can you tell if the road is icy when it's cold outside?",
+    "choices": {
+      "A": "The steering feels heavy",
+      "B": "The steering feels very light and there is less tyre noise",
+      "C": "The car uses more fuel",
+      "D": "The heater stops working"
+    },
+    "correct": "B",
+    "explanation": "This 'black ice' effect is very dangerous as the car feels like it's floating.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "440",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do when following a vehicle on a road with surface water?",
+    "choices": {
+      "A": "Follow their tyre tracks closely",
+      "B": "Stay back to avoid the spray and have a better view",
+      "C": "Speed up to get past",
+      "D": "Turn your headlights off"
+    },
+    "correct": "B",
+    "explanation": "Surface water can hide potholes and lead to aquaplaning.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "441",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What does 'brake fade' feel like?",
+    "choices": {
+      "A": "The brakes become very sensitive",
+      "B": "The brakes feel 'spongy' and require more pressure to work",
+      "C": "The steering wheel vibrates",
+      "D": "The car speeds up when you brake"
+    },
+    "correct": "B",
+    "explanation": "This happens when brakes overheat on long descents.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "442",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do if your engine stalls in the middle of a level crossing?",
+    "choices": {
+      "A": "Leave the car and get everyone clear immediately",
+      "B": "Try to restart the engine for 5 minutes",
+      "C": "Wait for a passerby to help",
+      "D": "Call a mechanic"
+    },
+    "correct": "A",
+    "explanation": "If the alarm sounds or lights flash"
+  },
+  {
+    "id": "443",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How should you drive over a bridge in high winds?",
+    "choices": {
+      "A": "Fast and in the middle of the road",
+      "B": "Slowly and with extra care,  especially if you have a roof box",
+      "C": "With your hazard lights on",
+      "D": "By staying close to the vehicle in front"
+    },
+    "correct": "B",
+    "explanation": "Bridges are often exposed to high side winds.  A roof box increases the surface area of your car, making it more likely to be affected."
+  },
+  {
+    "id": "444",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "When should you use your rear fog lights?",
+    "choices": {
+      "A": "When it is raining slightly",
+      "B": "When visibility is reduced to less than 100 metres",
+      "C": "Whenever you are on a motorway",
+      "D": "At night in the countryside"
+    },
+    "correct": "B",
+    "explanation": "You must switch them off as soon as visibility improves to avoid dazzling others.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "445",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do if a tyre bursts while you are driving?",
+    "choices": {
+      "A": "Brake hard and pull over",
+      "B": "Hold the steering wheel firmly and let the car slow down gradually",
+      "C": "Accelerate to keep the car straight",
+      "D": "Switch the engine off"
+    },
+    "correct": "B",
+    "explanation": "Sudden braking with a burst tyre will cause the car to pull violently or spin.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "446",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "Why should you keep your speed down when driving in the dark?",
+    "choices": {
+      "A": "To save electricity",
+      "B": "Because you can only see as far as your headlights reach",
+      "C": "To prevent the engine from overheating",
+      "D": "To avoid waking people up"
+    },
+    "correct": "B",
+    "explanation": "Your 'stopping distance' should never be longer than your 'seeing distance'.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "447",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do if your car's bonnet flies up while driving?",
+    "choices": {
+      "A": "Brake hard immediately",
+      "B": "Look through the gap at the bottom or out the side window and pull over safely",
+      "C": "Close your eyes",
+      "D": "Accelerate to push it down"
+    },
+    "correct": "B",
+    "explanation": "Stay calm"
+  },
+  {
+    "id": "448",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What is the first sign of 'tire wear' affecting handling?",
+    "choices": {
+      "A": "The car uses more oil",
+      "B": "The car slides more easily in the wet",
+      "C": "The heater takes longer to warm up",
+      "D": "The radio signal is poor"
+    },
+    "correct": "B",
+    "explanation": "Worn tyres cannot disperse water effectively"
+  },
+  {
+    "id": "449",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How should you react to a 'Ford' depth gauge?",
+    "choices": {
+      "A": "Ignore it if you have a big car",
+      "B": "Only cross if the water level is safe for your vehicle",
+      "C": "Always cross if other cars are doing it",
+      "D": "Wait for the water to dry up"
+    },
+    "correct": "B",
+    "explanation": "Never risk your engine by driving through water that is too deep.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "450",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do if your car starts to slide on a patch of oil?",
+    "choices": {
+      "A": "Brake hard",
+      "B": "Ease off the accelerator and steer gently",
+      "C": "Shift into neutral",
+      "D": "Apply the handbrake"
+    },
+    "correct": "B",
+    "explanation": "Sudden inputs will cause a total loss of control on oil.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "451",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What is the main danger of 'sun glare' in winter?",
+    "choices": {
+      "A": "It makes the car too hot",
+      "B": "It can hide road markings and other road users",
+      "C": "It improves your vision",
+      "D": "It drains the battery"
+    },
+    "correct": "B",
+    "explanation": "Low winter sun is often paired with wet roads"
+  },
+  {
+    "id": "452",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How can you maintain control when driving down a very steep hill?",
+    "choices": {
+      "A": "Stay in neutral",
+      "B": "Use a low gear and the brakes together",
+      "C": "Use a high gear to go faster",
+      "D": "Turn the engine off"
+    },
+    "correct": "B",
+    "explanation": "The engine acts as a brake in lower gears"
+  },
+  {
+    "id": "453",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do if you are driving at night and a car behind has full beams on?",
+    "choices": {
+      "A": "Brake hard to stop them",
+      "B": "Adjust your mirror to the 'anti-dazzle' position",
+      "C": "Flash your brake lights",
+      "D": "Speed up"
+    },
+    "correct": "B",
+    "explanation": "Most mirrors have a small lever to reduce glare from vehicles behind.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "454",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What does it mean if the car keeps 'wandering' to one side?",
+    "choices": {
+      "A": "The road is perfectly flat",
+      "B": "The tyre pressures are uneven or the tracking is out",
+      "C": "The engine is too powerful",
+      "D": "The car is too light"
+    },
+    "correct": "B",
+    "explanation": "Uneven tyre pressure is a common cause of a car 'pulling' to one side.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "455",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "What should you do if you are driving in a tunnel and your car catches fire?",
+    "choices": {
+      "A": "Stop immediately and run",
+      "B": "Try to drive the car out of the tunnel if possible",
+      "C": "Stay in the car with the windows up",
+      "D": "Turn the heater on"
+    },
+    "correct": "B",
+    "explanation": "Driving out of the tunnel is safer for everyone. If you can't"
+  },
+  {
+    "id": "456",
+    "category": "Road Conditions and Vehicle Handling",
+    "question": "How does a heavy load in the boot affect your car?",
+    "choices": {
+      "A": "It makes it faster",
+      "B": "It makes the steering feel lighter and the braking distance longer",
+      "C": "It has no effect",
+      "D": "It improves the fuel economy"
+    },
+    "correct": "B",
+    "explanation": "Weight at the back lifts the front of the car slightly"
+  }
+]
