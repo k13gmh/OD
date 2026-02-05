@@ -1,0 +1,730 @@
+[  
+{
+    "id": "628",
+    "category": "Essential Documents",
+    "question": "What is the legal minimum insurance cover required to drive on public roads?",
+    "choices": {
+      "A": "Third-party fire and theft",
+      "B": "Third-party only",
+      "C": "Comprehensive",
+      "D": "Personal injury cover"
+    },
+    "correct": "B",
+    "explanation": "Third-party insurance is the minimum. It covers damage to other people and their property"
+  },
+  {
+    "id": "629",
+    "category": "Essential Documents",
+    "question": "What is a Statutory Off-Road Notification (SORN)?",
+    "choices": {
+      "A": "A notice to tell the DVLA a vehicle is being kept off the road",
+      "B": "A fine for speeding",
+      "C": "A permit to drive without insurance",
+      "D": "A type of driving license"
+    },
+    "correct": "A",
+    "explanation": "You must declare SORN if you aren't taxing or insuring your vehicle because it is parked on private land.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "630",
+    "category": "Essential Documents",
+    "question": "How long is an MOT certificate usually valid for?",
+    "choices": {
+      "A": "Six months",
+      "B": "One year",
+      "C": "Two years",
+      "D": "Three years"
+    },
+    "correct": "B",
+    "explanation": "An MOT test must be carried out every 12 months once a car is three years old.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "631",
+    "category": "Essential Documents",
+    "question": "What must you check before driving someone else's vehicle?",
+    "choices": {
+      "A": "That the car is clean",
+      "B": "That your own insurance covers you to drive it",
+      "C": "That the fuel tank is full",
+      "D": "That the owner is in the car"
+    },
+    "correct": "B",
+    "explanation": "Never assume your insurance covers other cars. Check your policy for 'Driving Other Cars' (DOC) cover.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "632",
+    "category": "Essential Documents",
+    "question": "Who is responsible for ensuring a vehicle is taxed?",
+    "choices": {
+      "A": "The local council",
+      "B": "The driver's insurance company",
+      "C": "The registered keeper of the vehicle",
+      "D": "The manufacturer"
+    },
+    "correct": "C",
+    "explanation": "The person named on the V5C (logbook) is responsible for the tax and MOT.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "633",
+    "category": "Essential Documents",
+    "question": "When must you notify the DVLA of a change?",
+    "choices": {
+      "A": "Only when you sell the car",
+      "B": "When you change your name,  address,  or health status",
+      "C": "Only if you get a speeding ticket",
+      "D": "Every year"
+    },
+    "correct": "B",
+    "explanation": "You must tell the DVLA immediately if you change your name or address, or if you develop a medical condition that affects your driving."
+  },
+  {
+    "id": "634",
+    "category": "Essential Documents",
+    "question": "What is the maximum fine for driving without insurance?",
+    "choices": {
+      "A": "£50",
+      "B": "£500",
+      "C": "Unlimited",
+      "D": "£100"
+    },
+    "correct": "C",
+    "explanation": "The courts can issue an unlimited fine and give you 6 to 8 penalty points.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "635",
+    "category": "Essential Documents",
+    "question": "At what age does a car usually require its first MOT?",
+    "choices": {
+      "A": "One year old",
+      "B": "Two years old",
+      "C": "Three years old",
+      "D": "Five years old"
+    },
+    "correct": "C",
+    "explanation": "New cars are exempt for the first three years from the date of registration.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "636",
+    "category": "Essential Documents",
+    "question": "What does a 'Cover Note' mean in insurance terms?",
+    "choices": {
+      "A": "The document sent before your actual policy arrives",
+      "B": "An extra fee for young drivers",
+      "C": "Insurance for the car's contents",
+      "D": "A document that says the car is stolen"
+    },
+    "correct": "A",
+    "explanation": "A cover note is temporary proof of insurance while your main policy is being processed.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "637",
+    "category": "Essential Documents",
+    "question": "Under the 'New Drivers Act,how many points will cause you to lose your license within the first two years?'",
+    "choices": {
+      "A": "3 points",
+      "B": "6 points",
+      "C": "9 points",
+      "D": "12 points"
+    },
+    "correct": "B",
+    "explanation": "New drivers are on probation for the first two years.  There is no discretion for the court or DVLA, your licence would be revoked.  You have to restart, taking your theory and practical driving test. "
+  },
+  {
+    "id": "638",
+    "category": "Essential Documents",
+    "question": "What is the 'V5C'?",
+    "choices": {
+      "A": "The insurance policy",
+      "B": "The vehicle registration document (Logbook)",
+      "C": "The driving license",
+      "D": "The MOT certificate"
+    },
+    "correct": "B",
+    "explanation": "It contains details of the vehicle and the registered keeper.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "639",
+    "category": "Essential Documents",
+    "question": "If your car fails an MOT,  when can you drive it?",
+    "choices": {
+      "A": "Anytime for the next 7 days",
+      "B": "Only to a pre-arranged appointment at a garage to have the faults fixed",
+      "C": "Only during daylight hours",
+      "D": "To the shops and back"
+    },
+    "correct": "B",
+    "explanation": "If a car has failed it’s MOT, it can only be driven to a garage for repairs or to a pre- booked MOT retest."
+  },
+  {
+    "id": "640",
+    "category": "Essential Documents",
+    "question": "What must you do if your health affects your driving?",
+    "choices": {
+      "A": "Tell your doctor only",
+      "B": "Notify the DVLA",
+      "C": "Stop driving and tell no one",
+      "D": "Tell your insurance company only"
+    },
+    "correct": "B",
+    "explanation": "The DVLA must be informed of any medical condition that could make you unsafe behind the wheel.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "641",
+    "category": "Essential Documents",
+    "question": "How often should you update your vehicle's logbook (V5C)?",
+    "choices": {
+      "A": "Every time you have a service",
+      "B": "When the vehicle is sold, scrapped, or the keeper changes details",
+      "C": "Every 12 months",
+      "D": "Only if the color of the car changes"
+    },
+    "correct": "B",
+    "explanation": "The V5C must be updated whenever the registered keeper’s details change or when the vehicle is sold or destroyed."
+  },
+  {
+    "id": "642",
+    "category": "Essential Documents",
+    "question": "What is a SORN valid for?",
+    "choices": {
+      "A": "One month",
+      "B": "Six months",
+      "C": "Until the vehicle is taxed, sold or scrapped",
+      "D": "Ten Years"
+    },
+    "correct": "C",
+    "explanation": "A SORN is valid indefinitely as long as the vehicle remains off the road.  It does not need to be renewed annually"
+  },
+  {
+    "id": "643",
+    "category": "Essential Documents",
+    "question": "Who is responsible for ensuring a passenger under 14 wears a seatbelt?",
+    "choices": {
+      "A": "The passenger",
+      "B": "The driver",
+      "C": "The passenger's parents",
+      "D": "The police"
+    },
+    "correct": "B",
+    "explanation": "As the driver"
+  },
+  {
+    "id": "644",
+    "category": "Essential Documents",
+    "question": "What is the minimum age to hold a car driving license?",
+    "choices": {
+      "A": "16",
+      "B": "17",
+      "C": "18",
+      "D": "21"
+    },
+    "correct": "A",
+    "explanation": "A learner driver in receipt of the enhanced mobility component of PIP may apply for a provisional license at 15 years and 9 months and take their test at 16. For all other learners, the minimum age is 17."
+  },
+  {
+    "id": "645",
+    "category": "Essential Documents",
+    "question": "What is the maximum period you can leave a car without an MOT before it becomes illegal?",
+    "choices": {
+      "A": "One day",
+      "B": "One week",
+      "C": "One month",
+      "D": "There is no grace period"
+    },
+    "correct": "D",
+    "explanation": "As soon as the certificate expires"
+  },
+  {
+    "id": "646",
+    "category": "Essential Documents",
+    "question": "If you are involved in an accident,  what document may the police ask to see?",
+    "choices": {
+      "A": "Your birth certificate",
+      "B": "Your driving license and insurance certificate",
+      "C": "Your bank statement",
+      "D": "Your school records"
+    },
+    "correct": "B",
+    "explanation": "Following an accident, you must be able to produce your driving licence, valid insurance and MOT certificate if requested."
+  },
+  {
+    "id": "647",
+    "category": "Essential Documents",
+    "question": "What does 'Third Party' insurance cover?",
+    "choices": {
+      "A": "Damage to your car and yourself",
+      "B": "Damage to other people's property and vehicles",
+      "C": "Damage caused by fire only",
+      "D": "Theft of your vehicle"
+    },
+    "correct": "B",
+    "explanation": "It is the most basic legal requirement.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "648",
+    "category": "Essential Documents",
+    "question": "How long does a SORN declaration last?",
+    "choices": {
+      "A": "12 months",
+      "B": "Until you sell the car",
+      "C": "Five years",
+      "D": "One month"
+    },
+    "correct": "B",
+    "explanation": "SORN no longer needs to be renewed annually; it lasts until the vehicle's status changes.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "649",
+    "category": "Essential Documents",
+    "question": "What is an insurance 'excess'?",
+    "choices": {
+      "A": "The total cost of the insurance",
+      "B": "The amount you have to pay yourself toward any claim",
+      "C": "The profit the company makes",
+      "D": "An extra fee for driving at night"
+    },
+    "correct": "B",
+    "explanation": "If your excess is £250 and a repair costs £1000"
+  },
+  {
+    "id": "650",
+    "category": "Essential Documents",
+    "question": "What must you do if you sell your car?",
+    "choices": {
+      "A": "Give the whole V5C to the buyer",
+      "B": "Notify the DVLA and give the buyer the green 'New Keeper' supplement",
+      "C": "Keep the whole V5C",
+      "D": "Throw the V5C away"
+    },
+    "correct": "B",
+    "explanation": "The green slip (V5C/2) acts as temporary proof of ownership for the buyer.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "651",
+    "category": "Essential Documents",
+    "question": "Which document shows the CO2 emissions of your vehicle?",
+    "choices": {
+      "A": "The MOT certificate",
+      "B": "The V5C (Logbook)",
+      "C": "The insurance policy",
+      "D": "The driving license"
+    },
+    "correct": "B",
+    "explanation": "Tax rates are often based on the CO2 figures found in the V5C.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "652",
+    "category": "Essential Documents",
+    "question": "When can you drive without a valid MOT certificate?",
+    "choices": {
+      "A": "When driving to a pre-arranged MOT test appointment",
+      "B": "When you only have 5 miles to go",
+      "C": "When you have just bought the car",
+      "D": "Never"
+    },
+    "correct": "A",
+    "explanation": "This is the only legal exception.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "653",
+    "category": "Essential Documents",
+    "question": "What is the penalty for a new driver who gets 6 points?",
+    "choices": {
+      "A": "A £1000 fine",
+      "B": "Their license is revoked and they must retake both tests",
+      "C": "A one-month ban",
+      "D": "They must take a speed awareness course"
+    },
+    "correct": "B",
+    "explanation": "You go back to being a 'provisional' holder and must start from scratch.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "654",
+    "category": "Essential Documents",
+    "question": "What does it mean if your insurance has 'No Claims Discount'?",
+    "choices": {
+      "A": "You have never had an accident",
+      "B": "Your premium is reduced because you haven't made a claim",
+      "C": "You don't have to pay the excess",
+      "D": "You are allowed to crash once for free"
+    },
+    "correct": "B",
+    "explanation": "Each year you drive without making a claim"
+  },
+  {
+    "id": "655",
+    "category": "Essential Documents",
+    "question": "Who is legally responsible for the vehicle being in a roadworthy condition?",
+    "choices": {
+      "A": "The garage that serviced it",
+      "B": "The driver",
+      "C": "The DVLA",
+      "D": "The previous owner"
+    },
+    "correct": "B",
+    "explanation": "It is the driver's duty to check tyres"
+  },
+  {
+    "id": "656",
+    "category": "Essential Documents",
+    "question": "What information is on a photocard driving license?",
+    "choices": {
+      "A": "Your height",
+      "B": "Your name, address, and the categories of vehicles you can drive",
+      "C": "Your blood type",
+      "D": "Your bank details"
+    },
+    "correct": "B",
+    "explanation": "Your licence shows your personal details and lists the specific types of vehicles (categories) you are legally allowed to drive."
+  },
+  {
+    "id": "657",
+    "category": "Essential Documents",
+    "question": "When should you tell the DVLA that you have sold your vehicle?",
+    "choices": {
+      "A": "Immediately",
+      "B": "Within 30 days",
+      "C": "When the tax is due",
+      "D": "Only if the new owner asks"
+    },
+    "correct": "A",
+    "explanation": "Until the DVLA is notified"
+  },
+  {
+    "id": "658",
+    "category": "Essential Documents",
+    "question": "What is the purpose of the MOT test?",
+    "choices": {
+      "A": "To make sure the car is fast",
+      "B": "To ensure the vehicle meets minimum safety and environmental standards",
+      "C": "To check the oil level",
+      "D": "To see if the radio works"
+    },
+    "correct": "B",
+    "explanation": "It is a safety inspection"
+  },
+  {
+    "id": "659",
+    "category": "Essential Documents",
+    "question": "Which of these is NOT checked during an MOT test?",
+    "choices": {
+      "A": "The exhaust system",
+      "B": "The steering and suspension",
+      "C": "The engine oil and gearbox",
+      "D": "The brakes"
+    },
+    "correct": "C",
+    "explanation": "The MOT does not cover the general mechanical condition of the engine or clutch.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "660",
+    "category": "Essential Documents",
+    "question": "What must you have before you can supervise a learner driver?",
+    "choices": {
+      "A": "Be at least 21 and have held a full license for that category for 3 years",
+      "B": "Be over 18 and have a clean license",
+      "C": "A teaching degree",
+      "D": "Be at least 25 and have 1 year of driving experience"
+    },
+    "correct": "A",
+    "explanation": "If you don't meet these requirements"
+  },
+  {
+    "id": "661",
+    "category": "Essential Documents",
+    "question": "What happens if you are caught driving without a valid driving license?",
+    "choices": {
+      "A": "You get a warning",
+      "B": "You can be fined and disqualified from driving",
+      "C": "You are asked to take the test again next week",
+      "D": "Nothing if you are a good driver"
+    },
+    "correct": "B",
+    "explanation": "Driving without a valid license usually invalidates your insurance as well.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "662",
+    "category": "Essential Documents",
+    "question": "What must you have before you can tax your vehicle?",
+    "choices": {
+      "A": "A full tank of petrol",
+      "B": "Valid insurance and a valid MOT (if applicable)",
+      "C": "A clean car",
+      "D": "A driving license with no points"
+    },
+    "correct": "B",
+    "explanation": "The DVLA system checks for these automatically when you try to pay.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "663",
+    "category": "Essential Documents",
+    "question": "How long is a driving license photocard usually valid for?",
+    "choices": {
+      "A": "5 years",
+      "B": "10 years",
+      "C": "20 years",
+      "D": "For life"
+    },
+    "correct": "B",
+    "explanation": "You must renew the photo every 10 years to ensure it remains a true likeness.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "664",
+    "category": "Essential Documents",
+    "question": "When should you show your insurance certificate to the police?",
+    "choices": {
+      "A": "If you are involved in an incident or asked at a roadside check",
+      "B": "Every time you see a police car",
+      "C": "Once a year at the station",
+      "D": "Only if you have crashed into a police car"
+    },
+    "correct": "A",
+    "explanation": "If you don't have it on you"
+  },
+  {
+    "id": "665",
+    "category": "Essential Documents",
+    "question": "What does 'Comprehensive' insurance cover?",
+    "choices": {
+      "A": "Other people only",
+      "B": "Only your own car",
+      "C": "Other people and your own vehicle in almost any situation",
+      "D": "Only theft"
+    },
+    "correct": "C",
+    "explanation": "This is the highest level of cover available.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "666",
+    "category": "Essential Documents",
+    "question": "What does a 'Valid' MOT certificate mean?",
+    "choices": {
+      "A": "The car is safe for the next 12 months",
+      "B": "The car met the required standards on the day of the test",
+      "C": "The car will never break down",
+      "D": "The car is brand new"
+    },
+    "correct": "B",
+    "explanation": "The MOT is a snapshot; parts can fail the very next day.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "667",
+    "category": "Essential Documents",
+    "question": "What happens to your insurance if you don't have a valid MOT?",
+    "choices": {
+      "A": "It remains the same",
+      "B": "It may be invalidated (canceled)",
+      "C": "The price goes down",
+      "D": "It only covers fire"
+    },
+    "correct": "B",
+    "explanation": "Most insurance policies require the car to be roadworthy and have a valid MOT.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "668",
+    "category": "Essential Documents",
+    "question": "How do you know when your MOT is due?",
+    "choices": {
+      "A": "You get a letter from the Queen",
+      "B": "Check the date on your current certificate or use the online 'Check MOT' service",
+      "C": "Your car will beep",
+      "D": "The police will call you"
+    },
+    "correct": "B",
+    "explanation": "It is your responsibility to remember the date.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "669",
+    "category": "Essential Documents",
+    "question": "Who is responsible for the 'Vehicle Excise Duty' (Car Tax)?",
+    "choices": {
+      "A": "The passenger",
+      "B": "The driver/registered keeper",
+      "C": "The local council",
+      "D": "The petrol station"
+    },
+    "correct": "B",
+    "explanation": "Driving without tax can lead to the car being clamped or towed.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "670",
+    "category": "Essential Documents",
+    "question": "What should you do with your V5C when you sell your car privately?",
+    "choices": {
+      "A": "Give the whole document to the buyer",
+      "B": "Send the 'Change of Keeper' part to the DVLA and give the buyer the V5C/2",
+      "C": "Keep it for your records",
+      "D": "Throw it away"
+    },
+    "correct": "B",
+    "explanation": "This ensures the DVLA knows you are no longer responsible for the car.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "671",
+    "category": "Essential Documents",
+    "question": "What is the 'probationary period' for a new driver?",
+    "choices": {
+      "A": "The first 6 months",
+      "B": "The first 12 months",
+      "C": "The first 2 years after passing the test",
+      "D": "Until they turn 21"
+    },
+    "correct": "C",
+    "explanation": "Special rules about penalty points apply during this time.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "672",
+    "category": "Essential Documents",
+    "question": "What is the 'V5C/2'?",
+    "choices": {
+      "A": "The insurance slip",
+      "B": "The green 'New Keeper' supplement",
+      "C": "The MOT pass slip",
+      "D": "A speeding fine"
+    },
+    "correct": "B",
+    "explanation": "It is given to the new owner of a vehicle as temporary proof.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "673",
+    "category": "Essential Documents",
+    "question": "When would you need to produce a 'Valid Insurance Certificate'?",
+    "choices": {
+      "A": "When you have an accident that causes damage or injury",
+      "B": "Every time you get petrol",
+      "C": "When you buy a new air freshener",
+      "D": "When you park in a car park"
+    },
+    "correct": "A",
+    "explanation": "You are legally required to exchange insurance details with other parties.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "674",
+    "category": "Essential Documents",
+    "question": "Can you use a vehicle on the road if it is SORN?",
+    "choices": {
+      "A": "Yes, for one day a week",
+      "B": "No, not under any circumstances",
+      "C": "Yes, if you only drive at night",
+      "D": "Yes, if you are driving to a pre-arranged MOT appointment"
+    },
+    "correct": "D",
+    "explanation": "A vehicle with a Statutory Off-Road Notification (SORN) can only be driven on a public road to a pre-booked MOT appointment"
+  },
+  {
+    "id": "675",
+    "category": "Essential Documents",
+    "question": "What must you do if you change the colour of your car?",
+    "choices": {
+      "A": "Notify the DVLA and update the V5C",
+      "B": "Nothing, it's your car",
+      "C": "Buy new insurance only",
+      "D": "Tell your friends "
+    },
+    "correct": "A",
+    "explanation": "Any major alteration to a vehicle, such as a change of colour, must be updated on the V5C log book and reported to the DVLA."
+  },
+  {
+    "id": "676",
+    "category": "Essential Documents",
+    "question": "Which of these is a requirement for supervising a learner?",
+    "choices": {
+      "A": "The supervisor must have a car of their own",
+      "B": "The supervisor must be at least 21 years old",
+      "C": "The supervisor must be a family member",
+      "D": "The supervisor must have a clean license"
+    },
+    "correct": "B",
+    "explanation": "They must also have held a license for that category for at least 3 years.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "677",
+    "category": "Essential Documents",
+    "question": "What is the penalty for failing to notify the DVLA of a change of address?",
+    "choices": {
+      "A": "A £50 fine",
+      "B": "A fine of up to £1000",
+      "C": "Nothing",
+      "D": "Your license is canceled"
+    },
+    "correct": "B",
+    "explanation": "You must keep your details updated to receive tax reminders and legal notices.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "678",
+    "category": "Essential Documents",
+    "question": "What should you do if you lose your driving license?",
+    "choices": {
+      "A": "Stop driving until you find it",
+      "B": "Apply for a replacement immediately from the DVLA",
+      "C": "Borrow a friend's license",
+      "D": "Wait until it expires"
+    },
+    "correct": "B",
+    "explanation": "You should not drive if you do not have a valid license"
+  },
+  {
+    "id": "679",
+    "category": "Essential Documents",
+    "question": "What is the purpose of Third-Party, Fire and Theft insurance?",
+    "choices": {
+      "A": "It covers your car for everything",
+      "B": "It covers others plus your car if it is stolen or damaged by fire",
+      "C": "It only covers fire",
+      "D": "It is for racing cars only"
+    },
+    "correct": "B",
+    "explanation": "This insurance damage you cause to others, plus the cost of replacing your vehicle if it is stolen or fire-damaged."
+  },
+  {
+    "id": "681",
+    "category": "Essential Documents",
+    "question": "Who is responsible for ensuring a car is properly insured?",
+    "choices": {
+      "A": "The insurance company",
+      "B": "The registered keeper or the driver",
+      "C": "The bank",
+      "D": "The car manufacturer"
+    },
+    "correct": "B",
+    "explanation": "Driving without insurance is a serious offense.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "682",
+    "category": "Essential Documents",
+    "question": "If your car is three years old, how often must it be MOT tested?",
+    "choices": {
+      "A": "Every two years",
+      "B": "Once a year",
+      "C": "Every six months",
+      "D": "Only when it breaks down"
+    },
+    "correct": "B",
+    "explanation": "In the UK, cars must have their first MOT when they are three years old\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "683",
+    "category": "Essential Documents",
+    "question": "What document does an insurance company issue as proof of cover?",
+    "choices": {
+      "A": "The V5C",
+      "B": "The Certificate of Motor Insurance",
+      "C": "The MOT pass sheet",
+      "D": "The Highway Code"
+    },
+    "correct": "B",
+    "explanation": "This is the document the police will ask to see.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "684",
+    "category": "Essential Documents",
+    "question": "What happens if you provide false information to get insurance?",
+    "choices": {
+      "A": "The premium will be cheaper",
+      "B": "Your insurance will be invalid and you could be prosecuted for fraud",
+      "C": "Nothing happens",
+      "D": "The insurance company will thank you"
+    },
+    "correct": "B",
+    "explanation": "Lying about your age"
+  }
+]
