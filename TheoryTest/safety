@@ -1,0 +1,743 @@
+[
+{
+    "id": "115",
+    "category": "Safety and Your Vehicle",
+    "question": "How often should you check your tyre pressures?",
+    "choices": {
+      "A": "Only when you have a puncture",
+      "B": "At least once a week or before a long journey",
+      "C": "Every six months during a service",
+      "D": "Only when the car feels like it is pulling to one side"
+    },
+    "correct": "B",
+    "explanation": "Tyre pressures should be checked when they are cold to get an accurate reading. Regular checks help fuel economy and safety.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "116",
+    "category": "Safety and Your Vehicle",
+    "question": "What is the legal minimum tread depth for car tyres?",
+    "choices": {
+      "A": "1.0 mm",
+      "B": "1.6 mm",
+      "C": "2.0 mm",
+      "D": "2.5 mm"
+    },
+    "correct": "B",
+    "explanation": "The legal limit is 1.6mm across the central three-quarters of the breadth of the tyre and around the entire outer circumference.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "117",
+    "category": "Safety and Your Vehicle",
+    "question": "Where would you find the correct tyre pressure settings for your car?",
+    "choices": {
+      "A": "On the side of the tyre",
+      "B": "In the vehicle handbook",
+      "C": "On the dashboard",
+      "D": "On the MOT certificate"
+    },
+    "correct": "B",
+    "explanation": "The manufacturer's handbook will give you the specific pressures for different loads (e.g. if the car is full of passengers).\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "118",
+    "category": "Safety and Your Vehicle",
+    "question": "What can happen if your tyres are under-inflated?",
+    "choices": {
+      "A": "The car will be faster",
+      "B": "The steering will feel lighter",
+      "C": "Your fuel consumption will increase",
+      "D": "The brakes will last longer"
+    },
+    "correct": "C",
+    "explanation": "Under-inflated tyres increase rolling resistance"
+  },
+  {
+    "id": "119",
+    "category": "Safety and Your Vehicle",
+    "question": "How can you help the environment when you are driving?",
+    "choices": {
+      "A": "By driving in a low gear at all times",
+      "B": "By accelerating as quickly as possible",
+      "C": "By having your vehicle serviced regularly",
+      "D": "By using the air conditioning on every journey"
+    },
+    "correct": "C",
+    "explanation": "A well-maintained engine runs more efficiently and produces fewer harmful emissions.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "120",
+    "category": "Safety and Your Vehicle",
+    "question": "What should you do if your anti-lock brakes (ABS) warning light stays on?",
+    "choices": {
+      "A": "Ignore it if the brakes still feel okay",
+      "B": "Stop and check the brake fluid level",
+      "C": "Have the system checked by a professional immediately",
+      "D": "Drive faster to see if the light goes out"
+    },
+    "correct": "C",
+    "explanation": "An ABS light indicates a fault in the safety system. Your brakes will still work"
+  },
+  {
+    "id": "121",
+    "category": "Safety and Your Vehicle",
+    "question": "What is the main cause of uneven tyre wear?",
+    "choices": {
+      "A": "High-speed driving",
+      "B": "Frequent car washing",
+      "C": "Faulty suspension or incorrect wheel alignment",
+      "D": "Driving in heavy rain"
+    },
+    "correct": "C",
+    "explanation": "If your wheels are not aligned properly"
+  },
+  {
+    "id": "122",
+    "category": "Safety and Your Vehicle",
+    "question": "How can you save fuel while driving?",
+    "choices": {
+      "A": "By leaving the engine running when parked",
+      "B": "By removing a roof rack when it is not in use",
+      "C": "By keeping the windows open at high speeds",
+      "D": "By using a lower gear than necessary"
+    },
+    "correct": "B",
+    "explanation": "Roof racks increase wind resistance (drag). Removing them when not needed makes the car more aerodynamic.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "123",
+    "category": "Safety and Your Vehicle",
+    "question": "What should you check before starting a long journey?",
+    "choices": {
+      "A": "The radio signal strength",
+      "B": "The oil, water and tyre levels",
+      "C": "The car's maximum speed",
+      "D": "The cleanliness of the floor mats"
+    },
+    "correct": "B",
+    "explanation": "Checking oil, water and tyre pressures ensures your vehicle is reliable and safe for a long trip."
+  },
+  {
+    "id": "124",
+    "category": "Safety and Your Vehicle",
+    "question": "What is the purpose of a catalytic converter?",
+    "choices": {
+      "A": "To improve the car's top speed",
+      "B": "To reduce the noise from the exhaust",
+      "C": "To reduce toxic exhaust emissions",
+      "D": "To make the engine easier to start"
+    },
+    "correct": "C",
+    "explanation": "Catalytic converters treat exhaust gases to turn harmful pollutants into less toxic substances.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "125",
+    "category": "Safety and Your Vehicle",
+    "question": "When should you check the oil level in your engine?",
+    "choices": {
+      "A": "While the engine is running and hot",
+      "B": "When the engine is cold and the car is on level ground",
+      "C": "Once a year before the MOT",
+      "D": "Only when the oil warning light comes on"
+    },
+    "correct": "B",
+    "explanation": "Checking on level ground ensures you get an accurate reading on the dipstick.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "126",
+    "category": "Safety and Your Vehicle",
+    "question": "How do you know when your brake fluid is low?",
+    "choices": {
+      "A": "The steering wheel will vibrate",
+      "B": "The footbrake will feel firm and high",
+      "C": "A warning light will appear on the dashboard",
+      "D": "The car will accelerate more slowly"
+    },
+    "correct": "C",
+    "explanation": "Never ignore a brake warning light; low fluid can lead to total brake failure.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "127",
+    "category": "Safety and Your Vehicle",
+    "question": "What can cause your car to pull to one side when you brake?",
+    "choices": {
+      "A": "A flat battery",
+      "B": "Worn out windscreen wipers",
+      "C": "An incorrectly inflated tyre or a brake fault",
+      "D": "A loose exhaust pipe"
+    },
+    "correct": "C",
+    "explanation": "Uneven tyre pressure or a sticking brake caliper can cause the car to veer under braking.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "128",
+    "category": "Safety and Your Vehicle",
+    "question": "What's the best way to dispose of a used vehicle battery?",
+    "choices": {
+      "A": "Leave it in the garden",
+      "B": "Put it in a household dustbin",
+      "C": "Take it to a local authority disposal site or garage",
+      "D": "Bury it in the ground"
+    },
+    "correct": "C",
+    "explanation": "Batteries contain acid and lead; they are hazardous waste and must be recycled properly.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "129",
+    "category": "Safety and Your Vehicle",
+    "question": "Why should you keep your battery topped up with distilled water (if applicable)?",
+    "choices": {
+      "A": "To make it weigh more",
+      "B": "To keep the plates covered and prevent damage",
+      "C": "To help the car start in the summer",
+      "D": "To improve the headlights"
+    },
+    "correct": "B",
+    "explanation": "In older 'unsealed' batteries"
+  },
+  {
+    "id": "130",
+    "category": "Safety and Your Vehicle",
+    "question": "What is 'brake fade'?",
+    "choices": {
+      "A": "When the brakes become more sensitive",
+      "B": "A loss of braking effectiveness caused by overheating",
+      "C": "When the handbrake cable snaps",
+      "D": "When the brake pads are brand new"
+    },
+    "correct": "B",
+    "explanation": "Brake fade often happens on long downhill stretches if you use the brakes too much. Use a lower gear to help slow the car.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "131",
+    "category": "Safety and Your Vehicle",
+    "question": "What does it mean if the steering vibrates at high speeds?",
+    "choices": {
+      "A": "The road surface is bumpy",
+      "B": "The wheels are out of balance",
+      "C": "The fuel level is low",
+      "D": "The tyres are brand new"
+    },
+    "correct": "B",
+    "explanation": "Unbalanced wheels cause a vibration (shimmy) that is usually felt through the steering wheel.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "132",
+    "category": "Safety and Your Vehicle",
+    "question": "How should you adjust your head restraint?",
+    "choices": {
+      "A": "So that it is as low as possible",
+      "B": "So the rigid part is at least as high as your eyes or top of ears",
+      "C": "So it touches the back of your neck",
+      "D": "It doesn't matter as long as it's there"
+    },
+    "correct": "B",
+    "explanation": "A properly adjusted head restraint reduces the risk of whiplash in a rear-end collision.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "133",
+    "category": "Safety and Your Vehicle",
+    "question": "Who is responsible for making sure a child under 14 wears a seatbelt?",
+    "choices": {
+      "A": "The child",
+      "B": "The child's parents",
+      "C": "The driver of the car",
+      "D": "No one"
+    },
+    "correct": "C",
+    "explanation": "The driver is legally responsible for ensuring children under 14 are correctly restrained.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "134",
+    "category": "Safety and Your Vehicle",
+    "question": "When are you allowed to use your hazard warning lights?",
+    "choices": {
+      "A": "When you are parked on a double yellow line",
+      "B": "When your vehicle has broken down and is causing an obstruction",
+      "C": "To warn others you are stopping to pick up a passenger",
+      "D": "When you are driving in a pedestrian zone"
+    },
+    "correct": "B",
+    "explanation": "Hazard lights are only for genuine breakdowns or to warn of a hazard ahead on a motorway.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "135",
+    "category": "Safety and Your Vehicle",
+    "question": "What should you do if your engine overheats?",
+    "choices": {
+      "A": "Speed up to get more air into the engine",
+      "B": "Turn off the air conditioning and pull over safely",
+      "C": "Keep driving until you reach a garage",
+      "D": "Pour cold water over the hot engine immediately"
+    },
+    "correct": "B",
+    "explanation": "Pull over and let the engine cool naturally. Opening a hot radiator cap can cause serious steam burns.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "136",
+    "category": "Safety and Your Vehicle",
+    "question": "What does the 'E' in the 'FORCES' check stand for?",
+    "choices": {
+      "A": "Electricity",
+      "B": "Engine",
+      "C": "Electronics",
+      "D": "Exhaust"
+    },
+    "correct": "D",
+    "explanation": "The FORCES check stands for Fuel"
+  },
+  {
+    "id": "137",
+    "category": "Safety and Your Vehicle",
+    "question": "How can you tell if your power steering is working?",
+    "choices": {
+      "A": "The steering wheel will be very hard to turn",
+      "B": "The steering should feel light and easy as you move off",
+      "C": "The car will make a loud whistling noise",
+      "D": "The steering wheel will vibrate"
+    },
+    "correct": "B",
+    "explanation": "If the steering feels heavy"
+  },
+  {
+    "id": "138",
+    "category": "Safety and Your Vehicle",
+    "question": "What is the main danger of a leaking exhaust system?",
+    "choices": {
+      "A": "It will make the car go slower",
+      "B": "You will use more fuel",
+      "C": "Harmful gases could enter the car cabin",
+      "D": "It will damage the car's paintwork"
+    },
+    "correct": "C",
+    "explanation": "Exhaust fumes contain carbon monoxide"
+  },
+  {
+    "id": "139",
+    "category": "Safety and Your Vehicle",
+    "question": "When should you use your rear fog lights?",
+    "choices": {
+      "A": "Whenever it is raining",
+      "B": "Only when visibility is less than 100 metres",
+      "C": "When you are driving on a motorway at night",
+      "D": "To warn tailgaters to stay back"
+    },
+    "correct": "B",
+    "explanation": "Fog lights are very bright and can dazzle other drivers. Switch them off as soon as visibility improves.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "140",
+    "category": "Safety and Your Vehicle",
+    "question": "What is the correct way to check your indicators are working?",
+    "choices": {
+      "A": "Ask someone to watch as you operate them",
+      "B": "Listen for the clicking sound only",
+      "C": "Assume they work if the dashboard light flashes",
+      "D": "Check the reflectiveness in a shop window"
+    },
+    "correct": "A",
+    "explanation": "A physical check (either by walking around or asking someone) is the only way to be 100% sure.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "141",
+    "category": "Safety and Your Vehicle",
+    "question": "What could happen if you overfill your engine oil?",
+    "choices": {
+      "A": "The engine will run faster",
+      "B": "It could cause oil leaks and damage engine seals",
+      "C": "The car will use less fuel",
+      "D": "The engine will stay cooler"
+    },
+    "correct": "B",
+    "explanation": "Excess oil creates too much pressure"
+  },
+  {
+    "id": "142",
+    "category": "Safety and Your Vehicle",
+    "question": "How can you reduce the risk of your car being stolen?",
+    "choices": {
+      "A": "Leave the keys in the ignition when paying for fuel",
+      "B": "Always lock the car and remove the keys even for a short time",
+      "C": "Leave valuables on the passenger seat",
+      "D": "Park in dark, unlit side streets"
+    },
+    "correct": "B",
+    "explanation": "To prevent theft, you should never leave your keys in the car.  Even for a few seconds."
+  },
+  {
+    "id": "143",
+    "category": "Safety and Your Vehicle",
+    "question": "What is 'Eco-safe' driving?",
+    "choices": {
+      "A": "Driving as fast as possible to save time",
+      "B": "Driving in a way that is efficient and considerate",
+      "C": "Driving only on electric power",
+      "D": "Driving with the engine turned off downhill"
+    },
+    "correct": "B",
+    "explanation": "Eco-safe driving saves fuel"
+  },
+  {
+    "id": "144",
+    "category": "Safety and Your Vehicle",
+    "question": "Why should you check your tyre walls for bulges or cracks?",
+    "choices": {
+      "A": "They make the car look old",
+      "B": "They can cause a dangerous high-speed blowout",
+      "C": "They reduce the car's top speed",
+      "D": "They are only a problem during the MOT"
+    },
+    "correct": "B",
+    "explanation": "Damage to the side of a tyre is a sign of structural failure and is extremely dangerous.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "145",
+    "category": "Safety and Your Vehicle",
+    "question": "What does it mean if your brake pedal feels 'spongy'?",
+    "choices": {
+      "A": "The brakes are brand new",
+      "B": "There may be air in the hydraulic system",
+      "C": "The tyres are over-inflated",
+      "D": "The handbrake is on"
+    },
+    "correct": "B",
+    "explanation": "Spongy brakes are a serious safety issue and usually mean there is a leak or air in the brake lines.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "146",
+    "category": "Safety and Your Vehicle",
+    "question": "What should you do before checking your coolant level?",
+    "choices": {
+      "A": "Ensure the engine is running",
+      "B": "Wait for the engine to cool down",
+      "C": "Turn the heater on to maximum",
+      "D": "Drive the car for at least 10 miles"
+    },
+    "correct": "B",
+    "explanation": "Coolant is under pressure when hot. Opening the cap on a hot engine can cause an explosion of boiling liquid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "147",
+    "category": "Safety and Your Vehicle",
+    "question": "When must you use your parking lights?",
+    "choices": {
+      "A": "When parked on a road with a speed limit of 40mph or more at night",
+      "B": "Whenever you park in a car park",
+      "C": "When you are parked on your own driveway",
+      "D": "When you are waiting at a level crossing"
+    },
+    "correct": "A",
+    "explanation": "In higher speed limit areas"
+  },
+  {
+    "id": "148",
+    "category": "Safety and Your Vehicle",
+    "question": "What is the most common cause of a car's battery going flat?",
+    "choices": {
+      "A": "Driving too much at night",
+      "B": "Leaving the lights on when the car is parked",
+      "C": "Using the windscreen wipers in heavy rain",
+      "D": "Having the radio on while driving"
+    },
+    "correct": "B",
+    "explanation": "Leaving electrical items on without the engine running to charge the battery will drain it quickly.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "149",
+    "category": "Safety and Your Vehicle",
+    "question": "How can you tell if your shock absorbers are worn?",
+    "choices": {
+      "A": "The car will stop more quickly",
+      "B": "The car will bounce significantly when pushed down and released",
+      "C": "The steering will feel very heavy",
+      "D": "The tyres will wear evenly"
+    },
+    "correct": "B",
+    "explanation": "Worn shock absorbers don't dampen the spring movement"
+  },
+  {
+    "id": "150",
+    "category": "Safety and Your Vehicle",
+    "question": "Why is it important to keep your windows clean?",
+    "choices": {
+      "A": "To make the car look shiny",
+      "B": "To ensure you have an unobstructed view of the road",
+      "C": "To prevent the car from rusting",
+      "D": "To help the windscreen wipers last longer"
+    },
+    "correct": "B",
+    "explanation": "Dirty windows cause glare and can hide small hazards like cyclists or pedestrians.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "151",
+    "category": "Safety and Your Vehicle",
+    "question": "What should you do if a dashboard warning light comes on while driving?",
+    "choices": {
+      "A": "Wait until you get home to check it",
+      "B": "Stop as soon as it is safe and consult the vehicle handbook",
+      "C": "Ignore it if the car still feels fine",
+      "D": "Cover it with a piece of tape"
+    },
+    "correct": "B",
+    "explanation": "Warning lights (especially red ones) usually require immediate attention to prevent damage or accidents.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "152",
+    "category": "Safety and Your Vehicle",
+    "question": "How can you improve the security of your car at night?",
+    "choices": {
+      "A": "Leave the windows slightly open for ventilation",
+      "B": "Park in a well-lit area",
+      "C": "Leave your logbook in the glovebox",
+      "D": "Leave a spare key under the wheel arch"
+    },
+    "correct": "B",
+    "explanation": "Lighting is a natural deterrent for thieves.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "153",
+    "category": "Safety and Your Vehicle",
+    "question": "What happens if you use the 'kick-down' in an automatic car?",
+    "choices": {
+      "A": "The car slows down quickly",
+      "B": "The car stays in a higher gear",
+      "C": "The car selects a lower gear for faster acceleration",
+      "D": "The engine turns off"
+    },
+    "correct": "C",
+    "explanation": "Kick-down is used for quick bursts of speed"
+  },
+  {
+    "id": "154",
+    "category": "Safety and Your Vehicle",
+    "question": "When should you use your horn?",
+    "choices": {
+      "A": "To let a friend know you have arrived",
+      "B": "To warn other road users of your presence",
+      "C": "To show your annoyance at a slow driver",
+      "D": "To signal that you have right of way"
+    },
+    "correct": "B",
+    "explanation": "The horn is only for warning of danger or making others aware you are there.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "155",
+    "category": "Safety and Your Vehicle",
+    "question": "What should you do if your car starts to 'aquaplane' in heavy rain?",
+    "choices": {
+      "A": "Brake hard immediately",
+      "B": "Ease off the accelerator and do not steer sharply",
+      "C": "Speed up to get through the water",
+      "D": "Turn the steering wheel from side to side"
+    },
+    "correct": "B",
+    "explanation": "Aquaplaning is when tyres lift off the road on a thin film of water. Sudden braking or steering will cause a skid.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "156",
+    "category": "Safety and Your Vehicle",
+    "question": "How much can you be fined for having a tyre with insufficient tread?",
+    "choices": {
+      "A": "Up to £100",
+      "B": "Up to £1000 per tyre",
+      "C": "Up to £2500 per tyre and 3 points",
+      "D": "Nothing if it's a spare tyre"
+    },
+    "correct": "C",
+    "explanation": "Tyre safety is taken very seriously. You can be fined and get points for each illegal tyre on the car.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "157",
+    "category": "Safety and Your Vehicle",
+    "question": "What is the best way to clear ice from your windscreen?",
+    "choices": {
+      "A": "Pour boiling water over it",
+      "B": "Use a proper scraper or de-icer spray",
+      "C": "Wait for the sun to melt it",
+      "D": "Use a metal spatula from the kitchen"
+    },
+    "correct": "B",
+    "explanation": "Boiling water can crack the glass. Always use appropriate tools to ensure a clear view.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "158",
+    "category": "Safety and Your Vehicle",
+    "question": "Why should you keep your registration plates clean?",
+    "choices": {
+      "A": "To avoid a fine and ensure the car is identifiable",
+      "B": "To make the car look faster",
+      "C": "To help the engine run better",
+      "D": "To prevent them from falling off"
+    },
+    "correct": "A",
+    "explanation": "It is a legal requirement that your number plates are clearly visible at all times.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "159",
+    "category": "Safety and Your Vehicle",
+    "question": "What should you check after driving through deep water?",
+    "choices": {
+      "A": "Your fuel level",
+      "B": "Your brakes",
+      "C": "Your mirrors",
+      "D": "Your tyre pressure"
+    },
+    "correct": "B",
+    "explanation": "Water can temporarily lubricate the brakes. Gently tap them at low speed to dry them out.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "160",
+    "category": "Safety and Your Vehicle",
+    "question": "What should you do if your car's steering feels heavy?",
+    "choices": {
+      "A": "Check the tyre pressures and power steering fluid",
+      "B": "Change the oil",
+      "C": "Replace the battery",
+      "D": "Refill the screenwash"
+    },
+    "correct": "A",
+    "explanation": "Heavy steering is usually caused by low tyre pressure or a fault in the power steering system.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "161",
+    "category": "Safety and Your Vehicle",
+    "question": "How often should you check the fluid in your battery?",
+    "choices": {
+      "A": "Every day",
+      "B": "Every week",
+      "C": "Only if it is a low-maintenance 'unsealed' type",
+      "D": "Every time you wash the car"
+    },
+    "correct": "C",
+    "explanation": "Most modern batteries are sealed and don't need topping up"
+  },
+  {
+    "id": "162",
+    "category": "Safety and Your Vehicle",
+    "question": "Why should you avoid using the 'handbrake turn' technique?",
+    "choices": {
+      "A": "It makes the car stop too fast",
+      "B": "It causes unnecessary wear and can lead to loss of control",
+      "C": "It is the best way to park",
+      "D": "It saves fuel"
+    },
+    "correct": "B",
+    "explanation": "The handbrake is a parking brake"
+  },
+  {
+    "id": "163",
+    "category": "Safety and Your Vehicle",
+    "question": "When should you replace your windscreen wipers?",
+    "choices": {
+      "A": "When they start to squeak",
+      "B": "When they no longer clear the screen effectively",
+      "C": "Once every five years",
+      "D": "Only after the car fails its MOT"
+    },
+    "correct": "B",
+    "explanation": "Worn wipers cause streaks and smears"
+  },
+  {
+    "id": "164",
+    "category": "Safety and Your Vehicle",
+    "question": "What is the purpose of the 'breakaway cable' on a trailer?",
+    "choices": {
+      "A": "To make the trailer easier to park",
+      "B": "To apply the trailer's brakes if it becomes detached from the car",
+      "C": "To help with the electrical connection",
+      "D": "To stop the trailer from swaying"
+    },
+    "correct": "B",
+    "explanation": "This is a vital safety feature for anyone towing a trailer or caravan.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "165",
+    "category": "Safety and Your Vehicle",
+    "question": "Where is the safest place to fit a rear-facing baby seat?",
+    "choices": {
+      "A": "In the front seat with the airbag active",
+      "B": "In the back seat",
+      "C": "In the front seat with the airbag disabled",
+      "D": "In the boot"
+    },
+    "correct": "B",
+    "explanation": "The back seat is generally the safest place for children. If using the front"
+  },
+  {
+    "id": "166",
+    "category": "Safety and Your Vehicle",
+    "question": "What should you do if you smell petrol while driving?",
+    "choices": {
+      "A": "Keep driving to the next garage",
+      "B": "Stop as soon as it is safe and investigate the leak",
+      "C": "Turn the radio up",
+      "D": "Open all the windows and continue"
+    },
+    "correct": "B",
+    "explanation": "A petrol smell indicates a leak"
+  },
+  {
+    "id": "167",
+    "category": "Safety and Your Vehicle",
+    "question": "How can you tell if your exhaust is leaking?",
+    "choices": {
+      "A": "The car will be much quieter",
+      "B": "You will hear a loud roaring or blowing noise from under the car",
+      "C": "The car will use less fuel",
+      "D": "The dashboard will show a 'Fuel Low' light"
+    },
+    "correct": "B",
+    "explanation": "Exhaust leaks are usually easy to hear. They must be fixed to prevent poisonous gases from entering the car.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "168",
+    "category": "Safety and Your Vehicle",
+    "question": "Why should you check your tyre pressures when they are cold?",
+    "choices": {
+      "A": "Because the air expands when hot,  giving a false high reading",
+      "B": "Because tyres are easier to touch when cold",
+      "C": "Because it is better for the pump",
+      "D": "Because the law says so"
+    },
+    "correct": "A",
+    "explanation": "Driving heats the air inside the tyres, causing it to expand.  Checking when hot gives an inaccurate, higher pressure."
+  },
+  {
+    "id": "169",
+    "category": "Safety and Your Vehicle",
+    "question": "What can cause your engine to use more oil than usual?",
+    "choices": {
+      "A": "Driving at high speeds",
+      "B": "Worn engine components or a leak",
+      "C": "Using the air conditioning",
+      "D": "Having too many passengers"
+    },
+    "correct": "B",
+    "explanation": "Excessive oil consumption is a sign that the engine needs mechanical attention.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "170",
+    "category": "Safety and Your Vehicle",
+    "question": "How can you tell if your headlights are properly aligned?",
+    "choices": {
+      "A": "The road ahead will be clearly lit without dazzling others",
+      "B": "One light will be much brighter than the other",
+      "C": "The car will use more electricity",
+      "D": "The dashboard will show a blue light"
+    },
+    "correct": "A",
+    "explanation": "Incorrectly aligned lights are a common MOT failure and can be very dangerous for oncoming drivers.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "171",
+    "category": "Safety and Your Vehicle",
+    "question": "What is the benefit of using 'winter tyres'?",
+    "choices": {
+      "A": "They are quieter on dry roads",
+      "B": "They provide better grip in temperatures below 7 degrees",
+      "C": "They allow you to drive faster in the snow",
+      "D": "They never need to be inflated"
+    },
+    "correct": "B",
+    "explanation": "Winter tyres are made of a softer compound that stays flexible in cold weather.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  }
+]
