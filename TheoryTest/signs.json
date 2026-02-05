@@ -1015,15 +1015,15 @@
   {
     "id": "592",
     "category": "Road and Traffic Signs",
-    "question": "A sign shows a red triangle with a 'crossroads' symbol. What does it mean?",
+    "question": "A sign shows a red triangle with a 'unequal crossroads' symbol. What does it mean?",
     "choices": {
-      "A": "A hospital",
-      "B": "A crossroads ahead",
-      "C": "A church",
-      "D": "A first aid post"
+      "A": "A crossroads giveway to left and ahead",
+      "B": "A crossroads traffic turning right has priority",
+      "C": "A crossroad priority to crossing traffic",
+      "D": "Car parks off a right turn ahead"
     },
     "correct": "B",
-    "explanation": "Approach with caution and be ready to give way or stop.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "Approach with caution, tye bold line represents the main road\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "593",
