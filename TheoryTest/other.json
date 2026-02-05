@@ -1,0 +1,742 @@
+[  {
+    "id": "343",
+    "category": "Other Types of Vehicle",
+    "question": "Why should you stay well back when following a large vehicle?",
+    "choices": {
+      "A": "To help your fuel consumption",
+      "B": "To give yourself a better view of the road ahead",
+      "C": "To stop the driver from getting angry",
+      "D": "To stay in the vehicle's slipstream"
+    },
+    "correct": "B",
+    "explanation": "If you follow a large vehicle too closely"
+  },
+  {
+    "id": "344",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if you are following a large vehicle that is signaling to turn left but moving to the right?",
+    "choices": {
+      "A": "Overtake it on the left",
+      "B": "Stay well back and give it room",
+      "C": "Sound your horn to warn the driver",
+      "D": "Overtake it on the right"
+    },
+    "correct": "B",
+    "explanation": "Large vehicles often need to swing out in the opposite direction to make a tight turn.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "345",
+    "category": "Other Types of Vehicle",
+    "question": "Which vehicle is most likely to be affected by strong side winds?",
+    "choices": {
+      "A": "A bicycle",
+      "B": "A high-sided vehicle",
+      "C": "A motorcycle",
+      "D": "All of the above"
+    },
+    "correct": "D",
+    "explanation": "All these vehicles are light or have a large surface area that can be pushed by a gust of wind.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "346",
+    "category": "Other Types of Vehicle",
+    "question": "What color are the flashing lights on a slow-moving maintenance vehicle?",
+    "choices": {
+      "A": "Blue",
+      "B": "Green",
+      "C": "Amber",
+      "D": "Red"
+    },
+    "correct": "C",
+    "explanation": "Amber flashing lights warn you of a slow-moving or stationary hazard.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "347",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do when you see a bus signaling to pull away from a bus stop?",
+    "choices": {
+      "A": "Speed up to get past it",
+      "B": "Sound your horn and continue",
+      "C": "Give way if it is safe to do so",
+      "D": "Flash your lights to show you are there"
+    },
+    "correct": "C",
+    "explanation": "The Highway Code tells you to give priority to buses when they are pulling away"
+  },
+  {
+    "id": "348",
+    "category": "Other Types of Vehicle",
+    "question": "Why is it dangerous to overtake a lorry on a wet road?",
+    "choices": {
+      "A": "The lorry might speed up",
+      "B": "The spray from the lorry's tyres will make it hard to see",
+      "C": "The lorry will be very loud",
+      "D": "The road is wider there"
+    },
+    "correct": "B",
+    "explanation": "Spray can completely obscure your vision. Ensure you have a clear view before starting to overtake.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "349",
+    "category": "Other Types of Vehicle",
+    "question": "What does a 'tram' signal look like?",
+    "choices": {
+      "A": "A red light",
+      "B": "A white light on a black background",
+      "C": "A green arrow",
+      "D": "A flashing amber light"
+    },
+    "correct": "B",
+    "explanation": "Trams have their own special light signals (often white bars or dots) which differ from standard traffic lights.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "350",
+    "category": "Other Types of Vehicle",
+    "question": "How should you treat a vehicle with a green flashing light?",
+    "choices": {
+      "A": "It is a police car",
+      "B": "It is a doctor on an emergency call",
+      "C": "It is a slow-moving tractor",
+      "D": "It is a breakdown truck"
+    },
+    "correct": "B",
+    "explanation": "Give way to doctors on emergency calls if you can do so safely.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "351",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if you are following a lorry with a 'Long Vehicle' sign that is approaching a mini-roundabout?",
+    "choices": {
+      "A": "Overtake it immediately",
+      "B": "Stay back and give it room to maneuver",
+      "C": "Sound your horn",
+      "D": "Drive as close as possible"
+    },
+    "correct": "B",
+    "explanation": "Long vehicles may need to use the whole width of the roundabout to get around.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "352",
+    "category": "Other Types of Vehicle",
+    "question": "Why are 'trams' particularly dangerous for cyclists?",
+    "choices": {
+      "A": "They are very fast",
+      "B": "The tracks can catch the cyclist's wheels",
+      "C": "They have no brakes",
+      "D": "They only run at night"
+    },
+    "correct": "B",
+    "explanation": "Cyclists must cross tracks at a wide angle to avoid getting stuck in the grooves.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "353",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if an emergency vehicle with blue flashing lights is behind you?",
+    "choices": {
+      "A": "Brake hard immediately",
+      "B": "Pull over as soon as it is safe to do so",
+      "C": "Speed up to get out of the way",
+      "D": "Ignore it until it turns a corner"
+    },
+    "correct": "B",
+    "explanation": "Help the emergency vehicle pass"
+  },
+  {
+    "id": "354",
+    "category": "Other Types of Vehicle",
+    "question": "Why should you be extra careful when overtaking a horse-drawn vehicle?",
+    "choices": {
+      "A": "The driver might be asleep",
+      "B": "The horse may be easily spooked by the noise of your engine",
+      "C": "The vehicle is wider than a car",
+      "D": "It has no lights"
+    },
+    "correct": "B",
+    "explanation": "Pass very slowly and give plenty of room to avoid frightening the animal.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "355",
+    "category": "Other Types of Vehicle",
+    "question": "When you are following a large vehicle,  why is it important to see its mirrors?",
+    "choices": {
+      "A": "So you can see what the driver looks like",
+      "B": "If you can see the mirrors, the driver can see you",
+      "C": "To check if the mirrors are clean",
+      "D": "To see the traffic behind the lorry"
+    },
+    "correct": "B",
+    "explanation": "Large vehicles have big blind spots.  If you cannot see the driver’s mirrors, they almost certainly can’t see you."
+  },
+  {
+    "id": "356",
+    "category": "Other Types of Vehicle",
+    "question": "What is the maximum speed limit for a powered wheelchair or mobility scooter on the road?",
+    "choices": {
+      "A": "4 mph",
+      "B": "8 mph",
+      "C": "12 mph",
+      "D": "15 mph"
+    },
+    "correct": "B",
+    "explanation": "These vehicles are slow. Treat them with patience.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "357",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do when a bus is at a stop and children are getting off?",
+    "choices": {
+      "A": "Sound your horn",
+      "B": "Drive past as fast as possible",
+      "C": "Be prepared for children to run across the road",
+      "D": "Stay 50 metres back"
+    },
+    "correct": "C",
+    "explanation": "Children often cross the road without looking immediately after leaving a bus.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "358",
+    "category": "Other Types of Vehicle",
+    "question": "You are on a dual carriageway. A large vehicle pulls out to overtake. What should you do?",
+    "choices": {
+      "A": "Sound your horn and stay close",
+      "B": "Ease off the accelerator and let it pull out",
+      "C": "Flash your lights to show your annoyance",
+      "D": "Speed up to block it"
+    },
+    "correct": "B",
+    "explanation": "Large vehicles take longer to accelerate. Be patient.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "359",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if you see a 'Trams' sign?",
+    "choices": {
+      "A": "Turn your radio off",
+      "B": "Watch out for tram tracks and the silent approach of trams",
+      "C": "Speed up to get ahead of them",
+      "D": "Drive on the tracks to save space"
+    },
+    "correct": "B",
+    "explanation": "Trams are very quiet and cannot steer out of your way.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "360",
+    "category": "Other Types of Vehicle",
+    "question": "What does it mean if a lorry is flashing its right-hand indicator but staying in the left lane of a roundabout?",
+    "choices": {
+      "A": "The indicator is faulty",
+      "B": "The lorry is intending to turn right and needs the extra space",
+      "C": "The driver is confused",
+      "D": "The lorry is about to stop"
+    },
+    "correct": "B",
+    "explanation": "Long vehicles must 'sweep' wide to avoid the rear wheels clipping the kerb.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "361",
+    "category": "Other Types of Vehicle",
+    "question": "Why should you avoid 'undertaking' (passing on the left) a large vehicle?",
+    "choices": {
+      "A": "It is faster",
+      "B": "The driver has a massive blind spot on the left and may not see you",
+      "C": "It uses more fuel",
+      "D": "It is only allowed on Sundays"
+    },
+    "correct": "B",
+    "explanation": "Passing on the left of a lorry is extremely dangerous near junctions.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "362",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if a tractor is pulling a long queue of traffic?",
+    "choices": {
+      "A": "Sound your horn continuously",
+      "B": "Wait for a safe place to overtake and be patient",
+      "C": "Overtake on a blind bend",
+      "D": "Tailgate the tractor"
+    },
+    "correct": "B",
+    "explanation": "Tractors are slow but vital. Only overtake when it is safe and legal to do so.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "363",
+    "category": "Other Types of Vehicle",
+    "question": "How can you help a large vehicle that is trying to turn into a narrow side road?",
+    "choices": {
+      "A": "Speed up to get past",
+      "B": "Stop and wait to give them the room they need",
+      "C": "Sound your horn",
+      "D": "Drive onto the pavement"
+    },
+    "correct": "B",
+    "explanation": "Give them the space they need to complete the maneuver.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "364",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if you see a vehicle with blue flashing lights at a junction?",
+    "choices": {
+      "A": "Pull out quickly to get ahead",
+      "B": "Wait and allow the vehicle to pass",
+      "C": "Sound your horn",
+      "D": "Ignore it if your light is green"
+    },
+    "correct": "B",
+    "explanation": "Even if you have the right of way"
+  },
+  {
+    "id": "365",
+    "category": "Other Types of Vehicle",
+    "question": "What is a common hazard when driving behind a moped?",
+    "choices": {
+      "A": "They are very loud",
+      "B": "They may be wobbly or slow to accelerate",
+      "C": "They are only allowed on motorways",
+      "D": "They don't have indicators"
+    },
+    "correct": "B",
+    "explanation": "Mopeds are light and easily affected by wind or road surfaces.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "366",
+    "category": "Other Types of Vehicle",
+    "question": "Why should you give way to a funeral procession?",
+    "choices": {
+      "A": "Out of respect and because they often travel as a group",
+      "B": "Because it is a legal requirement",
+      "C": "Because the cars are very fast",
+      "D": "Because they have special lights"
+    },
+    "correct": "A",
+    "explanation": "It is polite and helps the procession stay together.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "367",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if a large vehicle's spray is making it hard to see?",
+    "choices": {
+      "A": "Speed up to get past it",
+      "B": "Turn your wipers to the fastest setting and drop back",
+      "C": "Turn your lights off",
+      "D": "Follow the lorry's tyre tracks"
+    },
+    "correct": "B",
+    "explanation": "Dropping back increases the distance between you and the spray source.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "368",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do when you see a vehicle with a flashing amber light on a dual carriageway?",
+    "choices": {
+      "A": "Speed up",
+      "B": "Be prepared to slow down as it may be a slow-moving vehicle",
+      "C": "Ignore it",
+      "D": "Turn your hazard lights on"
+    },
+    "correct": "B",
+    "explanation": "Maintenance or recovery vehicles use amber lights for safety.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "369",
+    "category": "Other Types of Vehicle",
+    "question": "How does a tram driver warn other road users of their presence?",
+    "choices": {
+      "A": "By flashing their lights",
+      "B": "By ringing a bell or 'gong'",
+      "C": "By shouting",
+      "D": "By using a loud horn"
+    },
+    "correct": "B",
+    "explanation": "Listen for the distinctive tram bell in city centers.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "370",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if you are following a lorry on a winding road?",
+    "choices": {
+      "A": "Overtake on the next bend",
+      "B": "Stay back so you can see the road ahead clearly",
+      "C": "Tailgate to stay out of the wind",
+      "D": "Flash your lights to tell them to speed up"
+    },
+    "correct": "B",
+    "explanation": "Keep distance to check for safe overtaking opportunities.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "371",
+    "category": "Other Types of Vehicle",
+    "question": "Which of these shouldn't use a motorway?",
+    "choices": {
+      "A": "Double-decker buses",
+      "B": "Cars towing a trailer",
+      "C": "Powered wheelchairs",
+      "D": "Motorcycles over 125cc"
+    },
+    "correct": "C",
+    "explanation": "Powered wheelchairs and mobility scooters are not permitted on motorways.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "372",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do as you approach a tram at a tram stop?",
+    "choices": {
+      "A": "Speed up to pass before passengers get off",
+      "B": "Watch for passengers crossing between the tram and the kerb",
+      "C": "Sound your horn to warn passengers",
+      "D": "Drive as close as possible to the tram"
+    },
+    "correct": "B",
+    "explanation": "Passengers may step directly into the road when getting off a tram.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "373",
+    "category": "Other Types of Vehicle",
+    "question": "You are following a large vehicle as it approaches a crossroads. It signals to turn left but moves out to the right. What should you do?",
+    "choices": {
+      "A": "Overtake it on the left",
+      "B": "Stay well back and wait for it to turn",
+      "C": "Sound your horn",
+      "D": "Overtake on the right"
+    },
+    "correct": "B",
+    "explanation": "Large vehicles need space to turn. Do not try to move into the gap on the left.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "374",
+    "category": "Other Types of Vehicle",
+    "question": "What does a flashing amber light on a vehicle mean?",
+    "choices": {
+      "A": "It is an emergency doctor",
+      "B": "It is a slow-moving vehicle",
+      "C": "It is a breakdown recovery truck",
+      "D": "It is a police car in a hurry"
+    },
+    "correct": "B",
+    "explanation": "Maintenance vehicles or tractors use amber lights to warn of their slow speed.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "375",
+    "category": "Other Types of Vehicle",
+    "question": "Why is it difficult to see a motorcyclist at a junction?",
+    "choices": {
+      "A": "They are faster than cars",
+      "B": "They are easily hidden by other vehicles or the car's door pillars",
+      "C": "They don't use lights",
+      "D": "They always wear camouflage"
+    },
+    "correct": "B",
+    "explanation": "Motorcycles have a narrow profile"
+  },
+  {
+    "id": "376",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do when you are being overtaken by a large vehicle?",
+    "choices": {
+      "A": "Speed up to make it harder",
+      "B": "Maintain your speed or slow down slightly to help it pass",
+      "C": "Flash your lights at the driver",
+      "D": "Change lanes"
+    },
+    "correct": "B",
+    "explanation": "Cooperation makes the road safer for everyone.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "377",
+    "category": "Other Types of Vehicle",
+    "question": "Why should you keep a larger gap when following a large vehicle in the rain?",
+    "choices": {
+      "A": "The lorry is slower",
+      "B": "The spray makes it hard to see ahead",
+      "C": "The lorry will stop faster",
+      "D": "The road is narrower"
+    },
+    "correct": "B",
+    "explanation": "Visibility is the primary concern when following large vehicles in the wet.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "378",
+    "category": "Other Types of Vehicle",
+    "question": "A bus is at a bus stop ahead of you. What should you be prepared for?",
+    "choices": {
+      "A": "The bus to reverse",
+      "B": "The bus to stay there for an hour",
+      "C": "Pedestrians to cross the road in front of the bus",
+      "D": "The bus to explode"
+    },
+    "correct": "C",
+    "explanation": "Always anticipate pedestrians emerging from behind or in front of a stationary bus.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "379",
+    "category": "Other Types of Vehicle",
+    "question": "How should you pass a horse and rider on a country road?",
+    "choices": {
+      "A": "Sound your horn to let them know you are there",
+      "B": "Pass wide and very slowly",
+      "C": "Rev your engine",
+      "D": "Overtake on a bend"
+    },
+    "correct": "B",
+    "explanation": "Horses can be spooked by noise and speed.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "380",
+    "category": "Other Types of Vehicle",
+    "question": "What color are the flashing lights on an emergency doctor's car?",
+    "choices": {
+      "A": "Blue",
+      "B": "Amber",
+      "C": "Green",
+      "D": "Red"
+    },
+    "correct": "C",
+    "explanation": "Green flashing lights identify a doctor on an emergency call.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "381",
+    "category": "Other Types of Vehicle",
+    "question": "What is a common feature of a 'Smart Motorway'?",
+    "choices": {
+      "A": "No speed limits",
+      "B": "The use of the hard shoulder as a running lane at busy times",
+      "C": "No lorries allowed",
+      "D": "Free petrol"
+    },
+    "correct": "B",
+    "explanation": "Smart motorways manage traffic flow using the hard shoulder and variable speed limits.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "382",
+    "category": "Other Types of Vehicle",
+    "question": "Why should you check your near-side mirror before turning left?",
+    "choices": {
+      "A": "To check for overtaking cars",
+      "B": "To check for cyclists or mopeds on your left",
+      "C": "To see the kerb",
+      "D": "To check the fuel"
+    },
+    "correct": "B",
+    "explanation": "Always ensure no smaller vehicles are in the gap between you and the kerb.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "383",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if an ambulance with sirens on is behind you?",
+    "choices": {
+      "A": "Stop immediately",
+      "B": "Pull over safely as soon as possible",
+      "C": "Speed up to the speed limit",
+      "D": "Ignore it"
+    },
+    "correct": "B",
+    "explanation": "Move out of the way safely but do not break the law (like jumping a red light) to do so.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "384",
+    "category": "Other Types of Vehicle",
+    "question": "What's the main hazard when a large vehicle is turning right?",
+    "choices": {
+      "A": "It will speed up",
+      "B": "It may need to swing left before turning right",
+      "C": "It will turn its lights off",
+      "D": "It will reverse"
+    },
+    "correct": "B",
+    "explanation": "Give the driver plenty of room to maneuver.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "385",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if a driver is acting aggressively behind you?",
+    "choices": {
+      "A": "Brake hard",
+      "B": "Stay calm and allow them to overtake",
+      "C": "Shout at them",
+      "D": "Speed up"
+    },
+    "correct": "B",
+    "explanation": "Do not engage with road rage.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "386",
+    "category": "Other Types of Vehicle",
+    "question": "How can you help a bus driver that is trying to pull out?",
+    "choices": {
+      "A": "Speed up to get past",
+      "B": "Slow down and give way if it is safe",
+      "C": "Sound your horn",
+      "D": "Flash your lights repeatedly"
+    },
+    "correct": "B",
+    "explanation": "Buses have a difficult job in traffic; helping them move keeps the city flowing.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "387",
+    "category": "Other Types of Vehicle",
+    "question": "What does a 'Long Vehicle' sign on the back of a lorry mean?",
+    "choices": {
+      "A": "It is carrying a lot of weight",
+      "B": "It is longer than a standard lorry and needs more room to turn",
+      "C": "It is very fast",
+      "D": "It can only travel on motorways"
+    },
+    "correct": "B",
+    "explanation": "Be aware of the extra length when overtaking or at roundabouts.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "388",
+    "category": "Other Types of Vehicle",
+    "question": "Why are 'trams' environmentally friendly?",
+    "choices": {
+      "A": "They are made of wood",
+      "B": "They run on electricity and produce no exhaust fumes at the point of use",
+      "C": "They only carry one person",
+      "D": "They are very slow"
+    },
+    "correct": "B",
+    "explanation": "Trams help reduce city center pollution.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "389",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if you are driving in a tunnel and see a 'Trams' sign?",
+    "choices": {
+      "A": "Close your windows",
+      "B": "Watch for tram tracks and don't park on them",
+      "C": "Speed up",
+      "D": "Turn your lights off"
+    },
+    "correct": "B",
+    "explanation": "Parking on tram tracks blocks the entire system as trams cannot steer around you.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "390",
+    "category": "Other Types of Vehicle",
+    "question": "What is the danger of 'air turbulence' from a large vehicle?",
+    "choices": {
+      "A": "It can pull a cyclist or motorcyclist toward the vehicle",
+      "B": "It makes the car cleaner",
+      "C": "It cools the engine",
+      "D": "It makes the radio louder"
+    },
+    "correct": "A",
+    "explanation": "The wind created by a large vehicle is a significant hazard for vulnerable road users.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "391",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if you see a vehicle with blue flashing lights but no siren?",
+    "choices": {
+      "A": "Ignore it",
+      "B": "Treat it as an emergency vehicle and give way if safe",
+      "C": "Assume it is broken down",
+      "D": "Sound your horn"
+    },
+    "correct": "B",
+    "explanation": "Emergency vehicles don't always use sirens"
+  },
+  {
+    "id": "392",
+    "category": "Other Types of Vehicle",
+    "question": "How should you treat a learner driver on a moped?",
+    "choices": {
+      "A": "Tailgate them",
+      "B": "Give them extra space and be patient",
+      "C": "Sound your horn to encourage them",
+      "D": "Overtake on the left"
+    },
+    "correct": "B",
+    "explanation": "Learners are more likely to make sudden mistakes.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "393",
+    "category": "Other Types of Vehicle",
+    "question": "Why do some lorries have 'Side-guards' between the wheels?",
+    "choices": {
+      "A": "To make the lorry look better",
+      "B": "To prevent pedestrians and cyclists from being pulled under the wheels",
+      "C": "To save fuel",
+      "D": "To carry extra tools"
+    },
+    "correct": "B",
+    "explanation": "These are vital safety features to protect vulnerable road users.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "394",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if a large vehicle is taking a long time to overtake you?",
+    "choices": {
+      "A": "Speed up",
+      "B": "Slightly reduce your speed to help them get past quicker",
+      "C": "Stay in their blind spot",
+      "D": "Sound your horn"
+    },
+    "correct": "B",
+    "explanation": "The sooner they complete the overtake"
+  },
+  {
+    "id": "395",
+    "category": "Other Types of Vehicle",
+    "question": "What color are the flashing lights on a coastguard vehicle?",
+    "choices": {
+      "A": "Amber",
+      "B": "Green",
+      "C": "Blue",
+      "D": "Red"
+    },
+    "correct": "C",
+    "explanation": "Coastguard"
+  },
+  {
+    "id": "396",
+    "category": "Other Types of Vehicle",
+    "question": "Why should you be careful when driving past a stationary tractor?",
+    "choices": {
+      "A": "It might be about to turn into a field or hidden entrance",
+      "B": "Tractors are always stolen",
+      "C": "The driver might be asleep",
+      "D": "Tractors don't have brakes"
+    },
+    "correct": "A",
+    "explanation": "Tractors often make turns into small"
+  },
+  {
+    "id": "397",
+    "category": "Other Types of Vehicle",
+    "question": "What is the risk of following a bus too closely?",
+    "choices": {
+      "A": "You will get home faster",
+      "B": "You won't be able to see pedestrians crossing or the road ahead",
+      "C": "The bus will go faster",
+      "D": "The bus driver will see you better"
+    },
+    "correct": "B",
+    "explanation": "The large back of the bus acts as a wall"
+  },
+  {
+    "id": "398",
+    "category": "Other Types of Vehicle",
+    "question": "What should you do if you are behind a cyclist at a set of traffic lights?",
+    "choices": {
+      "A": "Stop as close as possible",
+      "B": "Leave them plenty of room to move off",
+      "C": "Sound your horn when the light turns green",
+      "D": "Flash your lights"
+    },
+    "correct": "B",
+    "explanation": "Cyclists need space to get their balance when starting from a stop.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "399",
+    "category": "Other Types of Vehicle",
+    "question": "How should you pass a group of horse riders?",
+    "choices": {
+      "A": "Pass one at a time",
+      "B": "Pass the whole group slowly and with plenty of room",
+      "C": "Sound your horn as you pass each one",
+      "D": "Rev your engine to get past quickly"
+    },
+    "correct": "B",
+    "explanation": "Treat the whole group as one slow-moving unit.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  }
+]
