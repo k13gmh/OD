@@ -1,0 +1,1483 @@
+[  {
+    "id": "514",
+    "category": "Road and Traffic Signs",
+    "question": "What does a circular sign with a red border mean?",
+    "choices": {
+      "A": "A warning of a hazard",
+      "B": "An order or prohibition",
+      "C": "Information about a local route",
+      "D": "A recommendation"
+    },
+    "correct": "B",
+    "explanation": "Red circles generally tell you what you MUST NOT do or set a mandatory limit.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "515",
+    "category": "Road and Traffic Signs",
+    "question": "Which shape is used for a 'Give Way' sign?",
+    "choices": {
+      "A": "A circle",
+      "B": "An upright triangle",
+      "C": "An inverted (upside-down) triangle",
+      "D": "A square"
+    },
+    "correct": "C",
+    "explanation": "The Give Way sign is unique so it can be recognized even if it is obscured.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "516",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue circular sign usually show?",
+    "choices": {
+      "A": "A speed limit",
+      "B": "A mandatory instruction",
+      "C": "A warning of a school",
+      "D": "A parking area"
+    },
+    "correct": "B",
+    "explanation": "Blue circles often give positive instructions"
+  },
+  {
+    "id": "517",
+    "category": "Road and Traffic Signs",
+    "question": "What is the meaning of a triangular sign with a red border?",
+    "choices": {
+      "A": "A mandatory order",
+      "B": "A warning of a hazard ahead",
+      "C": "A direction sign",
+      "D": "A parking restriction"
+    },
+    "correct": "B",
+    "explanation": "Triangles are used to alert drivers to upcoming dangers like bends or steep hills.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "518",
+    "category": "Road and Traffic Signs",
+    "question": "What does a brown rectangular sign indicate?",
+    "choices": {
+      "A": "A motorway exit",
+      "B": "A tourist attraction or point of interest",
+      "C": "A primary route",
+      "D": "A hospital"
+    },
+    "correct": "B",
+    "explanation": "Brown signs guide you to places like zoos"
+  },
+  {
+    "id": "519",
+    "category": "Road and Traffic Signs",
+    "question": "What does an 'octagon' shaped sign mean?",
+    "choices": {
+      "A": "No Entry",
+      "B": "Stop",
+      "C": "Give Way",
+      "D": "One Way Street"
+    },
+    "correct": "B",
+    "explanation": "The 'Stop' sign is the only octagonal sign on the road to ensure it stands out clearly.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "520",
+    "category": "Road and Traffic Signs",
+    "question": "What is the meaning of a red circle with a white horizontal bar?",
+    "choices": {
+      "A": "No Entry",
+      "B": "Stop",
+      "C": "No Overtaking",
+      "D": "No Parking"
+    },
+    "correct": "A",
+    "explanation": "This sign is used at the exit of one-way streets or where vehicle access is prohibited.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "521",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a person walking mean?",
+    "choices": {
+      "A": "A pedestrian zone ahead",
+      "B": "A warning of pedestrians in the road",
+      "C": "A footway for children only",
+      "D": "A crossing point"
+    },
+    "correct": "B",
+    "explanation": "This triangle warns you to watch out for people crossing or walking along the road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "522",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue rectangular sign on a motorway show?",
+    "choices": {
+      "A": "A warning",
+      "B": "Information and directions",
+      "C": "A speed limit",
+      "D": "A hospital"
+    },
+    "correct": "B",
+    "explanation": "Motorway signs use blue backgrounds to provide route and distance information.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "523",
+    "category": "Road and Traffic Signs",
+    "question": "What does a green rectangular sign indicate?",
+    "choices": {
+      "A": "A secondary road",
+      "B": "A primary route",
+      "C": "A tourist attraction",
+      "D": "A dead end"
+    },
+    "correct": "B",
+    "explanation": "Green signs are used for primary routes that are not motorways.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "524",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a car with 'skid' marks behind it. What does it mean?",
+    "choices": {
+      "A": "You should practice skidding",
+      "B": "The road surface may be slippery ahead",
+      "C": "No cars allowed",
+      "D": "A car racing track is nearby"
+    },
+    "correct": "B",
+    "explanation": "Slow down and avoid sudden braking or steering when you see this warning.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "525",
+    "category": "Road and Traffic Signs",
+    "question": "What does a circular sign with a blue background and a red cross (X) mean?",
+    "choices": {
+      "A": "A hospital",
+      "B": "A clearway (no stopping)",
+      "C": "No entry for cars",
+      "D": "A police station"
+    },
+    "correct": "B",
+    "explanation": "On a clearway"
+  },
+  {
+    "id": "526",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing two cars side-by-side in a red circle mean?",
+    "choices": {
+      "A": "Overtaking is allowed",
+      "B": "No overtaking",
+      "C": "A dual carriageway ahead",
+      "D": "A car park for two cars"
+    },
+    "correct": "B",
+    "explanation": "This sign prohibits overtaking until you pass a sign that says the restriction has ended.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "527",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a bicycle in a red circle. What does it mean?",
+    "choices": {
+      "A": "No cycling allowed",
+      "B": "Cycle path ahead",
+      "C": "Cyclists have priority",
+      "D": "A cycle shop is nearby"
+    },
+    "correct": "A",
+    "explanation": "A red circle means 'No' - in this case"
+  },
+  {
+    "id": "528",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign with a 'white circle and a black diagonal stripe' mean?",
+    "choices": {
+      "A": "No entry",
+      "B": "End of speed limit",
+      "C": "National speed limit applies",
+      "D": "No stopping"
+    },
+    "correct": "C",
+    "explanation": "This sign means the speed limit for the type of road and vehicle you are driving now applies.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "529",
+    "category": "Road and Traffic Signs",
+    "question": "What does a yellow sign with a black 'square' or 'triangle' symbol indicate?",
+    "choices": {
+      "A": "A children's playground",
+      "B": "An emergency diversion route",
+      "C": "A nearby airport",
+      "D": "A slow-moving vehicle"
+    },
+    "correct": "B",
+    "explanation": "Follow these symbols if the main road or motorway ahead is closed.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "530",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a 'red triangle with a car falling off a quay' mean?",
+    "choices": {
+      "A": "No parking near water",
+      "B": "A quayside or river bank ahead",
+      "C": "A car wash ahead",
+      "D": "A bridge"
+    },
+    "correct": "B",
+    "explanation": "This warns you that the road leads directly to an unprotected edge of water.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "531",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows an 'exclamation mark' in a red triangle. What does it mean?",
+    "choices": {
+      "A": "Stop immediately",
+      "B": "A specific hazard not shown by other symbols",
+      "C": "A loud noise ahead",
+      "D": "A dead end"
+    },
+    "correct": "B",
+    "explanation": "There will usually be a plate below this sign explaining the nature of the hazard.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "532",
+    "category": "Road and Traffic Signs",
+    "question": "What does a red circle with a '50' inside mean?",
+    "choices": {
+      "A": "Recommended speed is 50mph",
+      "B": "Minimum speed is 50mph",
+      "C": "Maximum speed limit is 50mph",
+      "D": "Average speed is 50mph"
+    },
+    "correct": "C",
+    "explanation": "Red circles set mandatory maximum limits that you must not exceed.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "533",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue circle with a '30' inside mean?",
+    "choices": {
+      "A": "Maximum speed is 30mph",
+      "B": "Minimum speed is 30mph",
+      "C": "A parking zone for 30 cars",
+      "D": "End of a 30mph zone"
+    },
+    "correct": "B",
+    "explanation": "Blue circles with numbers set a minimum speed"
+  },
+  {
+    "id": "534",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with 'two horizontal arrows pointing in opposite directions'. What does it mean?",
+    "choices": {
+      "A": "A crossroads",
+      "B": "Two-way traffic crosses a one-way street",
+      "C": "Two-way traffic straight ahead",
+      "D": "A U-turn is allowed"
+    },
+    "correct": "C",
+    "explanation": "To prevent drivers from pulling out into the path of oncoming traffic from the right (which they might not expect if they assume the next road is also one-way).\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "535",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a 'locomotive' (train) in a red triangle mean?",
+    "choices": {
+      "A": "A railway station nearby",
+      "B": "A level crossing with a barrier",
+      "C": "A level crossing without a barrier",
+      "D": "A model railway shop"
+    },
+    "correct": "C",
+    "explanation": "A 'train' symbol means no barrier. A 'fence' symbol means there is a gate or barrier.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "536",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign with a 'red circle and a motorcycle' over a car mean?",
+    "choices": {
+      "A": "No motor vehicles",
+      "B": "Motorcycles only",
+      "C": "Cars only",
+      "D": "Overtaking allowed"
+    },
+    "correct": "A",
+    "explanation": "This prohibits all motor vehicles except for mopeds/scooters.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "537",
+    "category": "Road and Traffic Signs",
+    "question": "What does a white and red'T' on a blue square mean?",
+    "choices": {
+      "A": "The road is for Taxis only",
+      "B": "A dead end",
+      "C": "A Tram stop",
+      "D": "Turn left ahead"
+    },
+    "correct": "B",
+    "explanation": "This tells you that you cannot exit through the road you are entering.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "538",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue square with a white 'P' mean?",
+    "choices": {
+      "A": "Police station",
+      "B": "Parking permitted",
+      "C": "Primary route",
+      "D": "Private road"
+    },
+    "correct": "B",
+    "explanation": "This identifies a place where you are allowed to park.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "539",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with a 'hump'. What does it mean?",
+    "choices": {
+      "A": "A steep hill",
+      "B": "A hump bridge",
+      "C": "Speed bumps ahead",
+      "D": "A tunnel"
+    },
+    "correct": "C",
+    "explanation": "Striking a speed bump at normal road speeds can cause damage to a car's suspension, tyres, and undercarriage. The warning gives the driver time to brake gently.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "540",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a black 'gate' in a red triangle mean?",
+    "choices": {
+      "A": "A farm entrance",
+      "B": "A level crossing with a gate or barrier",
+      "C": "A prison ahead",
+      "D": "A toll booth"
+    },
+    "correct": "B",
+    "explanation": "Slow down and be prepared to stop if the barriers are down.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "541",
+    "category": "Road and Traffic Signs",
+    "question": "What does a red triangle with a 'bicycle' inside mean?",
+    "choices": {
+      "A": "Cycle path only",
+      "B": "No cycling allowed",
+      "C": "Watch out for cyclists",
+      "D": "Cyclists have priority"
+    },
+    "correct": "C",
+    "explanation": "You are approaching a cycle path"
+  },
+  {
+    "id": "542",
+    "category": "Road and Traffic Signs",
+    "question": "A blue circle has a 'white bicycle' inside. What does it mean?",
+    "choices": {
+      "A": "No cycling",
+      "B": "A route for cycles only",
+      "C": "A bike shop",
+      "D": "Cycle parking"
+    },
+    "correct": "B",
+    "explanation": "Blue circles give positive instructions—this is a dedicated cycle route.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "543",
+    "category": "Road and Traffic Signs",
+    "question": "What does a red triangle with a 'horse' inside mean?",
+    "choices": {
+      "A": "Horse racing track",
+      "B": "Horse-drawn vehicles only",
+      "C": "Wild ponies may be in the road",
+      "D": "A nearby stable"
+    },
+    "correct": "C",
+    "explanation": "Pass horses slowly and give them plenty of room.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "544",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a 'red circle with a black 6'-6\"' mean?",
+    "choices": {
+      "A": "Vehicles wider than 6'-6\" are prohibited",
+      "B": "The speed limit is 6.6 mph",
+      "C": "The road is 6.6 miles long",
+      "D": "Vehicles longer than 6'-6\" are prohibited"
+    },
+    "correct": "A",
+    "explanation": "This is usually found on narrow roads or bridges to prevent large vehicles from getting stuck.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "545",
+    "category": "Road and Traffic Signs",
+    "question": "What does the 'inverted Y' symbol on a red warning triangle mean?",
+    "choices": {
+      "A": "A junction ahead where roads merge",
+      "B": "The road ahead leads to a dead end",
+      "C": "The dual carriageway is ending",
+      "D": "The road approaches an airport.  Low-flying aircraft zone begins"
+    },
+    "correct": "C",
+    "explanation": "The symbol represents the physical change in the road layout: the two separate paths (the dual carriageway) are narrowing down into a single, two-way road where there is no longer a central reservation to separate you from oncoming traffic.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "546",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a 'tilted car' on a red warning triangle mean?",
+    "choices": {
+      "A": "Risk of ice or skidding",
+      "B": "Soft verges",
+      "C": "Parking on pavement allowed",
+      "D": "Parking on pavement not allowed"
+    },
+    "correct": "B",
+    "explanation": "This sign warns that the edge of the road (the verge) is not solid. Heavy vehicles especially should avoid driving on it, as the ground could give way, causing the vehicle to sink, get stuck, or even overturn.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "547",
+    "category": "Road and Traffic Signs",
+    "question": "What does a red circle showing a black arrow pointing down and a red arrow pointing in opposite directions mean?",
+    "choices": {
+      "A": "Priority over oncoming vehicles",
+      "B": "You must give way to oncoming traffic",
+      "C": "No overtaking allowed",
+      "D": "Two-way traffic ahead"
+    },
+    "correct": "B",
+    "explanation": "This sign is used at narrow sections of road where there isn't enough room for two vehicles to pass. The red arrow points in your direction, meaning you must give priority to vehicles coming from the opposite direction.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "548",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue circle showing a silhouette of a tram and a bus mean?",
+    "choices": {
+      "A": "A parking area for buses and trams",
+      "B": "A route for use by buses and trams only",
+      "C": "Bus and Tram crossing ahead",
+      "D": "End of Bus and Tram lane"
+    },
+    "correct": "B",
+    "explanation": "This is a mandatory instruction sign. It indicates a road or lane that is restricted specifically to buses and trams. No other vehicles (including cars or motorcycles) are permitted to use this route.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "549",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with a 'T symbol'. What does it mean?",
+    "choices": {
+      "A": "A dead end",
+      "B": "A side road enters from the side shown",
+      "C": "Turn right only",
+      "D": "Taxis only"
+    },
+    "correct": "B",
+    "explanation": "The symbol will show whether the side road enters from the left or right.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "550",
+    "category": "Road and Traffic Signs",
+    "question": "What does this sign mean when shown above a motorway lane?",
+    "choices": {
+      "A": "High winds ahead, drive with caution",
+      "B": "You must not proceed in this lane",
+      "C": "Proceed in this lane but with caution",
+      "D": "Exit the motorway at the next junction"
+    },
+    "correct": "B",
+    "explanation": "A red 'X' with flashing red lights means the lane is closed. It is illegal and dangerous to drive in a lane showing this signal, as there is likely a broken-down vehicle or roadworks ahead.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "551",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a 'red triangle with an airplane'. What does it mean?",
+    "choices": {
+      "A": "An airport exit",
+      "B": "Low-flying aircraft or sudden aircraft noise",
+      "C": "A flight school",
+      "D": "No flying"
+    },
+    "correct": "B",
+    "explanation": "Sudden noise from low aircraft can spook horses or distract drivers.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "552",
+    "category": "Road and Traffic Signs",
+    "question": "What does this sign mean?",
+    "choices": {
+      "A": "No overnight parking for caravans",
+      "B": "Towed caravans prohibited",
+      "C": "Caravans only beyond this point",
+      "D": "Caution, slow-moving caravans ahead"
+    },
+    "correct": "B",
+    "explanation": "This red circle indicates a prohibition. The silhouette shows a car towing a caravan, meaning that vehicles towing caravans are not allowed to enter the road or area beyond this sign.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "553",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a 'red triangle with two people (an adult and child)' mean?",
+    "choices": {
+      "A": "A playground",
+      "B": "School crossing or children likely in the road",
+      "C": "A family-friendly restaurant",
+      "D": "A residential home"
+    },
+    "correct": "B",
+    "explanation": "Slow down and watch for children who may run out.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "554",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'red circle with a black van' and a '7.5t' inside mean?",
+    "choices": {
+      "A": "No vans allowed",
+      "B": "Vans over 7.5 tonnes maximum authorized mass prohibited",
+      "C": "Vans only",
+      "D": "Speed limit is 7.5 mph"
+    },
+    "correct": "B",
+    "explanation": "This prevents heavy goods vehicles from using unsuitable roads.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "555",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a 'red triangle with a snowflake'. What does it mean?",
+    "choices": {
+      "A": "A ski resort",
+      "B": "Ice or snow hazard ahead",
+      "C": "A cold storage warehouse",
+      "D": "Free ice cream"
+    },
+    "correct": "B",
+    "explanation": "This is often a permanent warning on roads prone to freezing or a temporary sign in winter.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "556",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign with a 'white arrow pointing right' in a blue circle mean?",
+    "choices": {
+      "A": "Turn right ahead",
+      "B": "Turn right only",
+      "C": "A one-way street",
+      "D": "No right turn"
+    },
+    "correct": "B",
+    "explanation": "This is a mandatory direction sign.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "557",
+    "category": "Road and Traffic Signs",
+    "question": "What does this sign mean?",
+    "choices": {
+      "A": "Low bridge ahead",
+      "B": "Tunnel ahead",
+      "C": "Ancient monument ahead",
+      "D": "Narrow archway ahead"
+    },
+    "correct": "B",
+    "explanation": "This is a warning sign alerting you to a tunnel. You should switch on your dipped headlights before entering to ensure you can see and be seen by others.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "558",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a 'red triangle with a cow'. What does it mean?",
+    "choices": {
+      "A": "A farm shop",
+      "B": "Cattle or farm animals likely to be in the road",
+      "C": "A steakhouse",
+      "D": "A zoo"
+    },
+    "correct": "B",
+    "explanation": "Animals may be crossing; be prepared to stop.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "559",
+    "category": "Road and Traffic Signs",
+    "question": "What does a red circle with a 'red motorcycle' inside mean?",
+    "choices": {
+      "A": "No motorcycles allowed",
+      "B": "Motorcycles only",
+      "C": "A motorbike race",
+      "D": "Watch out for bikes"
+    },
+    "correct": "A",
+    "explanation": "No motorcycling is permitted on this route.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "560",
+    "category": "Road and Traffic Signs",
+    "question": "What does this yellow sign mean?",
+    "choices": {
+      "A": "Move into the left lane",
+      "B": "End of lane closure",
+      "C": "You may overtake on the left",
+      "D": "You may not overtake on the left"
+    },
+    "correct": "B",
+    "explanation": "This is a temporary roadwork sign to show the end of a previous lane closure. It indicates that the lane that was previously blocked off is now re-opening for use."
+  },
+  {
+    "id": "561",
+    "category": "Road and Traffic Signs",
+    "question": "What does this sign mean?",
+    "choices": {
+      "A": "Walking route only",
+      "B": "Approaching a football ground",
+      "C": "Public park or garden",
+      "D": "A youth hostel"
+    },
+    "correct": "C",
+    "explanation": "This brown sign features the official tourist symbol for a Country Park in England and Wales. Brown signs are used to direct drivers to tourist attractions and facilities, helping them find leisure destinations like country parks that might be off the main road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+  "id": "562",
+  "category": "Road and Traffic Signs",
+  "question": "What does this blue rectangular sign mean?",
+  "choices": {
+    "A": "Residential parking only",
+    "B": "People share the road with vehicles",
+    "C": "People are prohibited from using this road",
+    "D": "No through road for motor vehicles"
+  },
+  "correct": "B",
+  "explanation": "This sign marks the entrance to a Home Zone. These are residential areas designed to be shared safely by pedestrians, cyclists, and low-speed motor vehicles. Drivers should be particularly careful as children may be playing in the street."
+  },
+  {
+    "id": "563",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue rectangle with a 'white arrow pointing straight up' mean?",
+    "choices": {
+      "A": "One-way traffic only",
+      "B": "Keep going straight",
+      "C": "A dead end",
+      "D": "Flyover ahead"
+    },
+    "correct": "A",
+    "explanation": "This indicates that traffic must travel in the direction of the arrow only.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "564",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a 'red triangle with a man digging'. What does it mean?",
+    "choices": {
+      "A": "A garden center",
+      "B": "Road works ahead",
+      "C": "A graveyard",
+      "D": "A construction site entrance"
+    },
+    "correct": "B",
+    "explanation": "Be prepared for workers"
+  },
+  {
+    "id": "565",
+    "category": "Road and Traffic Signs",
+    "question": "What does a red circle with a 'white line' through a car and a 5t mean?",
+    "choices": {
+      "A": "No cars over 5 tonnes",
+      "B": "No motor vehicles over 5 tonnes maximum gross weight",
+      "C": "Speed limit 5 mph",
+      "D": "No parking for 5 hours"
+    },
+    "correct": "B",
+    "explanation": "Weight restrictions protect bridge structures or road surfaces.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "566",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a 'red triangle with a cross' (like a plus sign) mean?",
+    "choices": {
+      "A": "A hospital",
+      "B": "A crossroads ahead",
+      "C": "A first aid post",
+      "D": "A church"
+    },
+    "correct": "B",
+    "explanation": "Slow down and check both ways as you approach the intersection.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "567",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a blue square with a 'white wheelchair'. What does it mean?",
+    "choices": {
+      "A": "A hospital",
+      "B": "Parking for disabled badge holders only",
+      "C": "A wheelchair ramp",
+      "D": "A pharmacy"
+    },
+    "correct": "B",
+    "explanation": "Only vehicles displaying a valid Blue Badge can park here.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "568",
+    "category": "Road and Traffic Signs",
+    "question": "What does a red circle with a '7-6' (7ft 6in) height symbol mean?",
+    "choices": {
+      "A": "Vehicles over 7ft 6in tall are prohibited",
+      "B": "The road is 7.6 miles long",
+      "C": "Maximum speed is 7.6 mph",
+      "D": "Parking for 7 hours"
+    },
+    "correct": "A",
+    "explanation": "This is usually found before low bridges or tunnels.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "569",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a 'red triangle with a stone flying from a tyre' mean?",
+    "choices": {
+      "A": "A stone quarry",
+      "B": "Loose chippings on the road surface",
+      "C": "A landslide area",
+      "D": "No driving on gravel"
+    },
+    "correct": "B",
+    "explanation": "Slow down to avoid stones hitting your windscreen or other road users.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "570",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue square sign with a 'white telephone' symbol mean?",
+    "choices": {
+      "A": "A mobile phone shop",
+      "B": "A public telephone nearby",
+      "C": "No phones allowed",
+      "D": "A call center"
+    },
+    "correct": "B",
+    "explanation": "Useful if you need to make a call and have no signal.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "571",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a red triangle with a 'steep hill' and '10%' mean?",
+    "choices": {
+      "A": "A hill with a 1 in 10 gradient",
+      "B": "A 10mph speed limit on a hill",
+      "C": "10 miles of hills ahead",
+      "D": "Parking allowed for 10 cars"
+    },
+    "correct": "A",
+    "explanation": "The percentage shows the steepness. 10% means the road rises or falls 1 metre for every 10 metres of travel.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "572",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue circle with a 'white arrow pointing down to the left' mean?",
+    "choices": {
+      "A": "Turn left",
+      "B": "Keep left",
+      "C": "One-way street",
+      "D": "No entry"
+    },
+    "correct": "B",
+    "explanation": "This is often found on bollards at the start of a traffic island.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "573",
+    "category": "Road and Traffic Signs",
+    "question": "What does a red circle with a 'person on a horse' inside mean?",
+    "choices": {
+      "A": "Horse riding allowed",
+      "B": "No horse riding",
+      "C": "A nearby stable",
+      "D": "Slow down for horses"
+    },
+    "correct": "B",
+    "explanation": "Red circle means no. Horses are not permitted on this specific path.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "574",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with 'two people holding hands'. What does it mean?",
+    "choices": {
+      "A": "A wedding venue",
+      "B": "Pedestrians in the road ahead",
+      "C": "A playground",
+      "D": "No walking"
+    },
+    "correct": "B",
+    "explanation": "This warns you that people may be walking in the road where there is no pavement.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "575",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue rectangular sign with a 'white bus and cycle' mean?",
+    "choices": {
+      "A": "Bus and cycle lane",
+      "B": "No buses or cycles",
+      "C": "Bus and cycle parking",
+      "D": "A bike shop"
+    },
+    "correct": "A",
+    "explanation": "This indicates a lane that can be used by both buses and cyclists.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "576",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a red triangle with a 'fence' mean?",
+    "choices": {
+      "A": "A farm ahead",
+      "B": "A level crossing with a gate or barrier",
+      "C": "No trespassing",
+      "D": "A garden center"
+    },
+    "correct": "B",
+    "explanation": "The fence symbol tells you the crossing is protected by a barrier.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "577",
+    "category": "Road and Traffic Signs",
+    "question": "What does a circular sign with a 'red border and a car over a motorbike' mean?",
+    "choices": {
+      "A": "No motor vehicles",
+      "B": "No cars",
+      "C": "No motorbikes",
+      "D": "Motor vehicles only"
+    },
+    "correct": "A",
+    "explanation": "This excludes all motorized vehicles from the road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "578",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue square sign with a 'white bicycle' and the word 'Route' mean?",
+    "choices": {
+      "A": "No cycling",
+      "B": "A recommended route for cyclists",
+      "C": "A cycle shop",
+      "D": "A cycle race"
+    },
+    "correct": "B",
+    "explanation": "This is a direction sign for cyclists to help them find the safest path.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "579",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with a 'fork in the road'. What does it mean?",
+    "choices": {
+      "A": "A restaurant ahead",
+      "B": "A junction on a bend",
+      "C": "A dead end",
+      "D": "A bridge"
+    },
+    "correct": "B",
+    "explanation": "This warns of a side road entering the main road exactly on a curve.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "580",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign with a 'black car and two red lines' in a red circle mean?",
+    "choices": {
+      "A": "No motor vehicles",
+      "B": "No overtaking",
+      "C": "A car park",
+      "D": "End of no overtaking zone"
+    },
+    "correct": "B",
+    "explanation": "This is the standard 'No Overtaking' sign.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "581",
+    "category": "Road and Traffic Signs",
+    "question": "What does a yellow rectangle with 'Diversion' and an arrow mean?",
+    "choices": {
+      "A": "Follow the arrow for the temporary route",
+      "B": "The road is closed forever",
+      "C": "A new housing estate",
+      "D": "A car wash"
+    },
+    "correct": "A",
+    "explanation": "These are used when the main road is blocked by roadworks or an accident.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "582",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with a 'single line crossing a thick line'. What does it mean?",
+    "choices": {
+      "A": "A railway crossing",
+      "B": "A side road junction",
+      "C": "A crossroads",
+      "D": "A dead end"
+    },
+    "correct": "B",
+    "explanation": "The thick line represents the priority road you are on.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "583",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue circle with a 'white 30' and a red line through it mean?",
+    "choices": {
+      "A": "Maximum speed 30mph",
+      "B": "End of minimum speed limit",
+      "C": "30 miles to the next town",
+      "D": "No parking for 30 minutes"
+    },
+    "correct": "B",
+    "explanation": "The red diagonal line always means the end of a previous instruction.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "584",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a 'red triangle with a deer' mean?",
+    "choices": {
+      "A": "A zoo ahead",
+      "B": "Wild animals likely in the road",
+      "C": "A hunting area",
+      "D": "A pet shop"
+    },
+    "correct": "B",
+    "explanation": "This is common in forested areas. Be prepared to slow down for deer crossing.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "585",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'white rectangle with a black camera' symbol mean?",
+    "choices": {
+      "A": "A tourist photo spot",
+      "B": "Speed or red-light cameras in the area",
+      "C": "No photography allowed",
+      "D": "A film studio"
+    },
+    "correct": "B",
+    "explanation": "This warns you that enforcement cameras are active on this stretch of road.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "586",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with an 'opening bridge'. What does it mean?",
+    "choices": {
+      "A": "A hump bridge",
+      "B": "A lifting or swing bridge ahead",
+      "C": "A tunnel",
+      "D": "A car ferry"
+    },
+    "correct": "B",
+    "explanation": "Be prepared to stop if the lights flash or the bridge begins to move.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "587",
+    "category": "Road and Traffic Signs",
+    "question": "What does a red circle with 'No' over a 'U-shaped arrow' mean?",
+    "choices": {
+      "A": "No left turn",
+      "B": "No U-turns",
+      "C": "One-way street only",
+      "D": "Roundabout ahead"
+    },
+    "correct": "B",
+    "explanation": "You must not attempt to turn your vehicle around to face the opposite direction.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "588",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue square with a 'white bus' and a 'time' (e.g. 7am-10am) mean?",
+    "choices": {
+      "A": "Buses only during those times",
+      "B": "Buses are not allowed then",
+      "C": "A bus will arrive at that time",
+      "D": "No parking during those times"
+    },
+    "correct": "A",
+    "explanation": "Outside of those hours"
+  },
+  {
+    "id": "589",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with a 'falling rocks' symbol. What does it mean?",
+    "choices": {
+      "A": "A construction site",
+      "B": "Risk of falling rocks or debris on the road",
+      "C": "A stone quarry",
+      "D": "No driving on hills"
+    },
+    "correct": "B",
+    "explanation": "Watch out for obstructions that may have already fallen into your path.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "590",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue circle with 'two white arrows pointing down left and down right' mean??",
+    "choices": {
+      "A": "Turn left",
+      "B": "Pass on either side",
+      "C": "One-way street",
+      "D": "Keep left"
+    },
+    "correct": "B",
+    "explanation": "This is used where traffic can pass a central obstruction on both sides.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "591",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'red circle with a motorbike' and '30' inside mean?",
+    "choices": {
+      "A": "Motorbikes only at 30mph",
+      "B": "A maximum speed limit of 30mph for all vehicles",
+      "C": "No motorcycles allowed",
+      "D": "Parking for 30 motorbikes"
+    },
+    "correct": "B",
+    "explanation": "The red circle speed limit applies to everyone"
+  },
+  {
+    "id": "592",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with a 'crossroads' symbol. What does it mean?",
+    "choices": {
+      "A": "A hospital",
+      "B": "A crossroads ahead",
+      "C": "A church",
+      "D": "A first aid post"
+    },
+    "correct": "B",
+    "explanation": "Approach with caution and be ready to give way or stop.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "593",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'blue rectangle with a white car and a red line' mean?",
+    "choices": {
+      "A": "No cars allowed",
+      "B": "End of a motorway",
+      "C": "A car park",
+      "D": "A dual carriageway"
+    },
+    "correct": "B",
+    "explanation": "The red line through the motorway symbol marks the end of motorway regulations.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "594",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a 'red triangle with a toad' mean?",
+    "choices": {
+      "A": "A pet shop",
+      "B": "A migration route for toads or small animals",
+      "C": "A swamp",
+      "D": "No driving in wet weather"
+    },
+    "correct": "B",
+    "explanation": "These are placed where animals frequently cross the road to reach breeding grounds.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "595",
+    "category": "Road and Traffic Signs",
+    "question": "What does a red circle with 'No' over a 'Right Arrow' mean?",
+    "choices": {
+      "A": "No left turn",
+      "B": "No right turn",
+      "C": "One-way street",
+      "D": "Right turn only"
+    },
+    "correct": "B",
+    "explanation": "You are prohibited from turning right at this location.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "596",
+    "category": "Road and Traffic Signs",
+    "question": "What does a green rectangular sign with a 'white phone' and 'SOS' mean?",
+    "choices": {
+      "A": "A public phone",
+      "B": "An emergency roadside telephone",
+      "C": "A hospital",
+      "D": "A mobile phone shop"
+    },
+    "correct": "B",
+    "explanation": "These are found on dual carriageways and near motorways for breakdown use.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "597",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with a 'tank' symbol. What does it mean?",
+    "choices": {
+      "A": "A petrol station",
+      "B": "Slow-moving military vehicles likely to cross",
+      "C": "No heavy vehicles",
+      "D": "A war museum"
+    },
+    "correct": "B",
+    "explanation": "This is common near military bases or training grounds.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "598",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'blue circle with a white moped' mean?",
+    "choices": {
+      "A": "No mopeds",
+      "B": "A route for mopeds only",
+      "C": "A motorcycle shop",
+      "D": "Mopeds must stay in the middle of the road"
+    },
+    "correct": "B",
+    "explanation": "This is a dedicated path or lane for low-powered motorcycles.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "599",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'white square sign with a black 'C' in a red circle' mean?",
+    "choices": {
+      "A": "A car park",
+      "B": "Congestion charging zone",
+      "C": "A church",
+      "D": "A city center"
+    },
+    "correct": "B",
+    "explanation": "You must pay a fee to enter this area during certain times.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "600",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with a 'low-flying helicopter'. What does it mean?",
+    "choices": {
+      "A": "An airport exit",
+      "B": "Sudden noise from low-flying helicopters",
+      "C": "A hospital",
+      "D": "No helicopters allowed"
+    },
+    "correct": "B",
+    "explanation": "Helicopter noise can be very loud and sudden"
+  },
+  {
+    "id": "601",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue square sign with a 'white 1 in a blue circle' mean?",
+    "choices": {
+      "A": "The first exit",
+      "B": "A motorway status sign",
+      "C": "A one-way street",
+      "D": "A primary route"
+    },
+    "correct": "B",
+    "explanation": "These are used to identify motorway junction numbers.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "602",
+    "category": "Road and Traffic Signs",
+    "question": "What does a red circle with 'No' over a 'Left Arrow' mean?",
+    "choices": {
+      "A": "No left turn",
+      "B": "No right turn",
+      "C": "One-way street",
+      "D": "Left turn only"
+    },
+    "correct": "A",
+    "explanation": "You are prohibited from turning left at this location.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "603",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with a 'sheep'. What does it mean?",
+    "choices": {
+      "A": "A farm shop",
+      "B": "Sheep or farm animals likely in the road",
+      "C": "A wool factory",
+      "D": "No driving in the countryside"
+    },
+    "correct": "B",
+    "explanation": "Sheep can be unpredictable; slow down and be prepared to stop.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "604",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'blue rectangular sign with a white 'M'' mean?",
+    "choices": {
+      "A": "A motorway",
+      "B": "A metro station",
+      "C": "A museum",
+      "D": "A parking area"
+    },
+    "correct": "B",
+    "explanation": "This indicates a nearby station for a metro or underground system.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "605",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'yellow sign with a black arrow and a black 4' mean?",
+    "choices": {
+      "A": "Speed limit 4mph",
+      "B": "Follow the 4th exit",
+      "C": "Diversion route number 4",
+      "D": "No 4-wheel drives"
+    },
+    "correct": "C",
+    "explanation": "This helps drivers follow a specific diverted path through multiple junctions.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "606",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with 'two rows of dots'. What does it mean?",
+    "choices": {
+      "A": "A gravel road",
+      "B": "Queues likely ahead",
+      "C": "A stone quarry",
+      "D": "No driving on bumps"
+    },
+    "correct": "B",
+    "explanation": "This is often used on motorways or near busy junctions to warn of stationary traffic.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "607",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'red circle with a car' and a 'white center' mean?",
+    "choices": {
+      "A": "No motor vehicles allowed",
+      "B": "No cars allowed",
+      "C": "No parking",
+      "D": "Only cycles allowed"
+    },
+    "correct": "A",
+    "explanation": "This prohibits all motor vehicles.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "608",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue circle with a 'white bicycle and person' mean?",
+    "choices": {
+      "A": "No cycling or walking",
+      "B": "A shared-use path for cyclists and pedestrians",
+      "C": "A park entrance",
+      "D": "A race track"
+    },
+    "correct": "B",
+    "explanation": "Both groups can use this path; cyclists should be careful of pedestrians.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "609",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with 'T-junction on a curve'. What does it mean?",
+    "choices": {
+      "A": "A dead end",
+      "B": "A side road on a bend",
+      "C": "A crossroads",
+      "D": "A hairpin turn"
+    },
+    "correct": "B",
+    "explanation": "It warns that traffic might emerge from a hidden side road while you are cornering.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "610",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'white rectangle with black 1 in a red circle' mean?",
+    "choices": {
+      "A": "Congestion charge zone 1",
+      "B": "End of the first speed limit",
+      "C": "The start of a controlled parking zone",
+      "D": "Priority over oncoming traffic"
+    },
+    "correct": "D",
+    "explanation": "White rectangles with arrows usually show who has the right of way in narrow roads.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "611",
+    "category": "Road and Traffic Signs",
+    "question": "What does a red circle with 'End' and a car with a red line mean?",
+    "choices": {
+      "A": "End of a clearway",
+      "B": "End of a restricted parking zone",
+      "C": "End of a motorway",
+      "D": "End of a no-entry zone"
+    },
+    "correct": "B",
+    "explanation": "Specific local parking rules stop at this point.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "612",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with a 'low bridge' height. What does it mean?",
+    "choices": {
+      "A": "The bridge is 7 miles long",
+      "B": "The maximum height is shown (e.g. 14ft 6in)",
+      "C": "The bridge is for cars only",
+      "D": "No driving on the bridge"
+    },
+    "correct": "B",
+    "explanation": "If your vehicle is taller than the height shown"
+  },
+  {
+    "id": "613",
+    "category": "Road and Traffic Signs",
+    "question": "What does a blue square with a 'white bus' and no times mean?",
+    "choices": {
+      "A": "A bus lane in operation at all times",
+      "B": "A bus lane that is never used",
+      "C": "A bus stop",
+      "D": "A bus station"
+    },
+    "correct": "A",
+    "explanation": "If no times are shown"
+  },
+  {
+    "id": "614",
+    "category": "Road and Traffic Signs",
+    "question": "What does a sign showing a 'red triangle with a cyclist' mean?",
+    "choices": {
+      "A": "A cycle race",
+      "B": "Cyclists likely in the road or crossing",
+      "C": "No cycling",
+      "D": "A bike shop"
+    },
+    "correct": "B",
+    "explanation": "Watch out for cyclists"
+  },
+  {
+    "id": "615",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'white rectangle with a blue P' and a 'van' mean?",
+    "choices": {
+      "A": "Parking for vans only",
+      "B": "No parking for vans",
+      "C": "A van wash",
+      "D": "A van rental shop"
+    },
+    "correct": "A",
+    "explanation": "This designates a specific parking zone for commercial vehicles.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "616",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with 'soft verges'. What does it mean?",
+    "choices": {
+      "A": "A park",
+      "B": "Do not drive on the grass or edge of the road",
+      "C": "A playground",
+      "D": "A garden"
+    },
+    "correct": "B",
+    "explanation": "The edge of the road may not support the weight of your car and could cause you to get stuck.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "617",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'blue circle with a white arrow pointing diagonally right' mean?",
+    "choices": {
+      "A": "Turn right only",
+      "B": "Keep right",
+      "C": "One-way street",
+      "D": "No entry"
+    },
+    "correct": "B",
+    "explanation": "Found on traffic islands to tell you which side to pass on.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "618",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'red circle with a red line' mean?",
+    "choices": {
+      "A": "No stopping (Clearway)",
+      "B": "No entry",
+      "C": "No parking",
+      "D": "One-way street"
+    },
+    "correct": "A",
+    "explanation": "You must not stop your vehicle at all"
+  },
+  {
+    "id": "619",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with 'uneven road'. What does it mean?",
+    "choices": {
+      "A": "A steep hill",
+      "B": "The road surface is bumpy or in poor condition",
+      "C": "A construction site",
+      "D": "A dead end"
+    },
+    "correct": "B",
+    "explanation": "Slow down to avoid damaging your suspension or losing control.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "620",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'blue square with a white car' mean?",
+    "choices": {
+      "A": "A car park",
+      "B": "A motorway",
+      "C": "No motor vehicles",
+      "D": "A car wash"
+    },
+    "correct": "B",
+    "explanation": "The blue square with a car symbol is the start of a motorway.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "621",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'red circle with a 30' mean?",
+    "choices": {
+      "A": "Maximum speed 30mph",
+      "B": "Minimum speed 30mph",
+      "C": "30 miles to go",
+      "D": "Parking for 30 cars"
+    },
+    "correct": "A",
+    "explanation": "A mandatory maximum speed limit.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "622",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with a 'hump bridge'. What does it mean?",
+    "choices": {
+      "A": "A steep hill",
+      "B": "A bridge with a hidden view or a sharp rise",
+      "C": "A tunnel",
+      "D": "No driving on bridges"
+    },
+    "correct": "B",
+    "explanation": "Approach slowly to see what is on the other side.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "623",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'white rectangle with a green border' mean?",
+    "choices": {
+      "A": "A primary route sign",
+      "B": "A secondary route sign",
+      "C": "A motorway sign",
+      "D": "A tourist sign"
+    },
+    "correct": "A",
+    "explanation": "These provide directions on major 'A' roads.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "624",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'red circle with a white horizontal bar' mean?",
+    "choices": {
+      "A": "No entry",
+      "B": "Stop",
+      "C": "No parking",
+      "D": "One-way street"
+    },
+    "correct": "A",
+    "explanation": "You are prohibited from entering this road from this direction.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "625",
+    "category": "Road and Traffic Signs",
+    "question": "A sign shows a red triangle with 'low-flying aircraft'. What does it mean?",
+    "choices": {
+      "A": "An airport nearby",
+      "B": "Sudden noise or low aircraft",
+      "C": "No flying",
+      "D": "A flight school"
+    },
+    "correct": "B",
+    "explanation": "Warns of aircraft that could startle drivers or horses.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "626",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'blue square with a white bed' mean?",
+    "choices": {
+      "A": "A hotel or guest house",
+      "B": "A hospital",
+      "C": "A furniture shop",
+      "D": "A rest area"
+    },
+    "correct": "A",
+    "explanation": "Used to indicate local accommodation.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "627",
+    "category": "Road and Traffic Signs",
+    "question": "What does a 'red circle with a motorcycle' mean?",
+    "choices": {
+      "A": "No motorcycles allowed",
+      "B": "Motorcycles only",
+      "C": "Motorcycle racing",
+      "D": "Watch for bikes"
+    },
+    "correct": "A",
+    "explanation": "Prohibits motorcycles from using the route.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  }
+]
