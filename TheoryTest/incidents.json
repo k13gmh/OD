@@ -1,0 +1,743 @@
+[
+    {
+    "id": "685",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What is the first thing you should do at the scene of a collision?",
+    "choices": {
+      "A": "Check for witnesses",
+      "B": "Make sure the area is safe and warn other traffic",
+      "C": "Call your insurance company",
+      "D": "Take photos of the damage"
+    },
+    "correct": "B",
+    "explanation": "Safety is the priority. Use hazard lights and a warning triangle if possible to prevent further accidents.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "686",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "If a casualty is unconscious but breathing,  what position should they be placed in?",
+    "choices": {
+      "A": "Flat on their back",
+      "B": "The recovery position",
+      "C": "Sitting upright",
+      "D": "On their stomach"
+    },
+    "correct": "B",
+    "explanation": "The recovery position keeps the airway open and prevents the person from choking on their tongue or vomit."
+  },
+  {
+    "id": "687",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "How can you help a casualty who is in shock?",
+    "choices": {
+      "A": "Give them a cigarette",
+      "B": "Keep them warm and reassure them",
+      "C": "Give them a drink of water",
+      "D": "Ask them to walk around"
+    },
+    "correct": "B",
+    "explanation": "Shock can be life-threatening. Keep them calm"
+  },
+  {
+    "id": "688",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if your car catches fire in a tunnel?",
+    "choices": {
+      "A": "Stop and run immediately",
+      "B": "Drive out of the tunnel if possible",
+      "C": "Stay in the car and close windows",
+      "D": "Turn the engine off and wait"
+    },
+    "correct": "B",
+    "explanation": "It is much safer to deal with a fire in the open air than in a confined tunnel.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "689",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "How should you treat a minor burn?",
+    "choices": {
+      "A": "Apply butter or cream",
+      "B": "Douse the burn with cool (not cold) liquid for at least 20 minutes",
+      "C": "Wrap it in a woolly scarf",
+      "D": "Pop any blisters"
+    },
+    "correct": "B",
+    "explanation": "Clean"
+  },
+  {
+    "id": "690",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if a person’s clothes are on fire?",
+    "choices": {
+      "A": "Tell them to run",
+      "B": "Make them 'Stop, Drop and Roll'",
+      "C": "Throw petrol on them",
+      "D": "Give them a drink of water"
+    },
+    "correct": "B",
+    "explanation": "Running fans the flames.  Stopping, dropping to the ground and rolling is the most effective way to smother the fire."
+  },
+  {
+    "id": "691",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What is the 'DR ABC' code in first aid?",
+    "choices": {
+      "A": "Driver, Route, Area, Body, Check",
+      "B": "Danger, Response, Airway, Breathing, Circulation",
+      "C": "Danger, Rescue, Airway, Breathing, Compression",
+      "D": "Danger, Response, Ambulance, Breathing, Circulation"
+    },
+    "correct": "B",
+    "explanation": "DRABC stands for Danger, Response, Airway, Breathing and Circulation (or Compressions).  It’s the order of priority when treating a casualty."
+  },
+  {
+    "id": "692",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "When should you move a casualty from a vehicle?",
+    "choices": {
+      "A": "Whenever they ask you to",
+      "B": "Only if there is an immediate danger (like fire or explosion)",
+      "C": "To make them more comfortable",
+      "D": "To see their injuries better"
+    },
+    "correct": "B",
+    "explanation": "Moving a casualty can worsen spinal injuries. Only do it if their life is at risk where they are.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "693",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if an injured person is bleeding heavily?",
+    "choices": {
+      "A": "Give them a drink",
+      "B": "Apply firm pressure to the wound with a clean cloth",
+      "C": "Tell them to go for a walk",
+      "D": "Wash the wound with soap"
+    },
+    "correct": "B",
+    "explanation": "Stopping blood loss is a priority. Keep the wound held firmly until paramedics take over.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "694",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What is the shortest time you should cool a burn for?",
+    "choices": {
+      "A": "5 minutes",
+      "B": "10 minutes",
+      "C": "20 minutes",
+      "D": "1 hour"
+    },
+    "correct": "C",
+    "explanation": "Current first aid guidelines recommend at least 20 minutes of cooling.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "695",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "How can you warn other traffic of an accident on a standard road?",
+    "choices": {
+      "A": "By shouting",
+      "B": "By placing a warning triangle at least 45 metres behind the scene",
+      "C": "By waving a white cloth",
+      "D": "By turning your interior light on"
+    },
+    "correct": "B",
+    "explanation": "Warning triangles should never be used on motorways"
+  },
+  {
+    "id": "696",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if you see a 'Danger: Chemicals' sign on a crashed tanker?",
+    "choices": {
+      "A": "Try to stop the leak",
+      "B": "Keep well back and upwind",
+      "C": "Open the tanker doors",
+      "D": "Check the driver's license"
+    },
+    "correct": "B",
+    "explanation": "Chemical fumes can be toxic. Stay back and tell the emergency services about the sign.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "697",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What are the signs of someone being in shock?",
+    "choices": {
+      "A": "They are very happy",
+      "B": "They are pale, cold, and have a rapid pulse",
+      "C": "They have a high fever",
+      "D": "They are very talkative"
+    },
+    "correct": "B",
+    "explanation": "Shock is a life-threatening condition.  Signs include pale grey skin, sweating, rapid pulse and fast, shallow breathing."
+  },
+  {
+    "id": "698",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "When is it okay to give a casualty something to eat or drink?",
+    "choices": {
+      "A": "If they are hungry",
+      "B": "Only if they are very thirsty",
+      "C": "Never, as it could complicate medical treatment or surgery",
+      "D": "If they are in shock"
+    },
+    "correct": "C",
+    "explanation": "You should never give food or drink to a casualty at an accident scene as they may need an an"
+  },
+  {
+    "id": "699",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if your engine cuts out while you are driving?",
+    "choices": {
+      "A": "Brake hard",
+      "B": "Shift to neutral and steer safely to the side of the road",
+      "C": "Turn the lights off",
+      "D": "Wait for the car to stop in the middle of the road"
+    },
+    "correct": "B",
+    "explanation": "Steering will become heavier and brakes harder to push"
+  },
+  {
+    "id": "700",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "Where should you look for a fire extinguisher in your car?",
+    "choices": {
+      "A": "In the glove box",
+      "B": "It is usually kept in the boot or under a seat",
+      "C": "On the roof",
+      "D": "In the petrol tank"
+    },
+    "correct": "B",
+    "explanation": "Ensure you know where yours is and that it is serviced.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "701",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if you hit a dog and cannot find the owner?",
+    "choices": {
+      "A": "Leave a note on a tree",
+      "B": "Report it to the police as soon as possible (within 24 hours)",
+      "C": "Take the dog home",
+      "D": "Ignore it"
+    },
+    "correct": "B",
+    "explanation": "By law"
+  },
+  {
+    "id": "702",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What is the aim of 'Circulation' in DR ABC?",
+    "choices": {
+      "A": "To check if the person is moving",
+      "B": "To check for and stop heavy bleeding",
+      "C": "To check the person's blood type",
+      "D": "To drive the person to hospital"
+    },
+    "correct": "B",
+    "explanation": "The 'C' stands for checking for severe bleeding after you've checked breathing.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "703",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "If you are involved in a collision, what must you give to other parties involved?",
+    "choices": {
+      "A": "Your car's service history",
+      "B": "Your name, address and vehicle registration",
+      "C": "Your bank details",
+      "D": "Your driving licence number"
+    },
+    "correct": "B",
+    "explanation": "If you're involved in a collision that causes damage or injury, you must give your name, address, and vehicle registration to anyone who has reasonable grounds for requiring them.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "704",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if your car is submerged in water?",
+    "choices": {
+      "A": "Wait for the car to fill with water before trying to open the door",
+      "B": "Try to open the window immediately to escape",
+      "C": "Stay in your seatbelt",
+      "D": "Call a mechanic"
+    },
+    "correct": "B",
+    "explanation": "Water pressure will make the door impossible to open until the car is full"
+  },
+  {
+    "id": "705",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What does it mean if a casualty's breath smells of pear drops?",
+    "choices": {
+      "A": "They have been eating sweets",
+      "B": "They may be in a diabetic coma",
+      "C": "They are very healthy",
+      "D": "They have been drinking alcohol"
+    },
+    "correct": "B",
+    "explanation": "Acetone breath is a symptom of a diabetic emergency.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "706",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if a motorcyclist is unconscious after an accident?",
+    "choices": {
+      "A": "Remove their helmet immediately",
+      "B": "Only remove the helmet if it is essential to keep them breathing",
+      "C": "Sit them up",
+      "D": "Remove their boots"
+    },
+    "correct": "B",
+    "explanation": "Removing a helmet can cause or worsen a neck injury.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "707",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "How would you help someone having a seizure (fit)?",
+    "choices": {
+      "A": "Hold them down",
+      "B": "Put something in their mouth",
+      "C": "Protect them from nearby hazards but do not restrain them",
+      "D": "Splash water on their face"
+    },
+    "correct": "C",
+    "explanation": "Let the seizure run its course while ensuring they don't hit their head on anything sharp.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "708",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What is the rate for chest compressions during CPR?",
+    "choices": {
+      "A": "10 per minute",
+      "B": "30 per minute",
+      "C": "100-120 per minute",
+      "D": "200 per minute"
+    },
+    "correct": "C",
+    "explanation": "This is roughly the beat of the song 'Stayin' Alive'.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "709",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if your brakes fail while driving?",
+    "choices": {
+      "A": "Switch the engine off immediately",
+      "B": "Pump the brake pedal and use the handbrake gently",
+      "C": "Jump out of the car",
+      "D": "Switch to the highest gear"
+    },
+    "correct": "B",
+    "explanation": "Pumping the pedal may build up pressure; the handbrake can help slow you down.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "710",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "You arrive at a scene where a car has hit a power pole and wires are touching the car. What do you do?",
+    "choices": {
+      "A": "Pull the driver out",
+      "B": "Tell the driver to stay inside until the power is turned off",
+      "C": "Spray the car with water",
+      "D": "Touch the car to see if it is live"
+    },
+    "correct": "B",
+    "explanation": "Touching the car or the person inside could result in electrocution.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "711",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What is the first thing you should check for when assessing a casualty's 'Response'?",
+    "choices": {
+      "A": "Their pulse",
+      "B": "If they respond to your voice or a gentle shake of the shoulders",
+      "C": "Their pupils",
+      "D": "Their breathing"
+    },
+    "correct": "B",
+    "explanation": "See if they are conscious before moving to the next step.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "712",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if your car has a tyre blowout on a motorway?",
+    "choices": {
+      "A": "Brake hard",
+      "B": "Hold the wheel firmly and let the car slow down on the hard shoulder",
+      "C": "Accelerate to keep it straight",
+      "D": "Swerve into the next lane"
+    },
+    "correct": "B",
+    "explanation": "Sudden braking with a flat tyre is likely to cause a spin.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "713",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "When must you call the police after an accident?",
+    "choices": {
+      "A": "Only if a car is expensive",
+      "B": "If someone is injured or if property is damaged and details weren't exchanged",
+      "C": "Only if it's raining",
+      "D": "If you are late for work"
+    },
+    "correct": "B",
+    "explanation": "If you cannot exchange details at the scene"
+  },
+  {
+    "id": "714",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if a casualty has stopped breathing?",
+    "choices": {
+      "A": "Start chest compressions (CPR)",
+      "B": "Give them a glass of water",
+      "C": "Slap their face",
+      "D": "Wait for them to wake up"
+    },
+    "correct": "A",
+    "explanation": "If they aren't breathing"
+  },
+  {
+    "id": "715",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "How do you check for breathing in a casualty?",
+    "choices": {
+      "A": "Listen for sounds and look for chest movement for up to 10 seconds",
+      "B": "Hold a mirror to their mouth",
+      "C": "Pinch their nose",
+      "D": "Ask them if they are breathing"
+    },
+    "correct": "A",
+    "explanation": "Check 'Look"
+  },
+  {
+    "id": "716",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if your car's throttle (accelerator) sticks open?",
+    "choices": {
+      "A": "Switch the engine off while moving",
+      "B": "Press the clutch and shift to neutral, then brake safely",
+      "C": "Apply the handbrake hard",
+      "D": "Close your eyes"
+    },
+    "correct": "B",
+    "explanation": "By shifting to neutral, you disconnect the engine from the wheels, allowing you to brake safely to a stop without the car accelerating."
+  },
+  {
+    "id": "717",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if you are the first to arrive at a crash?",
+    "choices": {
+      "A": "Drive past and call later",
+      "B": "Stop in a safe place and switch on hazard lights",
+      "C": "Take a video for social media",
+      "D": "Check the damage to the cars first"
+    },
+    "correct": "B",
+    "explanation": "Securing the scene prevents more people from getting hurt.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "718",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What is the ratio of chest compressions to rescue breaths in CPR?",
+    "choices": {
+      "A": "10 to 1",
+      "B": "30 to 2",
+      "C": "15 to 5",
+      "D": "50 to 1"
+    },
+    "correct": "B",
+    "explanation": "Give 30 compressions followed by 2 breaths.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "719",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if a casualty is shivering?",
+    "choices": {
+      "A": "Give them a hot drink",
+      "B": "Cover them with a coat or blanket",
+      "C": "Make them run",
+      "D": "Give them a hot water bottle"
+    },
+    "correct": "B",
+    "explanation": "Keeping them warm helps prevent the worsening of shock.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "720",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What is a common sign of internal bleeding?",
+    "choices": {
+      "A": "A high fever",
+      "B": "Bruising, thirst, and a weak but rapid pulse",
+      "C": "A very slow heartbeat",
+      "D": "They are very hungry"
+    },
+    "correct": "B",
+    "explanation": "Internal bleeding is serious.  Signs include skin bruising, a cold/clamy feel, thirst and signs of shock like a rapid, weak pulse."
+  },
+  {
+    "id": "721",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if your car breaks down in a tunnel?",
+    "choices": {
+      "A": "Walk to the end of the tunnel",
+      "B": "Switch on hazard lights and use the emergency telephone",
+      "C": "Stay in the car with the engine running",
+      "D": "Try to fix it yourself"
+    },
+    "correct": "B",
+    "explanation": "Tunnels have emergency points with phones and fire extinguishers.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "722",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "How can you help someone with a broken arm?",
+    "choices": {
+      "A": "Make them move it",
+      "B": "Immobilize the arm using a sling or by padding it against their body",
+      "C": "Give them a painkiller",
+      "D": "Pull the arm straight"
+    },
+    "correct": "B",
+    "explanation": "Preventing movement reduces pain and further injury.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "723",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "Why shouldn't you remove a motorcyclist's helmet unless necessary?",
+    "choices": {
+      "A": "It's expensive",
+      "B": "It could cause a permanent neck or spine injury",
+      "C": "The driver might get cold",
+      "D": "It is against the law"
+    },
+    "correct": "B",
+    "explanation": "The helmet supports the head and neck; removing it can be fatal if the neck is broken.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "724",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if you hit a parked car and the owner isn't there?",
+    "choices": {
+      "A": "Drive away",
+      "B": "Leave your details in a visible place (like under the wiper) and report it",
+      "C": "Wait for 5 hours",
+      "D": "Take the car to a garage"
+    },
+    "correct": "B",
+    "explanation": "Leaving the scene without providing details is an offense.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "725",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "Which of these animals must you report hitting to the police?",
+    "choices": {
+      "A": "A cat",
+      "B": "A pheasant",
+      "C": "A pig",
+      "D": "A squirrel"
+    },
+    "correct": "C",
+    "explanation": "Dogs"
+  },
+  {
+    "id": "726",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What does a 'warning triangle' do?",
+    "choices": {
+      "A": "It fixes the car",
+      "B": "It warns other drivers of a hazard ahead",
+      "C": "It is for decoration",
+      "D": "It marks a parking spot"
+    },
+    "correct": "B",
+    "explanation": "Place it well back from the scene to give others time to slow down.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "727",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "Where should you never use a warning triangle?",
+    "choices": {
+      "A": "On a country road",
+      "B": "In a city center",
+      "C": "On a motorway",
+      "D": "On a dual carriageway"
+    },
+    "correct": "C",
+    "explanation": "Walking on a motorway to place a triangle is too dangerous.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "728",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if you suspect a casualty has a back injury?",
+    "choices": {
+      "A": "Help them stand up",
+      "B": "Reassure them and tell them not to move",
+      "C": "Massage their back",
+      "D": "Give them a drink of water"
+    },
+    "correct": "B",
+    "explanation": "Any movement could lead to paralysis if the spine is damaged.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "729",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What is the purpose of the 'Emergency SOS' phones on motorways?",
+    "choices": {
+      "A": "To call home",
+      "B": "To give your exact location to the emergency services",
+      "C": "To check the weather",
+      "D": "To listen to the radio"
+    },
+    "correct": "B",
+    "explanation": "These phones are connected directly to control centers that know exactly where you are.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "730",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "How can you help a child who has stopped breathing?",
+    "choices": {
+      "A": "Use two fingers for chest compressions instead of a full hand",
+      "B": "Give them a sweet",
+      "C": "Wait for them to wake up",
+      "D": "Hold them upside down"
+    },
+    "correct": "A",
+    "explanation": "Children are more fragile"
+  },
+  {
+    "id": "731",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if a car is on fire and the person is trapped?",
+    "choices": {
+      "A": "Try to put the fire out with a proper extinguisher if safe",
+      "B": "Run away immediately",
+      "C": "Wait for the police",
+      "D": "Throw sand on the person"
+    },
+    "correct": "A",
+    "explanation": "Only attempt to help if you do not put your own life at risk.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "732",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "How deep should you press the chest during adult CPR?",
+    "choices": {
+      "A": "1-2 cm",
+      "B": "5-6 cm",
+      "C": "10 cm",
+      "D": "Only slightly"
+    },
+    "correct": "B",
+    "explanation": "You need to compress the chest significantly to pump the blood.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "733",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What is the first step in using a fire extinguisher?",
+    "choices": {
+      "A": "Shake it",
+      "B": "Pull the pin",
+      "C": "Throw it at the fire",
+      "D": "Turn it upside down"
+    },
+    "correct": "B",
+    "explanation": "Most extinguishers have a safety pin to prevent accidental use.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "734",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if you see an accident on the other side of the motorway?",
+    "choices": {
+      "A": "Stop and cross the lanes to help",
+      "B": "Continue and call 999 if needed - do not slow down to watch",
+      "C": "Slow down to take a photo",
+      "D": "Sound your horn"
+    },
+    "correct": "B",
+    "explanation": "'Rubbernecking' causes more accidents and traffic jams.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "735",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "If you are involved in an accident,  how long do you have to produce your documents to the police?",
+    "choices": {
+      "A": "24 hours",
+      "B": "7 days",
+      "C": "30 days",
+      "D": "One year"
+    },
+    "correct": "B",
+    "explanation": "If you do not have your documents with you at the scene, you must take them to a police station within 7 days."
+  },
+  {
+    "id": "736",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if someone is choking?",
+    "choices": {
+      "A": "Slap them on the back between the shoulder blades",
+      "B": "Give them a drink of water",
+      "C": "Make them lie down",
+      "D": "Tell them to sing"
+    },
+    "correct": "A",
+    "explanation": "Up to five sharp back blows can help dislodge the object.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "737",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What is the purpose of 'Airway' in DR ABC?",
+    "choices": {
+      "A": "To check if the person has fresh air",
+      "B": "To ensure the tongue isn't blocking the throat by tilting the head back",
+      "C": "To check the air in the tyres",
+      "D": "To use an air pump"
+    },
+    "correct": "B",
+    "explanation": "A blocked airway is the most common cause of death in unconscious casualties.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "738",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What information should you give the emergency services?",
+    "choices": {
+      "A": "The color of your car",
+      "B": "Your location and the number of people injured",
+      "C": "Your life story",
+      "D": "The price of the car"
+    },
+    "correct": "B",
+    "explanation": "This helps them send the right amount of help to the right place.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "739",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if you are dazzled by the sun and cannot see?",
+    "choices": {
+      "A": "Close your eyes",
+      "B": "Slow down and stop if necessary",
+      "C": "Speed up to get past the glare",
+      "D": "Turn your lights on"
+    },
+    "correct": "B",
+    "explanation": "If you cannot see the road"
+  },
+  {
+    "id": "740",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "How can you identify a vehicle carrying dangerous goods?",
+    "choices": {
+      "A": "It will be very large",
+      "B": "It will have a plain orange plate or a hazard warning diamond",
+      "C": "It will be painted red",
+      "D": "It will have a loud siren"
+    },
+    "correct": "B",
+    "explanation": "This warns emergency services of the specific risks (fire"
+  },
+  {
+    "id": "741",
+    "category": "Incidents Accidents and Emergencies",
+    "question": "What should you do if you see a pedestrian with a white stick and a red band?",
+    "choices": {
+      "A": "They are deaf and blind",
+      "B": "They are just blind",
+      "C": "They are a teacher",
+      "D": "They are an athlete"
+    },
+    "correct": "A",
+    "explanation": "A plain white stick indicates blindness; a red band indicates they are also deaf.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  }
+]
