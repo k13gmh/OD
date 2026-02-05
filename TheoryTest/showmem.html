@@ -16,8 +16,10 @@
             vertical-align: top;
         }
         .mem-table th { background-color: #f8f9fa; color: #333; text-transform: uppercase; }
-        .raw-val { font-family: monospace; color: #d9534f; background: #fffcfc; display: block; padding: 5px; }
+        .raw-val { font-family: monospace; color: #d9534f; background: #fffcfc; display: block; padding: 5px; max-height: 100px; overflow-y: auto; }
         .key-name { font-weight: bold; color: #1a1a1a; }
+        .btn-danger { background: #d9534f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
+        .btn-clear-all { background: #333; color: white; margin-bottom: 15px; width: 100%; }
     </style>
 </head>
 <body>
@@ -31,27 +33,32 @@
         <div class="card">
             <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">Displaying all data strings currently held in browser memory.</p>
             
+            <button onclick="clearAllMemory()" class="btn btn-clear-all">WIPE ALL STORAGE</button>
+
             <table class="mem-table">
                 <thead>
                     <tr>
-                        <th style="width: 35%;">Storage Key</th>
-                        <th style="width: 65%;">Raw Data Value</th>
+                        <th style="width: 30%;">Key</th>
+                        <th style="width: 55%;">Raw Value</th>
+                        <th style="width: 15%;">Action</th>
                     </tr>
                 </thead>
                 <tbody id="mem-body">
-                    </tbody>
+                </tbody>
             </table>
 
             <a href="sysmenu.html" class="btn btn-blue" style="margin-top:25px; text-decoration:none;">Back to System Menu</a>
             
             <div class="card-footer">
                 <span>TOTAL KEYS: <span id="key-count">0</span></span>
-                <span>v2.3.0</span>
+                <span>v2.3.5</span>
             </div>
         </div>
     </div>
 
     <script>
+        // Version Check: v2.3.5
+        
         function dumpMemory() {
             const tbody = document.getElementById('mem-body');
             const countDisplay = document.getElementById('key-count');
@@ -61,25 +68,44 @@
             countDisplay.innerText = totalKeys;
 
             if (totalKeys === 0) {
-                tbody.innerHTML = '<tr><td colspan="2" style="text-align:center; padding: 20px;">Memory is currently empty.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding: 20px;">Memory is currently empty.</td></tr>';
                 return;
             }
 
-            // Iterate through every single item in localStorage
-            for (let i = 0; i < totalKeys; i++) {
-                const key = localStorage.key(i);
-                const value = localStorage.getItem(key);
+            // Create an array of keys to avoid index shifting while rendering
+            const keys = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                keys.push(localStorage.key(i));
+            }
 
+            keys.forEach(key => {
+                const value = localStorage.getItem(key);
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td class="key-name">${key}</td>
                     <td><code class="raw-val">${value}</code></td>
+                    <td>
+                        <button class="btn-danger" onclick="deleteItem('${key}')">Del</button>
+                    </td>
                 `;
                 tbody.appendChild(row);
+            });
+        }
+
+        function deleteItem(key) {
+            if (confirm(`Delete key: ${key}?`)) {
+                localStorage.removeItem(key);
+                dumpMemory();
             }
         }
 
-        // Run on load
+        function clearAllMemory() {
+            if (confirm("WARNING: This will delete all local data, including scores, saved sessions, and downloaded questions. Proceed?")) {
+                localStorage.clear();
+                dumpMemory();
+            }
+        }
+
         window.onload = dumpMemory;
     </script>
 </body>
