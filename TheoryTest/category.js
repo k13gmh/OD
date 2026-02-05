@@ -1,10 +1,10 @@
 /**
  * File: category.js
- * Version: v2.2.5
- * Feature: Removed sysmenu link, Final Grey UI Standardization
+ * Version: v2.2.6
+ * Feature: Weighted Selection (Wall of Shame integration)
  */
 
-const SCRIPT_VERSION = "v2.2.5";
+const SCRIPT_VERSION = "v2.2.6";
 
 if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -55,7 +55,6 @@ function buildCategoryMenu() {
         listArea.appendChild(btn);
     });
 
-    // Single Back Button - Only points to Main Menu
     const backBtn = document.createElement('a');
     backBtn.href = "mainmenu.html";
     backBtn.className = 'btn btn-grey';
@@ -93,16 +92,46 @@ function showQuantitySelector(categoryName) {
     `;
 }
 
+/**
+ * Weighted Selection Logic
+ * Questions with higher shame weight appear more frequently.
+ */
 function startCategoryTest(limit) {
     document.getElementById('menu-ui').style.display = 'none';
     document.getElementById('test-ui').style.display = 'block';
 
-    let selected = allQuestions
-        .filter(q => q.category === selectedCategory)
-        .sort(() => 0.5 - Math.random())
-        .slice(0, limit);
+    const shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
+    let categoryPool = allQuestions.filter(q => q.category === selectedCategory);
+    let selected = [];
 
-    sessionQuestions = selected.map((q, idx) => shuffleQuestionOptions(q, idx + 1));
+    // Create a weighted list: Higher weight = more entries in the 'lottery'
+    let weightedPool = [];
+    categoryPool.forEach(q => {
+        let weight = (shameTally[q.id] || 0) + 1; // Base weight is 1
+        for (let i = 0; i < weight; i++) {
+            weightedPool.push(q);
+        }
+    });
+
+    // Pick unique questions until limit or pool exhausted
+    while (selected.length < limit && categoryPool.length > 0) {
+        const randomIndex = Math.floor(Math.random() * weightedPool.length);
+        const pickedQ = weightedPool[randomIndex];
+
+        // Add to selection
+        selected.push(pickedQ);
+
+        // Remove ALL instances of this ID from the weighted lottery so it's not picked twice
+        weightedPool = weightedPool.filter(item => item.id !== pickedQ.id);
+        // Also remove from the master category pool to track remaining unique questions
+        categoryPool = categoryPool.filter(item => item.id !== pickedQ.id);
+    }
+
+    // Shuffle the final selection so the hardest ones aren't all at the start
+    sessionQuestions = selected
+        .sort(() => 0.5 - Math.random())
+        .map((q, idx) => shuffleQuestionOptions(q, idx + 1));
+
     originalSessionQuestions = [...sessionQuestions];
     currentIndex = 0;
     testData = { selections: {}, flagged: [], seenIndices: [0] };
@@ -193,6 +222,14 @@ function retrySubset(type) {
     document.getElementById('summary-ui').style.display = 'none';
     document.getElementById('test-ui').style.display = 'block';
     renderQuestion();
+}
+
+function promptCustomCount(max) {
+    let num = prompt(`Enter number (1 - ${max}):`, "25");
+    if (num !== null) {
+        let val = parseInt(num);
+        if (!isNaN(val) && val > 0) startCategoryTest(Math.min(val, max));
+    }
 }
 
 function shuffleQuestionOptions(q, displayIndex) {
