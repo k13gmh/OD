@@ -141,8 +141,8 @@
             <h3>About the Wall</h3>
             <p>This page tracks questions you've answered incorrectly to help you focus your revision.</p>
             <ul>
-                <li><strong>Weight:</strong> Every time you get a question wrong, its weight increases. Questions with higher weight appear more often in your tests.</li>
-                <li><strong>Redemption:</strong> Every time you get a "shame" question right, its weight drops. Get it right twice, and it is removed from the wall.</li>
+                <li><strong>Weight:</strong> Every time you get a question wrong, its weight increases.</li>
+                <li><strong>Redemption:</strong> Get a "shame" question right to drop its weight. Get it right twice, and it's removed.</li>
             </ul>
             <button class="btn btn-blue" onclick="closeInfo()" style="padding:10px; margin-top:10px;">CLOSE</button>
         </div>
@@ -154,7 +154,7 @@
             <div class="title-group">
                 <h1>ORION DRIVE</h1>
                 <h2>Wall of Shame</h2>
-                <div id="version-tag">HTML: v2.3.7 | JS: Loading...</div>
+                <div id="version-tag">HTML: v2.3.8 | JS: Loading...</div>
             </div>
             <div id="shame-total-sign" class="shame-speed-sign">0</div>
         </div>
@@ -171,8 +171,8 @@
     </div>
 
     <script>
-        const JS_VERSION = "v2.3.7";
-        const HTML_VERSION = "v2.3.7";
+        const JS_VERSION = "v2.3.8";
+        const HTML_VERSION = "v2.3.8";
 
         function openInfo() { document.getElementById('info-modal').style.display = 'flex'; }
         function closeInfo() { document.getElementById('info-modal').style.display = 'none'; }
@@ -196,8 +196,11 @@
             }
 
             try {
-                const response = await fetch('questions.json');
-                const allQuestions = await response.json();
+                // FIXED: Using localStorage instead of fetch
+                const localData = localStorage.getItem('orion_master.json');
+                if (!localData) throw new Error("Database not synced");
+                
+                const allQuestions = JSON.parse(localData);
 
                 let catCounts = {};
                 ids.forEach(id => {
@@ -231,7 +234,7 @@
                     }
                 });
             } catch (e) {
-                shameList.innerHTML = '<p style="color:red; text-align:center;">Error loading database.</p>';
+                shameList.innerHTML = `<p style="color:red; text-align:center;">Error: ${e.message}. Please sync from Main Menu.</p>`;
             }
         }
 
