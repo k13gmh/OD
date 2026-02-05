@@ -950,7 +950,7 @@
   {
     "id": "587",
     "category": "Road and Traffic Signs",
-    "question": "What does a red circle with 'No' over a 'U-shaped arrow' mean?",
+    "question": "What does a red circle with red line over a 'U-shaped arrow' mean?",
     "choices": {
       "A": "No left turn",
       "B": "No U-turns",
@@ -971,7 +971,7 @@
       "D": "No parking during those times"
     },
     "correct": "A",
-    "explanation": "Outside of those hours"
+    "explanation": "Other vehicles may use the lane outside of those hours"
   },
   {
     "id": "589",
@@ -1002,7 +1002,7 @@
   {
     "id": "591",
     "category": "Road and Traffic Signs",
-    "question": "What does a 'red circle with a motorbike' and '30' inside mean?",
+    "question": "What does a 'red circle with a '30' inside mean?",
     "choices": {
       "A": "Motorbikes only at 30mph",
       "B": "A maximum speed limit of 30mph for all vehicles",
