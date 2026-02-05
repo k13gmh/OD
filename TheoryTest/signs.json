@@ -796,10 +796,10 @@
     "category": "Road and Traffic Signs",
     "question": "What does a blue rectangular sign with a 'white bus and cycle' mean?",
     "choices": {
-      "A": "Bus and cycle lane",
-      "B": "No buses or cycles",
-      "C": "Bus and cycle parking",
-      "D": "A bike shop"
+      "A": "Bus and cycle lane only",
+      "B": "Cars only.  No buses or cycles",
+      "C": "Bus and cycle parking only",
+      "D": "Entrance to bike shop only"
     },
     "correct": "A",
     "explanation": "This indicates a lane that can be used by both buses and cyclists.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
@@ -807,15 +807,15 @@
   {
     "id": "576",
     "category": "Road and Traffic Signs",
-    "question": "What does a sign showing a red triangle with a 'fence' mean?",
+    "question": "What does a sign showing a red triangle with a stone flying froma tyre mean?",
     "choices": {
-      "A": "A farm ahead",
-      "B": "A level crossing with a gate or barrier",
-      "C": "No trespassing",
-      "D": "A garden center"
+      "A": "A stone quarry",
+      "B": "Loose chippings on road surface",
+      "C": "A landslide area",
+      "D": "No driving on gravel"
     },
     "correct": "B",
-    "explanation": "The fence symbol tells you the crossing is protected by a barrier.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "Slow down to avoid stones hitting your windscreenor other road users.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "577",
@@ -833,15 +833,15 @@
   {
     "id": "578",
     "category": "Road and Traffic Signs",
-    "question": "What does a blue square sign with a 'white bicycle' and the word 'Route' mean?",
+    "question": "What does a blue square sign with a 'white bicycle' and line mean?",
     "choices": {
       "A": "No cycling",
-      "B": "A recommended route for cyclists",
-      "C": "A cycle shop",
+      "B": "A cycle route - traffic in the same direction",
+      "C": "A cycle route - traffic in the opposite direction",
       "D": "A cycle race"
     },
     "correct": "B",
-    "explanation": "This is a direction sign for cyclists to help them find the safest path.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+    "explanation": "Withflow cycle lane.  Cycles have their own lane on the road travelling in the same direction.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
   },
   {
     "id": "579",
