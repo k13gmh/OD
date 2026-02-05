@@ -1,0 +1,743 @@
+[
+{
+    "id": "286",
+    "category": "Vulnerable Road Users",
+    "question": "Which road users are most at risk in even light winds?",
+    "choices": {
+      "A": "Bus drivers",
+      "B": "Motorcyclists and cyclists",
+      "C": "Car drivers",
+      "D": "Tractor drivers"
+    },
+    "correct": "B",
+    "explanation": "Cyclists and motorcyclists can be blown off course by a single gust of wind. Give them extra space.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "287",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do when you see a pedestrian with a white cane?",
+    "choices": {
+      "A": "Sound your horn to let them know you are there",
+      "B": "Give them plenty of room as they are blind",
+      "C": "Flash your lights at them",
+      "D": "Speed up to get past quickly"
+    },
+    "correct": "B",
+    "explanation": "A white cane signifies the pedestrian is blind. Be patient and do not make sudden noises.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "288",
+    "category": "Vulnerable Road Users",
+    "question": "Why should you be extra careful of children near a parked ice-cream van?",
+    "choices": {
+      "A": "They might be loud",
+      "B": "They may run across the road without looking",
+      "C": "The van might move off quickly",
+      "D": "They will be distracted by their ice cream"
+    },
+    "correct": "B",
+    "explanation": "Children are easily distracted by treats and often forget to look for traffic.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "289",
+    "category": "Vulnerable Road Users",
+    "question": "You are turning left into a side road. A pedestrian is already crossing that road. What should you do?",
+    "choices": {
+      "A": "Sound your horn to tell them to stop",
+      "B": "Wait and give way to the pedestrian",
+      "C": "Drive around them",
+      "D": "Flash your lights at them"
+    },
+    "correct": "B",
+    "explanation": "Pedestrians who have already started to cross a side road into which you are turning have priority.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "290",
+    "category": "Vulnerable Road Users",
+    "question": "How should you pass a horse and rider?",
+    "choices": {
+      "A": "As quickly as possible",
+      "B": "With a loud rev of the engine",
+      "C": "Slowly and with plenty of room",
+      "D": "Sounding your horn as you pass"
+    },
+    "correct": "C",
+    "explanation": "Horses are unpredictable and easily spooked. Pass wide and slow (usually under 10mph).\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "291",
+    "category": "Vulnerable Road Users",
+    "question": "Why are motorcyclists more at risk at junctions?",
+    "choices": {
+      "A": "They are faster than cars",
+      "B": "They are smaller and can be hidden by larger vehicles or pillars",
+      "C": "They do not have to stop at junctions",
+      "D": "They always wear dark clothing"
+    },
+    "correct": "B",
+    "explanation": "The small profile of a motorcycle makes it much harder to judge their speed and distance.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "292",
+    "category": "Vulnerable Road Users",
+    "question": "What does it mean if a pedestrian is carrying a white cane with a red band?",
+    "choices": {
+      "A": "They are blind",
+      "B": "They are deaf",
+      "C": "They are both deaf and blind",
+      "D": "They are a senior citizen"
+    },
+    "correct": "C",
+    "explanation": "This specific cane signifies a dual sensory impairment. They may not see or hear you.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "293",
+    "category": "Vulnerable Road Users",
+    "question": "You are following a cyclist as you approach a roundabout. They stay in the left-hand lane but signal right. What should you do?",
+    "choices": {
+      "A": "Sound your horn",
+      "B": "Overtake them on the right",
+      "C": "Give them plenty of room as they may stay in the left lane to go all the way around",
+      "D": "Assume they have forgotten to cancel their signal"
+    },
+    "correct": "C",
+    "explanation": "Cyclists are allowed to stay in the left lane for safety even when turning right at a roundabout.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "294",
+    "category": "Vulnerable Road Users",
+    "question": "Who is most likely to be affected by 'buffeting' when a large vehicle passes them?",
+    "choices": {
+      "A": "Car drivers",
+      "B": "Motorcyclists",
+      "C": "Lorry drivers",
+      "D": "Bus passengers"
+    },
+    "correct": "B",
+    "explanation": "The air pressure from a large vehicle can push a motorcyclist or cyclist sideways.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "295",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do when approaching a pedestrian crossing and the lights are flashing amber?",
+    "choices": {
+      "A": "Speed up to get through",
+      "B": "Stop and wait for the lights to turn green",
+      "C": "Give way to any pedestrians already on the crossing",
+      "D": "Sound your horn to warn pedestrians"
+    },
+    "correct": "C",
+    "explanation": "Flashing amber at a pelican crossing means you must give way to pedestrians on the crossing"
+  },
+  {
+    "id": "296",
+    "category": "Vulnerable Road Users",
+    "question": "Why should you look for motorcyclists when you are in a traffic queue?",
+    "choices": {
+      "A": "They might be trying to squeeze through the gap between lanes (filtering)",
+      "B": "They might steal your wing mirror",
+      "C": "They are trying to race you",
+      "D": "They are not allowed in traffic queues"
+    },
+    "correct": "A",
+    "explanation": "Motorcyclists often 'filter' through slow traffic. Check your mirrors before changing position or opening a door.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "297",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you see a group of people led by a person carrying a white light at the front and a red light at the back?",
+    "choices": {
+      "A": "Ignore them",
+      "B": "They are a group of organized marchers; pass them with care",
+      "C": "Speed up to get past the obstruction",
+      "D": "Sound your horn to make them move"
+    },
+    "correct": "B",
+    "explanation": "At night"
+  },
+  {
+    "id": "298",
+    "category": "Vulnerable Road Users",
+    "question": "What color is a 'dog's coat' or harness if it is a guide dog for a deaf person?",
+    "choices": {
+      "A": "Yellow",
+      "B": "Burgundy or yellow",
+      "C": "Bright blue",
+      "D": "Green"
+    },
+    "correct": "B",
+    "explanation": "Recognizing these colors helps you identify that the pedestrian may not hear your engine or horn.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "299",
+    "category": "Vulnerable Road Users",
+    "question": "How much room should you give a cyclist when overtaking in 30mph limits?",
+    "choices": {
+      "A": "At least 1.5 metres",
+      "B": "At least 6 inches",
+      "C": "The width of a wing mirror",
+      "D": "Only as much as is needed to clear them"
+    },
+    "correct": "A",
+    "explanation": "The Highway Code recommends at least 1.5 metres of space when overtaking at speeds up to 30mph.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "300",
+    "category": "Vulnerable Road Users",
+    "question": "Why are older pedestrians more at risk?",
+    "choices": {
+      "A": "They may be faster than you think",
+      "B": "They may have difficulty judging the speed of approaching vehicles",
+      "C": "They always have the right of way",
+      "D": "They prefer to cross on bends"
+    },
+    "correct": "B",
+    "explanation": "Reduced eyesight or hearing can make it harder for elderly people to judge how far away a car is.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "301",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you see a cyclist looking over their shoulder?",
+    "choices": {
+      "A": "Speed up to pass them",
+      "B": "Prepare for them to move out or turn",
+      "C": "Sound your horn",
+      "D": "Ignore them"
+    },
+    "correct": "B",
+    "explanation": "This 'lifesaver' check is a clear signal that the cyclist is planning to change direction.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "302",
+    "category": "Vulnerable Road Users",
+    "question": "When should you be particularly careful of cyclists?",
+    "choices": {
+      "A": "When you are driving on a motorway",
+      "B": "When you are opening your car door",
+      "C": "When the road is perfectly straight",
+      "D": "When it is a sunny day"
+    },
+    "correct": "B",
+    "explanation": "Always check your blind spot for cyclists before opening your door (the 'Dutch Reach' is recommended).\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "303",
+    "category": "Vulnerable Road Users",
+    "question": "What is the hazard when you see a 'School' sign?",
+    "choices": {
+      "A": "The road will be closed",
+      "B": "Children may run out from between parked cars",
+      "C": "You must stop and wait",
+      "D": "Only teachers can drive there"
+    },
+    "correct": "B",
+    "explanation": "Children have limited perception of danger. Be prepared for the unexpected.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "304",
+    "category": "Vulnerable Road Users",
+    "question": "Why should you check for motorcyclists before turning right into a side road?",
+    "choices": {
+      "A": "They might be overtaking you on the right",
+      "B": "They might be in the side road",
+      "C": "They are faster than cars",
+      "D": "They have no lights"
+    },
+    "correct": "A",
+    "explanation": "It is a common accident for a car to turn right into the path of an overtaking motorcyclist.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "305",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you see an ambulance behind you with blue flashing lights?",
+    "choices": {
+      "A": "Stop in the middle of the road",
+      "B": "Pull over safely as soon as you can to let it pass",
+      "C": "Speed up to stay ahead",
+      "D": "Follow it closely to get through traffic"
+    },
+    "correct": "B",
+    "explanation": "Help emergency vehicles by clearing a path"
+  },
+  {
+    "id": "306",
+    "category": "Vulnerable Road Users",
+    "question": "A person in a wheelchair is crossing the road. What should you do?",
+    "choices": {
+      "A": "Sound your horn to tell them to hurry",
+      "B": "Be patient and give them time to cross",
+      "C": "Drive around them",
+      "D": "Flash your lights at them"
+    },
+    "correct": "B",
+    "explanation": "Wheelchair users may take longer to cross. Be patient and wait until they are safely on the pavement.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "307",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you see a sheep or a horse on the road?",
+    "choices": {
+      "A": "Sound your horn",
+      "B": "Slow down and be ready to stop",
+      "C": "Rev your engine",
+      "D": "Flash your lights"
+    },
+    "correct": "B",
+    "explanation": "Animals are easily startled. Give them room and do not make sudden noises.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "308",
+    "category": "Vulnerable Road Users",
+    "question": "Why is it dangerous to wave a pedestrian across a road?",
+    "choices": {
+      "A": "They might not see you",
+      "B": "Another vehicle may be coming that they can't see",
+      "C": "It is against the law",
+      "D": "It makes you look impatient"
+    },
+    "correct": "B",
+    "explanation": "Your wave might lead them into the path of an overtaking vehicle or a car coming from the other direction.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "309",
+    "category": "Vulnerable Road Users",
+    "question": "What is the risk of following a large vehicle too closely at a junction?",
+    "choices": {
+      "A": "You will get home faster",
+      "B": "You cannot see pedestrians or cyclists who may be crossing the road",
+      "C": "The vehicle will block the wind",
+      "D": "It is better for fuel economy"
+    },
+    "correct": "B",
+    "explanation": "Large vehicles block your vision. Stay back to see the 'big picture' of the junction.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "310",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do when passing a school bus that has stopped to let children off?",
+    "choices": {
+      "A": "Speed up to get past quickly",
+      "B": "Be alert for children crossing the road in front of or behind the bus",
+      "C": "Sound your horn continuously",
+      "D": "Drive as close as possible"
+    },
+    "correct": "B",
+    "explanation": "Children often run across the road immediately after getting off the bus.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "311",
+    "category": "Vulnerable Road Users",
+    "question": "How can you help a cyclist at a set of traffic lights?",
+    "choices": {
+      "A": "Stop as close to them as possible",
+      "B": "Leave them plenty of room and don't try to squeeze past",
+      "C": "Sound your horn when the light turns green",
+      "D": "Flash your lights to tell them to go"
+    },
+    "correct": "B",
+    "explanation": "Cyclists need space to move off as they may be wobbly or slow to start.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "312",
+    "category": "Vulnerable Road Users",
+    "question": "Why should you take extra care when passing a cyclist in wet weather?",
+    "choices": {
+      "A": "The cyclist will be faster",
+      "B": "The road surface may be slippery and the cyclist could slip or swerve",
+      "C": "The cyclist will be wearing a raincoat",
+      "D": "Water spray doesn't affect cyclists"
+    },
+    "correct": "B",
+    "explanation": "Puddles and slippery markings can cause a cyclist to lose balance. Give them extra room.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "313",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you see a 'disabled' person in a powered wheelchair on the road?",
+    "choices": {
+      "A": "Sound your horn",
+      "B": "Treat them as a slow-moving vehicle and give them plenty of room",
+      "C": "Force them onto the pavement",
+      "D": "Speed up to get past"
+    },
+    "correct": "B",
+    "explanation": "Powered wheelchairs (Category 3) are allowed on the road and should be treated with the same respect as a car.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "314",
+    "category": "Vulnerable Road Users",
+    "question": "What's the main hazard when you are turning left into a side road?",
+    "choices": {
+      "A": "Oncoming traffic",
+      "B": "A cyclist coming up on your left-hand side",
+      "C": "A car behind you",
+      "D": "The speed limit changing"
+    },
+    "correct": "B",
+    "explanation": "Always check your near-side mirror and blind spot for cyclists who may be continuing straight on.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "315",
+    "category": "Vulnerable Road Users",
+    "question": "How should you drive in areas where there are many pedestrians?",
+    "choices": {
+      "A": "At the maximum speed limit",
+      "B": "With extra caution and at a lower speed",
+      "C": "Sounding your horn every minute",
+      "D": "Using full-beam headlights"
+    },
+    "correct": "B",
+    "explanation": "In busy areas"
+  },
+  {
+    "id": "316",
+    "category": "Vulnerable Road Users",
+    "question": "What is a 'vulnerable road user'?",
+    "choices": {
+      "A": "Someone who drives a tank",
+      "B": "Someone who is more likely to be injured in a collision (e.g. pedestrians/cyclists)",
+      "C": "Someone who has no insurance",
+      "D": "Someone who drives an electric car"
+    },
+    "correct": "B",
+    "explanation": "These road users do not have the protection of a metal 'cage' around them.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "317",
+    "category": "Vulnerable Road Users",
+    "question": "Why should you be careful when driving near a row of parked cars?",
+    "choices": {
+      "A": "People might be hiding behind them to jump out",
+      "B": "A child or pedestrian may step out from between the cars",
+      "C": "The cars might all start at once",
+      "D": "There are no hazards here"
+    },
+    "correct": "B",
+    "explanation": "Always look for 'clues' like feet or heads visible through the windows of parked cars.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "318",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you see a pedestrian who is looking undecided at the kerb?",
+    "choices": {
+      "A": "Speed up so they don't cross",
+      "B": "Slow down and be prepared to stop if they step out",
+      "C": "Sound your horn to warn them",
+      "D": "Flash your lights to tell them to cross"
+    },
+    "correct": "B",
+    "explanation": "Anticipate that they might make a mistake or decide to cross suddenly.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "319",
+    "category": "Vulnerable Road Users",
+    "question": "What color is a 'Level Crossing' light signal for pedestrians?",
+    "choices": {
+      "A": "Blue",
+      "B": "Red",
+      "C": "Green",
+      "D": "Amber"
+    },
+    "correct": "B",
+    "explanation": "The red standing man or flashing red lights mean pedestrians must not cross.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "320",
+    "category": "Vulnerable Road Users",
+    "question": "How can you tell if a person is a 'deaf' pedestrian?",
+    "choices": {
+      "A": "They are wearing a red coat",
+      "B": "They have a dog with a burgundy or yellow harness",
+      "C": "They are carrying a blue cane",
+      "D": "They are walking very fast"
+    },
+    "correct": "B",
+    "explanation": "Specialized dog harnesses are a key visual clue for drivers.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "321",
+    "category": "Vulnerable Road Users",
+    "question": "Why are 'trams' dangerous for cyclists?",
+    "choices": {
+      "A": "The rails can catch the cyclist's tyres",
+      "B": "Trams are very loud",
+      "C": "Trams only travel on grass",
+      "D": "Cyclists are not allowed near trams"
+    },
+    "correct": "A",
+    "explanation": "Cyclists must cross tram tracks at a wide angle to avoid getting their wheels stuck in the grooves.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "322",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you are driving and a ball bounces into the road?",
+    "choices": {
+      "A": "Keep going at the same speed",
+      "B": "Slow down and stop if necessary as a child may follow it",
+      "C": "Speed up to avoid the ball",
+      "D": "Sound your horn at the ball"
+    },
+    "correct": "B",
+    "explanation": "The ball is a 'warning' of a child hazard.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "323",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you are following a learner who is struggling to move off?",
+    "choices": {
+      "A": "Tailgate them",
+      "B": "Be patient and stay back",
+      "C": "Sound your horn",
+      "D": "Overtake them immediately on the left"
+    },
+    "correct": "B",
+    "explanation": "Adding pressure to a learner increases the chance of them making more mistakes.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "324",
+    "category": "Vulnerable Road Users",
+    "question": "Why should you be careful when passing a horse at night?",
+    "choices": {
+      "A": "The horse will be sleeping",
+      "B": "The rider and horse may be hard to see in dark clothing",
+      "C": "Horses are faster at night",
+      "D": "There are no horses at night"
+    },
+    "correct": "B",
+    "explanation": "If you suspect horses are ahead"
+  },
+  {
+    "id": "325",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you see a person with a white cane and a red band waiting to cross?",
+    "choices": {
+      "A": "Sound your horn",
+      "B": "Stop and allow them to cross when it is safe for them",
+      "C": "Drive past quickly",
+      "D": "Assume they are just out for a walk"
+    },
+    "correct": "B",
+    "explanation": "They are both deaf and blind; they need extra time and your complete patience.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "326",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you see a cyclist in the middle of the lane?",
+    "choices": {
+      "A": "Sound your horn to tell them to move",
+      "B": "Be patient and wait until it is safe to overtake with plenty of room",
+      "C": "Force your way past",
+      "D": "Flash your lights"
+    },
+    "correct": "B",
+    "explanation": "Cyclists often take 'Primary Position' (the center of the lane) for safety at junctions or narrow spots.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "327",
+    "category": "Vulnerable Road Users",
+    "question": "What is the danger of 'overshooting' a stop line at a junction?",
+    "choices": {
+      "A": "You will get a fine",
+      "B": "You might hit a pedestrian who is crossing the road",
+      "C": "It saves time",
+      "D": "It helps you see better"
+    },
+    "correct": "B",
+    "explanation": "The stop line is there to keep you clear of the pedestrian crossing path.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "328",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do when you see a 'Cattle' sign?",
+    "choices": {
+      "A": "Speed up",
+      "B": "Slow down and be prepared to stop",
+      "C": "Sound your horn",
+      "D": "Drive in the middle of the road"
+    },
+    "correct": "B",
+    "explanation": "Livestock can be unpredictable and may be crossing the road just around the bend.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "329",
+    "category": "Vulnerable Road Users",
+    "question": "How should you treat a moped rider with 'L' plates?",
+    "choices": {
+      "A": "Ignore them",
+      "B": "Give them plenty of space and be patient with their speed",
+      "C": "Tailgate them to make them go faster",
+      "D": "Sound your horn as you pass"
+    },
+    "correct": "B",
+    "explanation": "L-plate riders are inexperienced and may be nervous in traffic.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "330",
+    "category": "Vulnerable Road Users",
+    "question": "Why should you stay well back from a large vehicle at a junction?",
+    "choices": {
+      "A": "To avoid their exhaust",
+      "B": "To ensure the driver can see you and to give them room to turn",
+      "C": "To save fuel",
+      "D": "To get a better view of the sky"
+    },
+    "correct": "B",
+    "explanation": "Large vehicles often need to swing out in the opposite direction before making a tight turn.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "331",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you are driving near a park where children are playing?",
+    "choices": {
+      "A": "Speed up",
+      "B": "Drive slowly and be extra alert for children running into the road",
+      "C": "Sound your horn every 10 seconds",
+      "D": "Turn your radio up"
+    },
+    "correct": "B",
+    "explanation": "Parks are high-risk zones for child pedestrians.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "332",
+    "category": "Vulnerable Road Users",
+    "question": "What is the benefit of a 'Puffin Crossing'?",
+    "choices": {
+      "A": "It has no lights",
+      "B": "It uses sensors to detect when pedestrians have finished crossing",
+      "C": "It is only for birds",
+      "D": "It stays red for 5 minutes"
+    },
+    "correct": "B",
+    "explanation": "Puffin crossings are safer because they won't turn green while someone is still slowly crossing.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "333",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do when approaching a zebra crossing?",
+    "choices": {
+      "A": "Speed up to get across before anyone reaches it",
+      "B": "Slow down and be prepared to stop if anyone is waiting",
+      "C": "Sound your horn to warn people",
+      "D": "Only stop if someone is actually on the road"
+    },
+    "correct": "B",
+    "explanation": "You should be looking for people approaching the crossing"
+  },
+  {
+    "id": "334",
+    "category": "Vulnerable Road Users",
+    "question": "How can you protect a cyclist when you are turning left?",
+    "choices": {
+      "A": "By overtaking them just before the turn",
+      "B": "By staying behind them until they have passed the junction",
+      "C": "By sounding your horn",
+      "D": "By flashing your lights"
+    },
+    "correct": "B",
+    "explanation": "'Left-hooking' a cyclist is a major cause of serious accidents. Wait behind them.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "335",
+    "category": "Vulnerable Road Users",
+    "question": "Why should you be careful of 'delivery riders'?",
+    "choices": {
+      "A": "They are always slow",
+      "B": "They may be distracted by their GPS or under pressure to deliver quickly",
+      "C": "They are not allowed on the road",
+      "D": "They have no lights"
+    },
+    "correct": "B",
+    "explanation": "Be aware that their focus may be divided between the road and their next delivery.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "336",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you see an elderly person crossing the road very slowly?",
+    "choices": {
+      "A": "Sound your horn",
+      "B": "Be patient and allow them all the time they need",
+      "C": "Drive around them",
+      "D": "Rev your engine"
+    },
+    "correct": "B",
+    "explanation": "Never rush a vulnerable road user.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "337",
+    "category": "Vulnerable Road Users",
+    "question": "What color are the flashing lights on a 'Doctor's' car?",
+    "choices": {
+      "A": "Blue",
+      "B": "Green",
+      "C": "Amber",
+      "D": "Red"
+    },
+    "correct": "B",
+    "explanation": "A green flashing light indicates a doctor on an emergency call. Give way if safe to do so.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "338",
+    "category": "Vulnerable Road Users",
+    "question": "Why should you check your near-side mirror before turning left?",
+    "choices": {
+      "A": "To check for overtaking cars",
+      "B": "To check for cyclists or mopeds on your left",
+      "C": "To see the kerb",
+      "D": "To check the fuel"
+    },
+    "correct": "B",
+    "explanation": "Cyclists often ride on the left; you must check they aren't there before you turn.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "339",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if a pedestrian is crossing the road and is partially blind?",
+    "choices": {
+      "A": "Sound your horn to help them",
+      "B": "Be patient and wait for them to finish crossing",
+      "C": "Flash your lights",
+      "D": "Drive past as close as possible"
+    },
+    "correct": "B",
+    "explanation": "Always give extra time and space to those with disabilities.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "340",
+    "category": "Vulnerable Road Users",
+    "question": "What's the main hazard on a country road at night?",
+    "choices": {
+      "A": "A lack of shops",
+      "B": "Pedestrians or animals in the road where there is no pavement",
+      "C": "The road being too wide",
+      "D": "The speed limit"
+    },
+    "correct": "B",
+    "explanation": "Be prepared for hazards to appear suddenly in your headlight beam.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "341",
+    "category": "Vulnerable Road Users",
+    "question": "How should you pass a group of cyclists?",
+    "choices": {
+      "A": "Overtake one by one",
+      "B": "Pass the whole group with as much room as you would give a car",
+      "C": "Sound your horn to scatter them",
+      "D": "Flash your lights"
+    },
+    "correct": "B",
+    "explanation": "Treat a group of cyclists as one long vehicle and only overtake when you have a clear view of the road ahead.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  },
+  {
+    "id": "342",
+    "category": "Vulnerable Road Users",
+    "question": "What should you do if you are driving and you feel tired?",
+    "choices": {
+      "A": "Turn the radio up",
+      "B": "Stop in a safe place and take a break",
+      "C": "Drive faster to get home",
+      "D": "Open the window slightly and keep going"
+    },
+    "correct": "B",
+    "explanation": "Tiredness kills. A short nap and a coffee can save your life.\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t"
+  }
+]
