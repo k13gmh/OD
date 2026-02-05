@@ -1,7 +1,7 @@
 /**
  * File: category.js
  * Version: v2.2.3
- * Feature: UI Cleanup - White buttons, Grey Nav, Single Back Link
+ * Feature: UI Cleanup & Version Display Fix
  */
 
 const SCRIPT_VERSION = "v2.2.3";
@@ -15,9 +15,10 @@ let testData = { selections: {}, flagged: [], seenIndices: [] };
 let selectedCategory = "";
 
 async function init() {
+    // UPDATED: Clear and visible version injection
     const tag = document.getElementById('v-tag-top');
     if (tag) {
-        tag.innerText = SCRIPT_VERSION;
+        tag.innerText = `JS: ${SCRIPT_VERSION}`;
     }
     
     try {
@@ -41,14 +42,13 @@ function buildCategoryMenu() {
 
     categories.forEach(cat => {
         const btn = document.createElement('button');
-        // Setting white background with black border and reducing size
         btn.className = 'btn'; 
         btn.style.background = '#ffffff';
         btn.style.color = '#000000';
         btn.style.border = '1px solid #000000';
         btn.style.marginBottom = '10px';
         btn.style.width = '100%';
-        btn.style.padding = '11px'; // Approx 25% smaller than 15px
+        btn.style.padding = '11px'; 
         btn.style.borderRadius = '12px';
         btn.style.fontSize = '0.9rem';
         btn.innerText = cat;
@@ -56,7 +56,6 @@ function buildCategoryMenu() {
         listArea.appendChild(btn);
     });
 
-    // Single Back Button - Points only to Main Menu
     const backBtn = document.createElement('a');
     backBtn.href = "mainmenu.html";
     backBtn.className = 'btn';
@@ -184,8 +183,6 @@ function showSummary() {
         </div>
     `;
 }
-
-// ... rest of the existing helper functions (retrySubset, promptCustomCount, shuffle, openModal, reviewAnswers) remain the same ...
 
 function retrySubset(type) {
     if (type === 'skipped') sessionQuestions = originalSessionQuestions.filter(q => !testData.selections[q.id]);
