@@ -1,10 +1,10 @@
 /**
  * File: category.js
- * Version: v2.2.0
- * Feature: Loads from orion_master.json (Local Storage)
+ * Version: v2.2.1
+ * Feature: Enhanced UI styling for buttons
  */
 
-const SCRIPT_VERSION = "v2.2.0";
+const SCRIPT_VERSION = "v2.2.1";
 
 if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -19,31 +19,31 @@ async function init() {
     if (tag) tag.innerText = SCRIPT_VERSION;
     
     try {
-        // CHANGED: Load from local storage master pool instead of server fetch
         const localData = localStorage.getItem('orion_master.json');
-        
         if (!localData) {
             alert("Master question pool not found. Please return to Main Menu to sync.");
             window.location.href = 'mainmenu.html';
             return;
         }
-
         allQuestions = JSON.parse(localData);
         buildCategoryMenu();
     } catch (e) { 
         console.error("Initialization Error:", e);
-        alert("Error loading category data.");
     }
 }
 
 function buildCategoryMenu() {
     const categories = [...new Set(allQuestions.map(q => q.category))].sort();
     const listArea = document.getElementById('category-list');
-    listArea.innerHTML = '<h2 style="text-align: center;">Select Category</h2>';
+    listArea.innerHTML = '<h2 style="text-align: center; margin-bottom: 20px;">Select Category</h2>';
 
     categories.forEach(cat => {
         const btn = document.createElement('button');
-        btn.className = 'cat-btn';
+        btn.className = 'btn btn-blue';
+        btn.style.marginBottom = '12px';
+        btn.style.width = '100%';
+        btn.style.padding = '15px';
+        btn.style.borderRadius = '12px';
         btn.innerText = cat;
         btn.onclick = () => showQuantitySelector(cat);
         listArea.appendChild(btn);
@@ -54,35 +54,31 @@ function showQuantitySelector(categoryName) {
     selectedCategory = categoryName;
     const count = allQuestions.filter(q => q.category === categoryName).length;
     const listArea = document.getElementById('category-list');
-    
-    // Default to 50, but don't exceed the total available
     const defaultVal = count < 50 ? count : 50;
 
     listArea.innerHTML = `
-        <h2 style="text-align: center;">${categoryName}</h2>
-        <p style="text-align:center; color:#666;">There are ${count} questions available.</p>
+        <h2 style="text-align: center; margin-bottom: 10px;">${categoryName}</h2>
+        <p style="text-align:center; color:#8e8e93; font-size: 0.9rem; margin-bottom: 25px;">There are ${count} questions available.</p>
         
-        <button class="btn btn-blue" style="margin-bottom: 20px; padding: 20px;" onclick="startCategoryTest(${defaultVal})">
-            START TEST (${defaultVal} Questions)
+        <button class="btn btn-blue" style="margin-bottom: 15px; padding: 20px; font-size: 1.1rem; width:100%; border-radius:12px;" onclick="startCategoryTest(${defaultVal})">
+            START TEST (${defaultVal} QUESTIONS)
         </button>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <button class="cat-btn" onclick="startCategoryTest(10)">Try 10</button>
-            <button class="cat-btn" onclick="startCategoryTest(20)">Try 20</button>
-            <button class="cat-btn" onclick="startCategoryTest(${count})">Try ALL (${count})</button>
-            <button class="cat-btn" onclick="promptCustomCount(${count})">Custom Number</button>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+            <button class="btn btn-grey" style="padding: 12px; font-size: 0.85rem;" onclick="startCategoryTest(10)">Try 10</button>
+            <button class="btn btn-grey" style="padding: 12px; font-size: 0.85rem;" onclick="startCategoryTest(20)">Try 20</button>
+            <button class="btn btn-grey" style="padding: 12px; font-size: 0.85rem;" onclick="startCategoryTest(${count})">Try ALL (${count})</button>
+            <button class="btn btn-grey" style="padding: 12px; font-size: 0.85rem;" onclick="promptCustomCount(${count})">Custom</button>
         </div>
-        <button class="btn" style="margin-top:20px; background:#bdc3c7;" onclick="buildCategoryMenu()">BACK</button>
+        <button class="btn" style="width:100%; padding: 15px; background:#bdc3c7; border-radius:12px;" onclick="buildCategoryMenu()">BACK</button>
     `;
 }
 
 function promptCustomCount(max) {
-    let num = prompt(`Enter number of questions (1 - ${max}):`, "25");
+    let num = prompt(`Enter number (1 - ${max}):`, "25");
     if (num !== null) {
         let val = parseInt(num);
-        if (!isNaN(val) && val > 0) {
-            startCategoryTest(Math.min(val, max));
-        }
+        if (!isNaN(val) && val > 0) startCategoryTest(Math.min(val, max));
     }
 }
 
@@ -109,12 +105,7 @@ function shuffleQuestionOptions(q, displayIndex) {
         if (opt.correct) newCorrectLetter = letter;
     });
 
-    return {
-        ...q,
-        choices: newChoices,
-        correct: newCorrectLetter,
-        originalIndex: displayIndex
-    };
+    return { ...q, choices: newChoices, correct: newCorrectLetter, originalIndex: displayIndex };
 }
 
 function startCategoryTest(limit) {
@@ -126,10 +117,7 @@ function startCategoryTest(limit) {
         .sort(() => 0.5 - Math.random())
         .slice(0, limit);
 
-    sessionQuestions = selected.map((q, idx) => {
-        return shuffleQuestionOptions(q, idx + 1);
-    });
-    
+    sessionQuestions = selected.map((q, idx) => shuffleQuestionOptions(q, idx + 1));
     originalSessionQuestions = [...sessionQuestions];
     currentIndex = 0;
     testData = { selections: {}, flagged: [], seenIndices: [0] };
@@ -199,13 +187,13 @@ function showSummary() {
     const flagged = originalSessionQuestions.filter(q => testData.flagged.includes(q.id)).length;
 
     summaryUI.innerHTML = `
-        <h3>Category Summary</h3>
-        <p>You have ${skipped} unanswered questions.</p>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-            <button class="btn btn-blue" onclick="retrySubset('skipped')">SKIPPED (${skipped})</button>
-            <button class="btn btn-blue" onclick="retrySubset('flagged')">FLAGGED (${flagged})</button>
-            <button class="btn btn-blue" onclick="retrySubset('all')">REVIEW ALL</button>
-            <button class="btn" onclick="reviewAnswers()">FINISHED</button>
+        <h3 style="margin-bottom: 20px;">Category Summary</h3>
+        <p style="margin-bottom: 20px; color: #8e8e93;">You have ${skipped} unanswered questions.</p>
+        <div style="display:grid; grid-template-columns: 1fr; gap:12px;">
+            <button class="btn btn-blue" style="padding: 15px; border-radius: 12px;" onclick="retrySubset('skipped')">REVIEW SKIPPED (${skipped})</button>
+            <button class="btn btn-blue" style="padding: 15px; border-radius: 12px;" onclick="retrySubset('flagged')">REVIEW FLAGGED (${flagged})</button>
+            <button class="btn btn-blue" style="padding: 15px; border-radius: 12px;" onclick="retrySubset('all')">REVIEW ALL</button>
+            <button class="btn" style="margin-top: 10px; padding: 15px; background: #007bff; color: #fff; border-radius: 12px;" onclick="reviewAnswers()">FINISH TEST</button>
         </div>
     `;
 }
