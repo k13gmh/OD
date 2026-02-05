@@ -35,12 +35,13 @@
                     <span>ORION DRIVE</span>
                     <span id="sync-progress" style="margin-left: 10px; color: #8e8e93; font-weight: normal; font-size: 0.7rem;"></span>
                 </div>
-                <span>v2.4.1</span>
+                <span>v2.4.2</span>
             </div>
         </div>
     </div>
 
     <script>
+        // Version Check: v2.4.2
         const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
         const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 
@@ -105,22 +106,21 @@
                 for (let i = 0; i < total; i++) {
                     const cat = categoryFiles[i];
                     const percent = Math.round(((i + 1) / total) * 100);
-                    
-                    // Update discrete progress text
                     progressDisplay.innerText = `[${cat}.json ${percent}%]`;
                     
                     const response = await fetch(`${cat}.json`);
                     if (response.ok) {
                         const data = await response.json();
                         masterPool = masterPool.concat(data);
-                    } else {
-                        console.warn(`Could not fetch ${cat}.json`);
                     }
                 }
                 
+                // Save the Master File
                 localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
                 
-                // Clear progress text when done
+                // CLEANUP: Clear any stale active session data to prevent resume errors
+                localStorage.removeItem('orion_current_session');
+                
                 progressDisplay.innerText = "";
                 return true;
             } catch (err) {
