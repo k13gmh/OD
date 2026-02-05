@@ -1,10 +1,10 @@
 /**
  * File: category.js
- * Version: v2.2.2
- * Feature: Corrected Menu Link and Version Display
+ * Version: v2.2.3
+ * Feature: UI Cleanup - White buttons, Grey Nav, Single Back Link
  */
 
-const SCRIPT_VERSION = "v2.2.2";
+const SCRIPT_VERSION = "v2.2.3";
 
 if (!localStorage.getItem('orion_session_token')) {
     window.location.href = 'mainmenu.html';
@@ -15,7 +15,6 @@ let testData = { selections: {}, flagged: [], seenIndices: [] };
 let selectedCategory = "";
 
 async function init() {
-    // Inject version number into the HTML tag
     const tag = document.getElementById('v-tag-top');
     if (tag) {
         tag.innerText = SCRIPT_VERSION;
@@ -42,21 +41,26 @@ function buildCategoryMenu() {
 
     categories.forEach(cat => {
         const btn = document.createElement('button');
-        btn.className = 'btn btn-blue';
-        btn.style.marginBottom = '12px';
+        // Setting white background with black border and reducing size
+        btn.className = 'btn'; 
+        btn.style.background = '#ffffff';
+        btn.style.color = '#000000';
+        btn.style.border = '1px solid #000000';
+        btn.style.marginBottom = '10px';
         btn.style.width = '100%';
-        btn.style.padding = '15px';
+        btn.style.padding = '11px'; // Approx 25% smaller than 15px
         btn.style.borderRadius = '12px';
+        btn.style.fontSize = '0.9rem';
         btn.innerText = cat;
         btn.onclick = () => showQuantitySelector(cat);
         listArea.appendChild(btn);
     });
 
-    // Add a Back button specifically for the Category Menu
+    // Single Back Button - Points only to Main Menu
     const backBtn = document.createElement('a');
-    backBtn.href = "mainmenu.html"; // Corrected link
+    backBtn.href = "mainmenu.html";
     backBtn.className = 'btn';
-    backBtn.style.marginTop = '10px';
+    backBtn.style.marginTop = '15px';
     backBtn.style.background = '#bdc3c7';
     backBtn.style.display = 'block';
     backBtn.style.textDecoration = 'none';
@@ -89,40 +93,6 @@ function showQuantitySelector(categoryName) {
         </div>
         <button class="btn" style="width:100%; padding: 15px; background:#bdc3c7; border-radius:12px;" onclick="buildCategoryMenu()">BACK</button>
     `;
-}
-
-function promptCustomCount(max) {
-    let num = prompt(`Enter number (1 - ${max}):`, "25");
-    if (num !== null) {
-        let val = parseInt(num);
-        if (!isNaN(val) && val > 0) startCategoryTest(Math.min(val, max));
-    }
-}
-
-function shuffleQuestionOptions(q, displayIndex) {
-    let optionsArray = [
-        { text: q.choices.A, correct: q.correct === "A" },
-        { text: q.choices.B, correct: q.correct === "B" },
-        { text: q.choices.C, correct: q.correct === "C" },
-        { text: q.choices.D, correct: q.correct === "D" }
-    ].filter(opt => opt.text);
-
-    for (let i = optionsArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [optionsArray[i], optionsArray[j]] = [optionsArray[j], optionsArray[i]];
-    }
-
-    const newChoices = {};
-    let newCorrectLetter = "";
-    const letters = ["A", "B", "C", "D"];
-
-    optionsArray.forEach((opt, i) => {
-        const letter = letters[i];
-        newChoices[letter] = opt.text;
-        if (opt.correct) newCorrectLetter = letter;
-    });
-
-    return { ...q, choices: newChoices, correct: newCorrectLetter, originalIndex: displayIndex };
 }
 
 function startCategoryTest(limit) {
@@ -210,10 +180,12 @@ function showSummary() {
             <button class="btn btn-blue" style="padding: 15px; border-radius: 12px;" onclick="retrySubset('skipped')">REVIEW SKIPPED (${skipped})</button>
             <button class="btn btn-blue" style="padding: 15px; border-radius: 12px;" onclick="retrySubset('flagged')">REVIEW FLAGGED (${flagged})</button>
             <button class="btn btn-blue" style="padding: 15px; border-radius: 12px;" onclick="retrySubset('all')">REVIEW ALL</button>
-            <button class="btn" style="margin-top: 10px; padding: 15px; background: #007bff; color: #fff; border-radius: 12px;" onclick="reviewAnswers()">FINISH TEST</button>
+            <button class="btn btn-blue" style="margin-top: 10px; padding: 15px; border-radius: 12px;" onclick="reviewAnswers()">FINISH TEST</button>
         </div>
     `;
 }
+
+// ... rest of the existing helper functions (retrySubset, promptCustomCount, shuffle, openModal, reviewAnswers) remain the same ...
 
 function retrySubset(type) {
     if (type === 'skipped') sessionQuestions = originalSessionQuestions.filter(q => !testData.selections[q.id]);
@@ -227,6 +199,36 @@ function retrySubset(type) {
     renderQuestion();
 }
 
+function promptCustomCount(max) {
+    let num = prompt(`Enter number (1 - ${max}):`, "25");
+    if (num !== null) {
+        let val = parseInt(num);
+        if (!isNaN(val) && val > 0) startCategoryTest(Math.min(val, max));
+    }
+}
+
+function shuffleQuestionOptions(q, displayIndex) {
+    let optionsArray = [
+        { text: q.choices.A, correct: q.correct === "A" },
+        { text: q.choices.B, correct: q.correct === "B" },
+        { text: q.choices.C, correct: q.correct === "C" },
+        { text: q.choices.D, correct: q.correct === "D" }
+    ].filter(opt => opt.text);
+    for (let i = optionsArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [optionsArray[i], optionsArray[j]] = [optionsArray[j], optionsArray[i]];
+    }
+    const newChoices = {};
+    let newCorrectLetter = "";
+    const letters = ["A", "B", "C", "D"];
+    optionsArray.forEach((opt, i) => {
+        const letter = letters[i];
+        newChoices[letter] = opt.text;
+        if (opt.correct) newCorrectLetter = letter;
+    });
+    return { ...q, choices: newChoices, correct: newCorrectLetter, originalIndex: displayIndex };
+}
+
 function openModal(src) {
     document.getElementById('img-modal-content').src = src;
     document.getElementById('img-modal').style.display = 'flex';
@@ -235,11 +237,9 @@ function openModal(src) {
 function reviewAnswers() { 
     let shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
     let score = 0;
-
     originalSessionQuestions.forEach(q => {
         const userSelection = testData.selections[q.id];
         const isCorrect = (userSelection === q.correct);
-
         if (isCorrect) {
             score++;
             if (shameTally[q.id]) {
@@ -250,15 +250,8 @@ function reviewAnswers() {
             shameTally[q.id] = (shameTally[q.id] || 0) + 1;
         }
     });
-
     localStorage.setItem('orion_shame_tally', JSON.stringify(shameTally));
-    localStorage.setItem('orion_final_results', JSON.stringify({ 
-        score, 
-        total: originalSessionQuestions.length, 
-        questions: originalSessionQuestions, 
-        data: testData 
-    }));
-
+    localStorage.setItem('orion_final_results', JSON.stringify({ score, total: originalSessionQuestions.length, questions: originalSessionQuestions, data: testData }));
     window.location.href = 'review.html'; 
 }
 
