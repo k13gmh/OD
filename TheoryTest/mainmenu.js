@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: v2.6.0
- * Feature: Matched Footer Font & "Road Signs" Text Change
+ * Version: v2.6.1
+ * Feature: Identical Footer Styling
  */
 
-const JS_VERSION = "v2.6.0";
+const JS_VERSION = "v2.6.1";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -17,7 +17,7 @@ const categoryFiles = [
 
 function init() {
     const vTag = document.getElementById('v-tag');
-    if(vTag) vTag.innerText = `JS: ${JS_VERSION}`;
+    if(vTag) vTag.innerText = `v${JS_VERSION}`;
 
     if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
         document.getElementById('lock-ui').style.display = 'none';
@@ -42,7 +42,6 @@ function verifyAccess() {
 async function checkSyncStatus() {
     const masterData = localStorage.getItem('orion_master.json');
     const syncFull = localStorage.getItem('orion_full_sync_complete');
-
     document.getElementById('status-msg').style.display = 'block';
 
     if (!masterData) {
@@ -58,13 +57,9 @@ function showSyncModal(isResume) {
     const modal = document.getElementById('sync-modal');
     const title = document.getElementById('modal-title');
     const desc = document.getElementById('modal-desc');
-    
     if (isResume) {
         title.innerText = "Sync Incomplete";
-        desc.innerText = "The image library is not fully cached. Would you like to finish the download or continue to the menu?";
-    } else {
-        title.innerText = "Assets Required";
-        desc.innerText = "Download all images now for 100% offline use, or download them automatically as you practice?";
+        desc.innerText = "The image library is not fully cached. Resume download?";
     }
     modal.style.display = 'flex';
 }
@@ -84,10 +79,8 @@ async function buildMasterDatabase(fullImageSync) {
     const syncUI = document.getElementById('sync-ui');
     const bar = document.getElementById('sync-bar');
     const statusText = document.getElementById('sync-status-text');
-    const percentText = document.getElementById('sync-percent-text');
 
     syncUI.style.display = 'block';
-
     let masterPool = [];
     
     if (!localStorage.getItem('orion_master.json')) {
@@ -95,16 +88,12 @@ async function buildMasterDatabase(fullImageSync) {
             for (let i = 0; i < categoryFiles.length; i++) {
                 statusText.innerText = `Fetching ${categoryFiles[i]}...`;
                 const res = await fetch(`${categoryFiles[i]}.json`);
-                if (res.ok) {
-                    masterPool = masterPool.concat(await res.json());
-                }
-                let p = Math.round(((i + 1) / categoryFiles.length) * 20);
-                bar.style.width = p + "%";
-                percentText.innerText = `${p}%`;
+                if (res.ok) masterPool = masterPool.concat(await res.json());
+                bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 20) + "%";
             }
             localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
         } catch (e) {
-            statusText.innerText = "Sync Interrupted.";
+            statusText.innerText = "Sync Error.";
             setTimeout(showMenu, 1500);
             return;
         }
@@ -117,52 +106,32 @@ async function buildMasterDatabase(fullImageSync) {
         for (let j = 0; j < masterPool.length; j++) {
             const qId = masterPool[j].id;
             const imgUrl = `images/${qId}.jpeg`;
-            
             try {
                 const cached = await cache.match(imgUrl);
                 if (!cached) {
                     const imgRes = await fetch(imgUrl);
                     if (imgRes.ok) await cache.put(imgUrl, imgRes);
                 }
-            } catch (e) {
-                statusText.innerText = "Connection lost. Opening Menu...";
-                setTimeout(showMenu, 1500);
-                return;
-            }
-            
+            } catch (e) {}
             if (j % 20 === 0) {
-                statusText.innerText = `Caching: ${qId}.jpeg`;
-                let p = 20 + Math.round((j / masterPool.length) * 80);
-                bar.style.width = p + "%";
-                percentText.innerText = `${p}%`;
+                statusText.innerText = `Caching Assets...`;
+                bar.style.width = (20 + Math.round((j / masterPool.length) * 80)) + "%";
             }
         }
         localStorage.setItem('orion_full_sync_complete', "true");
     }
-
     showMenu();
 }
 
-/**
- * Discreetly updates the cache counter in the footer
- * Version 2.6.0: Uses matched font-family and "Road Signs" text
- */
 async function updateCacheCount() {
     try {
         const cache = await caches.open(IMAGE_CACHE_NAME);
         const keys = await cache.keys();
         const indicator = document.getElementById('sync-indicator');
         if (indicator) {
-            // Match the ORION DRIVE style exactly
-            indicator.style.color = "#8e8e93"; 
-            indicator.style.fontSize = "0.7rem";
-            indicator.style.fontFamily = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
-            indicator.style.letterSpacing = "0.5px";
             indicator.innerText = `● ${keys.length} Road Signs`;
         }
-    } catch (e) {
-        console.log("Cache count unavailable.");
-    }
+    } catch (e) {}
 }
 
 async function showMenu() {
@@ -170,7 +139,6 @@ async function showMenu() {
     const menuOptions = document.getElementById('menu-options');
     menuOptions.innerHTML = ''; 
     menuOptions.style.display = 'flex';
-
     updateCacheCount();
 
     try {
@@ -190,13 +158,13 @@ async function showMenu() {
             const syncStatus = localStorage.getItem('orion_full_sync_complete');
             if (opt.htmlName.includes('mock') && syncStatus !== "true") {
                 anchor.onclick = (e) => {
-                    if (!confirm("Caution: Full image cache not found. Timed Mock requires internet. Proceed?")) e.preventDefault();
+                    if (!confirm("Caution: Images not cached. Data required for Mock. Proceed?")) e.preventDefault();
                 };
             }
             menuOptions.appendChild(anchor);
         });
     } catch (err) {
-        menuOptions.innerHTML = `<p style="color:red;">Failed to load Menu Options.</p>`;
+        menuOptions.innerHTML = `<p style="color:red;">Error loading menu.</p>`;
     }
 }
 
@@ -225,7 +193,7 @@ function calcKey() {
 }
 
 function triggerManualSync() {
-    if (confirm("Reset local database and images?")) {
+    if (confirm("Reset local data?")) {
         localStorage.removeItem('orion_master.json');
         localStorage.removeItem('orion_full_sync_complete');
         window.location.reload();
