@@ -13,11 +13,18 @@
         .sync-btn-stack { display: flex; flex-direction: column; gap: 12px; }
         .btn-grey { background: #8e8e93; color: white; border: none; padding: 15px; border-radius: 12px; font-size: 1rem; cursor: pointer; }
         
-        /* The "Clean" Style matched to Force Reset */
+        /* Container fix to prevent button overshoot */
+        #menu-options {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
         .footer-text {
             color: #8e8e93 !important;
-            font-size: 0.65rem !important; /* Smaller size to match force reset */
-            font-family: sans-serif !important; /* Standard system font */
+            font-size: 0.65rem !important;
+            font-family: sans-serif !important;
             font-weight: normal !important;
             letter-spacing: normal !important;
             text-transform: none;
@@ -55,7 +62,7 @@
                 <button class="btn btn-blue" onclick="verifyAccess()">Unlock System</button>
             </div>
 
-            <div id="menu-options" style="display:none; width: 100%; flex-direction: column;"></div>
+            <div id="menu-options"></div>
             
             <div id="sync-ui" style="display:none; text-align:center; padding: 20px;">
                 <div style="width:100%; background:#eee; height:8px; border-radius:4px; overflow:hidden;">
@@ -69,7 +76,7 @@
                     <span class="footer-text">ORION DRIVE</span>
                     <span id="sync-indicator" class="footer-text" style="margin-left: 10px;"></span>
                 </div>
-                <span id="v-tag" class="footer-text">v2.6.3</span>
+                <span id="v-tag" class="footer-text">v2.6.4</span>
             </div>
         </div>
         
@@ -78,6 +85,6 @@
         </p>
     </div>
 
-    <script src="mainmenu.js?v=2.6.3"></script>
+    <script src="mainmenu.js?v=2.6.4"></script>
 </body>
 </html>
