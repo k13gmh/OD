@@ -30,11 +30,12 @@
             </div>
             
             <div id="sync-ui" style="display:none; text-align:center; padding: 20px;">
-                <p style="color:#8e8e93; font-size:0.8rem; margin-bottom:10px;">Syncing Assets for Offline Use...</p>
+                <p id="sync-main-label" style="color:#8e8e93; font-size:0.8rem; margin-bottom:10px;">Syncing Assets...</p>
                 <div style="width:100%; background:#eee; height:8px; border-radius:4px; overflow:hidden;">
                     <div id="sync-bar" style="width:0%; background:#007bff; height:100%; transition: width 0.2s;"></div>
                 </div>
-                <p id="sync-status-text" style="color:#8e8e93; font-size:0.7rem; margin-top:8px;">0%</p>
+                <p id="sync-status-text" style="color:#007bff; font-size:0.75rem; font-weight:bold; margin-top:12px; height: 1.2em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 250px; margin-left: auto; margin-right: auto;">Initialising...</p>
+                <p id="sync-percent-text" style="color:#8e8e93; font-size:0.65rem; margin-top:4px;">0%</p>
             </div>
 
             <div class="card-footer">
@@ -42,7 +43,7 @@
                     <span>ORION DRIVE</span>
                     <span id="sync-indicator" style="margin-left: 10px; color: #8e8e93; font-size: 0.7rem;"></span>
                 </div>
-                <span>v2.5.1</span>
+                <span>v2.5.2</span>
             </div>
         </div>
         
@@ -52,7 +53,7 @@
     </div>
 
     <script>
-        // Version Check: v2.5.1
+        // Version Check: v2.5.2
         const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
         const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
         const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -110,9 +111,7 @@
         }
 
         async function buildMasterDatabase() {
-            // IF ALREADY LOADED, SKIP
             if (localStorage.getItem('orion_master.json')) {
-                console.log("Orion: Database already local. Skipping sync.");
                 return true;
             }
 
@@ -120,28 +119,40 @@
             const menuOptions = document.getElementById('menu-options');
             const bar = document.getElementById('sync-bar');
             const statusText = document.getElementById('sync-status-text');
+            const percentText = document.getElementById('sync-percent-text');
 
             menuOptions.style.display = 'none';
             syncUI.style.display = 'block';
 
             let masterPool = [];
             try {
-                // 1. JSON Data
+                // 1. JSON Data Loading
                 for (let i = 0; i < categoryFiles.length; i++) {
-                    const res = await fetch(`${categoryFiles[i]}.json`);
+                    const fileName = categoryFiles[i];
+                    statusText.innerText = `Loading: ${fileName}.json`; // DETAIL ADDED HERE
+                    
+                    const res = await fetch(`${fileName}.json`);
                     if (res.ok) masterPool = masterPool.concat(await res.json());
+                    
                     let p = Math.round(((i + 1) / categoryFiles.length) * 20);
                     bar.style.width = p + "%";
-                    statusText.innerText = `Loading Data: ${p}%`;
+                    percentText.innerText = `${p}%`;
                 }
                 
                 localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
                 localStorage.removeItem('orion_current_session');
 
-                // 2. Images
+                // 2. Image Caching
                 const cache = await caches.open(IMAGE_CACHE_NAME);
                 for (let j = 0; j < masterPool.length; j++) {
-                    const imgUrl = `images/${masterPool[j].id}.jpeg`;
+                    const qId = masterPool[j].id;
+                    const imgUrl = `images/${qId}.jpeg`;
+                    
+                    // Show specific image ID being processed
+                    if (j % 5 === 0) { // Update text every 5 images for readability
+                        statusText.innerText = `Caching: image ${qId}.jpeg`;
+                    }
+
                     const cached = await cache.match(imgUrl);
                     if (!cached) {
                         try {
@@ -149,11 +160,10 @@
                             if (imgRes.ok) await cache.put(imgUrl, imgRes);
                         } catch (e) {}
                     }
-                    if (j % 20 === 0) {
-                        let p = 20 + Math.round((j / masterPool.length) * 80);
-                        bar.style.width = p + "%";
-                        statusText.innerText = `Caching Assets: ${p}%`;
-                    }
+                    
+                    let p = 20 + Math.round((j / masterPool.length) * 80);
+                    bar.style.width = p + "%";
+                    percentText.innerText = `${p}%`;
                 }
                 
                 syncUI.style.display = 'none';
@@ -161,6 +171,7 @@
                 return true;
             } catch (err) {
                 statusText.innerText = "Sync Failed.";
+                statusText.style.color = "#ff3b30";
                 return false;
             }
         }
