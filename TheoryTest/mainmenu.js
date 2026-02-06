@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: v2.5.9
- * Feature: Optimized Cache Indicator Color & Resilient Sync
+ * Version: v2.6.0
+ * Feature: Matched Footer Font & "Road Signs" Text Change
  */
 
-const JS_VERSION = "v2.5.9";
+const JS_VERSION = "v2.6.0";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -145,7 +145,7 @@ async function buildMasterDatabase(fullImageSync) {
 
 /**
  * Discreetly updates the cache counter in the footer
- * Styled with light grey for better visibility (v2.5.9)
+ * Version 2.6.0: Uses matched font-family and "Road Signs" text
  */
 async function updateCacheCount() {
     try {
@@ -153,10 +153,12 @@ async function updateCacheCount() {
         const keys = await cache.keys();
         const indicator = document.getElementById('sync-indicator');
         if (indicator) {
-            indicator.style.color = "#b0b0b5"; // Light silver-grey
+            // Match the ORION DRIVE style exactly
+            indicator.style.color = "#8e8e93"; 
             indicator.style.fontSize = "0.7rem";
-            indicator.style.fontWeight = "400";
-            indicator.innerText = `● ${keys.length} Cached`;
+            indicator.style.fontFamily = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+            indicator.style.letterSpacing = "0.5px";
+            indicator.innerText = `● ${keys.length} Road Signs`;
         }
     } catch (e) {
         console.log("Cache count unavailable.");
