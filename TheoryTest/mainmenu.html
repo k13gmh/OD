@@ -6,20 +6,43 @@
     <title>Orion Drive - Main Menu</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        #sync-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); align-items:center; justify-content:center; z-index:9999; padding: 20px; box-sizing: border-box; }
-        .sync-box { background:#fff; padding:25px; border-radius:20px; width:100%; max-width:400px; text-align:center; }
-        .sync-box h3 { margin-top:0; color:#333; }
-        .sync-box p { font-size:0.9rem; color:#666; line-height:1.4; margin-bottom:20px; }
-        .sync-btn-stack { display: flex; flex-direction: column; gap: 10px; }
+        /* Modal for Sync Selection */
+        #sync-modal { 
+            display:none; 
+            position:fixed; 
+            top:0; 
+            left:0; 
+            width:100%; 
+            height:100%; 
+            background:rgba(0,0,0,0.85); 
+            align-items:center; 
+            justify-content:center; 
+            z-index:9999; 
+            padding: 20px; 
+            box-sizing: border-box; 
+        }
+        .sync-box { 
+            background:#fff; 
+            padding:25px; 
+            border-radius:20px; 
+            width:100%; 
+            max-width:400px; 
+            text-align:center; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .sync-box h3 { margin-top:0; color:#333; font-size: 1.4rem; }
+        .sync-box p { font-size:0.95rem; color:#666; line-height:1.4; margin-bottom:20px; }
+        .sync-btn-stack { display: flex; flex-direction: column; gap: 12px; }
+        .btn-grey { background: #8e8e93; color: white; border: none; padding: 15px; border-radius: 12px; font-size: 1rem; cursor: pointer; }
     </style>
 </head>
 <body>
     <div id="sync-modal">
         <div class="sync-box">
             <h3 id="modal-title">Assets Required</h3>
-            <p id="modal-desc">Would you like to download all images now for 100% offline reliability? (Approx. 30MB)</p>
+            <p id="modal-desc">Download all images now for 100% offline use, or download them automatically as you practice?</p>
             <div class="sync-btn-stack">
-                <button class="btn btn-blue" onclick="startSync(true)">DOWNLOAD ALL</button>
+                <button class="btn btn-blue" onclick="startSync(true)">DOWNLOAD ALL IMAGES</button>
                 <button class="btn btn-grey" onclick="startSync(false)">DOWNLOAD AS I GO</button>
             </div>
             <p style="font-size:0.7rem; color:#999; margin-top:15px;">Note: "As I Go" requires internet during tests to fetch new images.</p>
@@ -61,7 +84,7 @@
                     <span>ORION DRIVE</span>
                     <span id="sync-indicator" style="margin-left: 10px; color: #8e8e93; font-size: 0.7rem;"></span>
                 </div>
-                <span id="v-tag">v2.5.4</span>
+                <span id="v-tag">v2.5.7</span>
             </div>
         </div>
         
@@ -70,6 +93,6 @@
         </p>
     </div>
 
-    <script src="mainmenu.js"></script>
+    <script src="mainmenu.js?v=2.5.7"></script>
 </body>
 </html>
