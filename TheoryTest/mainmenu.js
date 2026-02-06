@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: v2.5.7
- * Feature: Cache Counter & Resilient Sync
+ * Version: v2.5.8
+ * Feature: Cache Counter Styled & Resilient Sync
  */
 
-const JS_VERSION = "v2.5.7";
+const JS_VERSION = "v2.5.8";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -145,6 +145,7 @@ async function buildMasterDatabase(fullImageSync) {
 
 /**
  * Discreetly updates the cache counter in the footer
+ * Styled to match existing footer text (v2.5.8)
  */
 async function updateCacheCount() {
     try {
@@ -152,7 +153,9 @@ async function updateCacheCount() {
         const keys = await cache.keys();
         const indicator = document.getElementById('sync-indicator');
         if (indicator) {
-            indicator.innerText = `(${keys.length} Cached)`;
+            indicator.style.color = "#8e8e93";
+            indicator.style.fontSize = "0.7rem";
+            indicator.innerText = `● ${keys.length} Cached`;
         }
     } catch (e) {
         console.log("Cache count unavailable.");
@@ -165,7 +168,6 @@ async function showMenu() {
     menuOptions.innerHTML = ''; 
     menuOptions.style.display = 'flex';
 
-    // Update the discreet counter
     updateCacheCount();
 
     try {
