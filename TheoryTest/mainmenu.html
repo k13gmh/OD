@@ -5,8 +5,27 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Orion Drive - Main Menu</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        #sync-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); align-items:center; justify-content:center; z-index:9999; padding: 20px; box-sizing: border-box; }
+        .sync-box { background:#fff; padding:25px; border-radius:20px; width:100%; max-width:400px; text-align:center; }
+        .sync-box h3 { margin-top:0; color:#333; }
+        .sync-box p { font-size:0.9rem; color:#666; line-height:1.4; margin-bottom:20px; }
+        .sync-btn-stack { display: flex; flex-direction: column; gap: 10px; }
+    </style>
 </head>
 <body>
+    <div id="sync-modal">
+        <div class="sync-box">
+            <h3 id="modal-title">Assets Required</h3>
+            <p id="modal-desc">Would you like to download all images now for 100% offline reliability? (Approx. 30MB)</p>
+            <div class="sync-btn-stack">
+                <button class="btn btn-blue" onclick="startSync(true)">DOWNLOAD ALL</button>
+                <button class="btn btn-grey" onclick="startSync(false)">DOWNLOAD AS I GO</button>
+            </div>
+            <p style="font-size:0.7rem; color:#999; margin-top:15px;">Note: "As I Go" requires internet during tests to fetch new images.</p>
+        </div>
+    </div>
+
     <div class="container">
         <div style="margin-bottom: 20px; text-align: center;">
             <img src="images/logo.jpeg" alt="Orion Drive Logo" style="width: 280px; height: auto;">
@@ -26,15 +45,14 @@
                 <button class="btn btn-blue" onclick="verifyAccess()">Unlock System</button>
             </div>
 
-            <div id="menu-options" style="display:none; width: 100%; flex-direction: column;">
-            </div>
+            <div id="menu-options" style="display:none; width: 100%; flex-direction: column;"></div>
             
             <div id="sync-ui" style="display:none; text-align:center; padding: 20px;">
                 <p id="sync-main-label" style="color:#8e8e93; font-size:0.8rem; margin-bottom:10px;">Syncing Assets...</p>
                 <div style="width:100%; background:#eee; height:8px; border-radius:4px; overflow:hidden;">
                     <div id="sync-bar" style="width:0%; background:#007bff; height:100%; transition: width 0.2s;"></div>
                 </div>
-                <p id="sync-status-text" style="color:#007bff; font-size:0.75rem; font-weight:bold; margin-top:12px; height: 1.2em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 250px; margin-left: auto; margin-right: auto;">Initialising...</p>
+                <p id="sync-status-text" style="color:#007bff; font-size:0.75rem; font-weight:bold; margin-top:12px;">Connecting...</p>
                 <p id="sync-percent-text" style="color:#8e8e93; font-size:0.65rem; margin-top:4px;">0%</p>
             </div>
 
@@ -43,7 +61,7 @@
                     <span>ORION DRIVE</span>
                     <span id="sync-indicator" style="margin-left: 10px; color: #8e8e93; font-size: 0.7rem;"></span>
                 </div>
-                <span>v2.5.2</span>
+                <span id="v-tag">v2.5.4</span>
             </div>
         </div>
         
@@ -52,164 +70,6 @@
         </p>
     </div>
 
-    <script>
-        // Version Check: v2.5.2
-        const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
-        const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
-        const IMAGE_CACHE_NAME = 'orion-image-cache';
-
-        const categoryFiles = [
-            'alertness', 'attitude', 'safety', 'hazard', 'margins', 
-            'vulnerable', 'other', 'conditions', 'motorway', 
-            'signs', 'documents', 'incidents', 'loading'
-        ];
-
-        function init() {
-            if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
-                showMenu(); 
-            }
-        }
-
-        function verifyAccess() {
-            const input = document.getElementById('passCode').value.toUpperCase();
-            if (input === calcKey()) { 
-                localStorage.setItem('gatekeeper_stamp', curMonthYear);
-                localStorage.setItem('orion_session_token', getMMYY());
-                showMenu(); 
-            } else { alert("Incorrect Code."); }
-        }
-
-        function getMMYY() {
-            const d = new Date();
-            return String(d.getUTCMonth() + 1).padStart(2, '0') + String(d.getUTCFullYear()).slice(-2);
-        }
-
-        function calcKey() {
-            const d = new Date(); 
-            const s = new Date(Date.UTC(d.getFullYear(), d.getMonth(), 1, 0, 0, 0));
-            const e = new Date(Date.UTC(1900, 0, 1, 0, 0, 0)); 
-            const m = Math.floor((s.getTime() - e.getTime()) / 60000);
-            let v = m % Math.pow(32, 4); 
-            let r = ""; 
-            for (let j = 0; j < 4; j++) { r = ALPH.charAt(v % 32) + r; v = Math.floor(v / 32); }
-            let t = 0; 
-            let ra = r.split('').reverse();
-            for (let j = 0; j < ra.length; j++) { 
-                let x = ALPH.indexOf(ra[j]); 
-                if (j % 2 === 0) { x *= 2; if (x >= 32) x = (x % 32) + Math.floor(x / 32); } 
-                t += x; 
-            }
-            let ci = (32 - (t % 32)) % 32; 
-            return r + (ALPH[ci] || ALPH[0]);
-        }
-
-        async function triggerManualSync() {
-            if (confirm("Refresh all question data and images? This may take a moment.")) {
-                localStorage.removeItem('orion_master.json');
-                showMenu();
-            }
-        }
-
-        async function buildMasterDatabase() {
-            if (localStorage.getItem('orion_master.json')) {
-                return true;
-            }
-
-            const syncUI = document.getElementById('sync-ui');
-            const menuOptions = document.getElementById('menu-options');
-            const bar = document.getElementById('sync-bar');
-            const statusText = document.getElementById('sync-status-text');
-            const percentText = document.getElementById('sync-percent-text');
-
-            menuOptions.style.display = 'none';
-            syncUI.style.display = 'block';
-
-            let masterPool = [];
-            try {
-                // 1. JSON Data Loading
-                for (let i = 0; i < categoryFiles.length; i++) {
-                    const fileName = categoryFiles[i];
-                    statusText.innerText = `Loading: ${fileName}.json`; // DETAIL ADDED HERE
-                    
-                    const res = await fetch(`${fileName}.json`);
-                    if (res.ok) masterPool = masterPool.concat(await res.json());
-                    
-                    let p = Math.round(((i + 1) / categoryFiles.length) * 20);
-                    bar.style.width = p + "%";
-                    percentText.innerText = `${p}%`;
-                }
-                
-                localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
-                localStorage.removeItem('orion_current_session');
-
-                // 2. Image Caching
-                const cache = await caches.open(IMAGE_CACHE_NAME);
-                for (let j = 0; j < masterPool.length; j++) {
-                    const qId = masterPool[j].id;
-                    const imgUrl = `images/${qId}.jpeg`;
-                    
-                    // Show specific image ID being processed
-                    if (j % 5 === 0) { // Update text every 5 images for readability
-                        statusText.innerText = `Caching: image ${qId}.jpeg`;
-                    }
-
-                    const cached = await cache.match(imgUrl);
-                    if (!cached) {
-                        try {
-                            const imgRes = await fetch(imgUrl);
-                            if (imgRes.ok) await cache.put(imgUrl, imgRes);
-                        } catch (e) {}
-                    }
-                    
-                    let p = 20 + Math.round((j / masterPool.length) * 80);
-                    bar.style.width = p + "%";
-                    percentText.innerText = `${p}%`;
-                }
-                
-                syncUI.style.display = 'none';
-                menuOptions.style.display = 'flex';
-                return true;
-            } catch (err) {
-                statusText.innerText = "Sync Failed.";
-                statusText.style.color = "#ff3b30";
-                return false;
-            }
-        }
-
-        async function showMenu() { 
-            document.getElementById('lock-ui').style.display = 'none'; 
-            const menuOptions = document.getElementById('menu-options');
-            menuOptions.style.display = 'flex'; 
-            menuOptions.style.flexDirection = 'column';
-            document.getElementById('status-msg').style.display = 'block'; 
-
-            await buildMasterDatabase();
-
-            try {
-                const response = await fetch('options.json');
-                const options = await response.json();
-                menuOptions.innerHTML = ''; 
-                options.forEach(opt => {
-                    const anchor = document.createElement('a');
-                    anchor.href = opt.htmlName;
-                    anchor.className = 'btn btn-blue';
-                    anchor.style.textDecoration = 'none';
-                    anchor.style.marginBottom = '12px';
-                    anchor.style.display = 'flex';
-                    anchor.style.alignItems = 'center';
-                    anchor.style.justifyContent = 'center';
-                    anchor.style.width = '100%';
-                    anchor.style.boxSizing = 'border-box';
-                    anchor.style.borderRadius = '12px';
-                    anchor.style.padding = '15px';
-                    anchor.innerText = opt.description;
-                    menuOptions.appendChild(anchor);
-                });
-            } catch (err) {
-                menuOptions.innerHTML = `<p style="color:#ff3b30;">Menu Error</p>`;
-            }
-        }
-        window.onload = init;
-    </script>
+    <script src="mainmenu.js"></script>
 </body>
 </html>
