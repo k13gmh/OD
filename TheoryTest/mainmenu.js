@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: v2.5.8
- * Feature: Cache Counter Styled & Resilient Sync
+ * Version: v2.5.9
+ * Feature: Optimized Cache Indicator Color & Resilient Sync
  */
 
-const JS_VERSION = "v2.5.8";
+const JS_VERSION = "v2.5.9";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -145,7 +145,7 @@ async function buildMasterDatabase(fullImageSync) {
 
 /**
  * Discreetly updates the cache counter in the footer
- * Styled to match existing footer text (v2.5.8)
+ * Styled with light grey for better visibility (v2.5.9)
  */
 async function updateCacheCount() {
     try {
@@ -153,8 +153,9 @@ async function updateCacheCount() {
         const keys = await cache.keys();
         const indicator = document.getElementById('sync-indicator');
         if (indicator) {
-            indicator.style.color = "#8e8e93";
+            indicator.style.color = "#b0b0b5"; // Light silver-grey
             indicator.style.fontSize = "0.7rem";
+            indicator.style.fontWeight = "400";
             indicator.innerText = `● ${keys.length} Cached`;
         }
     } catch (e) {
