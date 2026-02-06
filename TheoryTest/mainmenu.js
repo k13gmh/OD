@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: v2.6.3
- * Feature: Clean Footer matched to Force Reset
+ * Version: v2.6.4
+ * Feature: Button Width Fix & Clean Footer
  */
 
-const JS_VERSION = "v2.6.3";
+const JS_VERSION = "v2.6.4";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -55,11 +55,9 @@ async function checkSyncStatus() {
 
 function showSyncModal(isResume) {
     const modal = document.getElementById('sync-modal');
-    const title = document.getElementById('modal-title');
-    const desc = document.getElementById('modal-desc');
     if (isResume) {
-        title.innerText = "Sync Incomplete";
-        desc.innerText = "The image library is not fully cached. Resume download?";
+        document.getElementById('modal-title').innerText = "Sync Incomplete";
+        document.getElementById('modal-desc').innerText = "The image library is not fully cached. Resume download?";
     }
     modal.style.display = 'flex';
 }
@@ -153,6 +151,8 @@ async function showMenu() {
             anchor.style.padding = '15px';
             anchor.style.borderRadius = '12px';
             anchor.style.textAlign = 'center';
+            anchor.style.width = '100%';           // Ensure button fills parent width
+            anchor.style.boxSizing = 'border-box'; // Include padding in width calculation
             anchor.innerText = opt.description;
             
             const syncStatus = localStorage.getItem('orion_full_sync_complete');
