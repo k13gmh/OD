@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: v2.6.1
- * Feature: Identical Footer Styling
+ * Version: v2.6.3
+ * Feature: Clean Footer matched to Force Reset
  */
 
-const JS_VERSION = "v2.6.1";
+const JS_VERSION = "v2.6.3";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
