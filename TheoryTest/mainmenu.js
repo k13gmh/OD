@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: v2.5.6
- * Feature: Resilient Sync & Loop Fix
+ * Version: v2.5.7
+ * Feature: Cache Counter & Resilient Sync
  */
 
-const JS_VERSION = "v2.5.6";
+const JS_VERSION = "v2.5.7";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -45,10 +45,9 @@ async function checkSyncStatus() {
 
     document.getElementById('status-msg').style.display = 'block';
 
-    // If we have JSON but full sync hasn't been flagged, ask.
     if (!masterData) {
         showSyncModal(false); 
-    } else if (syncFull !== "true") {
+    } else if (syncFull !== "true" && syncFull !== "dynamic") {
         showSyncModal(true);  
     } else {
         showMenu();           
@@ -75,9 +74,7 @@ async function startSync(wantsFull) {
     if (wantsFull) {
         await buildMasterDatabase(true);
     } else {
-        // If they chose "As I Go", we still need the JSON text
         await buildMasterDatabase(false);
-        // Flag it as 'true' so we don't keep nagging them every time they open the app
         localStorage.setItem('orion_full_sync_complete', "dynamic"); 
         showMenu();
     }
@@ -93,7 +90,6 @@ async function buildMasterDatabase(fullImageSync) {
 
     let masterPool = [];
     
-    // 1. JSON Sync
     if (!localStorage.getItem('orion_master.json')) {
         try {
             for (let i = 0; i < categoryFiles.length; i++) {
@@ -116,7 +112,6 @@ async function buildMasterDatabase(fullImageSync) {
         masterPool = JSON.parse(localStorage.getItem('orion_master.json'));
     }
 
-    // 2. Image Sync
     if (fullImageSync) {
         const cache = await caches.open(IMAGE_CACHE_NAME);
         for (let j = 0; j < masterPool.length; j++) {
@@ -130,7 +125,6 @@ async function buildMasterDatabase(fullImageSync) {
                     if (imgRes.ok) await cache.put(imgUrl, imgRes);
                 }
             } catch (e) {
-                // If internet cuts out, we stop but don't crash
                 statusText.innerText = "Connection lost. Opening Menu...";
                 setTimeout(showMenu, 1500);
                 return;
@@ -143,11 +137,26 @@ async function buildMasterDatabase(fullImageSync) {
                 percentText.innerText = `${p}%`;
             }
         }
-        // Success! Set flag to stop the modal
         localStorage.setItem('orion_full_sync_complete', "true");
     }
 
     showMenu();
+}
+
+/**
+ * Discreetly updates the cache counter in the footer
+ */
+async function updateCacheCount() {
+    try {
+        const cache = await caches.open(IMAGE_CACHE_NAME);
+        const keys = await cache.keys();
+        const indicator = document.getElementById('sync-indicator');
+        if (indicator) {
+            indicator.innerText = `(${keys.length} Cached)`;
+        }
+    } catch (e) {
+        console.log("Cache count unavailable.");
+    }
 }
 
 async function showMenu() {
@@ -155,6 +164,9 @@ async function showMenu() {
     const menuOptions = document.getElementById('menu-options');
     menuOptions.innerHTML = ''; 
     menuOptions.style.display = 'flex';
+
+    // Update the discreet counter
+    updateCacheCount();
 
     try {
         const response = await fetch('options.json');
@@ -170,7 +182,6 @@ async function showMenu() {
             anchor.style.textAlign = 'center';
             anchor.innerText = opt.description;
             
-            // Check if we are in "Dynamic" or "Incomplete" mode
             const syncStatus = localStorage.getItem('orion_full_sync_complete');
             if (opt.htmlName.includes('mock') && syncStatus !== "true") {
                 anchor.onclick = (e) => {
@@ -184,7 +195,6 @@ async function showMenu() {
     }
 }
 
-// ... rest of the calcKey and helper functions remain the same ...
 function getMMYY() {
     const d = new Date();
     return String(d.getUTCMonth() + 1).padStart(2, '0') + String(d.getUTCFullYear()).slice(-2);
