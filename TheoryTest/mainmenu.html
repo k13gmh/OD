@@ -6,34 +6,20 @@
     <title>Orion Drive - Main Menu</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Modal for Sync Selection */
-        #sync-modal { 
-            display:none; 
-            position:fixed; 
-            top:0; 
-            left:0; 
-            width:100%; 
-            height:100%; 
-            background:rgba(0,0,0,0.85); 
-            align-items:center; 
-            justify-content:center; 
-            z-index:9999; 
-            padding: 20px; 
-            box-sizing: border-box; 
-        }
-        .sync-box { 
-            background:#fff; 
-            padding:25px; 
-            border-radius:20px; 
-            width:100%; 
-            max-width:400px; 
-            text-align:center; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
+        #sync-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); align-items:center; justify-content:center; z-index:9999; padding: 20px; box-sizing: border-box; }
+        .sync-box { background:#fff; padding:25px; border-radius:20px; width:100%; max-width:400px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .sync-box h3 { margin-top:0; color:#333; font-size: 1.4rem; }
         .sync-box p { font-size:0.95rem; color:#666; line-height:1.4; margin-bottom:20px; }
         .sync-btn-stack { display: flex; flex-direction: column; gap: 12px; }
         .btn-grey { background: #8e8e93; color: white; border: none; padding: 15px; border-radius: 12px; font-size: 1rem; cursor: pointer; }
+        
+        /* Force identical footer styling */
+        .footer-text {
+            color: #8e8e93 !important;
+            font-size: 0.7rem !important;
+            font-family: -apple-system, Helvetica, Arial, sans-serif !important;
+            letter-spacing: 0.3px;
+        }
     </style>
 </head>
 <body>
@@ -45,7 +31,6 @@
                 <button class="btn btn-blue" onclick="startSync(true)">DOWNLOAD ALL IMAGES</button>
                 <button class="btn btn-grey" onclick="startSync(false)">DOWNLOAD AS I GO</button>
             </div>
-            <p style="font-size:0.7rem; color:#999; margin-top:15px;">Note: "As I Go" requires internet during tests to fetch new images.</p>
         </div>
     </div>
 
@@ -71,20 +56,18 @@
             <div id="menu-options" style="display:none; width: 100%; flex-direction: column;"></div>
             
             <div id="sync-ui" style="display:none; text-align:center; padding: 20px;">
-                <p id="sync-main-label" style="color:#8e8e93; font-size:0.8rem; margin-bottom:10px;">Syncing Assets...</p>
                 <div style="width:100%; background:#eee; height:8px; border-radius:4px; overflow:hidden;">
-                    <div id="sync-bar" style="width:0%; background:#007bff; height:100%; transition: width 0.2s;"></div>
+                    <div id="sync-bar" style="width:0%; background:#007bff; height:100%;"></div>
                 </div>
-                <p id="sync-status-text" style="color:#007bff; font-size:0.75rem; font-weight:bold; margin-top:12px;">Connecting...</p>
-                <p id="sync-percent-text" style="color:#8e8e93; font-size:0.65rem; margin-top:4px;">0%</p>
+                <p id="sync-status-text" style="color:#007bff; font-size:0.75rem; margin-top:12px;">Connecting...</p>
             </div>
 
             <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center;">
                 <div style="display: flex; align-items: center;">
-                    <span style="color: #8e8e93; font-size: 0.7rem; letter-spacing: 0.5px;">ORION DRIVE</span>
-                    <span id="sync-indicator" style="margin-left: 10px;"></span>
+                    <span class="footer-text">ORION DRIVE</span>
+                    <span id="sync-indicator" class="footer-text" style="margin-left: 8px;"></span>
                 </div>
-                <span id="v-tag" style="color: #8e8e93; font-size: 0.7rem;">v2.6.0</span>
+                <span id="v-tag" class="footer-text">v2.6.1</span>
             </div>
         </div>
         
@@ -93,6 +76,6 @@
         </p>
     </div>
 
-    <script src="mainmenu.js?v=2.6.0"></script>
+    <script src="mainmenu.js?v=2.6.1"></script>
 </body>
 </html>
