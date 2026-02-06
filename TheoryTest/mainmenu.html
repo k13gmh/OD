@@ -13,12 +13,14 @@
         .sync-btn-stack { display: flex; flex-direction: column; gap: 12px; }
         .btn-grey { background: #8e8e93; color: white; border: none; padding: 15px; border-radius: 12px; font-size: 1rem; cursor: pointer; }
         
-        /* Force identical footer styling */
+        /* The "Clean" Style matched to Force Reset */
         .footer-text {
             color: #8e8e93 !important;
-            font-size: 0.7rem !important;
-            font-family: -apple-system, Helvetica, Arial, sans-serif !important;
-            letter-spacing: 0.3px;
+            font-size: 0.65rem !important; /* Smaller size to match force reset */
+            font-family: sans-serif !important; /* Standard system font */
+            font-weight: normal !important;
+            letter-spacing: normal !important;
+            text-transform: none;
         }
     </style>
 </head>
@@ -62,20 +64,20 @@
                 <p id="sync-status-text" style="color:#007bff; font-size:0.75rem; margin-top:12px;">Connecting...</p>
             </div>
 
-            <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 15px;">
                 <div style="display: flex; align-items: center;">
                     <span class="footer-text">ORION DRIVE</span>
-                    <span id="sync-indicator" class="footer-text" style="margin-left: 8px;"></span>
+                    <span id="sync-indicator" class="footer-text" style="margin-left: 10px;"></span>
                 </div>
-                <span id="v-tag" class="footer-text">v2.6.1</span>
+                <span id="v-tag" class="footer-text">v2.6.3</span>
             </div>
         </div>
         
         <p style="text-align:center; margin-top:15px;">
-            <button onclick="triggerManualSync()" style="background:none; border:none; color:#ccc; font-size:0.65rem; cursor:pointer; text-decoration:underline;">Force Database Refresh</button>
+            <button onclick="triggerManualSync()" class="footer-text" style="background:none; border:none; cursor:pointer; text-decoration:underline;">Force Database Refresh</button>
         </p>
     </div>
 
-    <script src="mainmenu.js?v=2.6.1"></script>
+    <script src="mainmenu.js?v=2.6.3"></script>
 </body>
 </html>
