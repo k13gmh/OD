@@ -10,8 +10,8 @@
         .lesson-item { border-left: 4px solid #007bff; padding: 10px 15px; margin-bottom: 15px; background: #f8f9fa; border-radius: 0 8px 8px 0; }
         .lesson-date { font-weight: bold; color: #333; display: block; }
         .lesson-desc { font-size: 0.9rem; color: #666; }
-        .input-group { margin-bottom: 20px; }
-        input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 0.8rem; background: #f0f0f0; }
+        .input-group { margin-bottom: 15px; }
+        input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 0.9rem; margin-top: 5px; }
         .status-pill { font-size: 0.7rem; padding: 4px 8px; border-radius: 10px; display: inline-block; margin-top: 10px; }
         .status-syncing { background: #fff3cd; color: #856404; }
         .status-ready { background: #d4edda; color: #155724; }
@@ -22,16 +22,17 @@
 <body>
     <div class="container">
         <div style="text-align: center; margin-bottom: 20px;">
-            <h1 style="color: #333; margin-bottom: 5px;">Diary</h1>
-            <p style="color: #8e8e93; font-size: 0.8rem;">Total Drive Integration</p>
+            <h1 style="color: #333; margin-bottom: 5px;">My Lessons</h1>
+            <p style="color: #8e8e93; font-size: 0.8rem;">Orion Drive Diary</p>
         </div>
 
         <div class="diary-card">
             <div class="input-group">
-                <label style="font-size: 0.8rem; color: #666; display: block; margin-bottom: 8px;">Subscription Link</label>
-                <input type="text" id="diaryUrl" value="https://web.totaldrive.app/calsync/?id=11693755868-1006&outlook" />
-                <button class="btn btn-blue" onclick="saveAndSync()" style="margin-top: 10px; width: 100%;">Sync My Diary</button>
+                <label style="font-size: 0.8rem; color: #666;">Enter Your Name</label>
+                <input type="text" id="studentName" placeholder="e.g. Lewis" oninput="saveNameAndFilter()" />
             </div>
+
+            <button class="btn btn-blue" onclick="syncDiary()" style="width: 100%; margin-top: 10px;">Check for Lessons</button>
 
             <div id="diary-status" style="display: none;">
                 <span id="status-text" class="status-pill status-ready">Ready</span>
@@ -40,7 +41,7 @@
             <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
 
             <div id="lesson-list">
-                <p style="text-align: center; color: #999; font-size: 0.9rem;">Tap Sync to load lessons.</p>
+                <p style="text-align: center; color: #999; font-size: 0.9rem;">Tap button to sync with Total Drive.</p>
             </div>
             
             <div id="debug-log"></div>
@@ -51,21 +52,28 @@
         </p>
 
         <div class="card-footer" style="text-align: center; margin-top: 30px;">
-            <span class="footer-text">ORION DRIVE ● DIARY ● v1.0.2</span>
+            <span class="footer-text">ORION DRIVE ● DIARY ● v1.0.4</span>
         </div>
     </div>
 
     <script>
+        const TD_LINK = "https://web.totaldrive.app/calsync/?id=11693755868-1006";
         const debug = (msg) => { document.getElementById('debug-log').innerText += "\n" + msg; };
 
-        function saveAndSync() {
-            const url = document.getElementById('diaryUrl').value.trim();
-            if (!url) return alert("Please paste a link first.");
-            localStorage.setItem('orion_diary_url', url);
-            syncDiary(url);
+        window.onload = () => {
+            const savedName = localStorage.getItem('orion_student_name');
+            if (savedName) {
+                document.getElementById('studentName').value = savedName;
+            }
+        };
+
+        function saveNameAndFilter() {
+            const name = document.getElementById('studentName').value;
+            localStorage.setItem('orion_student_name', name);
+            if (window.allLessons) displayLessons(window.allLessons);
         }
 
-        async function syncDiary(url) {
+        async function syncDiary() {
             const list = document.getElementById('lesson-list');
             const statusDiv = document.getElementById('diary-status');
             const statusText = document.getElementById('status-text');
@@ -75,29 +83,23 @@
             statusDiv.style.display = 'block';
             statusText.innerText = "Syncing...";
             statusText.className = "status-pill status-syncing";
-            list.innerHTML = "<p style='text-align:center;'>Fetching lessons...</p>";
+            list.innerHTML = "<p style='text-align:center;'>Updating diary...</p>";
 
             try {
-                // Switching to AllOrigins proxy which handles 403s better for ICS files
-                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-                debug("Attempting Sync via AllOrigins...");
+                // Using AllOrigins to pull the data silently
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(TD_LINK)}&timestamp=${Date.now()}`;
                 
                 const response = await fetch(proxyUrl);
-                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+                if (!response.ok) throw new Error(`Network Error: ${response.status}`);
                 
                 const data = await response.json();
                 const rawText = data.contents;
-                debug("Data received. Content Length: " + rawText.length);
+                debug("Data fetched successfully.");
 
-                if (!rawText.includes("BEGIN:VCALENDAR")) {
-                    debug("Error: Invalid data format received.");
-                    throw new Error("Invalid Format");
-                }
+                window.allLessons = parseICS(rawText);
+                displayLessons(window.allLessons);
                 
-                const lessons = parseICS(rawText);
-                displayLessons(lessons);
-                
-                statusText.innerText = "Updated Just Now";
+                statusText.innerText = "Updated: " + new Date().toLocaleTimeString();
                 statusText.className = "status-pill status-ready";
             } catch (err) {
                 console.error(err);
@@ -105,8 +107,8 @@
                 statusText.className = "status-pill";
                 statusText.style.background = "#f8d7da";
                 statusText.style.color = "#721c24";
-                list.innerHTML = "<p style='text-align:center; color:red;'>Sync Error. Please try again.</p>";
-                debug("Error details: " + err.message);
+                list.innerHTML = "<p style='text-align:center; color:red;'>Check internet connection.</p>";
+                debug("Error: " + err.message);
             }
         }
 
@@ -128,21 +130,27 @@
             });
 
             const now = new Date().toISOString().replace(/[-:]/g, '').split('.')[0];
-            return events
-                .filter(e => e.start >= now)
-                .sort((a, b) => a.start.localeCompare(b.start))
-                .slice(0, 10);
+            return events.filter(e => e.start >= now).sort((a, b) => a.start.localeCompare(b.start));
         }
 
         function displayLessons(lessons) {
             const list = document.getElementById('lesson-list');
-            if (lessons.length === 0) {
-                list.innerHTML = "<p style='text-align:center;'>No upcoming lessons found.</p>";
+            const filter = document.getElementById('studentName').value.trim().toLowerCase();
+            
+            if (!filter) {
+                list.innerHTML = `<p style="text-align:center; color:#999;">Please enter your name above.</p>`;
+                return;
+            }
+
+            const filtered = lessons.filter(l => l.summary.toLowerCase().includes(filter));
+
+            if (filtered.length === 0) {
+                list.innerHTML = `<p style="text-align:center; color:#999;">No upcoming lessons found for "${filter}".</p>`;
                 return;
             }
 
             list.innerHTML = "";
-            lessons.forEach(lesson => {
+            filtered.slice(0, 5).forEach(lesson => {
                 const dateStr = formatICSDate(lesson.start);
                 list.innerHTML += `
                     <div class="lesson-item">
