@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Orion Drive - Diary Prototype</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .diary-card { background: #fff; border-radius: 15px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-top: 20px; }
+        .lesson-item { border-left: 4px solid #007bff; padding: 10px 15px; margin-bottom: 15px; background: #f8f9fa; border-radius: 0 8px 8px 0; }
+        .lesson-date { font-weight: bold; color: #333; display: block; }
+        .lesson-desc { font-size: 0.9rem; color: #666; }
+        .input-group { margin-bottom: 20px; }
+        input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 0.9rem; }
+        .status-pill { font-size: 0.7rem; padding: 4px 8px; border-radius: 10px; display: inline-block; margin-top: 10px; }
+        .status-syncing { background: #fff3cd; color: #856404; }
+        .status-ready { background: #d4edda; color: #155724; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h1 style="color: #333; margin-bottom: 5px;">Diary</h1>
+            <p style="color: #8e8e93; font-size: 0.8rem;">Total Drive Integration Test</p>
+        </div>
+
+        <div class="diary-card">
+            <div class="input-group">
+                <label style="font-size: 0.8rem; color: #666; display: block; margin-bottom: 8px;">Subscription Link (.ics)</label>
+                <input type="text" id="diaryUrl" placeholder="https://totaldrive.co.uk/calendars/..." />
+                <button class="btn btn-blue" onclick="saveAndSync()" style="margin-top: 10px; width: 100%;">Sync My Diary</button>
+            </div>
+
+            <div id="diary-status" style="display: none;">
+                <span id="status-text" class="status-pill status-ready">Ready</span>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+            <div id="lesson-list">
+                <p style="text-align: center; color: #999; font-size: 0.9rem;">No lessons loaded. Enter your link above to begin.</p>
+            </div>
+        </div>
+
+        <p style="text-align: center; margin-top: 20px;">
+            <a href="mainmenu.html" style="color: #007bff; text-decoration: none; font-size: 0.9rem;">&larr; Back to Menu</a>
+        </p>
+
+        <div class="card-footer" style="text-align: center; margin-top: 30px;">
+            <span class="footer-text">ORION DRIVE ● DIARY PROTOTYPE ● v1.0.0</span>
+        </div>
+    </div>
+
+    <script>
+        // Load saved link on start
+        window.onload = () => {
+            const savedUrl = localStorage.getItem('orion_diary_url');
+            if (savedUrl) {
+                document.getElementById('diaryUrl').value = savedUrl;
+                syncDiary(savedUrl);
+            }
+        };
+
+        function saveAndSync() {
+            const url = document.getElementById('diaryUrl').value.trim();
+            if (!url) return alert("Please paste a link first.");
+            localStorage.setItem('orion_diary_url', url);
+            syncDiary(url);
+        }
+
+        async function syncDiary(url) {
+            const list = document.getElementById('lesson-list');
+            const statusDiv = document.getElementById('diary-status');
+            const statusText = document.getElementById('status-text');
+
+            statusDiv.style.display = 'block';
+            statusText.innerText = "Syncing...";
+            statusText.className = "status-pill status-syncing";
+            list.innerHTML = "<p style='text-align:center;'>Fetching lessons...</p>";
+
+            try {
+                // Using a CORS proxy to bypass security blocks for the prototype
+                const proxy = "https://api.allorigins.win/get?url=";
+                const response = await fetch(proxy + encodeURIComponent(url));
+                const data = await response.json();
+                
+                if (!data.contents) throw new Error("Could not read data.");
+                
+                const lessons = parseICS(data.contents);
+                displayLessons(lessons);
+                
+                statusText.innerText = "Updated Just Now";
+                statusText.className = "status-pill status-ready";
+            } catch (err) {
+                console.error(err);
+                statusText.innerText = "Sync Failed";
+                statusText.className = "status-pill";
+                statusText.style.background = "#f8d7da";
+                statusText.style.color = "#721c24";
+                list.innerHTML = "<p style='text-align:center; color:red;'>Error connecting to Total Drive. Check your link.</p>";
+            }
+        }
+
+        function parseICS(icsString) {
+            const events = [];
+            const lines = icsString.split(/\r?\n/);
+            let currentEvent = null;
+
+            lines.forEach(line => {
+                if (line.startsWith("BEGIN:VEVENT")) {
+                    currentEvent = {};
+                } else if (line.startsWith("END:VEVENT")) {
+                    events.push(currentEvent);
+                    currentEvent = null;
+                } else if (currentEvent) {
+                    if (line.startsWith("SUMMARY:")) currentEvent.summary = line.replace("SUMMARY:", "");
+                    if (line.startsWith("DTSTART:")) currentEvent.start = line.replace("DTSTART:", "");
+                    if (line.startsWith("LOCATION:")) currentEvent.location = line.replace("LOCATION:", "");
+                }
+            });
+
+            // Sort by date (Total Drive uses YYYYMMDDThhmmssZ format)
+            return events.sort((a, b) => a.start.localeCompare(b.start)).slice(0, 5);
+        }
+
+        function displayLessons(lessons) {
+            const list = document.getElementById('lesson-list');
+            if (lessons.length === 0) {
+                list.innerHTML = "<p style='text-align:center;'>No upcoming lessons found.</p>";
+                return;
+            }
+
+            list.innerHTML = "";
+            lessons.forEach(lesson => {
+                const dateStr = formatICSDate(lesson.start);
+                const html = `
+                    <div class="lesson-item">
+                        <span class="lesson-date">${dateStr}</span>
+                        <span class="lesson-desc">${lesson.summary}</span>
+                        ${lesson.location ? `<br><span style="font-size:0.75rem; color:#999;">📍 ${lesson.location}</span>` : ''}
+                    </div>
+                `;
+                list.innerHTML += html;
+            });
+        }
+
+        function formatICSDate(icsDate) {
+            // Basic parsing for YYYYMMDDTHHMMSS
+            const y = icsDate.substring(0, 4);
+            const m = parseInt(icsDate.substring(4, 6)) - 1;
+            const d = icsDate.substring(6, 8);
+            const hh = icsDate.substring(9, 11);
+            const mm = icsDate.substring(11, 13);
+            
+            const dateObj = new Date(Date.UTC(y, m, d, hh, mm));
+            return dateObj.toLocaleDateString('en-GB', { 
+                weekday: 'short', 
+                day: 'numeric', 
+                month: 'short', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+        }
+    </script>
+</body>
+</html>
