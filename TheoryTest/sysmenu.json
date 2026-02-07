@@ -23,9 +23,5 @@
    {
     "description": "LOCAL MEMORY",
     "htmlName": "showmem.html"
-  },
-     {
-    "description": "TD DIARY",
-    "htmlName": "diary.html"
   }
 ]
