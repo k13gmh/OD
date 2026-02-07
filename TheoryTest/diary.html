@@ -11,23 +11,24 @@
         .lesson-date { font-weight: bold; color: #333; display: block; }
         .lesson-desc { font-size: 0.9rem; color: #666; }
         .input-group { margin-bottom: 20px; }
-        input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 0.9rem; }
+        input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 0.8rem; background: #f0f0f0; }
         .status-pill { font-size: 0.7rem; padding: 4px 8px; border-radius: 10px; display: inline-block; margin-top: 10px; }
         .status-syncing { background: #fff3cd; color: #856404; }
         .status-ready { background: #d4edda; color: #155724; }
+        #debug-log { margin-top: 20px; font-family: monospace; font-size: 0.6rem; color: #999; white-space: pre-wrap; word-break: break-all; border-top: 1px solid #eee; padding-top: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div style="text-align: center; margin-bottom: 20px;">
             <h1 style="color: #333; margin-bottom: 5px;">Diary</h1>
-            <p style="color: #8e8e93; font-size: 0.8rem;">Total Drive Integration Test</p>
+            <p style="color: #8e8e93; font-size: 0.8rem;">Total Drive Integration</p>
         </div>
 
         <div class="diary-card">
             <div class="input-group">
-                <label style="font-size: 0.8rem; color: #666; display: block; margin-bottom: 8px;">Subscription Link (.ics)</label>
-                <input type="text" id="diaryUrl" placeholder="https://totaldrive.co.uk/calendars/..." />
+                <label style="font-size: 0.8rem; color: #666; display: block; margin-bottom: 8px;">Subscription Link</label>
+                <input type="text" id="diaryUrl" value="https://web.totaldrive.app/calsync/?id=11693755868-1006" />
                 <button class="btn btn-blue" onclick="saveAndSync()" style="margin-top: 10px; width: 100%;">Sync My Diary</button>
             </div>
 
@@ -38,8 +39,10 @@
             <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
 
             <div id="lesson-list">
-                <p style="text-align: center; color: #999; font-size: 0.9rem;">No lessons loaded. Enter your link above to begin.</p>
+                <p style="text-align: center; color: #999; font-size: 0.9rem;">Tap Sync to load lessons.</p>
             </div>
+            
+            <div id="debug-log"></div>
         </div>
 
         <p style="text-align: center; margin-top: 20px;">
@@ -47,17 +50,17 @@
         </p>
 
         <div class="card-footer" style="text-align: center; margin-top: 30px;">
-            <span class="footer-text">ORION DRIVE ● DIARY PROTOTYPE ● v1.0.0</span>
+            <span class="footer-text">ORION DRIVE ● DIARY ● v1.0.1</span>
         </div>
     </div>
 
     <script>
-        // Load saved link on start
+        const debug = (msg) => { document.getElementById('debug-log').innerText += "\n" + msg; };
+
         window.onload = () => {
             const savedUrl = localStorage.getItem('orion_diary_url');
             if (savedUrl) {
                 document.getElementById('diaryUrl').value = savedUrl;
-                syncDiary(savedUrl);
             }
         };
 
@@ -72,21 +75,31 @@
             const list = document.getElementById('lesson-list');
             const statusDiv = document.getElementById('diary-status');
             const statusText = document.getElementById('status-text');
+            const logger = document.getElementById('debug-log');
 
+            logger.innerText = "Log Start:";
             statusDiv.style.display = 'block';
             statusText.innerText = "Syncing...";
             statusText.className = "status-pill status-syncing";
             list.innerHTML = "<p style='text-align:center;'>Fetching lessons...</p>";
 
             try {
-                // Using a CORS proxy to bypass security blocks for the prototype
-                const proxy = "https://api.allorigins.win/get?url=";
-                const response = await fetch(proxy + encodeURIComponent(url));
-                const data = await response.json();
+                // Using corsproxy.io for better compatibility
+                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+                debug("Fetching via Proxy...");
                 
-                if (!data.contents) throw new Error("Could not read data.");
+                const response = await fetch(proxyUrl);
+                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
                 
-                const lessons = parseICS(data.contents);
+                const rawText = await response.text();
+                debug("Data received. Length: " + rawText.length);
+
+                if (!rawText.includes("BEGIN:VCALENDAR")) {
+                    debug("Error: Response is not a valid iCalendar file.");
+                    throw new Error("Invalid Format");
+                }
+                
+                const lessons = parseICS(rawText);
                 displayLessons(lessons);
                 
                 statusText.innerText = "Updated Just Now";
@@ -97,7 +110,8 @@
                 statusText.className = "status-pill";
                 statusText.style.background = "#f8d7da";
                 statusText.style.color = "#721c24";
-                list.innerHTML = "<p style='text-align:center; color:red;'>Error connecting to Total Drive. Check your link.</p>";
+                list.innerHTML = "<p style='text-align:center; color:red;'>Error connecting to Total Drive.</p>";
+                debug("Error details: " + err.message);
             }
         }
 
@@ -110,17 +124,21 @@
                 if (line.startsWith("BEGIN:VEVENT")) {
                     currentEvent = {};
                 } else if (line.startsWith("END:VEVENT")) {
-                    events.push(currentEvent);
+                    if (currentEvent.start) events.push(currentEvent);
                     currentEvent = null;
                 } else if (currentEvent) {
-                    if (line.startsWith("SUMMARY:")) currentEvent.summary = line.replace("SUMMARY:", "");
-                    if (line.startsWith("DTSTART:")) currentEvent.start = line.replace("DTSTART:", "");
-                    if (line.startsWith("LOCATION:")) currentEvent.location = line.replace("LOCATION:", "");
+                    if (line.startsWith("SUMMARY:")) currentEvent.summary = line.replace("SUMMARY:", "").trim();
+                    if (line.startsWith("DTSTART:")) currentEvent.start = line.replace("DTSTART:", "").trim();
+                    if (line.startsWith("LOCATION:")) currentEvent.location = line.replace("LOCATION:", "").trim();
                 }
             });
 
-            // Sort by date (Total Drive uses YYYYMMDDThhmmssZ format)
-            return events.sort((a, b) => a.start.localeCompare(b.start)).slice(0, 5);
+            // Filter for future lessons and sort
+            const now = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + "Z";
+            return events
+                .filter(e => e.start >= now)
+                .sort((a, b) => a.start.localeCompare(b.start))
+                .slice(0, 10);
         }
 
         function displayLessons(lessons) {
@@ -133,19 +151,18 @@
             list.innerHTML = "";
             lessons.forEach(lesson => {
                 const dateStr = formatICSDate(lesson.start);
-                const html = `
+                list.innerHTML += `
                     <div class="lesson-item">
                         <span class="lesson-date">${dateStr}</span>
                         <span class="lesson-desc">${lesson.summary}</span>
                         ${lesson.location ? `<br><span style="font-size:0.75rem; color:#999;">📍 ${lesson.location}</span>` : ''}
                     </div>
                 `;
-                list.innerHTML += html;
             });
         }
 
         function formatICSDate(icsDate) {
-            // Basic parsing for YYYYMMDDTHHMMSS
+            // Handles both UTC (Z) and local formats
             const y = icsDate.substring(0, 4);
             const m = parseInt(icsDate.substring(4, 6)) - 1;
             const d = icsDate.substring(6, 8);
