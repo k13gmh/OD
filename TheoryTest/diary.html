@@ -16,6 +16,14 @@
         .status-syncing { background: #fff3cd; color: #856404; }
         .status-ready { background: #d4edda; color: #155724; }
         #debug-log { margin-top: 20px; font-family: monospace; font-size: 0.6rem; color: #999; white-space: pre-wrap; word-break: break-all; border-top: 1px solid #eee; padding-top: 10px; }
+        
+        .footer-text {
+            color: #8e8e93 !important;
+            font-size: 0.65rem !important;
+            font-family: sans-serif !important;
+            font-weight: normal !important;
+            text-transform: none;
+        }
     </style>
 </head>
 <body>
@@ -56,13 +64,6 @@
 
     <script>
         const debug = (msg) => { document.getElementById('debug-log').innerText += "\n" + msg; };
-
-        window.onload = () => {
-            const savedUrl = localStorage.getItem('orion_diary_url');
-            if (savedUrl) {
-                document.getElementById('diaryUrl').value = savedUrl;
-            }
-        };
 
         function saveAndSync() {
             const url = document.getElementById('diaryUrl').value.trim();
@@ -129,11 +130,9 @@
                 } else if (currentEvent) {
                     if (line.startsWith("SUMMARY:")) currentEvent.summary = line.replace("SUMMARY:", "").trim();
                     if (line.startsWith("DTSTART:")) currentEvent.start = line.replace("DTSTART:", "").trim();
-                    if (line.startsWith("LOCATION:")) currentEvent.location = line.replace("LOCATION:", "").trim();
                 }
             });
 
-            // Filter for future lessons and sort
             const now = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + "Z";
             return events
                 .filter(e => e.start >= now)
@@ -155,14 +154,12 @@
                     <div class="lesson-item">
                         <span class="lesson-date">${dateStr}</span>
                         <span class="lesson-desc">${lesson.summary}</span>
-                        ${lesson.location ? `<br><span style="font-size:0.75rem; color:#999;">📍 ${lesson.location}</span>` : ''}
                     </div>
                 `;
             });
         }
 
         function formatICSDate(icsDate) {
-            // Handles both UTC (Z) and local formats
             const y = icsDate.substring(0, 4);
             const m = parseInt(icsDate.substring(4, 6)) - 1;
             const d = icsDate.substring(6, 8);
