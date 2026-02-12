@@ -1,14 +1,13 @@
 /**
  * File: mainmenu.js
- * Version: v2.6.5
- * Feature: Weekly SMTM, Dice Roll Lock, Corrected Sayings
+ * Version: v2.6.6
+ * Feature: Layout Fixes & Auto-hide SMTM
  */
 
-const JS_VERSION = "v2.6.5";
+const JS_VERSION = "v2.6.6";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
-let smtmPassed = false;
 
 const categoryFiles = [
     'alertness', 'attitude', 'safety', 'hazard', 'margins', 
@@ -22,7 +21,7 @@ const jokes = [
     "Life is full of crossroads; this one only requires a 'Tell Me' answer.",
     "Think of this as a digital speed bump. Answer correctly to smooth it out.",
     "Education is expensive, but this app is free—consider this your tuition.",
-    "A free app is a rare gift. A driver who knows their pressures is rarer!",
+    "A free app is a rare gift. A driver who knows their tyres is rarer!",
     "Your luck just ran out! A six was rolled. Time for some knowledge."
 ];
 
@@ -52,36 +51,22 @@ function verifyAccess() {
 
 async function checkSyncStatus() {
     const masterData = localStorage.getItem('orion_master.json');
-    const syncFull = localStorage.getItem('orion_full_sync_complete');
-    document.getElementById('status-msg').style.display = 'block';
-
     if (!masterData) {
         showSyncModal(false); 
-    } else if (syncFull !== "true" && syncFull !== "dynamic") {
-        showSyncModal(true);  
     } else {
         showMenu();           
     }
 }
 
-function showSyncModal(isResume) {
-    const modal = document.getElementById('sync-modal');
-    if (isResume) {
-        document.getElementById('modal-title').innerText = "Sync Incomplete";
-        document.getElementById('modal-desc').innerText = "The image library is not fully cached. Resume download?";
-    }
-    modal.style.display = 'flex';
+function showSyncModal() {
+    document.getElementById('sync-modal').style.display = 'flex';
 }
 
 async function startSync(wantsFull) {
     document.getElementById('sync-modal').style.display = 'none';
-    if (wantsFull) {
-        await buildMasterDatabase(true);
-    } else {
-        await buildMasterDatabase(false);
-        localStorage.setItem('orion_full_sync_complete', "dynamic"); 
-        showMenu();
-    }
+    await buildMasterDatabase(wantsFull);
+    if (!wantsFull) localStorage.setItem('orion_full_sync_complete', "dynamic");
+    showMenu();
 }
 
 async function buildMasterDatabase(fullImageSync) {
@@ -120,7 +105,6 @@ async function buildMasterDatabase(fullImageSync) {
         }
         localStorage.setItem('orion_full_sync_complete', "true");
     }
-    showMenu();
 }
 
 async function showMenu() {
@@ -129,23 +113,18 @@ async function showMenu() {
     menuOptions.innerHTML = ''; 
     menuOptions.style.display = 'flex';
 
-    // Update Counts in Footer
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
     const cache = await caches.open(IMAGE_CACHE_NAME);
     const keys = await cache.keys();
     document.getElementById('db-counts').innerText = `Database: ${master.length} Questions - ${keys.length} Road Signs`;
 
-    // 1. Build Buttons (initially locked if roll hits 6)
     try {
         const response = await fetch('options.json');
         const options = await response.json();
         
-        // Determine if we show SMTM today
         const today = new Date().toDateString();
         const hasPassedToday = localStorage.getItem('smtm_passed_today') === today;
         const diceRoll = Math.floor(Math.random() * 6) + 1;
-        
-        // Lock logic: If not passed today AND rolled a 6
         const shouldLock = !hasPassedToday && diceRoll === 6;
 
         options.forEach(opt => {
@@ -162,7 +141,10 @@ async function showMenu() {
             anchor.style.boxSizing = 'border-box';
             
             if (shouldLock) {
-                anchor.onclick = (e) => { e.preventDefault(); alert("Please answer the 'Show Me, Tell Me' question below first!"); };
+                anchor.onclick = (e) => { 
+                    e.preventDefault(); 
+                    alert("Six Rolled! Answer the question below to unlock."); 
+                };
             }
             menuOptions.appendChild(anchor);
         });
@@ -177,24 +159,18 @@ async function showMenu() {
 }
 
 async function setupSMTM() {
-    const container = document.getElementById('smtm-container');
-    container.style.display = 'block';
-    
+    document.getElementById('smtm-container').style.display = 'block';
     const res = await fetch('showmetellme.json');
     const data = await res.json();
     
-    // Calculate Week Question (1-11)
     const now = new Date();
     const start = new Date(now.getFullYear(), 0, 1);
-    const diff = now - start;
-    const day = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const weekNum = Math.floor(day / 7);
-    const qIndex = weekNum % 11; // 0 to 10
+    const day = Math.floor((now - start) / 86400000);
+    const qIndex = Math.floor(day / 7) % 11;
     
     const q = data[qIndex];
     document.getElementById('smtm-question').innerText = q.question;
     
-    // Shuffle choices
     const choices = Object.entries(q.choices);
     choices.sort(() => Math.random() - 0.5);
     
@@ -212,7 +188,7 @@ async function setupSMTM() {
                 document.getElementById('smtm-continue').style.display = 'block';
                 ansDiv.style.pointerEvents = 'none';
             } else {
-                alert("Incorrect. Read carefully and try again.");
+                alert("Incorrect. Think again!");
             }
         };
         ansDiv.appendChild(b);
@@ -224,14 +200,11 @@ function unlockButtons() {
     const btns = document.querySelectorAll('.main-btn');
     btns.forEach(b => {
         b.classList.remove('btn-grey');
-        b.onclick = null; // Restore original link behavior
+        b.onclick = null;
     });
-    document.getElementById('smtm-container').style.opacity = '0.5';
-    document.getElementById('smtm-container').style.pointerEvents = 'none';
-    document.getElementById('smtm-continue').innerText = "System Unlocked";
+    // Completely hide the SMTM section after they finish
+    document.getElementById('smtm-container').style.display = 'none';
 }
-
-// ... Keep getMMYY, calcKey, triggerManualSync same as v2.6.4 ...
 
 function getMMYY() {
     const d = new Date();
@@ -259,8 +232,7 @@ function calcKey() {
 
 function triggerManualSync() {
     if (confirm("Reset local data?")) {
-        localStorage.removeItem('orion_master.json');
-        localStorage.removeItem('orion_full_sync_complete');
+        localStorage.clear();
         window.location.reload();
     }
 }
