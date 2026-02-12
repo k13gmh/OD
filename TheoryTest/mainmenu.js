@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: v2.6.6
- * Feature: Layout Fixes & Auto-hide SMTM
+ * Version: v2.6.7
+ * Feature: Layout Spacing Fix & Footer Alignment
  */
 
-const JS_VERSION = "v2.6.6";
+const JS_VERSION = "v2.6.7";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -52,7 +52,7 @@ function verifyAccess() {
 async function checkSyncStatus() {
     const masterData = localStorage.getItem('orion_master.json');
     if (!masterData) {
-        showSyncModal(false); 
+        showSyncModal(); 
     } else {
         showMenu();           
     }
@@ -109,6 +109,7 @@ async function buildMasterDatabase(fullImageSync) {
 
 async function showMenu() {
     document.getElementById('sync-ui').style.display = 'none';
+    document.getElementById('status-msg').style.display = 'block';
     const menuOptions = document.getElementById('menu-options');
     menuOptions.innerHTML = ''; 
     menuOptions.style.display = 'flex';
@@ -116,7 +117,7 @@ async function showMenu() {
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
     const cache = await caches.open(IMAGE_CACHE_NAME);
     const keys = await cache.keys();
-    document.getElementById('db-counts').innerText = `Database: ${master.length} Questions - ${keys.length} Road Signs`;
+    document.getElementById('db-counts').innerText = `Database: ${master.length} Questions — ${keys.length} Road Signs`;
 
     try {
         const response = await fetch('options.json');
@@ -132,18 +133,11 @@ async function showMenu() {
             anchor.href = opt.htmlName;
             anchor.className = 'btn btn-blue main-btn' + (shouldLock ? ' btn-grey' : '');
             anchor.innerText = opt.description;
-            anchor.style.textDecoration = 'none';
-            anchor.style.marginBottom = '12px';
-            anchor.style.padding = '15px';
-            anchor.style.borderRadius = '12px';
-            anchor.style.textAlign = 'center';
-            anchor.style.width = '100%';
-            anchor.style.boxSizing = 'border-box';
             
             if (shouldLock) {
                 anchor.onclick = (e) => { 
                     e.preventDefault(); 
-                    alert("Six Rolled! Answer the question below to unlock."); 
+                    alert("Six Rolled! Answer the 'Show Me, Tell Me' question to unlock."); 
                 };
             }
             menuOptions.appendChild(anchor);
@@ -202,7 +196,6 @@ function unlockButtons() {
         b.classList.remove('btn-grey');
         b.onclick = null;
     });
-    // Completely hide the SMTM section after they finish
     document.getElementById('smtm-container').style.display = 'none';
 }
 
