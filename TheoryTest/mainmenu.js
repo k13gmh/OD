@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: v2.7.1
- * Fix: Cleaned up versioning strings and UI state management
+ * Version: 2.7.2
+ * Feature: Fluid layout with separated system footer
  */
 
-const JS_VERSION = "2.7.1"; // Removed the 'v' here to prevent 'vv' in display
+const JS_VERSION = "2.7.2";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 
@@ -14,22 +14,13 @@ const categoryFiles = [
     'signs', 'documents', 'incidents', 'loading'
 ];
 
-const jokes = [
-    "The best things in life are free, but a mock test costs this question!",
-    "Think of this as a digital speed bump. Answer correctly to smooth it out.",
-    "A free app is a rare gift. A driver who knows their tyres is rarer!",
-    "Your luck just ran out! A six was rolled. Time for some knowledge."
-];
-
 function init() {
-    // Explicitly set the version text without adding extra 'v's
+    // Standard version print
     document.getElementById('v-tag').innerText = `v${JS_VERSION}`;
     
     if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
         document.getElementById('lock-ui').style.display = 'none';
         checkSyncStatus(); 
-    } else {
-        document.getElementById('lock-ui').style.display = 'block';
     }
 }
 
@@ -39,12 +30,11 @@ function verifyAccess() {
         localStorage.setItem('gatekeeper_stamp', curMonthYear);
         document.getElementById('lock-ui').style.display = 'none';
         checkSyncStatus(); 
-    } else { alert("Incorrect Code."); }
+    } else { alert("Access Denied."); }
 }
 
 async function checkSyncStatus() {
-    const masterData = localStorage.getItem('orion_master.json');
-    if (!masterData) { 
+    if (!localStorage.getItem('orion_master.json')) { 
         document.getElementById('sync-modal').style.display = 'flex'; 
     } else { 
         showMenu(); 
@@ -65,7 +55,7 @@ async function buildMasterDatabase() {
     let masterPool = [];
     
     for (let i = 0; i < categoryFiles.length; i++) {
-        statusText.innerText = `Updating ${categoryFiles[i]}...`;
+        statusText.innerText = `Updating: ${categoryFiles[i]}`;
         const res = await fetch(`${categoryFiles[i]}.json`);
         if (res.ok) masterPool = masterPool.concat(await res.json());
         bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 100) + "%";
@@ -81,7 +71,7 @@ async function showMenu() {
     menuOptions.style.display = 'flex';
 
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
-    document.getElementById('db-counts').innerText = `Database: ${master.length} Questions Online`;
+    document.getElementById('db-counts').innerText = `Database: ${master.length} Qs • Ready for use`;
 
     try {
         const response = await fetch('options.json');
@@ -97,20 +87,14 @@ async function showMenu() {
             anchor.href = opt.htmlName;
             anchor.className = 'btn btn-blue main-btn' + (shouldLock ? ' btn-grey' : '');
             anchor.innerText = opt.description.toUpperCase();
-            
-            if (shouldLock) {
-                anchor.onclick = (e) => { 
-                    e.preventDefault(); 
-                    alert("Dice roll triggered! Complete the check below to unlock."); 
-                };
-            }
+            if (shouldLock) anchor.onclick = (e) => { e.preventDefault(); alert("Complete the maintenance check below to unlock."); };
             menuOptions.appendChild(anchor);
         });
 
         if (shouldLock) {
             setupSMTM();
-            document.getElementById('joke-text').innerText = jokes[Math.floor(Math.random() * jokes.length)];
             document.getElementById('smtm-modal').style.display = 'flex';
+            document.getElementById('joke-text').innerText = "Security check triggered. Answer the question below to proceed.";
         }
     } catch (e) { console.error(e); }
 }
@@ -131,11 +115,11 @@ async function setupSMTM() {
         b.innerText = val;
         b.onclick = () => {
             if (key === q.correct) {
-                document.getElementById('smtm-feedback').innerText = "Correct! " + q.explanation;
+                document.getElementById('smtm-feedback').innerText = "Correct: " + q.explanation;
                 document.getElementById('smtm-feedback').style.display = 'block';
                 document.getElementById('smtm-continue').style.display = 'block';
                 ansDiv.style.pointerEvents = 'none';
-            } else { alert("Incorrect. Please try again."); }
+            } else { alert("Try again."); }
         };
         ansDiv.appendChild(b);
     });
@@ -145,10 +129,7 @@ function unlockButtons() {
     localStorage.setItem('smtm_passed_today', new Date().toDateString());
     document.getElementById('smtm-container').style.display = 'none';
     const btns = document.querySelectorAll('.main-btn');
-    btns.forEach(b => {
-        b.classList.remove('btn-grey');
-        b.onclick = null;
-    });
+    btns.forEach(b => { b.classList.remove('btn-grey'); b.onclick = null; });
 }
 
 function calcKey() {
@@ -171,10 +152,7 @@ function calcKey() {
 }
 
 function triggerManualSync() {
-    if (confirm("Reset application data?")) {
-        localStorage.clear();
-        window.location.reload();
-    }
+    if (confirm("Reset local storage?")) { localStorage.clear(); window.location.reload(); }
 }
 
 window.onload = init;
