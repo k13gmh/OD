@@ -18,11 +18,10 @@
             width: 95%;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* Keeps the footer bar rounded at corners */
+            overflow: hidden; 
             margin-top: 10px;
         }
 
-        /* Container for buttons with vertical breathing room */
         #menu-options { 
             display: none; 
             flex-direction: column; 
@@ -47,7 +46,6 @@
         #smtm-container { padding: 20px; border-top: 1px solid #f0f0f0; display: none; background: #fafafa; }
         .smtm-choice { width: 100%; padding: 14px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 10px; background: #fff; cursor: pointer; text-align: left; font-size: 0.95rem; }
 
-        /* New Separation Bar for Version/DB info */
         .system-footer { 
             background: #f8f9fa;
             padding: 12px 20px;
@@ -56,14 +54,14 @@
         }
         .footer-line { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
         .footer-text { color: #999 !important; font-size: 0.7rem !important; font-family: sans-serif; font-weight: 600; text-transform: uppercase; }
-        .db-text { color: #bbb !important; font-size: 0.65rem !important; display: block; }
+        .db-text { color: #bbb !important; font-size: 0.65rem !important; display: block; line-height: 1.2; }
     </style>
 </head>
 <body>
     <div id="sync-modal">
         <div class="sync-box">
             <h3>Update Required</h3>
-            <p>Download questions for offline use?</p>
+            <p>Download questions and signs for offline use?</p>
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <button class="btn btn-blue" onclick="startSync(true)">DOWNLOAD ALL</button>
                 <button class="btn btn-grey" style="background:#8e8e93;" onclick="startSync(false)">LATER</button>
@@ -110,15 +108,15 @@
             <div class="system-footer">
                 <div class="footer-line">
                     <span class="footer-text">ORION DRIVE</span>
-                    <span id="v-tag" class="footer-text">v2.7.2</span>
+                    <span id="v-tag" class="footer-text">v2.7.3</span>
                 </div>
-                <span id="db-counts" class="db-text">Initialising components...</span>
+                <span id="db-counts" class="db-text">Database check in progress...</span>
             </div>
         </div>
         
         <button onclick="triggerManualSync()" style="background:none; border:none; color:#ccc; text-decoration:underline; font-size:0.75rem; margin-top:20px; cursor:pointer;">Refresh Data</button>
     </div>
 
-    <script src="mainmenu.js?v=2.7.2"></script>
+    <script src="mainmenu.js?v=2.7.3"></script>
 </body>
 </html>
