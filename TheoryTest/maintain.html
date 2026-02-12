@@ -3,82 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Orion Drive - Maintenance</title>
+    <title>Orion Drive - Main Menu</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .edit-grid { display: grid; gap: 15px; margin-top: 15px; }
-        .input-group { display: flex; flex-direction: column; }
-        .input-group label { font-size: 0.8em; color: var(--primary-color); margin-bottom: 4px; }
-        .choice-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        #q-image-preview { 
-            max-width: 200px; 
-            margin: 10px auto; 
-            display: block; 
-            border: 2px solid #444; 
-            cursor: pointer;
+        /* Modal Overlays */
+        #sync-modal, #smtm-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); align-items:center; justify-content:center; z-index:9999; padding: 20px; box-sizing: border-box; }
+        .sync-box, .smtm-box { background:#fff; padding:25px; border-radius:20px; width:100%; max-width:400px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .sync-box h3, .smtm-box h3 { margin-top:0; color:#333; font-size: 1.4rem; }
+        .sync-box p, .smtm-box p { font-size:0.95rem; color:#666; line-height:1.4; margin-bottom:20px; }
+        
+        /* Main UI Layout */
+        .container { 
+            max-width: 500px; 
+            margin: 0 auto; 
+            padding: 10px; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
         }
-        .maintenance-footer { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+
+        .card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Keeps the footer corners rounded */
+        }
+
+        #menu-options { 
+            display: none; 
+            flex-direction: column; 
+            width: 100%; 
+            box-sizing: border-box; 
+            padding: 20px; /* Spacing inside the card for buttons */
+        }
+
+        .main-btn {
+            text-decoration: none;
+            margin-bottom: 12px;
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            font-weight: 600;
+            display: block;
+        }
+
+        .btn-grey { 
+            background: #8e8e93 !important; 
+            color: white !important; 
+            cursor: not-allowed !important; 
+            opacity: 0.6; 
+        }
+        
+        /* Show Me Tell Me UI */
+        #smtm-container { 
+            padding: 0 20px 20px 20px; 
+            border-top: 1px solid #f0f0f0; 
+            display: none; 
+        }
+        .smtm-choice { 
+            width: 100%; 
+            padding: 15px; 
+            margin-bottom: 10px; 
+            border: 1px solid #d1e3f8; 
+            border-radius: 12px; 
+            background: #fdfdfd; 
+            cursor: pointer; 
+            font-size: 0.95rem; 
+            text-align: left; 
+            line-height: 1.4;
+        }
+
+        /* Footer Styling */
+        .card-footer { 
+            background: #fcfcfc;
+            padding: 15px 20px; 
+            border-top: 1px solid #eee; 
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-text { 
+            color: #8e8e93 !important; 
+            font-size: 0.75rem !important; 
+            font-family: -apple-system, sans-serif !important; 
+            font-weight: 500 !important; 
+        }
+
+        #status-msg {
+            padding: 10px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <div id="img-modal" onclick="this.style.display='none'">
-        <img id="img-modal-content" alt="Full view">
+    <div id="sync-modal">
+        <div class="sync-box">
+            <h3 id="modal-title">Assets Required</h3>
+            <p id="modal-desc">Download all images now for 100% offline use, or download them automatically as you practice?</p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <button class="btn btn-blue" onclick="startSync(true)">DOWNLOAD ALL IMAGES</button>
+                <button class="btn" style="background:#8e8e93; color:white;" onclick="startSync(false)">DOWNLOAD AS I GO</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="smtm-modal">
+        <div class="smtm-box">
+            <h3 id="joke-title">🎲 Bad Luck!</h3>
+            <p id="joke-text"></p>
+            <button class="btn btn-blue" onclick="document.getElementById('smtm-modal').style.display='none'">Show Me the Question</button>
+        </div>
     </div>
 
     <div class="container">
+        <div style="margin: 20px 0; text-align: center;">
+            <img src="images/logo.jpeg" alt="Orion Drive Logo" style="width: 260px; height: auto;">
+        </div>
+
+        <div id="status-msg" style="display: none;">
+            ● System Active & Unlocked
+        </div>
+
         <div class="card">
-            <div class="q-header">
-                <div id="m-status">Maintenance Mode</div>
-                <div>ID Search</div>
+            <div id="lock-ui" style="padding: 30px 20px;">
+                <p style="font-size: 0.9rem; color: #8e8e93; margin-bottom: 20px; text-align: center;">Enter Monthly Security Token</p>
+                <input type="text" id="passCode" placeholder="•••••" autocomplete="off" 
+                       style="background: #f8f9fa; border: 2px solid #e9ecef; color: #007bff; padding: 18px; font-size: 1.5rem; width: 100%; box-sizing: border-box; text-align: center; border-radius: 15px; margin-bottom: 20px; font-family: monospace; letter-spacing: 4px;">
+                <button class="btn btn-blue" onclick="verifyAccess()" style="width:100%;">Unlock System</button>
             </div>
 
-            <div class="input-group">
-                <input type="text" id="search-id" placeholder="Enter Question ID..." style="padding:12px; border-radius:8px; border:1px solid #444; background:#222; color:white;">
-                <button class="btn" onclick="loadQuestionById()" style="margin-top:8px;">LOAD QUESTION</button>
+            <div id="menu-options"></div>
+
+            <div id="smtm-container">
+                <h3 style="font-size: 1.1rem; color: #333; margin: 15px 0; text-align: center;">Show Me, Tell Me</h3>
+                <p id="smtm-question" style="font-size: 1rem; color: #444; margin-bottom: 20px; font-weight: bold; line-height: 1.5;"></p>
+                <div id="smtm-answers"></div>
+                <div id="smtm-feedback" style="display:none; margin:15px 0; padding:15px; background:#eef6ff; border-radius:12px; font-size:0.9rem; color:#0056b3; line-height: 1.5;"></div>
+                <button id="smtm-continue" class="btn btn-blue" style="display:none; width:100%; padding:18px;" onclick="unlockButtons()">CONTINUE TO THEORY</button>
             </div>
-
-            <div id="edit-form" style="display:none;">
-                <div class="edit-grid">
-                    <img id="q-image-preview" src="" alt="Thumbnail" onclick="document.getElementById('img-modal').style.display='flex'; document.getElementById('img-modal-content').src=this.src;">
-                    
-                    <div class="input-group">
-                        <label>Question Text</label>
-                        <textarea id="edit-q-text" rows="3"></textarea>
-                    </div>
-
-                    <div class="choice-row">
-                        <div class="input-group"><label>Choice A</label><input type="text" id="edit-a"></div>
-                        <div class="input-group"><label>Choice B</label><input type="text" id="edit-b"></div>
-                        <div class="input-group"><label>Choice C</label><input type="text" id="edit-c"></div>
-                        <div class="input-group"><label>Choice D</label><input type="text" id="edit-d"></div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Correct Answer (A, B, C, or D)</label>
-                        <input type="text" id="edit-correct">
-                    </div>
-
-                    <div class="input-group">
-                        <label>Explanation</label>
-                        <textarea id="edit-explanation" rows="3"></textarea>
-                    </div>
+            
+            <div id="sync-ui" style="display:none; text-align:center; padding: 30px 20px;">
+                <div style="width:100%; background:#eee; height:10px; border-radius:5px; overflow:hidden;">
+                    <div id="sync-bar" style="width:0%; background:#007bff; height:100%;"></div>
                 </div>
-
-                <div class="maintenance-footer">
-                    <button class="btn" style="background:#27ae60;" onclick="saveChanges()">SAVE CHANGES TO MEMORY</button>
-                    <button class="btn" style="background:#2980b9;" onclick="copySingleJSON()">COPY THIS QUESTION</button>
-                    <button class="btn" style="background:#8e44ad;" onclick="copyFullJSON()">COPY FULL JSON (questions.json)</button>
-                </div>
+                <p id="sync-status-text" style="color:#007bff; font-size:0.85rem; margin-top:15px; font-weight: 500;">Connecting to Server...</p>
             </div>
 
             <div class="card-footer">
-                <span id="version-tag">HTML: v2.2.8 | JS: v2.2.8</span>
-                <span id="q-id-display">ID: --</span>
+                <div class="footer-row">
+                    <span class="footer-text" style="font-weight: 700; color: #333 !important;">ORION DRIVE</span>
+                    <span id="v-tag" class="footer-text">v2.6.7</span>
+                </div>
+                <div id="db-counts" class="footer-text">Database: Initializing...</div>
             </div>
         </div>
-        <button class="btn" onclick="window.location.href='mainmenu.html'" style="margin-top:15px; width:100%;">BACK TO MENU</button>
+        
+        <div style="text-align:center; margin-top:25px; padding-bottom: 20px;">
+            <button onclick="triggerManualSync()" class="footer-text" style="background:none; border:none; cursor:pointer; text-decoration:underline; font-size: 0.8rem !important;">Force Database Refresh</button>
+        </div>
     </div>
 
-    <script src="maintain.js"></script>
+    <script src="mainmenu.js?v=2.6.7"></script>
 </body>
 </html>
