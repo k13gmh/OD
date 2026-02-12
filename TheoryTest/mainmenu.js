@@ -1,12 +1,13 @@
 /**
  * File: mainmenu.js
- * Version: 2.7.2
- * Feature: Fluid layout with separated system footer
+ * Version: 2.7.3
+ * Feature: Restored sign count in footer
  */
 
-const JS_VERSION = "2.7.2";
+const JS_VERSION = "2.7.3";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
+const IMAGE_CACHE_NAME = 'orion-image-cache';
 
 const categoryFiles = [
     'alertness', 'attitude', 'safety', 'hazard', 'margins', 
@@ -15,7 +16,6 @@ const categoryFiles = [
 ];
 
 function init() {
-    // Standard version print
     document.getElementById('v-tag').innerText = `v${JS_VERSION}`;
     
     if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
@@ -71,7 +71,12 @@ async function showMenu() {
     menuOptions.style.display = 'flex';
 
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
-    document.getElementById('db-counts').innerText = `Database: ${master.length} Qs • Ready for use`;
+    
+    // Count Road Signs specifically from the cache
+    const cache = await caches.open(IMAGE_CACHE_NAME);
+    const keys = await cache.keys();
+    
+    document.getElementById('db-counts').innerText = `Database: ${master.length} Questions • ${keys.length} Road Signs Loaded`;
 
     try {
         const response = await fetch('options.json');
