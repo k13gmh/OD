@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: v2.6.7
- * Feature: Layout Spacing Fix & Footer Alignment
+ * Version: v2.6.8
+ * Feature: Simplified Layout & Clipping Fix
  */
 
-const JS_VERSION = "v2.6.7";
+const JS_VERSION = "v2.6.8";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -52,14 +52,10 @@ function verifyAccess() {
 async function checkSyncStatus() {
     const masterData = localStorage.getItem('orion_master.json');
     if (!masterData) {
-        showSyncModal(); 
+        document.getElementById('sync-modal').style.display = 'flex';
     } else {
         showMenu();           
     }
-}
-
-function showSyncModal() {
-    document.getElementById('sync-modal').style.display = 'flex';
 }
 
 async function startSync(wantsFull) {
@@ -109,7 +105,6 @@ async function buildMasterDatabase(fullImageSync) {
 
 async function showMenu() {
     document.getElementById('sync-ui').style.display = 'none';
-    document.getElementById('status-msg').style.display = 'block';
     const menuOptions = document.getElementById('menu-options');
     menuOptions.innerHTML = ''; 
     menuOptions.style.display = 'flex';
@@ -117,7 +112,7 @@ async function showMenu() {
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
     const cache = await caches.open(IMAGE_CACHE_NAME);
     const keys = await cache.keys();
-    document.getElementById('db-counts').innerText = `Database: ${master.length} Questions — ${keys.length} Road Signs`;
+    document.getElementById('db-counts').innerText = `Database: ${master.length} Qs — ${keys.length} Signs`;
 
     try {
         const response = await fetch('options.json');
@@ -137,7 +132,7 @@ async function showMenu() {
             if (shouldLock) {
                 anchor.onclick = (e) => { 
                     e.preventDefault(); 
-                    alert("Six Rolled! Answer the 'Show Me, Tell Me' question to unlock."); 
+                    alert("Dice roll triggered! Answer the question to unlock."); 
                 };
             }
             menuOptions.appendChild(anchor);
