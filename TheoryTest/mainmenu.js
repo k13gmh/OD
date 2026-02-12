@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: v2.6.8
- * Feature: Simplified Layout & Clipping Fix
+ * Version: v2.7.0
+ * Fix: Explicit container display and button spacing
  */
 
-const JS_VERSION = "v2.6.8";
+const JS_VERSION = "v2.7.0";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -17,18 +17,13 @@ const categoryFiles = [
 
 const jokes = [
     "The best things in life are free, but a mock test costs this question!",
-    "There’s no such thing as a free lunch, but there is a free app. Pay the toll!",
     "Life is full of crossroads; this one only requires a 'Tell Me' answer.",
-    "Think of this as a digital speed bump. Answer correctly to smooth it out.",
-    "Education is expensive, but this app is free—consider this your tuition.",
     "A free app is a rare gift. A driver who knows their tyres is rarer!",
     "Your luck just ran out! A six was rolled. Time for some knowledge."
 ];
 
 function init() {
-    const vTag = document.getElementById('v-tag');
-    if(vTag) vTag.innerText = `v${JS_VERSION}`;
-
+    document.getElementById('v-tag').innerText = `v${JS_VERSION}`;
     if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
         document.getElementById('lock-ui').style.display = 'none';
         checkSyncStatus(); 
@@ -41,27 +36,23 @@ function verifyAccess() {
     const input = document.getElementById('passCode').value.toUpperCase();
     if (input === calcKey()) { 
         localStorage.setItem('gatekeeper_stamp', curMonthYear);
-        localStorage.setItem('orion_session_token', getMMYY());
         document.getElementById('lock-ui').style.display = 'none';
         checkSyncStatus(); 
-    } else { 
-        alert("Incorrect Code."); 
-    }
+    } else { alert("Incorrect Code."); }
 }
 
 async function checkSyncStatus() {
     const masterData = localStorage.getItem('orion_master.json');
-    if (!masterData) {
-        document.getElementById('sync-modal').style.display = 'flex';
-    } else {
-        showMenu();           
+    if (!masterData) { 
+        document.getElementById('sync-modal').style.display = 'flex'; 
+    } else { 
+        showMenu(); 
     }
 }
 
 async function startSync(wantsFull) {
     document.getElementById('sync-modal').style.display = 'none';
     await buildMasterDatabase(wantsFull);
-    if (!wantsFull) localStorage.setItem('orion_full_sync_complete', "dynamic");
     showMenu();
 }
 
@@ -69,50 +60,26 @@ async function buildMasterDatabase(fullImageSync) {
     const syncUI = document.getElementById('sync-ui');
     const bar = document.getElementById('sync-bar');
     const statusText = document.getElementById('sync-status-text');
-
     syncUI.style.display = 'block';
     let masterPool = [];
     
-    try {
-        for (let i = 0; i < categoryFiles.length; i++) {
-            statusText.innerText = `Fetching ${categoryFiles[i]}...`;
-            const res = await fetch(`${categoryFiles[i]}.json`);
-            if (res.ok) masterPool = masterPool.concat(await res.json());
-            bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 20) + "%";
-        }
-        localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
-    } catch (e) {
-        statusText.innerText = "Sync Error.";
-        return;
+    for (let i = 0; i < categoryFiles.length; i++) {
+        const res = await fetch(`${categoryFiles[i]}.json`);
+        if (res.ok) masterPool = masterPool.concat(await res.json());
+        bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 100) + "%";
     }
-
-    if (fullImageSync) {
-        const cache = await caches.open(IMAGE_CACHE_NAME);
-        for (let j = 0; j < masterPool.length; j++) {
-            const imgUrl = `images/${masterPool[j].id}.jpeg`;
-            try {
-                const cached = await cache.match(imgUrl);
-                if (!cached) {
-                    const imgRes = await fetch(imgUrl);
-                    if (imgRes.ok) await cache.put(imgUrl, imgRes);
-                }
-            } catch (e) {}
-            bar.style.width = (20 + Math.round((j / masterPool.length) * 80)) + "%";
-        }
-        localStorage.setItem('orion_full_sync_complete', "true");
-    }
+    localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
+    syncUI.style.display = 'none';
 }
 
 async function showMenu() {
-    document.getElementById('sync-ui').style.display = 'none';
+    document.getElementById('status-msg').style.display = 'block';
     const menuOptions = document.getElementById('menu-options');
     menuOptions.innerHTML = ''; 
-    menuOptions.style.display = 'flex';
+    menuOptions.style.display = 'flex'; // Ensure flex is applied
 
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
-    const cache = await caches.open(IMAGE_CACHE_NAME);
-    const keys = await cache.keys();
-    document.getElementById('db-counts').innerText = `Database: ${master.length} Qs — ${keys.length} Signs`;
+    document.getElementById('db-counts').innerText = `Database: ${master.length} Questions Loaded`;
 
     try {
         const response = await fetch('options.json');
@@ -128,13 +95,7 @@ async function showMenu() {
             anchor.href = opt.htmlName;
             anchor.className = 'btn btn-blue main-btn' + (shouldLock ? ' btn-grey' : '');
             anchor.innerText = opt.description;
-            
-            if (shouldLock) {
-                anchor.onclick = (e) => { 
-                    e.preventDefault(); 
-                    alert("Dice roll triggered! Answer the question to unlock."); 
-                };
-            }
+            if (shouldLock) anchor.onclick = (e) => { e.preventDefault(); alert("Dice roll! Unlock via SMTM below."); };
             menuOptions.appendChild(anchor);
         });
 
@@ -143,42 +104,30 @@ async function showMenu() {
             document.getElementById('joke-text').innerText = jokes[Math.floor(Math.random() * jokes.length)];
             document.getElementById('smtm-modal').style.display = 'flex';
         }
-
-    } catch (err) { console.error(err); }
+    } catch (e) { console.error("Menu Load Error:", e); }
 }
 
 async function setupSMTM() {
     document.getElementById('smtm-container').style.display = 'block';
     const res = await fetch('showmetellme.json');
     const data = await res.json();
+    const q = data[Math.floor(Math.random() * data.length)];
     
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 1);
-    const day = Math.floor((now - start) / 86400000);
-    const qIndex = Math.floor(day / 7) % 11;
-    
-    const q = data[qIndex];
     document.getElementById('smtm-question').innerText = q.question;
-    
-    const choices = Object.entries(q.choices);
-    choices.sort(() => Math.random() - 0.5);
-    
     const ansDiv = document.getElementById('smtm-answers');
     ansDiv.innerHTML = '';
     
-    choices.forEach(([key, val]) => {
+    Object.entries(q.choices).forEach(([key, val]) => {
         const b = document.createElement('button');
         b.className = 'smtm-choice';
         b.innerText = val;
         b.onclick = () => {
             if (key === q.correct) {
-                document.getElementById('smtm-feedback').innerText = "Correct! " + q.explanation;
+                document.getElementById('smtm-feedback').innerText = q.explanation;
                 document.getElementById('smtm-feedback').style.display = 'block';
                 document.getElementById('smtm-continue').style.display = 'block';
                 ansDiv.style.pointerEvents = 'none';
-            } else {
-                alert("Incorrect. Think again!");
-            }
+            } else { alert("Try again!"); }
         };
         ansDiv.appendChild(b);
     });
@@ -186,17 +135,9 @@ async function setupSMTM() {
 
 function unlockButtons() {
     localStorage.setItem('smtm_passed_today', new Date().toDateString());
-    const btns = document.querySelectorAll('.main-btn');
-    btns.forEach(b => {
-        b.classList.remove('btn-grey');
-        b.onclick = null;
-    });
     document.getElementById('smtm-container').style.display = 'none';
-}
-
-function getMMYY() {
-    const d = new Date();
-    return String(d.getUTCMonth() + 1).padStart(2, '0') + String(d.getUTCFullYear()).slice(-2);
+    const btns = document.querySelectorAll('.main-btn');
+    btns.forEach(b => { b.classList.remove('btn-grey'); b.onclick = null; });
 }
 
 function calcKey() {
@@ -219,10 +160,7 @@ function calcKey() {
 }
 
 function triggerManualSync() {
-    if (confirm("Reset local data?")) {
-        localStorage.clear();
-        window.location.reload();
-    }
+    if (confirm("Reset data?")) { localStorage.clear(); window.location.reload(); }
 }
 
 window.onload = init;
