@@ -23,5 +23,9 @@
    {
     "description": "LOCAL MEMORY",
     "htmlName": "showmem.html"
+  },
+ {
+    "description": "REROLL",
+    "htmlName": "reroll.html"
   }
 ]
