@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: 2.7.3
- * Feature: Restored sign count in footer
+ * Version: 2.7.4
+ * Feature: Randomized SMTM Jokes
  */
 
-const JS_VERSION = "2.7.3";
+const JS_VERSION = "2.7.4";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -13,6 +13,17 @@ const categoryFiles = [
     'alertness', 'attitude', 'safety', 'hazard', 'margins', 
     'vulnerable', 'other', 'conditions', 'motorway', 
     'signs', 'documents', 'incidents', 'loading'
+];
+
+// Gary's Curated SMTM Jokes
+const jokes = [
+    "The best things in life are free, but a mock test costs this question!",
+    "Life is full of crossroads; this one only requires a 'Tell Me' answer.",
+    "A free app is a rare gift. A driver who knows their tyre pressures is rarer! Let’s see if you’re both.",
+    "Think of this as a digital speed bump. Answer correctly to smooth it out.",
+    "Mirror, signal, position….. but first, answer this question.",
+    "Safe driving is no accident, but this pop-up was! Answer to proceed.",
+    "Even the best drivers need a refresher. Here’s yours!"
 ];
 
 function init() {
@@ -72,7 +83,6 @@ async function showMenu() {
 
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
     
-    // Count Road Signs specifically from the cache
     const cache = await caches.open(IMAGE_CACHE_NAME);
     const keys = await cache.keys();
     
@@ -99,7 +109,10 @@ async function showMenu() {
         if (shouldLock) {
             setupSMTM();
             document.getElementById('smtm-modal').style.display = 'flex';
-            document.getElementById('joke-text').innerText = "Security check triggered. Answer the question below to proceed.";
+            
+            // Pick a random joke from the list
+            const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+            document.getElementById('joke-text').innerText = randomJoke;
         }
     } catch (e) { console.error(e); }
 }
