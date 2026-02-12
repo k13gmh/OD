@@ -1,18 +1,29 @@
 /**
  * File: mainmenu.js
- * Version: v2.6.4
- * Feature: Button Width Fix & Clean Footer
+ * Version: v2.6.5
+ * Feature: Weekly SMTM, Dice Roll Lock, Corrected Sayings
  */
 
-const JS_VERSION = "v2.6.4";
+const JS_VERSION = "v2.6.5";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
+let smtmPassed = false;
 
 const categoryFiles = [
     'alertness', 'attitude', 'safety', 'hazard', 'margins', 
     'vulnerable', 'other', 'conditions', 'motorway', 
     'signs', 'documents', 'incidents', 'loading'
+];
+
+const jokes = [
+    "The best things in life are free, but a mock test costs this question!",
+    "There’s no such thing as a free lunch, but there is a free app. Pay the toll!",
+    "Life is full of crossroads; this one only requires a 'Tell Me' answer.",
+    "Think of this as a digital speed bump. Answer correctly to smooth it out.",
+    "Education is expensive, but this app is free—consider this your tuition.",
+    "A free app is a rare gift. A driver who knows their pressures is rarer!",
+    "Your luck just ran out! A six was rolled. Time for some knowledge."
 ];
 
 function init() {
@@ -81,29 +92,23 @@ async function buildMasterDatabase(fullImageSync) {
     syncUI.style.display = 'block';
     let masterPool = [];
     
-    if (!localStorage.getItem('orion_master.json')) {
-        try {
-            for (let i = 0; i < categoryFiles.length; i++) {
-                statusText.innerText = `Fetching ${categoryFiles[i]}...`;
-                const res = await fetch(`${categoryFiles[i]}.json`);
-                if (res.ok) masterPool = masterPool.concat(await res.json());
-                bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 20) + "%";
-            }
-            localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
-        } catch (e) {
-            statusText.innerText = "Sync Error.";
-            setTimeout(showMenu, 1500);
-            return;
+    try {
+        for (let i = 0; i < categoryFiles.length; i++) {
+            statusText.innerText = `Fetching ${categoryFiles[i]}...`;
+            const res = await fetch(`${categoryFiles[i]}.json`);
+            if (res.ok) masterPool = masterPool.concat(await res.json());
+            bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 20) + "%";
         }
-    } else {
-        masterPool = JSON.parse(localStorage.getItem('orion_master.json'));
+        localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
+    } catch (e) {
+        statusText.innerText = "Sync Error.";
+        return;
     }
 
     if (fullImageSync) {
         const cache = await caches.open(IMAGE_CACHE_NAME);
         for (let j = 0; j < masterPool.length; j++) {
-            const qId = masterPool[j].id;
-            const imgUrl = `images/${qId}.jpeg`;
+            const imgUrl = `images/${masterPool[j].id}.jpeg`;
             try {
                 const cached = await cache.match(imgUrl);
                 if (!cached) {
@@ -111,25 +116,11 @@ async function buildMasterDatabase(fullImageSync) {
                     if (imgRes.ok) await cache.put(imgUrl, imgRes);
                 }
             } catch (e) {}
-            if (j % 20 === 0) {
-                statusText.innerText = `Caching Assets...`;
-                bar.style.width = (20 + Math.round((j / masterPool.length) * 80)) + "%";
-            }
+            bar.style.width = (20 + Math.round((j / masterPool.length) * 80)) + "%";
         }
         localStorage.setItem('orion_full_sync_complete', "true");
     }
     showMenu();
-}
-
-async function updateCacheCount() {
-    try {
-        const cache = await caches.open(IMAGE_CACHE_NAME);
-        const keys = await cache.keys();
-        const indicator = document.getElementById('sync-indicator');
-        if (indicator) {
-            indicator.innerText = `● ${keys.length} Road Signs`;
-        }
-    } catch (e) {}
 }
 
 async function showMenu() {
@@ -137,36 +128,110 @@ async function showMenu() {
     const menuOptions = document.getElementById('menu-options');
     menuOptions.innerHTML = ''; 
     menuOptions.style.display = 'flex';
-    updateCacheCount();
 
+    // Update Counts in Footer
+    const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
+    const cache = await caches.open(IMAGE_CACHE_NAME);
+    const keys = await cache.keys();
+    document.getElementById('db-counts').innerText = `Database: ${master.length} Questions - ${keys.length} Road Signs`;
+
+    // 1. Build Buttons (initially locked if roll hits 6)
     try {
         const response = await fetch('options.json');
         const options = await response.json();
+        
+        // Determine if we show SMTM today
+        const today = new Date().toDateString();
+        const hasPassedToday = localStorage.getItem('smtm_passed_today') === today;
+        const diceRoll = Math.floor(Math.random() * 6) + 1;
+        
+        // Lock logic: If not passed today AND rolled a 6
+        const shouldLock = !hasPassedToday && diceRoll === 6;
+
         options.forEach(opt => {
             const anchor = document.createElement('a');
             anchor.href = opt.htmlName;
-            anchor.className = 'btn btn-blue';
+            anchor.className = 'btn btn-blue main-btn' + (shouldLock ? ' btn-grey' : '');
+            anchor.innerText = opt.description;
             anchor.style.textDecoration = 'none';
             anchor.style.marginBottom = '12px';
             anchor.style.padding = '15px';
             anchor.style.borderRadius = '12px';
             anchor.style.textAlign = 'center';
-            anchor.style.width = '100%';           // Ensure button fills parent width
-            anchor.style.boxSizing = 'border-box'; // Include padding in width calculation
-            anchor.innerText = opt.description;
+            anchor.style.width = '100%';
+            anchor.style.boxSizing = 'border-box';
             
-            const syncStatus = localStorage.getItem('orion_full_sync_complete');
-            if (opt.htmlName.includes('mock') && syncStatus !== "true") {
-                anchor.onclick = (e) => {
-                    if (!confirm("Caution: Images not cached. Data required for Mock. Proceed?")) e.preventDefault();
-                };
+            if (shouldLock) {
+                anchor.onclick = (e) => { e.preventDefault(); alert("Please answer the 'Show Me, Tell Me' question below first!"); };
             }
             menuOptions.appendChild(anchor);
         });
-    } catch (err) {
-        menuOptions.innerHTML = `<p style="color:red;">Error loading menu.</p>`;
-    }
+
+        if (shouldLock) {
+            setupSMTM();
+            document.getElementById('joke-text').innerText = jokes[Math.floor(Math.random() * jokes.length)];
+            document.getElementById('smtm-modal').style.display = 'flex';
+        }
+
+    } catch (err) { console.error(err); }
 }
+
+async function setupSMTM() {
+    const container = document.getElementById('smtm-container');
+    container.style.display = 'block';
+    
+    const res = await fetch('showmetellme.json');
+    const data = await res.json();
+    
+    // Calculate Week Question (1-11)
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 1);
+    const diff = now - start;
+    const day = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const weekNum = Math.floor(day / 7);
+    const qIndex = weekNum % 11; // 0 to 10
+    
+    const q = data[qIndex];
+    document.getElementById('smtm-question').innerText = q.question;
+    
+    // Shuffle choices
+    const choices = Object.entries(q.choices);
+    choices.sort(() => Math.random() - 0.5);
+    
+    const ansDiv = document.getElementById('smtm-answers');
+    ansDiv.innerHTML = '';
+    
+    choices.forEach(([key, val]) => {
+        const b = document.createElement('button');
+        b.className = 'smtm-choice';
+        b.innerText = val;
+        b.onclick = () => {
+            if (key === q.correct) {
+                document.getElementById('smtm-feedback').innerText = "Correct! " + q.explanation;
+                document.getElementById('smtm-feedback').style.display = 'block';
+                document.getElementById('smtm-continue').style.display = 'block';
+                ansDiv.style.pointerEvents = 'none';
+            } else {
+                alert("Incorrect. Read carefully and try again.");
+            }
+        };
+        ansDiv.appendChild(b);
+    });
+}
+
+function unlockButtons() {
+    localStorage.setItem('smtm_passed_today', new Date().toDateString());
+    const btns = document.querySelectorAll('.main-btn');
+    btns.forEach(b => {
+        b.classList.remove('btn-grey');
+        b.onclick = null; // Restore original link behavior
+    });
+    document.getElementById('smtm-container').style.opacity = '0.5';
+    document.getElementById('smtm-container').style.pointerEvents = 'none';
+    document.getElementById('smtm-continue').innerText = "System Unlocked";
+}
+
+// ... Keep getMMYY, calcKey, triggerManualSync same as v2.6.4 ...
 
 function getMMYY() {
     const d = new Date();
