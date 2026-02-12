@@ -9,54 +9,56 @@
         #sync-modal, #smtm-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); align-items:center; justify-content:center; z-index:9999; padding: 20px; box-sizing: border-box; }
         .sync-box, .smtm-box { background:#fff; padding:25px; border-radius:20px; width:100%; max-width:400px; text-align:center; }
         
-        .container { max-width: 450px; margin: 0 auto; padding: 15px; }
+        .container { max-width: 480px; margin: 0 auto; padding: 10px; display: flex; flex-direction: column; align-items: center; }
 
         .card {
             background: #fff;
             border-radius: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            padding: 20px; /* Internal spacing for everything */
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
+            width: 100%;
+            display: block;
+            padding-bottom: 10px;
+            overflow: hidden;
         }
 
-        #menu-options { display: none; flex-direction: column; width: 100%; }
+        #menu-options { 
+            display: none; 
+            flex-direction: column; 
+            padding: 20px;
+            gap: 12px;
+        }
 
-        /* Button size fix - removed fixed heights and large padding */
         .main-btn {
             text-decoration: none;
-            margin-bottom: 12px;
-            padding: 15px; 
+            padding: 16px; 
             border-radius: 12px;
             text-align: center;
-            width: 100%;
-            box-sizing: border-box;
             font-weight: bold;
             display: block;
             font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .btn-grey { background: #8e8e93 !important; color: white !important; cursor: not-allowed; opacity: 0.6; }
         
-        #smtm-container { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ddd; display: none; }
-        .smtm-choice { width: 100%; padding: 12px; margin-bottom: 8px; border: 1px solid #d1e3f8; border-radius: 10px; background: #fdfdfd; cursor: pointer; text-align: left; }
+        #smtm-container { padding: 20px; border-top: 1px dashed #eee; display: none; }
+        .smtm-choice { width: 100%; padding: 12px; margin-bottom: 8px; border: 1px solid #d1e3f8; border-radius: 10px; background: #fdfdfd; cursor: pointer; text-align: left; font-size: 0.9rem; }
 
-        /* Footer inside card fix */
-        .footer-area { 
-            margin-top: 20px; 
-            padding-top: 10px; 
-            border-top: 1px solid #eee; 
+        .card-footer { 
+            margin-top: 10px;
+            padding: 15px 20px;
+            background: #fafafa;
+            border-top: 1px solid #eee;
         }
         .footer-row { display: flex; justify-content: space-between; align-items: center; }
-        .footer-text { color: #8e8e93 !important; font-size: 0.7rem !important; font-family: sans-serif; }
+        .footer-text { color: #8e8e93 !important; font-size: 0.7rem !important; font-family: sans-serif; font-weight: 600; }
     </style>
 </head>
 <body>
     <div id="sync-modal">
         <div class="sync-box">
-            <h3 id="modal-title">Assets Required</h3>
-            <p id="modal-desc">Download all images for offline use?</p>
+            <h3>Update Required</h3>
+            <p>Download the latest question bank?</p>
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <button class="btn btn-blue" onclick="startSync(true)">DOWNLOAD ALL</button>
                 <button class="btn btn-grey" style="opacity:1; cursor:pointer;" onclick="startSync(false)">LATER</button>
@@ -73,49 +75,49 @@
     </div>
 
     <div class="container">
-        <div style="margin-bottom: 20px; text-align: center;">
+        <div style="margin: 20px 0; text-align: center;">
             <img src="images/logo.jpeg" alt="Orion Drive Logo" style="width: 240px; height: auto;">
         </div>
 
-        <div class="card">
-            <h2 style="text-align: center; color: #666; font-size: 1rem; margin-top: 0; margin-bottom: 15px;">Theory Test System</h2>
+        <div id="status-msg" style="color:#5cb85c; font-weight:bold; font-size:0.9rem; margin-bottom:15px; display:none;">● System Unlocked</div>
 
-            <div id="lock-ui">
+        <div class="card">
+            <div id="lock-ui" style="padding: 20px;">
+                <p style="text-align:center; color:#8e8e93; font-size:0.85rem; margin-bottom:15px;">Monthly Security Token Required</p>
                 <input type="text" id="passCode" placeholder="ENTER CODE" autocomplete="off" 
-                       style="background: #fff; border: 1px solid #ddd; color: #007bff; padding: 15px; font-size: 1.2rem; width: 100%; box-sizing: border-box; text-align: center; border-radius: 12px; margin-bottom: 15px;">
-                <button class="btn btn-blue" onclick="verifyAccess()" style="width:100%;">Unlock</button>
+                       style="background:#fff; border:1px solid #ddd; color:#007bff; padding:15px; font-size:1.3rem; width:100%; box-sizing:border-box; text-align:center; border-radius:12px; margin-bottom:15px;">
+                <button class="btn btn-blue" onclick="verifyAccess()" style="width:100%;">Unlock System</button>
             </div>
 
             <div id="menu-options"></div>
 
             <div id="smtm-container">
-                <p id="smtm-question" style="font-size: 0.9rem; font-weight: bold; margin-bottom: 10px;"></p>
+                <h3 style="font-size:1rem; text-align:center; margin-bottom:15px;">Show Me, Tell Me</h3>
+                <p id="smtm-question" style="font-size: 0.95rem; font-weight: bold; margin-bottom: 15px; line-height: 1.4; color: #444;"></p>
                 <div id="smtm-answers"></div>
-                <div id="smtm-feedback" style="display:none; padding:10px; background:#f0f7ff; border-radius:8px; font-size:0.8rem; margin-bottom:10px;"></div>
-                <button id="smtm-continue" class="btn btn-blue" style="display:none; width:100%;" onclick="unlockButtons()">CONTINUE</button>
+                <div id="smtm-feedback" style="display:none; padding:12px; background:#f0f7ff; border-radius:10px; font-size:0.85rem; margin-bottom:12px; line-height:1.4;"></div>
+                <button id="smtm-continue" class="btn btn-blue" style="display:none; width:100%;" onclick="unlockButtons()">CONTINUE TO THEORY</button>
             </div>
             
-            <div id="sync-ui" style="display:none; text-align:center; padding: 15px;">
-                <div style="width:100%; background:#eee; height:6px; border-radius:3px; overflow:hidden;">
+            <div id="sync-ui" style="display:none; text-align:center; padding: 20px;">
+                <div style="width:100%; background:#eee; height:8px; border-radius:4px; overflow:hidden;">
                     <div id="sync-bar" style="width:0%; background:#007bff; height:100%;"></div>
                 </div>
-                <p id="sync-status-text" style="color:#007bff; font-size:0.7rem; margin-top:8px;">Syncing...</p>
+                <p id="sync-status-text" style="color:#007bff; font-size:0.75rem; margin-top:10px;">Connecting...</p>
             </div>
 
-            <div class="footer-area">
+            <div class="card-footer">
                 <div class="footer-row">
                     <span class="footer-text">ORION DRIVE</span>
-                    <span id="v-tag" class="footer-text">v2.6.8</span>
+                    <span id="v-tag" class="footer-text">v2.7.0</span>
                 </div>
-                <div id="db-counts" class="footer-text" style="margin-top: 4px;">Initializing...</div>
+                <div id="db-counts" class="footer-text" style="margin-top: 5px; font-weight: normal;">Checking Database...</div>
             </div>
         </div>
         
-        <p style="text-align:center; margin-top:15px;">
-            <button onclick="triggerManualSync()" class="footer-text" style="background:none; border:none; text-decoration:underline; cursor:pointer;">Force Database Refresh</button>
-        </p>
+        <button onclick="triggerManualSync()" style="background:none; border:none; color:#8e8e93; text-decoration:underline; font-size:0.75rem; margin-top:25px; cursor:pointer;">Force Database Refresh</button>
     </div>
 
-    <script src="mainmenu.js?v=2.6.8"></script>
+    <script src="mainmenu.js?v=2.7.0"></script>
 </body>
 </html>
