@@ -1,0 +1,145 @@
+[
+  {
+    "id": "SMT-01",
+    "category": "Show Me, Tell Me",
+    "question": "Tell me how you’d check that the brakes are working before starting a journey.",
+    "choices": {
+      "A": "Brakes should be tested after reaching 30mph.",
+      "B": "Brakes should not feel spongy or slack. Brakes should be tested as you set off. Vehicle should not pull to one side.",
+      "C": "Pump the brake pedal until it goes hard while the engine is off.",
+      "D": "Visual inspection of the brake pads for wear."
+    },
+    "correct": "B",
+    "explanation": "Brakes should be tested as you set off. They should not feel spongy and the car should travel straight."
+  },
+  {
+    "id": "SMT-02",
+    "category": "Show Me, Tell Me",
+    "question": "Tell me where you’d find the information for the recommended tyre pressures for this car and how tyre pressures should be checked.",
+    "choices": {
+      "A": "Manufacturer’s guide, use a reliable pressure gauge, check and adjust pressures when tyres are cold, don’t forget spare tyre, remember to refit valve caps.",
+      "B": "On the sidewall of the tyre, use a foot pump, check when tyres are hot after a drive.",
+      "C": "Check the DVLA website, use a ruler to check the bulge in the tyre.",
+      "D": "Manufacturer's guide, check only the front tyres, adjust when hot."
+    },
+    "correct": "A",
+    "explanation": "Always use a reliable gauge and check tyres when they are cold for an accurate reading."
+  },
+  {
+    "id": "SMT-03",
+    "category": "Show Me, Tell Me",
+    "question": "Tell me how you make sure your head restraint is correctly adjusted so it provides the best protection in the event of a crash.",
+    "choices": {
+      "A": "The restraint should be as low as possible to support the neck.",
+      "B": "The restraint should be adjusted so the rigid part is at least as high as the eye or top of the ears, and as close to the back of the head as is comfortable.",
+      "C": "The restraint should be tilted back at a 45-degree angle.",
+      "D": "The restraint should be positioned so it touches the top of your head."
+    },
+    "correct": "B",
+    "explanation": "Correct head restraint position significantly reduces the risk of whiplash injuries."
+  },
+  {
+    "id": "SMT-04",
+    "category": "Show Me, Tell Me",
+    "question": "Tell me how you’d check the tyres to ensure that they have sufficient tread depth and that their general condition is safe to use on the road.",
+    "choices": {
+      "A": "No cuts and bulges, 1.0mm of tread depth across the whole tyre.",
+      "B": "No cuts and bulges, 1.6mm of tread depth across the central three-quarters of the breadth of the tyre, and around the entire outer circumference of the tyre.",
+      "C": "As long as the wire isn't showing, the tyres are safe.",
+      "D": "1.6mm depth only on the outer edges of the tyre."
+    },
+    "correct": "B",
+    "explanation": "The 1.6mm limit is the legal minimum for cars and light trailers in the UK."
+  },
+  {
+    "id": "SMT-05",
+    "category": "Show Me, Tell Me",
+    "question": "Tell me how you’d check that the headlights and tail lights are working. You don’t need to exit the vehicle.",
+    "choices": {
+      "A": "Check for reflections in the garage door while driving.",
+      "B": "Explain you’d operate the switch (turn on ignition if necessary), then walk round vehicle.",
+      "C": "Look at the dashboard for a green light symbol.",
+      "D": "Listen for a double-click sound when turning the switch."
+    },
+    "correct": "B",
+    "explanation": "Since this is a 'tell me' question, you only need to describe the process."
+  },
+  {
+    "id": "SMT-06",
+    "category": "Show Me, Tell Me",
+    "question": "Tell me how you’d know if there was a problem with your anti-lock braking system.",
+    "choices": {
+      "A": "The brake pedal will vibrate every time you use it.",
+      "B": "The car will pull to the left when braking.",
+      "C": "Warning light should illuminate if there is a fault with the anti-lock braking system.",
+      "D": "The handbrake will feel loose."
+    },
+    "correct": "C",
+    "explanation": "If the ABS light stays on while driving, the system needs to be checked immediately."
+  },
+  {
+    "id": "SMT-07",
+    "category": "Show Me, Tell Me",
+    "question": "Tell me how you’d check the direction indicators are working. You don’t need to exit the vehicle.",
+    "choices": {
+      "A": "Operate the switch and listen for a fast clicking sound.",
+      "B": "Explain you’d operate the switch (turn on ignition if necessary), and then walk round vehicle.",
+      "C": "Check the dashboard for two arrows flashing simultaneously.",
+      "D": "Look at the reflection in the car parked in front."
+    },
+    "correct": "B",
+    "explanation": "Describing the act of operating the switch and walking around is the correct answer."
+  },
+  {
+    "id": "SMT-08",
+    "category": "Show Me, Tell Me",
+    "question": "Tell me how you’d check the brake lights are working on this car.",
+    "choices": {
+      "A": "Press the brake and look for a red glow on the dashboard.",
+      "B": "Explain you’d operate the brake pedal, make use of reflections in windows or doors, or ask someone to help.",
+      "C": "Check the brake fluid reservoir.",
+      "D": "Switch the lights to 'Auto' and check the rear."
+    },
+    "correct": "B",
+    "explanation": "Using reflections or a helper is the only way to check brake lights without leaving the car."
+  },
+  {
+    "id": "SMT-09",
+    "category": "Show Me, Tell Me",
+    "question": "Tell me how you’d check the power-assisted steering is working before starting a journey.",
+    "choices": {
+      "A": "Gentle pressure on the steering wheel, maintained while the engine is started, should result in a slight but noticeable movement.",
+      "B": "Turn the wheel as hard as possible while the engine is off.",
+      "C": "Check the steering fluid level using the dipstick.",
+      "D": "Drive at 10mph and let go of the wheel to see if it stays straight."
+    },
+    "correct": "A",
+    "explanation": "A slight movement when starting the engine indicates the power assistance is active."
+  },
+  {
+    "id": "SMT-10",
+    "category": "Show Me, Tell Me",
+    "question": "Tell me how you’d switch on the rear fog light(s) and explain when you’d use it/them. You don’t need to exit the vehicle.",
+    "choices": {
+      "A": "Operate switch (turn on dipped headlights and ignition if necessary). Check warning light is on. Explain use.",
+      "B": "Pull the stalk twice toward you. Use when it is raining.",
+      "C": "Press the hazard button twice. Use in tunnels.",
+      "D": "Fog lights should be left on at all times during winter."
+    },
+    "correct": "A",
+    "explanation": "Fog lights should only be used when visibility is seriously reduced (usually under 100m)."
+  },
+  {
+    "id": "SMT-11",
+    "category": "Show Me, Tell Me",
+    "question": "Tell me how you switch your headlight from dipped to main beam and explain how you’d know the main beam is on.",
+    "choices": {
+      "A": "Pull the stalk toward you and look for a green light.",
+      "B": "Operate switch (with ignition or engine on if necessary), check with main beam warning light.",
+      "C": "The main beam comes on automatically when there are no streetlights.",
+      "D": "Switch the dial to the 'P' position."
+    },
+    "correct": "B",
+    "explanation": "The main beam warning light on the dashboard is typically blue."
+  }
+]
