@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: 2.7.9
- * Feature: Weekly Indexed Question & Fresh Dice Per Refresh
+ * Version: 2.8.0
+ * Feature: Immediate Version Push & Fail-Safe Loading
  */
 
-const JS_VERSION = "2.7.9";
+const JS_VERSION = "2.8.0";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -26,12 +26,18 @@ const jokes = [
 ];
 
 function init() {
+    // 1. IMMEDIATE VERSION PUSH - Do this before anything else
     const jsTag = document.getElementById('js-tag');
-    if(jsTag) jsTag.innerText = `JS: ${JS_VERSION}`;
+    if (jsTag) jsTag.innerText = `JS: ${JS_VERSION}`;
     
+    console.log("System Init: v" + JS_VERSION);
+
+    // 2. Gatekeeper Check
     if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
         document.getElementById('lock-ui').style.display = 'none';
         checkSyncStatus(); 
+    } else {
+        document.getElementById('lock-ui').style.display = 'block';
     }
 }
 
@@ -41,14 +47,21 @@ function verifyAccess() {
         localStorage.setItem('gatekeeper_stamp', curMonthYear);
         document.getElementById('lock-ui').style.display = 'none';
         checkSyncStatus(); 
-    } else { alert("Access Denied."); }
+    } else { 
+        alert("Access Denied."); 
+    }
 }
 
 async function checkSyncStatus() {
-    if (!localStorage.getItem('orion_master.json')) { 
-        document.getElementById('sync-modal').style.display = 'flex'; 
-    } else { 
-        showMenu(); 
+    try {
+        if (!localStorage.getItem('orion_master.json')) { 
+            document.getElementById('sync-modal').style.display = 'flex'; 
+        } else { 
+            showMenu(); 
+        }
+    } catch (e) {
+        console.error("Sync Status Error:", e);
+        showMenu(); // Try to show menu anyway
     }
 }
 
@@ -64,10 +77,18 @@ async function buildMasterDatabase() {
     const statusText = document.getElementById('sync-status-text');
     syncUI.style.display = 'block';
     let masterPool = [];
+    
     for (let i = 0; i < categoryFiles.length; i++) {
-        statusText.innerText = `Updating: ${categoryFiles[i]}`;
-        const res = await fetch(`${categoryFiles[i]}.json`);
-        if (res.ok) masterPool = masterPool.concat(await res.json());
+        try {
+            statusText.innerText = `Updating: ${categoryFiles[i]}`;
+            const res = await fetch(`${categoryFiles[i]}.json`);
+            if (res.ok) {
+                const data = await res.json();
+                masterPool = masterPool.concat(data);
+            }
+        } catch (err) {
+            console.warn("Failed to sync category:", categoryFiles[i]);
+        }
         bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 100) + "%";
     }
     localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
@@ -81,35 +102,34 @@ function getWeekNumber() {
 }
 
 async function showMenu() {
-    document.getElementById('status-msg').style.display = 'block';
     const menuOptions = document.getElementById('menu-options');
+    if (!menuOptions) return;
+    
+    document.getElementById('status-msg').style.display = 'block';
     menuOptions.innerHTML = ''; 
     menuOptions.style.display = 'flex';
 
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
-    const cache = await caches.open(IMAGE_CACHE_NAME);
-    const keys = await cache.keys();
     
-    // Dice logic: Fresh roll 1-6 every time the menu is shown
+    // Dice logic: Fresh roll 1-6 every refresh
     const diceRoll = Math.floor(Math.random() * 6) + 1;
     const today = new Date().toDateString();
     const hasPassedToday = localStorage.getItem('smtm_passed_today') === today;
-    
-    // Locked if Dice is 6 and hasn't passed today
     const shouldLock = (diceRoll === 6 && !hasPassedToday);
 
     const dbCounts = document.getElementById('db-counts');
-    if(dbCounts) dbCounts.innerText = `Database: ${master.length} Qs • Signs: ${keys.length} • Dice: ${diceRoll}`;
+    if(dbCounts) dbCounts.innerText = `Database: ${master.length} Qs • Dice: ${diceRoll}`;
 
     try {
         const response = await fetch('options.json');
+        if (!response.ok) throw new Error("options.json missing");
         const options = await response.json();
         
         options.forEach(opt => {
             const anchor = document.createElement('a');
             anchor.href = opt.htmlName;
             
-            // Wall of Shame is always exempt
+            // Wall of Shame EXEMPT
             if (opt.htmlName.includes("wallofshame")) {
                 anchor.className = 'btn btn-blue main-btn';
             } else if (shouldLock) {
@@ -132,38 +152,46 @@ async function showMenu() {
             document.getElementById('joke-text').innerText = randomJoke;
             setupSMTM();
         }
-    } catch (e) { console.error("Menu Load Error:", e); }
+    } catch (e) { 
+        menuOptions.innerHTML = `<p style="color:red; padding:20px;">Error loading menu options. Please refresh data.</p>`;
+        console.error("Menu Load Error:", e); 
+    }
 }
 
 async function setupSMTM() {
-    const qContainer = document.getElementById('smtm-question');
-    document.getElementById('smtm-container').style.display = 'block';
-    
-    const res = await fetch('showmetellme.json');
-    const data = await res.json();
-    
-    // Index determined by week number (Week 7 = Index 7)
-    const weekNum = getWeekNumber();
-    const q = data[weekNum] || data[0]; // Fallback to 0 if weekNum out of bounds
-    
-    qContainer.innerText = q.question;
-    const ansDiv = document.getElementById('smtm-answers');
-    ansDiv.innerHTML = '';
-    
-    Object.entries(q.choices).forEach(([key, val]) => {
-        const b = document.createElement('button');
-        b.className = 'smtm-choice';
-        b.innerText = val;
-        b.onclick = () => {
-            if (key === q.correct) {
-                document.getElementById('smtm-feedback').innerText = "Correct: " + q.explanation;
-                document.getElementById('smtm-feedback').style.display = 'block';
-                document.getElementById('smtm-continue').style.display = 'block';
-                ansDiv.style.pointerEvents = 'none';
-            } else { alert("Try again."); }
-        };
-        ansDiv.appendChild(b);
-    });
+    try {
+        const qContainer = document.getElementById('smtm-question');
+        document.getElementById('smtm-container').style.display = 'block';
+        
+        const res = await fetch('showmetellme.json');
+        const data = await res.json();
+        
+        // Question index = Week Number
+        const weekNum = getWeekNumber();
+        const q = data[weekNum] || data[0]; 
+        
+        qContainer.innerText = q.question;
+        const ansDiv = document.getElementById('smtm-answers');
+        ansDiv.innerHTML = '';
+        
+        Object.entries(q.choices).forEach(([key, val]) => {
+            const b = document.createElement('button');
+            b.className = 'smtm-choice';
+            b.innerText = val;
+            b.onclick = () => {
+                if (key === q.correct) {
+                    document.getElementById('smtm-feedback').innerText = "Correct: " + q.explanation;
+                    document.getElementById('smtm-feedback').style.display = 'block';
+                    document.getElementById('smtm-continue').style.display = 'block';
+                    ansDiv.style.pointerEvents = 'none';
+                } else { alert("Try again."); }
+            };
+            ansDiv.appendChild(b);
+        });
+    } catch (e) {
+        alert("Error loading SMTM question.");
+        unlockButtons(); // Fail open so app isn't bricked
+    }
 }
 
 function unlockButtons() {
@@ -193,7 +221,10 @@ function calcKey() {
 }
 
 function triggerManualSync() {
-    if (confirm("Reset local storage?")) { localStorage.clear(); window.location.reload(); }
+    if (confirm("Reset local storage?")) { 
+        localStorage.clear(); 
+        window.location.reload(); 
+    }
 }
 
 window.onload = init;
