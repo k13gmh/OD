@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: 2.7.5
- * Feature: Dice Debug in Footer & Lock-Loop Fix
+ * Version: 2.7.7
+ * Feature: Strict Spec Alignment - Wall of Shame Exempt & Auto-Modal
  */
 
-const JS_VERSION = "2.7.5";
+const JS_VERSION = "2.7.7";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -27,7 +27,6 @@ const jokes = [
 
 function init() {
     document.getElementById('v-tag').innerText = `v${JS_VERSION}`;
-    
     if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
         document.getElementById('lock-ui').style.display = 'none';
         checkSyncStatus(); 
@@ -51,7 +50,7 @@ async function checkSyncStatus() {
     }
 }
 
-async function startSync(wantsFull) {
+async function startSync() {
     document.getElementById('sync-modal').style.display = 'none';
     await buildMasterDatabase();
     showMenu();
@@ -63,7 +62,6 @@ async function buildMasterDatabase() {
     const statusText = document.getElementById('sync-status-text');
     syncUI.style.display = 'block';
     let masterPool = [];
-    
     for (let i = 0; i < categoryFiles.length; i++) {
         statusText.innerText = `Updating: ${categoryFiles[i]}`;
         const res = await fetch(`${categoryFiles[i]}.json`);
@@ -74,30 +72,33 @@ async function buildMasterDatabase() {
     syncUI.style.display = 'none';
 }
 
+function getWeeklyDice() {
+    const now = new Date();
+    const onejan = new Date(now.getFullYear(), 0, 1);
+    const weekNum = Math.ceil((((now - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+    const seed = now.getFullYear() + "-" + weekNum;
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+        hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+        hash |= 0;
+    }
+    return (Math.abs(hash) % 6) + 1;
+}
+
 async function showMenu() {
     document.getElementById('status-msg').style.display = 'block';
     const menuOptions = document.getElementById('menu-options');
     menuOptions.innerHTML = ''; 
-    menuOptions.style.display = 'flex';
 
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
     const cache = await caches.open(IMAGE_CACHE_NAME);
     const keys = await cache.keys();
     
-    // --- Dice Logic Fix ---
     const today = new Date().toDateString();
     const hasPassedToday = localStorage.getItem('smtm_passed_today') === today;
-    
-    // Use session-based dice roll so it doesn't re-roll every time you click 'Back'
-    let diceRoll = sessionStorage.getItem('current_dice_roll');
-    if (!diceRoll) {
-        diceRoll = Math.floor(Math.random() * 6) + 1;
-        sessionStorage.setItem('current_dice_roll', diceRoll);
-    }
-    
-    const shouldLock = !hasPassedToday && parseInt(diceRoll) === 6;
+    const diceRoll = getWeeklyDice();
+    const shouldLock = (diceRoll === 6 && !hasPassedToday);
 
-    // Update Footer with Debug Dice Info
     document.getElementById('db-counts').innerText = `Database: ${master.length} Qs • ${keys.length} Signs • Dice: ${diceRoll}`;
 
     try {
@@ -107,9 +108,12 @@ async function showMenu() {
         options.forEach(opt => {
             const anchor = document.createElement('a');
             anchor.href = opt.htmlName;
-            // Only lock if we actually need to
-            if (shouldLock) {
-                anchor.className = 'btn btn-blue main-btn btn-grey';
+            
+            // Wall of Shame is always blue/active per spec
+            if (opt.htmlName === "wallofshame.html") {
+                anchor.className = 'btn btn-blue main-btn';
+            } else if (shouldLock) {
+                anchor.className = 'btn btn-grey main-btn';
                 anchor.onclick = (e) => { 
                     e.preventDefault(); 
                     document.getElementById('smtm-modal').style.display = 'flex';
@@ -117,26 +121,29 @@ async function showMenu() {
             } else {
                 anchor.className = 'btn btn-blue main-btn';
             }
+            
             anchor.innerText = opt.description.toUpperCase();
             menuOptions.appendChild(anchor);
         });
 
-        if (shouldLock && document.getElementById('smtm-container').style.display !== 'none') {
-            setupSMTM();
+        if (shouldLock) {
             document.getElementById('smtm-modal').style.display = 'flex';
             const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
             document.getElementById('joke-text').innerText = randomJoke;
+            setupSMTM();
         }
     } catch (e) { console.error(e); }
 }
 
 async function setupSMTM() {
+    const qContainer = document.getElementById('smtm-question');
     document.getElementById('smtm-container').style.display = 'block';
+    
     const res = await fetch('showmetellme.json');
     const data = await res.json();
     const q = data[Math.floor(Math.random() * data.length)];
     
-    document.getElementById('smtm-question').innerText = q.question;
+    qContainer.innerText = q.question;
     const ansDiv = document.getElementById('smtm-answers');
     ansDiv.innerHTML = '';
     
@@ -158,12 +165,9 @@ async function setupSMTM() {
 
 function unlockButtons() {
     localStorage.setItem('smtm_passed_today', new Date().toDateString());
-    sessionStorage.setItem('current_dice_roll', '1'); // Force dice to non-6 for session
     document.getElementById('smtm-modal').style.display = 'none';
     document.getElementById('smtm-container').style.display = 'none';
-    
-    // Refresh menu to show active buttons
-    showMenu();
+    showMenu(); 
 }
 
 function calcKey() {
