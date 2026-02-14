@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: 2.7.7
- * Feature: Dual Version Display & Spec Alignment
+ * Version: 2.7.9
+ * Feature: Weekly Indexed Question & Fresh Dice Per Refresh
  */
 
-const JS_VERSION = "2.7.7";
+const JS_VERSION = "2.7.9";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -26,8 +26,8 @@ const jokes = [
 ];
 
 function init() {
-    // Push the JS version to the UI
-    document.getElementById('js-tag').innerText = `JS: ${JS_VERSION}`;
+    const jsTag = document.getElementById('js-tag');
+    if(jsTag) jsTag.innerText = `JS: ${JS_VERSION}`;
     
     if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
         document.getElementById('lock-ui').style.display = 'none';
@@ -74,17 +74,10 @@ async function buildMasterDatabase() {
     syncUI.style.display = 'none';
 }
 
-function getWeeklyDice() {
+function getWeekNumber() {
     const now = new Date();
     const onejan = new Date(now.getFullYear(), 0, 1);
-    const weekNum = Math.ceil((((now - onejan) / 86400000) + onejan.getDay() + 1) / 7);
-    const seed = now.getFullYear() + "-" + weekNum;
-    let hash = 0;
-    for (let i = 0; i < seed.length; i++) {
-        hash = ((hash << 5) - hash) + seed.charCodeAt(i);
-        hash |= 0;
-    }
-    return (Math.abs(hash) % 6) + 1;
+    return Math.ceil((((now - onejan) / 86400000) + onejan.getDay() + 1) / 7);
 }
 
 async function showMenu() {
@@ -97,12 +90,16 @@ async function showMenu() {
     const cache = await caches.open(IMAGE_CACHE_NAME);
     const keys = await cache.keys();
     
+    // Dice logic: Fresh roll 1-6 every time the menu is shown
+    const diceRoll = Math.floor(Math.random() * 6) + 1;
     const today = new Date().toDateString();
     const hasPassedToday = localStorage.getItem('smtm_passed_today') === today;
-    const diceRoll = getWeeklyDice();
+    
+    // Locked if Dice is 6 and hasn't passed today
     const shouldLock = (diceRoll === 6 && !hasPassedToday);
 
-    document.getElementById('db-counts').innerText = `Database: ${master.length} Qs • Signs: ${keys.length} • Dice: ${diceRoll}`;
+    const dbCounts = document.getElementById('db-counts');
+    if(dbCounts) dbCounts.innerText = `Database: ${master.length} Qs • Signs: ${keys.length} • Dice: ${diceRoll}`;
 
     try {
         const response = await fetch('options.json');
@@ -112,7 +109,8 @@ async function showMenu() {
             const anchor = document.createElement('a');
             anchor.href = opt.htmlName;
             
-            if (opt.htmlName === "wallofshame.html") {
+            // Wall of Shame is always exempt
+            if (opt.htmlName.includes("wallofshame")) {
                 anchor.className = 'btn btn-blue main-btn';
             } else if (shouldLock) {
                 anchor.className = 'btn btn-grey main-btn';
@@ -134,18 +132,24 @@ async function showMenu() {
             document.getElementById('joke-text').innerText = randomJoke;
             setupSMTM();
         }
-    } catch (e) { console.error(e); }
+    } catch (e) { console.error("Menu Load Error:", e); }
 }
 
 async function setupSMTM() {
     const qContainer = document.getElementById('smtm-question');
     document.getElementById('smtm-container').style.display = 'block';
+    
     const res = await fetch('showmetellme.json');
     const data = await res.json();
-    const q = data[Math.floor(Math.random() * data.length)];
+    
+    // Index determined by week number (Week 7 = Index 7)
+    const weekNum = getWeekNumber();
+    const q = data[weekNum] || data[0]; // Fallback to 0 if weekNum out of bounds
+    
     qContainer.innerText = q.question;
     const ansDiv = document.getElementById('smtm-answers');
     ansDiv.innerHTML = '';
+    
     Object.entries(q.choices).forEach(([key, val]) => {
         const b = document.createElement('button');
         b.className = 'smtm-choice';
