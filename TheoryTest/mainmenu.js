@@ -1,11 +1,11 @@
 /**
  * File: mainmenu.js
- * Version: 2.8.1
- * Feature: Specific Debug Line Formatting
+ * Version: 2.8.2
+ * Feature: Mixed Case Debug Line + Dice Roll Info
  */
 
-const JS_VERSION = "2.8.1";
-const HTML_VERSION = "2.8.1";
+const JS_VERSION = "2.8.2";
+const HTML_VERSION = "2.8.2";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -29,7 +29,7 @@ const jokes = [
 function init() {
     // Immediate Update of right-side version string
     const debugRight = document.getElementById('debug-right');
-    if (debugRight) debugRight.innerText = `VH${HTML_VERSION} J${JS_VERSION}`;
+    if (debugRight) debugRight.innerText = `vh${HTML_VERSION} j${JS_VERSION}`;
     
     if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
         document.getElementById('lock-ui').style.display = 'none';
@@ -121,9 +121,9 @@ async function showMenu() {
     const hasPassedToday = localStorage.getItem('smtm_passed_today') === today;
     const shouldLock = (diceRoll === 6 && !hasPassedToday);
 
-    // Update Left side of debug line
+    // Update Left side of debug line with Mixed Case and Dice Roll
     const debugLeft = document.getElementById('debug-left');
-    if(debugLeft) debugLeft.innerText = `ORION DRIVE • QUESTIONS: ${master.length} • ROAD SIGNS: ${signCount}`;
+    if(debugLeft) debugLeft.innerText = `Orion Drive • Questions: ${master.length} • Signs: ${signCount} • Roll: ${diceRoll}`;
 
     try {
         const response = await fetch('options.json');
