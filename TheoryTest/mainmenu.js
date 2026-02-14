@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: 2.7.4
- * Feature: Randomized SMTM Jokes
+ * Version: 2.7.5
+ * Feature: Dice Debug in Footer & Lock-Loop Fix
  */
 
-const JS_VERSION = "2.7.4";
+const JS_VERSION = "2.7.5";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -15,7 +15,6 @@ const categoryFiles = [
     'signs', 'documents', 'incidents', 'loading'
 ];
 
-// Gary's Curated SMTM Jokes
 const jokes = [
     "The best things in life are free, but a mock test costs this question!",
     "Life is full of crossroads; this one only requires a 'Tell Me' answer.",
@@ -82,35 +81,49 @@ async function showMenu() {
     menuOptions.style.display = 'flex';
 
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
-    
     const cache = await caches.open(IMAGE_CACHE_NAME);
     const keys = await cache.keys();
     
-    document.getElementById('db-counts').innerText = `Database: ${master.length} Questions • ${keys.length} Road Signs Loaded`;
+    // --- Dice Logic Fix ---
+    const today = new Date().toDateString();
+    const hasPassedToday = localStorage.getItem('smtm_passed_today') === today;
+    
+    // Use session-based dice roll so it doesn't re-roll every time you click 'Back'
+    let diceRoll = sessionStorage.getItem('current_dice_roll');
+    if (!diceRoll) {
+        diceRoll = Math.floor(Math.random() * 6) + 1;
+        sessionStorage.setItem('current_dice_roll', diceRoll);
+    }
+    
+    const shouldLock = !hasPassedToday && parseInt(diceRoll) === 6;
+
+    // Update Footer with Debug Dice Info
+    document.getElementById('db-counts').innerText = `Database: ${master.length} Qs • ${keys.length} Signs • Dice: ${diceRoll}`;
 
     try {
         const response = await fetch('options.json');
         const options = await response.json();
         
-        const today = new Date().toDateString();
-        const hasPassedToday = localStorage.getItem('smtm_passed_today') === today;
-        const diceRoll = Math.floor(Math.random() * 6) + 1;
-        const shouldLock = !hasPassedToday && diceRoll === 6;
-
         options.forEach(opt => {
             const anchor = document.createElement('a');
             anchor.href = opt.htmlName;
-            anchor.className = 'btn btn-blue main-btn' + (shouldLock ? ' btn-grey' : '');
+            // Only lock if we actually need to
+            if (shouldLock) {
+                anchor.className = 'btn btn-blue main-btn btn-grey';
+                anchor.onclick = (e) => { 
+                    e.preventDefault(); 
+                    document.getElementById('smtm-modal').style.display = 'flex';
+                };
+            } else {
+                anchor.className = 'btn btn-blue main-btn';
+            }
             anchor.innerText = opt.description.toUpperCase();
-            if (shouldLock) anchor.onclick = (e) => { e.preventDefault(); alert("Complete the maintenance check below to unlock."); };
             menuOptions.appendChild(anchor);
         });
 
-        if (shouldLock) {
+        if (shouldLock && document.getElementById('smtm-container').style.display !== 'none') {
             setupSMTM();
             document.getElementById('smtm-modal').style.display = 'flex';
-            
-            // Pick a random joke from the list
             const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
             document.getElementById('joke-text').innerText = randomJoke;
         }
@@ -145,9 +158,12 @@ async function setupSMTM() {
 
 function unlockButtons() {
     localStorage.setItem('smtm_passed_today', new Date().toDateString());
+    sessionStorage.setItem('current_dice_roll', '1'); // Force dice to non-6 for session
+    document.getElementById('smtm-modal').style.display = 'none';
     document.getElementById('smtm-container').style.display = 'none';
-    const btns = document.querySelectorAll('.main-btn');
-    btns.forEach(b => { b.classList.remove('btn-grey'); b.onclick = null; });
+    
+    // Refresh menu to show active buttons
+    showMenu();
 }
 
 function calcKey() {
