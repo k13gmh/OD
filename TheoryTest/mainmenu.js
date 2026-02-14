@@ -1,11 +1,11 @@
 /**
  * File: mainmenu.js
- * Version: 2.8.4
- * Fix: Removed preventDefault conflict causing button "flicker" on iPad.
+ * Version: 2.8.5
+ * Feature: Restored Stability + Mixed Case Debug Line
  */
 
-const JS_VERSION = "2.8.4";
-const HTML_VERSION = "2.8.4";
+const JS_VERSION = "2.8.5";
+const HTML_VERSION = "2.8.5";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -101,13 +101,7 @@ async function showMenu() {
     menuOptions.innerHTML = ''; 
     menuOptions.style.display = 'flex';
 
-    let masterStatus = "Empty";
-    let optionsStatus = "Missing";
-    let smtmStatus = "Lock";
-
-    const masterRaw = localStorage.getItem('orion_master.json');
-    const master = JSON.parse(masterRaw || "[]");
-    if (masterRaw && master.length > 0) masterStatus = "OK";
+    const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
     
     let signCount = 0;
     try {
@@ -120,53 +114,42 @@ async function showMenu() {
     const today = new Date().toDateString();
     const hasPassedToday = localStorage.getItem('smtm_passed_today') === today;
     const shouldLock = (diceRoll === 6 && !hasPassedToday);
-    
-    if (!shouldLock) smtmStatus = "Pass";
+
+    const debugLeft = document.getElementById('debug-left');
+    if(debugLeft) debugLeft.innerText = `Orion Drive • Questions: ${master.length} • Signs: ${signCount} • Roll: ${diceRoll}`;
 
     try {
         const response = await fetch('options.json');
-        if (response.ok) {
-            optionsStatus = "OK";
-            const options = await response.json();
+        const options = await response.json();
+        
+        options.forEach(opt => {
+            const anchor = document.createElement('a');
+            anchor.href = opt.htmlName;
             
-            options.forEach(opt => {
-                const anchor = document.createElement('a');
-                
-                if (opt.htmlName.includes("wallofshame")) {
-                    anchor.href = opt.htmlName;
-                    anchor.className = 'btn btn-blue main-btn';
-                } else if (shouldLock) {
-                    anchor.href = "#"; // No real link while locked
-                    anchor.className = 'btn btn-grey main-btn';
-                    anchor.onclick = () => { 
-                        document.getElementById('smtm-modal').style.display = 'flex';
-                        return false; 
-                    };
-                } else {
-                    anchor.href = opt.htmlName; // Pure link while unlocked
-                    anchor.className = 'btn btn-blue main-btn';
-                    anchor.onclick = null; 
-                }
-                
-                anchor.innerText = opt.description.toUpperCase();
-                menuOptions.appendChild(anchor);
-            });
-
-            if (shouldLock) {
-                document.getElementById('smtm-modal').style.display = 'flex';
-                const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
-                document.getElementById('joke-text').innerText = randomJoke;
-                setupSMTM();
+            if (opt.htmlName.includes("wallofshame")) {
+                anchor.className = 'btn btn-blue main-btn';
+            } else if (shouldLock) {
+                anchor.className = 'btn btn-grey main-btn';
+                anchor.onclick = (e) => { 
+                    e.preventDefault(); 
+                    document.getElementById('smtm-modal').style.display = 'flex';
+                };
+            } else {
+                anchor.className = 'btn btn-blue main-btn';
             }
+            
+            anchor.innerText = opt.description.toUpperCase();
+            menuOptions.appendChild(anchor);
+        });
+
+        if (shouldLock) {
+            document.getElementById('smtm-modal').style.display = 'flex';
+            const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+            document.getElementById('joke-text').innerText = randomJoke;
+            setupSMTM();
         }
     } catch (e) { 
-        optionsStatus = "Err";
         menuOptions.innerHTML = `<p style="color:red; padding:20px;">Error loading menu.</p>`;
-    }
-
-    const debugLeft = document.getElementById('debug-left');
-    if(debugLeft) {
-        debugLeft.innerText = `Orion Drive • Questions: ${master.length} • Signs: ${signCount} • Roll: ${diceRoll} • M:${masterStatus} O:${optionsStatus} S:${smtmStatus}`;
     }
 }
 
