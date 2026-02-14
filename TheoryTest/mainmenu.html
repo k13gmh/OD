@@ -25,8 +25,8 @@
             <h3>Update Required</h3>
             <p>Download questions and signs for offline use?</p>
             <div style="display: flex; flex-direction: column; gap: 10px;">
-                <button class="btn btn-blue" onclick="startSync()">DOWNLOAD ALL</button>
-                <button class="btn btn-grey" style="background:#8e8e93;" onclick="document.getElementById('sync-modal').style.display='none'">LATER</button>
+                <button class="btn btn-blue" onclick="startSync(true)">DOWNLOAD ALL</button>
+                <button class="btn btn-grey" style="background:#8e8e93;" onclick="startSync(false)">LATER</button>
             </div>
         </div>
     </div>
@@ -66,12 +66,12 @@
             <div class="system-footer">
                 <div class="debug-line">
                     <span id="debug-left">Orion Drive • Questions: --- • Signs: --- • Roll: -</span>
-                    <span id="debug-right">vh2.8.5 jloading...</span>
+                    <span id="debug-right">vh2.8.6 jloading...</span>
                 </div>
             </div>
         </div>
         <button onclick="triggerManualSync()" style="background:none; border:none; color:#ccc; text-decoration:underline; font-size:0.75rem; margin-top:20px; cursor:pointer;">Refresh Data</button>
     </div>
-    <script src="mainmenu.js?v=2.8.5"></script>
+    <script src="mainmenu.js?v=2.8.6"></script>
 </body>
 </html>
