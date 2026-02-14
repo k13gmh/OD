@@ -1,11 +1,11 @@
 /**
  * File: mainmenu.js
- * Version: 2.8.6
- * Update: LATER button now performs quick JSON sync (skips images) instead of doing nothing.
+ * Version: 2.8.5
+ * Feature: Restored Stability + Mixed Case Debug Line
  */
 
-const JS_VERSION = "2.8.6";
-const HTML_VERSION = "2.8.6";
+const JS_VERSION = "2.8.5";
+const HTML_VERSION = "2.8.5";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -57,20 +57,19 @@ async function checkSyncStatus() {
     }
 }
 
-async function startSync(includeImages = true) {
+async function startSync() {
     document.getElementById('sync-modal').style.display = 'none';
-    await buildMasterDatabase(includeImages);
+    await buildMasterDatabase();
     showMenu();
 }
 
-async function buildMasterDatabase(includeImages) {
+async function buildMasterDatabase() {
     const syncUI = document.getElementById('sync-ui');
     const bar = document.getElementById('sync-bar');
     const statusText = document.getElementById('sync-status-text');
     syncUI.style.display = 'block';
     let masterPool = [];
     
-    // Always sync JSON questions (Fast)
     for (let i = 0; i < categoryFiles.length; i++) {
         try {
             statusText.innerText = `Updating: ${categoryFiles[i]}`;
@@ -85,13 +84,6 @@ async function buildMasterDatabase(includeImages) {
         bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 100) + "%";
     }
     localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
-    
-    // Only sync images if "DOWNLOAD ALL" was clicked
-    if (includeImages) {
-        statusText.innerText = "Syncing images...";
-        // Image sync logic would be called here if implemented.
-    }
-
     syncUI.style.display = 'none';
 }
 
