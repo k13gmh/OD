@@ -1,7 +1,7 @@
 /**
  * File: mainmenu.js
  * Version: 2.7.7
- * Feature: Strict Spec Alignment - Wall of Shame Exempt & Auto-Modal
+ * Feature: Dual Version Display & Spec Alignment
  */
 
 const JS_VERSION = "2.7.7";
@@ -26,7 +26,9 @@ const jokes = [
 ];
 
 function init() {
-    document.getElementById('v-tag').innerText = `v${JS_VERSION}`;
+    // Push the JS version to the UI
+    document.getElementById('js-tag').innerText = `JS: ${JS_VERSION}`;
+    
     if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
         document.getElementById('lock-ui').style.display = 'none';
         checkSyncStatus(); 
@@ -89,6 +91,7 @@ async function showMenu() {
     document.getElementById('status-msg').style.display = 'block';
     const menuOptions = document.getElementById('menu-options');
     menuOptions.innerHTML = ''; 
+    menuOptions.style.display = 'flex';
 
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
     const cache = await caches.open(IMAGE_CACHE_NAME);
@@ -99,7 +102,7 @@ async function showMenu() {
     const diceRoll = getWeeklyDice();
     const shouldLock = (diceRoll === 6 && !hasPassedToday);
 
-    document.getElementById('db-counts').innerText = `Database: ${master.length} Qs • ${keys.length} Signs • Dice: ${diceRoll}`;
+    document.getElementById('db-counts').innerText = `Database: ${master.length} Qs • Signs: ${keys.length} • Dice: ${diceRoll}`;
 
     try {
         const response = await fetch('options.json');
@@ -109,7 +112,6 @@ async function showMenu() {
             const anchor = document.createElement('a');
             anchor.href = opt.htmlName;
             
-            // Wall of Shame is always blue/active per spec
             if (opt.htmlName === "wallofshame.html") {
                 anchor.className = 'btn btn-blue main-btn';
             } else if (shouldLock) {
@@ -138,15 +140,12 @@ async function showMenu() {
 async function setupSMTM() {
     const qContainer = document.getElementById('smtm-question');
     document.getElementById('smtm-container').style.display = 'block';
-    
     const res = await fetch('showmetellme.json');
     const data = await res.json();
     const q = data[Math.floor(Math.random() * data.length)];
-    
     qContainer.innerText = q.question;
     const ansDiv = document.getElementById('smtm-answers');
     ansDiv.innerHTML = '';
-    
     Object.entries(q.choices).forEach(([key, val]) => {
         const b = document.createElement('button');
         b.className = 'smtm-choice';
