@@ -26,12 +26,10 @@ const jokes = [
 ];
 
 function init() {
-    // 1. IMMEDIATE VERSION PUSH - Do this before anything else
+    // 1. IMMEDIATE VERSION PUSH
     const jsTag = document.getElementById('js-tag');
     if (jsTag) jsTag.innerText = `JS: ${JS_VERSION}`;
     
-    console.log("System Init: v" + JS_VERSION);
-
     // 2. Gatekeeper Check
     if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
         document.getElementById('lock-ui').style.display = 'none';
@@ -60,8 +58,7 @@ async function checkSyncStatus() {
             showMenu(); 
         }
     } catch (e) {
-        console.error("Sync Status Error:", e);
-        showMenu(); // Try to show menu anyway
+        showMenu(); 
     }
 }
 
@@ -87,7 +84,7 @@ async function buildMasterDatabase() {
                 masterPool = masterPool.concat(data);
             }
         } catch (err) {
-            console.warn("Failed to sync category:", categoryFiles[i]);
+            console.warn("Failed sync:", categoryFiles[i]);
         }
         bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 100) + "%";
     }
@@ -111,7 +108,6 @@ async function showMenu() {
 
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
     
-    // Dice logic: Fresh roll 1-6 every refresh
     const diceRoll = Math.floor(Math.random() * 6) + 1;
     const today = new Date().toDateString();
     const hasPassedToday = localStorage.getItem('smtm_passed_today') === today;
@@ -122,14 +118,13 @@ async function showMenu() {
 
     try {
         const response = await fetch('options.json');
-        if (!response.ok) throw new Error("options.json missing");
+        if (!response.ok) throw new Error("JSON missing");
         const options = await response.json();
         
         options.forEach(opt => {
             const anchor = document.createElement('a');
             anchor.href = opt.htmlName;
             
-            // Wall of Shame EXEMPT
             if (opt.htmlName.includes("wallofshame")) {
                 anchor.className = 'btn btn-blue main-btn';
             } else if (shouldLock) {
@@ -153,8 +148,7 @@ async function showMenu() {
             setupSMTM();
         }
     } catch (e) { 
-        menuOptions.innerHTML = `<p style="color:red; padding:20px;">Error loading menu options. Please refresh data.</p>`;
-        console.error("Menu Load Error:", e); 
+        menuOptions.innerHTML = `<p style="color:red; padding:20px;">Error loading menu. Please refresh data.</p>`;
     }
 }
 
@@ -166,7 +160,6 @@ async function setupSMTM() {
         const res = await fetch('showmetellme.json');
         const data = await res.json();
         
-        // Question index = Week Number
         const weekNum = getWeekNumber();
         const q = data[weekNum] || data[0]; 
         
@@ -189,8 +182,7 @@ async function setupSMTM() {
             ansDiv.appendChild(b);
         });
     } catch (e) {
-        alert("Error loading SMTM question.");
-        unlockButtons(); // Fail open so app isn't bricked
+        unlockButtons();
     }
 }
 
