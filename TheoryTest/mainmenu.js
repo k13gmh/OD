@@ -1,10 +1,11 @@
 /**
  * File: mainmenu.js
- * Version: 2.8.0
- * Feature: Immediate Version Push & Fail-Safe Loading
+ * Version: 2.8.1
+ * Feature: Specific Debug Line Formatting
  */
 
-const JS_VERSION = "2.8.0";
+const JS_VERSION = "2.8.1";
+const HTML_VERSION = "2.8.1";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -26,11 +27,10 @@ const jokes = [
 ];
 
 function init() {
-    // 1. IMMEDIATE VERSION PUSH
-    const jsTag = document.getElementById('js-tag');
-    if (jsTag) jsTag.innerText = `JS: ${JS_VERSION}`;
+    // Immediate Update of right-side version string
+    const debugRight = document.getElementById('debug-right');
+    if (debugRight) debugRight.innerText = `VH${HTML_VERSION} J${JS_VERSION}`;
     
-    // 2. Gatekeeper Check
     if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
         document.getElementById('lock-ui').style.display = 'none';
         checkSyncStatus(); 
@@ -108,13 +108,22 @@ async function showMenu() {
 
     const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
     
+    // Road Signs Cache Check
+    let signCount = 0;
+    try {
+        const cache = await caches.open(IMAGE_CACHE_NAME);
+        const keys = await cache.keys();
+        signCount = keys.length;
+    } catch (e) { signCount = 0; }
+
     const diceRoll = Math.floor(Math.random() * 6) + 1;
     const today = new Date().toDateString();
     const hasPassedToday = localStorage.getItem('smtm_passed_today') === today;
     const shouldLock = (diceRoll === 6 && !hasPassedToday);
 
-    const dbCounts = document.getElementById('db-counts');
-    if(dbCounts) dbCounts.innerText = `Database: ${master.length} Qs • Dice: ${diceRoll}`;
+    // Update Left side of debug line
+    const debugLeft = document.getElementById('debug-left');
+    if(debugLeft) debugLeft.innerText = `ORION DRIVE • QUESTIONS: ${master.length} • ROAD SIGNS: ${signCount}`;
 
     try {
         const response = await fetch('options.json');
@@ -148,7 +157,7 @@ async function showMenu() {
             setupSMTM();
         }
     } catch (e) { 
-        menuOptions.innerHTML = `<p style="color:red; padding:20px;">Error loading menu. Please refresh data.</p>`;
+        menuOptions.innerHTML = `<p style="color:red; padding:20px;">Error loading menu.</p>`;
     }
 }
 
