@@ -1,11 +1,11 @@
 /**
  * File: mainmenu.js
- * Version: 2.8.6
- * Update: LATER button now performs quick JSON sync (skips images) instead of doing nothing.
+ * Version: 2.8.10
+ * Update: Fixed Sign Download logic to populate IMAGE_CACHE_NAME.
  */
 
-const JS_VERSION = "2.8.6";
-const HTML_VERSION = "2.8.6";
+const JS_VERSION = "2.8.10";
+const HTML_VERSION = "2.8.6"; // Keeping HTML at 2.8.6 as requested
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -70,7 +70,7 @@ async function buildMasterDatabase(includeImages) {
     syncUI.style.display = 'block';
     let masterPool = [];
     
-    // Always sync JSON questions (Fast)
+    // 1. Sync JSON questions
     for (let i = 0; i < categoryFiles.length; i++) {
         try {
             statusText.innerText = `Updating: ${categoryFiles[i]}`;
@@ -82,14 +82,34 @@ async function buildMasterDatabase(includeImages) {
         } catch (err) {
             console.warn("Failed sync:", categoryFiles[i]);
         }
-        bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 100) + "%";
+        bar.style.width = Math.round(((i + 1) / (categoryFiles.length + (includeImages ? 1 : 0))) * 100) + "%";
     }
     localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
     
-    // Only sync images if "DOWNLOAD ALL" was clicked
+    // 2. Sync images if requested
     if (includeImages) {
-        statusText.innerText = "Syncing images...";
-        // Image sync logic would be called here if implemented.
+        statusText.innerText = "Syncing images (please wait)...";
+        try {
+            const signsRes = await fetch('signs.json');
+            if (signsRes.ok) {
+                const signsData = await signsRes.json();
+                const cache = await caches.open(IMAGE_CACHE_NAME);
+                
+                for (let j = 0; j < signsData.length; j++) {
+                    const imgUrl = `images/${signsData[j].image}`;
+                    statusText.innerText = `Downloading Sign ${j + 1} of ${signsData.length}`;
+                    
+                    // Add to cache
+                    await cache.add(imgUrl);
+                    
+                    // Update progress bar
+                    let progress = ((categoryFiles.length + (j / signsData.length)) / (categoryFiles.length + 1)) * 100;
+                    bar.style.width = Math.round(progress) + "%";
+                }
+            }
+        } catch (err) {
+            console.error("Image sync failed:", err);
+        }
     }
 
     syncUI.style.display = 'none';
