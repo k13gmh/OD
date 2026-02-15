@@ -1,11 +1,11 @@
 /**
  * File: mainmenu.js
- * Version: 2.8.10
- * Update: Fixed Sign Download logic to populate IMAGE_CACHE_NAME.
+ * Version: 2.8.11
+ * Update: Fixed Image Sync to check for [ID].jpeg based on master question IDs.
  */
 
-const JS_VERSION = "2.8.10";
-const HTML_VERSION = "2.8.6"; // Keeping HTML at 2.8.6 as requested
+const JS_VERSION = "2.8.11";
+const HTML_VERSION = "2.8.6"; 
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -70,7 +70,7 @@ async function buildMasterDatabase(includeImages) {
     syncUI.style.display = 'block';
     let masterPool = [];
     
-    // 1. Sync JSON questions
+    // 1. Always sync JSON questions
     for (let i = 0; i < categoryFiles.length; i++) {
         try {
             statusText.innerText = `Updating: ${categoryFiles[i]}`;
@@ -82,30 +82,36 @@ async function buildMasterDatabase(includeImages) {
         } catch (err) {
             console.warn("Failed sync:", categoryFiles[i]);
         }
-        bar.style.width = Math.round(((i + 1) / (categoryFiles.length + (includeImages ? 1 : 0))) * 100) + "%";
+        bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 50) + "%";
     }
     localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
     
-    // 2. Sync images if requested
+    // 2. Sync images if "DOWNLOAD ALL" clicked
     if (includeImages) {
-        statusText.innerText = "Syncing images (please wait)...";
+        statusText.innerText = "Scanning for images...";
         try {
-            const signsRes = await fetch('signs.json');
-            if (signsRes.ok) {
-                const signsData = await signsRes.json();
-                const cache = await caches.open(IMAGE_CACHE_NAME);
+            const cache = await caches.open(IMAGE_CACHE_NAME);
+            // We loop through the masterPool we just built
+            for (let j = 0; j < masterPool.length; j++) {
+                const questionId = masterPool[j].id;
+                const imgUrl = `images/${questionId}.jpeg`;
                 
-                for (let j = 0; j < signsData.length; j++) {
-                    const imgUrl = `images/${signsData[j].image}`;
-                    statusText.innerText = `Downloading Sign ${j + 1} of ${signsData.length}`;
-                    
-                    // Add to cache
-                    await cache.add(imgUrl);
-                    
-                    // Update progress bar
-                    let progress = ((categoryFiles.length + (j / signsData.length)) / (categoryFiles.length + 1)) * 100;
-                    bar.style.width = Math.round(progress) + "%";
+                // Only try to fetch if we have an ID
+                if (questionId) {
+                    statusText.innerText = `Checking Image: ${questionId}.jpeg`;
+                    try {
+                        const imgCheck = await fetch(imgUrl, { method: 'HEAD' });
+                        if (imgCheck.ok) {
+                            await cache.add(imgUrl);
+                        }
+                    } catch (e) {
+                        // Skip if image doesn't exist or fetch fails
+                    }
                 }
+                
+                // Progress bar goes from 50% to 100%
+                let imgProgress = 50 + Math.round((j / masterPool.length) * 50);
+                bar.style.width = imgProgress + "%";
             }
         } catch (err) {
             console.error("Image sync failed:", err);
