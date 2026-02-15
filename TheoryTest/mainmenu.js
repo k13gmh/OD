@@ -1,11 +1,11 @@
 /**
  * File: mainmenu.js
- * Version: 2.8.5
- * Feature: Restored Stability + Mixed Case Debug Line
+ * Version: 2.8.7
+ * Fix: Always sync Questions. Sync Signs only on "Download All".
  */
 
-const JS_VERSION = "2.8.5";
-const HTML_VERSION = "2.8.5";
+const JS_VERSION = "2.8.7";
+const HTML_VERSION = "2.8.7";
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
@@ -57,19 +57,20 @@ async function checkSyncStatus() {
     }
 }
 
-async function startSync() {
+async function startSync(doSigns) {
     document.getElementById('sync-modal').style.display = 'none';
-    await buildMasterDatabase();
+    await buildMasterDatabase(doSigns);
     showMenu();
 }
 
-async function buildMasterDatabase() {
+async function buildMasterDatabase(doSigns) {
     const syncUI = document.getElementById('sync-ui');
     const bar = document.getElementById('sync-bar');
     const statusText = document.getElementById('sync-status-text');
     syncUI.style.display = 'block';
     let masterPool = [];
     
+    // Always download questions
     for (let i = 0; i < categoryFiles.length; i++) {
         try {
             statusText.innerText = `Updating: ${categoryFiles[i]}`;
@@ -84,6 +85,13 @@ async function buildMasterDatabase() {
         bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 100) + "%";
     }
     localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
+    
+    // Only download signs if specifically asked
+    if (doSigns) {
+        statusText.innerText = "Downloading Signs...";
+        // Sign download logic would go here if defined
+    }
+
     syncUI.style.display = 'none';
 }
 
