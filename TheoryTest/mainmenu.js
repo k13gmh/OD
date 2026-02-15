@@ -1,215 +1,251 @@
 /**
- * File: untimed.js
- * Version: v2.4.1
- * Feature: Weighted Selection & Strict Redemption (2:1 Ratio)
+ * File: mainmenu.js
+ * Version: 2.8.13
+ * Update: Fixed session token hand-off to prevent redirect loops.
  */
 
-const JS_VERSION = "v2.4.1";
-const HTML_VERSION = "v2.2.8"; 
+const JS_VERSION = "2.8.13";
+const HTML_VERSION = "2.8.6"; 
+const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
+const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
+const IMAGE_CACHE_NAME = 'orion-image-cache';
 
-if (!localStorage.getItem('orion_session_token')) {
-    window.location.href = 'mainmenu.html';
+const categoryFiles = [
+    'alertness', 'attitude', 'safety', 'hazard', 'margins', 
+    'vulnerable', 'other', 'conditions', 'motorway', 
+    'signs', 'documents', 'incidents', 'loading'
+];
+
+const jokes = [
+    "The best things in life are free, but a mock test costs this question!",
+    "Life is full of crossroads; this one only requires a 'Tell Me' answer.",
+    "A free app is a rare gift. A driver who knows their tyre pressures is rarer!",
+    "Think of this as a digital speed bump. Answer correctly to smooth it out.",
+    "Mirror, signal, position….. but first, answer this question.",
+    "Safe driving is no accident, but this pop-up was! Answer to proceed.",
+    "Even the best drivers need a refresher. Here’s yours!"
+];
+
+function init() {
+    const debugRight = document.getElementById('debug-right');
+    if (debugRight) debugRight.innerText = `vh${HTML_VERSION} j${JS_VERSION}`;
+    
+    if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
+        // Ensure token exists even if user refreshed the page
+        if (!localStorage.getItem('orion_session_token')) {
+            localStorage.setItem('orion_session_token', 'active_' + Date.now());
+        }
+        document.getElementById('lock-ui').style.display = 'none';
+        checkSyncStatus(); 
+    } else {
+        document.getElementById('lock-ui').style.display = 'block';
+    }
 }
 
-let allQuestions = [], sessionQuestions = [], currentIndex = 0;
-let testData = { selections: {}, flagged: [] };
+function verifyAccess() {
+    const input = document.getElementById('passCode').value.toUpperCase();
+    if (input === calcKey()) { 
+        localStorage.setItem('gatekeeper_stamp', curMonthYear);
+        // Explicitly set the token required by untimed.js/mock.js
+        localStorage.setItem('orion_session_token', 'active_' + Date.now());
+        
+        document.getElementById('lock-ui').style.display = 'none';
+        checkSyncStatus(); 
+    } else { 
+        alert("Access Denied."); 
+    }
+}
 
-async function init() {
-    const vTag = document.getElementById('version-tag');
-    if (vTag) vTag.innerText = `HTML: ${HTML_VERSION} | JS: ${JS_VERSION}`;
+async function checkSyncStatus() {
+    if (!localStorage.getItem('orion_master.json')) { 
+        document.getElementById('sync-modal').style.display = 'flex'; 
+    } else { 
+        showMenu(); 
+    }
+}
 
-    // Inject Custom Modal CSS
-    const style = document.createElement('style');
-    style.innerHTML = `
-        #resume-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); align-items:center; justify-content:center; z-index:9999; }
-        .modal-box { background:#fff; padding:25px; border-radius:15px; width:85%; max-width:400px; text-align:center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .modal-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 12px; color: #333; }
-        .modal-text { font-size: 0.95rem; color: #555; margin-bottom: 25px; line-height: 1.4; }
-        .modal-btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .m-btn { border:none; padding:14px; border-radius:8px; font-weight:bold; cursor:pointer; text-transform:uppercase; font-size:0.8rem; transition: opacity 0.2s; }
-        .m-btn-blue { background:#007bff; color:#fff; }
-        .m-btn-grey { background:#6c757d; color:#fff; }
-        .m-btn:active { opacity: 0.8; }
-    `;
-    document.head.appendChild(style);
+async function startSync(includeImages = true) {
+    document.getElementById('sync-modal').style.display = 'none';
+    await buildMasterDatabase(includeImages);
+    showMenu();
+}
 
-    // Inject the Modal HTML
-    const modalDiv = document.createElement('div');
-    modalDiv.id = "resume-modal";
-    modalDiv.innerHTML = `
-        <div class="modal-box">
-            <div class="modal-title">Resume Test?</div>
-            <div class="modal-text">An existing session was found. Would you like to resume where you left off?</div>
-            <div class="modal-btn-grid">
-                <button class="m-btn m-btn-grey" onclick="handleResumeChoice(false)">Restart</button>
-                <button class="m-btn m-btn-blue" onclick="handleResumeChoice(true)">Resume</button>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(modalDiv);
+async function buildMasterDatabase(includeImages) {
+    const syncUI = document.getElementById('sync-ui');
+    const bar = document.getElementById('sync-bar');
+    const statusText = document.getElementById('sync-status-text');
+    syncUI.style.display = 'block';
+    let masterPool = [];
+    
+    for (let i = 0; i < categoryFiles.length; i++) {
+        try {
+            statusText.innerText = `Updating: ${categoryFiles[i]}`;
+            const res = await fetch(`${categoryFiles[i]}.json`);
+            if (res.ok) {
+                const data = await res.json();
+                masterPool = masterPool.concat(data);
+            }
+        } catch (err) {
+            console.warn("Failed sync:", categoryFiles[i]);
+        }
+        bar.style.width = Math.round(((i + 1) / categoryFiles.length) * 50) + "%";
+    }
+    localStorage.setItem('orion_master.json', JSON.stringify(masterPool));
+    
+    if (includeImages) {
+        statusText.innerText = "Scanning for images...";
+        try {
+            const cache = await caches.open(IMAGE_CACHE_NAME);
+            for (let j = 0; j < masterPool.length; j++) {
+                const questionId = masterPool[j].id;
+                const imgUrl = `images/${questionId}.jpeg`;
+                
+                if (questionId) {
+                    statusText.innerText = `Checking Image: ${questionId}.jpeg`;
+                    try {
+                        const imgCheck = await fetch(imgUrl, { method: 'HEAD' });
+                        if (imgCheck.ok) {
+                            await cache.add(imgUrl);
+                        }
+                    } catch (e) {}
+                }
+                let imgProgress = 50 + Math.round((j / masterPool.length) * 50);
+                bar.style.width = imgProgress + "%";
+            }
+        } catch (err) {
+            console.error("Image sync failed:", err);
+        }
+    }
+    syncUI.style.display = 'none';
+}
+
+function getWeekNumber() {
+    const now = new Date();
+    const onejan = new Date(now.getFullYear(), 0, 1);
+    return Math.ceil((((now - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+}
+
+async function showMenu() {
+    const menuOptions = document.getElementById('menu-options');
+    if (!menuOptions) return;
+    
+    document.getElementById('status-msg').style.display = 'block';
+    menuOptions.innerHTML = ''; 
+    menuOptions.style.display = 'flex';
+
+    const master = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
+    
+    let signCount = 0;
+    try {
+        const cache = await caches.open(IMAGE_CACHE_NAME);
+        const keys = await cache.keys();
+        signCount = keys.length;
+    } catch (e) { signCount = 0; }
+
+    const diceRoll = Math.floor(Math.random() * 6) + 1;
+    const today = new Date().toDateString();
+    const hasPassedToday = localStorage.getItem('smtm_passed_today') === today;
+    const shouldLock = (diceRoll === 6 && !hasPassedToday);
+
+    const debugLeft = document.getElementById('debug-left');
+    if(debugLeft) debugLeft.innerText = `Orion Drive • Questions: ${master.length} • Signs: ${signCount} • Roll: ${diceRoll}`;
 
     try {
-        const localData = localStorage.getItem('orion_master.json');
-        if (!localData) {
-            alert("Master question pool not found. Please return to Main Menu to sync.");
-            window.location.href = 'mainmenu.html';
-            return;
-        }
-
-        allQuestions = JSON.parse(localData);
+        const response = await fetch('options.json');
+        const options = await response.json();
         
-        const savedSession = localStorage.getItem('orion_current_session');
-        if (savedSession) {
-            document.getElementById('resume-modal').style.display = 'flex';
-        } else {
-            startNewUntimed();
+        options.forEach(opt => {
+            const anchor = document.createElement('a');
+            anchor.href = opt.htmlName;
+            
+            if (opt.htmlName.includes("wallofshame")) {
+                anchor.className = 'btn btn-blue main-btn';
+            } else if (shouldLock) {
+                anchor.className = 'btn btn-grey main-btn';
+                anchor.onclick = (e) => { 
+                    e.preventDefault(); 
+                    document.getElementById('smtm-modal').style.display = 'flex';
+                };
+            } else {
+                anchor.className = 'btn btn-blue main-btn';
+            }
+            
+            anchor.innerText = opt.description.toUpperCase();
+            menuOptions.appendChild(anchor);
+        });
+
+        if (shouldLock) {
+            document.getElementById('smtm-modal').style.display = 'flex';
+            const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+            document.getElementById('joke-text').innerText = randomJoke;
+            setupSMTM();
         }
     } catch (e) { 
-        console.error("Initialization Error:", e);
-        alert("Error loading question data.");
+        menuOptions.innerHTML = `<p style="color:red; padding:20px;">Error loading menu.</p>`;
     }
 }
 
-function handleResumeChoice(shouldResume) {
-    document.getElementById('resume-modal').style.display = 'none';
-    if (shouldResume) {
-        const session = JSON.parse(localStorage.getItem('orion_current_session'));
-        sessionQuestions = session.questions;
-        testData = session.data;
-        currentIndex = session.index || 0;
-        renderQuestion();
-    } else {
-        startNewUntimed();
-    }
-}
-
-function startNewUntimed() {
-    const shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
-    let weightedPool = [];
-
-    // Build the Weighted Lottery
-    allQuestions.forEach(q => {
-        // Base chance is 1. We add the error weight to increase probability.
-        // If wrong 2 times, weight is 3 (1 base + 2 errors), giving 3x chance to appear.
-        let weight = Math.max(1, Math.floor(shameTally[q.id] || 0) + 1);
-        for (let i = 0; i < weight; i++) {
-            weightedPool.push(q);
-        }
-    });
-
-    let selected = [];
-    // Copy allQuestions to a temp pool to track what we've picked (no duplicates)
-    let tempPool = [...allQuestions];
-
-    while (selected.length < 50 && tempPool.length > 0) {
-        const randomIndex = Math.floor(Math.random() * weightedPool.length);
-        const picked = weightedPool[randomIndex];
+async function setupSMTM() {
+    try {
+        const qContainer = document.getElementById('smtm-question');
+        document.getElementById('smtm-container').style.display = 'block';
+        const res = await fetch('showmetellme.json');
+        const data = await res.json();
+        const weekNum = getWeekNumber();
+        const q = data[weekNum] || data[0]; 
         
-        if (!selected.find(s => s.id === picked.id)) {
-            selected.push(picked);
-            // Remove all instances of this ID from weightedPool so it's not picked again
-            weightedPool = weightedPool.filter(p => p.id !== picked.id);
-            // Remove from tempPool to manage the loop safety
-            tempPool = tempPool.filter(p => p.id !== picked.id);
-        }
-    }
-
-    sessionQuestions = selected.sort(() => 0.5 - Math.random());
-    currentIndex = 0;
-    testData = { selections: {}, flagged: [] };
-    saveProgress();
-    renderQuestion();
-}
-
-function saveProgress() {
-    const session = {
-        questions: sessionQuestions,
-        data: testData,
-        index: currentIndex
-    };
-    localStorage.setItem('orion_current_session', JSON.stringify(session));
-}
-
-function renderQuestion() {
-    const q = sessionQuestions[currentIndex];
-    const imgElement = document.getElementById('q-image');
-    if (imgElement) {
-        imgElement.style.display = 'none'; 
-        imgElement.src = `images/${q.id}.jpeg`;
-        imgElement.onload = () => { imgElement.style.display = 'block'; };
-        imgElement.onerror = () => { imgElement.style.display = 'none'; };
-    }
-
-    document.getElementById('q-number').innerText = `Question ${currentIndex + 1} of ${sessionQuestions.length}`;
-    document.getElementById('q-category').innerText = q.category;
-    document.getElementById('q-text').innerText = q.question;
-    document.getElementById('q-id-display').innerText = `ID: ${q.id}`;
-
-    const optionsArea = document.getElementById('options-area');
-    optionsArea.innerHTML = '';
-    ["A", "B", "C", "D"].forEach(letter => {
-        if (q.choices && q.choices[letter]) {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn' + (testData.selections[q.id] === letter ? ' selected' : '');
-            btn.innerHTML = `<strong>${letter}:</strong> ${q.choices[letter]}`;
-            btn.onclick = () => { 
-                testData.selections[q.id] = letter; 
-                saveProgress();
-                renderQuestion(); 
+        qContainer.innerText = q.question;
+        const ansDiv = document.getElementById('smtm-answers');
+        ansDiv.innerHTML = '';
+        
+        Object.entries(q.choices).forEach(([key, val]) => {
+            const b = document.createElement('button');
+            b.className = 'smtm-choice';
+            b.innerText = val;
+            b.onclick = () => {
+                if (key === q.correct) {
+                    document.getElementById('smtm-feedback').innerText = "Correct: " + q.explanation;
+                    document.getElementById('smtm-feedback').style.display = 'block';
+                    document.getElementById('smtm-continue').style.display = 'block';
+                    ansDiv.style.pointerEvents = 'none';
+                } else { alert("Try again."); }
             };
-            optionsArea.appendChild(btn);
-        }
-    });
-
-    const flagBtn = document.getElementById('flag-btn');
-    flagBtn.style.background = testData.flagged.includes(q.id) ? "#f1c40f" : "#bdc3c7";
+            ansDiv.appendChild(b);
+        });
+    } catch (e) { unlockButtons(); }
 }
 
-function changeQuestion(step) {
-    const newIndex = currentIndex + step;
-    if (newIndex >= 0 && newIndex < sessionQuestions.length) {
-        currentIndex = newIndex;
-        saveProgress();
-        renderQuestion();
+function unlockButtons() {
+    localStorage.setItem('smtm_passed_today', new Date().toDateString());
+    document.getElementById('smtm-modal').style.display = 'none';
+    document.getElementById('smtm-container').style.display = 'none';
+    showMenu(); 
+}
+
+function calcKey() {
+    const d = new Date(); 
+    const s = new Date(Date.UTC(d.getFullYear(), d.getMonth(), 1, 0, 0, 0));
+    const e = new Date(Date.UTC(1900, 0, 1, 0, 0, 0)); 
+    const m = Math.floor((s.getTime() - e.getTime()) / 60000);
+    let v = m % Math.pow(32, 4); 
+    let r = ""; 
+    for (let j = 0; j < 4; j++) { r = ALPH.charAt(v % 32) + r; v = Math.floor(v / 32); }
+    let t = 0; 
+    let ra = r.split('').reverse();
+    for (let j = 0; j < ra.length; j++) { 
+        let x = ALPH.indexOf(ra[j]); 
+        if (j % 2 === 0) { x *= 2; if (x >= 32) x = (x % 32) + Math.floor(x / 32); } 
+        t += x; 
     }
+    let ci = (32 - (t % 32)) % 32; 
+    return r + (ALPH[ci] || ALPH[0]);
 }
 
-function toggleFlag() {
-    const q = sessionQuestions[currentIndex];
-    const idx = testData.flagged.indexOf(q.id);
-    if (idx > -1) testData.flagged.splice(idx, 1);
-    else testData.flagged.push(q.id);
-    saveProgress();
-    renderQuestion();
-}
-
-function finishTest() {
-    // Clear active session upon finishing
-    localStorage.removeItem('orion_current_session');
-    
-    let shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
-    let score = 0;
-
-    sessionQuestions.forEach(q => {
-        const userSelection = testData.selections[q.id];
-        const isCorrect = (userSelection === q.correct);
-
-        if (isCorrect) {
-            score++;
-            if (shameTally[q.id]) {
-                // Redemption: Correct answer removes 0.5 (Strict 2:1 ratio)
-                shameTally[q.id] -= 0.5;
-                if (shameTally[q.id] <= 0) delete shameTally[q.id];
-            }
-        } else if (userSelection) {
-            // Error: Wrong answer adds 1.0 weight
-            shameTally[q.id] = (shameTally[q.id] || 0) + 1;
-        }
-    });
-
-    localStorage.setItem('orion_shame_tally', JSON.stringify(shameTally));
-    localStorage.setItem('orion_final_results', JSON.stringify({ score, total: sessionQuestions.length, questions: sessionQuestions, data: testData }));
-    window.location.href = 'review.html';
+function triggerManualSync() {
+    if (confirm("Reset local storage?")) { 
+        localStorage.clear(); 
+        window.location.reload(); 
+    }
 }
 
 window.onload = init;
