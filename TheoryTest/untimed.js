@@ -1,14 +1,15 @@
 /**
  * File: untimed.js
- * Version: v2.4.3
+ * Version: v2.4.4
  * Change Log:
- * v2.4.3 - Logic Change: Session now only saves after user interaction (answering/moving) to avoid empty resume prompts.
- * v2.4.2 - Disabled localStorage.removeItem('orion_current_session') in finishTest to allow resumption after review.
+ * v2.4.4 - Fix: Choice of "Restart" now explicitly clears old session data to prevent ghost resume prompts.
+ * v2.4.3 - Logic Change: Session now only saves after user interaction (answering/moving).
+ * v2.4.2 - Disabled localStorage.removeItem('orion_current_session') in finishTest to allow resumption.
  * v2.4.1 - Feature: Weighted Selection & Strict Redemption (2:1 Ratio).
  * v2.4.0 - Initial Weighted logic implementation.
  */
 
-const JS_VERSION = "v2.4.3";
+const JS_VERSION = "v2.4.4";
 const HTML_VERSION = "v2.2.8"; 
 
 if (!localStorage.getItem('orion_session_token')) {
@@ -82,6 +83,8 @@ function handleResumeChoice(shouldResume) {
         currentIndex = session.index || 0;
         renderQuestion();
     } else {
+        // MODIFIED (v2.4.4): Explicitly clear the old session from memory
+        localStorage.removeItem('orion_current_session');
         startNewUntimed();
     }
 }
@@ -115,8 +118,7 @@ function startNewUntimed() {
     currentIndex = 0;
     testData = { selections: {}, flagged: [] };
     
-    // MODIFIED (v2.4.3): Removed saveProgress() from here. 
-    // We don't save the session until they actually DO something.
+    // Initial display without saving to local memory yet
     renderQuestion();
 }
 
@@ -153,7 +155,7 @@ function renderQuestion() {
             btn.innerHTML = `<strong>${letter}:</strong> ${q.choices[letter]}`;
             btn.onclick = () => { 
                 testData.selections[q.id] = letter; 
-                saveProgress(); // SAVES ON SELECTION
+                saveProgress(); 
                 renderQuestion(); 
             };
             optionsArea.appendChild(btn);
@@ -168,7 +170,7 @@ function changeQuestion(step) {
     const newIndex = currentIndex + step;
     if (newIndex >= 0 && newIndex < sessionQuestions.length) {
         currentIndex = newIndex;
-        saveProgress(); // SAVES ON NAVIGATION
+        saveProgress(); 
         renderQuestion();
     }
 }
@@ -178,7 +180,7 @@ function toggleFlag() {
     const idx = testData.flagged.indexOf(q.id);
     if (idx > -1) testData.flagged.splice(idx, 1);
     else testData.flagged.push(q.id);
-    saveProgress(); // SAVES ON FLAG
+    saveProgress(); 
     renderQuestion();
 }
 
