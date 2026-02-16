@@ -1,10 +1,13 @@
 /**
  * File: untimed.js
- * Version: v2.4.1
- * Feature: Weighted Selection & Strict Redemption (2:1 Ratio)
+ * Version: v2.4.2
+ * * Change Log:
+ * v2.4.2 - Disabled localStorage.removeItem('orion_current_session') in finishTest to allow resumption after review.
+ * v2.4.1 - Feature: Weighted Selection & Strict Redemption (2:1 Ratio).
+ * v2.4.0 - Initial Weighted logic implementation.
  */
 
-const JS_VERSION = "v2.4.1";
+const JS_VERSION = "v2.4.2";
 const HTML_VERSION = "v2.2.8"; 
 
 if (!localStorage.getItem('orion_session_token')) {
@@ -89,8 +92,6 @@ function startNewUntimed() {
 
     // Build the Weighted Lottery
     allQuestions.forEach(q => {
-        // Base chance is 1. We add the error weight to increase probability.
-        // If wrong 2 times, weight is 3 (1 base + 2 errors), giving 3x chance to appear.
         let weight = Math.max(1, Math.floor(shameTally[q.id] || 0) + 1);
         for (let i = 0; i < weight; i++) {
             weightedPool.push(q);
@@ -98,7 +99,6 @@ function startNewUntimed() {
     });
 
     let selected = [];
-    // Copy allQuestions to a temp pool to track what we've picked (no duplicates)
     let tempPool = [...allQuestions];
 
     while (selected.length < 50 && tempPool.length > 0) {
@@ -107,9 +107,7 @@ function startNewUntimed() {
         
         if (!selected.find(s => s.id === picked.id)) {
             selected.push(picked);
-            // Remove all instances of this ID from weightedPool so it's not picked again
             weightedPool = weightedPool.filter(p => p.id !== picked.id);
-            // Remove from tempPool to manage the loop safety
             tempPool = tempPool.filter(p => p.id !== picked.id);
         }
     }
@@ -184,8 +182,8 @@ function toggleFlag() {
 }
 
 function finishTest() {
-    // Clear active session upon finishing
-    localStorage.removeItem('orion_current_session');
+    // MODIFIED (v2.4.2): Session is now preserved.
+    // localStorage.removeItem('orion_current_session');
     
     let shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
     let score = 0;
@@ -197,12 +195,10 @@ function finishTest() {
         if (isCorrect) {
             score++;
             if (shameTally[q.id]) {
-                // Redemption: Correct answer removes 0.5 (Strict 2:1 ratio)
                 shameTally[q.id] -= 0.5;
                 if (shameTally[q.id] <= 0) delete shameTally[q.id];
             }
         } else if (userSelection) {
-            // Error: Wrong answer adds 1.0 weight
             shameTally[q.id] = (shameTally[q.id] || 0) + 1;
         }
     });
