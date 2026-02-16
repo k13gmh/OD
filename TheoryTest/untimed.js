@@ -1,13 +1,14 @@
 /**
  * File: untimed.js
- * Version: v2.4.2
- * * Change Log:
+ * Version: v2.4.3
+ * Change Log:
+ * v2.4.3 - Logic Change: Session now only saves after user interaction (answering/moving) to avoid empty resume prompts.
  * v2.4.2 - Disabled localStorage.removeItem('orion_current_session') in finishTest to allow resumption after review.
  * v2.4.1 - Feature: Weighted Selection & Strict Redemption (2:1 Ratio).
  * v2.4.0 - Initial Weighted logic implementation.
  */
 
-const JS_VERSION = "v2.4.2";
+const JS_VERSION = "v2.4.3";
 const HTML_VERSION = "v2.2.8"; 
 
 if (!localStorage.getItem('orion_session_token')) {
@@ -36,7 +37,6 @@ async function init() {
     `;
     document.head.appendChild(style);
 
-    // Inject the Modal HTML
     const modalDiv = document.createElement('div');
     modalDiv.id = "resume-modal";
     modalDiv.innerHTML = `
@@ -90,7 +90,6 @@ function startNewUntimed() {
     const shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
     let weightedPool = [];
 
-    // Build the Weighted Lottery
     allQuestions.forEach(q => {
         let weight = Math.max(1, Math.floor(shameTally[q.id] || 0) + 1);
         for (let i = 0; i < weight; i++) {
@@ -115,7 +114,9 @@ function startNewUntimed() {
     sessionQuestions = selected.sort(() => 0.5 - Math.random());
     currentIndex = 0;
     testData = { selections: {}, flagged: [] };
-    saveProgress();
+    
+    // MODIFIED (v2.4.3): Removed saveProgress() from here. 
+    // We don't save the session until they actually DO something.
     renderQuestion();
 }
 
@@ -152,7 +153,7 @@ function renderQuestion() {
             btn.innerHTML = `<strong>${letter}:</strong> ${q.choices[letter]}`;
             btn.onclick = () => { 
                 testData.selections[q.id] = letter; 
-                saveProgress();
+                saveProgress(); // SAVES ON SELECTION
                 renderQuestion(); 
             };
             optionsArea.appendChild(btn);
@@ -167,7 +168,7 @@ function changeQuestion(step) {
     const newIndex = currentIndex + step;
     if (newIndex >= 0 && newIndex < sessionQuestions.length) {
         currentIndex = newIndex;
-        saveProgress();
+        saveProgress(); // SAVES ON NAVIGATION
         renderQuestion();
     }
 }
@@ -177,14 +178,11 @@ function toggleFlag() {
     const idx = testData.flagged.indexOf(q.id);
     if (idx > -1) testData.flagged.splice(idx, 1);
     else testData.flagged.push(q.id);
-    saveProgress();
+    saveProgress(); // SAVES ON FLAG
     renderQuestion();
 }
 
 function finishTest() {
-    // MODIFIED (v2.4.2): Session is now preserved.
-    // localStorage.removeItem('orion_current_session');
-    
     let shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || '{}');
     let score = 0;
 
