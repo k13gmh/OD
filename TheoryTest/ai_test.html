@@ -5,91 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orion AI Test Harness</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-            position: relative;
-        }
-        h2 { margin-top: 0; color: #333; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); width: 100%; max-width: 500px; position: relative; }
+        .version-label { position: absolute; top: 10px; right: 15px; font-size: 0.7rem; color: #ccc; }
         .input-group { margin-bottom: 1.5rem; }
-        label { display: block; margin-bottom: 0.5rem; color: #666; }
-        input[type="number"] {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        button:hover { background-color: #0056b3; }
-        #question-display {
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 2px solid #eee;
-        }
-        .version-label {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 0.7rem;
-            color: #ccc;
-        }
-        /* Layout for Lifeline Buttons [cite: 2026-02-06] */
-        .lifeline-row {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
+        button { width: 100%; padding: 0.75rem; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: bold; }
+        #question-display { margin-top: 2rem; padding-top: 1rem; border-top: 2px solid #eee; }
+        .lifeline-row { display: flex; gap: 10px; margin-top: 15px; }
         .btn-hub { background-color: #28a745; }
-        .btn-hub:hover { background-color: #218838; }
         .btn-nat { background-color: #17a2b8; }
-        .btn-nat:hover { background-color: #138496; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <span class="version-label">Harness v1.2.4</span>
+    <span class="version-label">Harness v1.2.5</span>
     <h2>Orion Test Controller</h2>
-    
     <div class="input-group">
-        <label for="qid">Enter Question ID:</label>
-        <input type="number" id="qid" placeholder="e.g. 7">
+        <input type="number" id="qid" placeholder="Question ID">
     </div>
-    
     <button onclick="loadTestQuestion()">Load Question</button>
 
     <div id="question-display" style="display:none;">
         <h3 id="q-text"></h3>
         <div id="q-options"></div>
-        
         <div class="lifeline-row">
             <button id="ask-hub-btn" class="btn-hub">Ask Hub Capp</button>
-            <button id="ask-nat-btn" class="btn-nat">Ask NatSav</button>
+            <button id="ask-nat-btn" class="btn-nat">GPS</button>
         </div>
     </div>
 </div>
@@ -101,39 +43,23 @@
     function loadTestQuestion() {
         const id = document.getElementById('qid').value;
         const display = document.getElementById('question-display');
-        const qText = document.getElementById('q-text');
-        const qOptions = document.getElementById('q-options');
-        const hubBtn = document.getElementById('ask-hub-btn');
-        const natBtn = document.getElementById('ask-nat-btn');
-
         const masterData = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
         const question = masterData.find(q => q.id == id);
 
-        if (!question) {
-            alert("Question ID not found!");
-            return;
-        }
+        if (!question) return alert("Question ID not found!");
 
         display.style.display = 'block';
-        qText.innerText = question.question;
+        document.getElementById('q-text').innerText = question.question;
+        const qOptions = document.getElementById('q-options');
         qOptions.innerHTML = '';
         
         for (const [key, value] of Object.entries(question.choices)) {
-            const p = document.createElement('p');
-            p.innerHTML = `<strong>${key}:</strong> ${value}`;
-            qOptions.appendChild(p);
+            qOptions.innerHTML += `<p><strong>${key}:</strong> ${value}</p>`;
         }
 
-        // Connect Lifelines [cite: 2026-02-06]
-        hubBtn.onclick = function() {
-            askafriend(question.id, question.question, question.choices);
-        };
-
-        natBtn.onclick = function() {
-            natsav(question.id);
-        };
+        document.getElementById('ask-hub-btn').onclick = () => askafriend(question.id, question.question, question.choices);
+        document.getElementById('ask-nat-btn').onclick = () => natsav(question.id);
     }
 </script>
-
 </body>
 </html>
