@@ -1,6 +1,6 @@
 /**
  * Orion Drive AI Assistant: natsav.js
- * Version: 1.0.1
+ * Version: 1.0.3
  * Character: Natalie Saav (NatSav)
  * Function: Removes two wrong answers (50/50).
  */
@@ -10,7 +10,6 @@ function natsav(id) {
     const overlay = createNatOverlay();
     document.body.appendChild(overlay);
 
-    // Access Data [cite: 2026-02-06]
     const shameTally = JSON.parse(localStorage.getItem('orion_shame_tally') || "{}");
     const masterData = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
     
@@ -19,7 +18,6 @@ function natsav(id) {
 
     let speechText = "";
     
-    // Personality Logic [cite: 2026-02-06]
     if (isShamed) {
         speechText = "Recalculating... I see you've struggled with this route before. Let's take it slow and clear the road.";
     } else {
@@ -34,16 +32,13 @@ function natsav(id) {
 
     document.getElementById('nat-speech-txt').innerText = speechText;
 
-    // Logic to remove 2 wrong answers [cite: 2026-02-06]
     if (foundInMaster) {
-        const correctLetter = foundInMaster.correct; // e.g., "C"
-        const allLetters = Object.keys(foundInMaster.choices); // ["A", "B", "C", "D"]
+        const correctLetter = foundInMaster.correct; 
+        const allLetters = Object.keys(foundInMaster.choices); 
         const wrongLetters = allLetters.filter(letter => letter !== correctLetter);
         
-        // Randomly pick 2 to remove [cite: 2026-02-06]
         const toRemove = wrongLetters.sort(() => 0.5 - Math.random()).slice(0, 2);
         
-        // Display the question with greyed out options [cite: 2026-02-06]
         const qContainer = document.getElementById('nat-q-display');
         qContainer.innerHTML = `<p><strong>${foundInMaster.question}</strong></p>`;
         
@@ -81,11 +76,11 @@ function createNatOverlay() {
     div.id = 'natsav-overlay';
     div.innerHTML = `
         <div class="nat-card">
-            <span class="nat-header">Natalie Saav (GPS)</span>
+            <span class="nat-header">Natalie Saav</span>
             <div id="nat-speech-txt" class="nat-speech">Calculating best route...</div>
             <div id="nat-q-display"></div>
             <button class="nat-close-btn" onclick="closeNat()">Back to Question</button>
-            <span class="nat-ver">v1.0.1</span>
+            <span class="nat-ver">v1.0.3</span>
         </div>
     `;
     return div;
