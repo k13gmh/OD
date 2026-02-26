@@ -6,47 +6,61 @@
     <title>Orion AI Test Harness</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); width: 100%; max-width: 500px; position: relative; }
+        .container { background-color: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); width: 100%; max-width: 550px; position: relative; }
         .version-label { position: absolute; top: 10px; right: 15px; font-size: 0.7rem; color: #ccc; }
         .input-group { margin-bottom: 1.5rem; }
-        button { width: 100%; padding: 0.75rem; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; font-weight: bold; }
+        button { width: 100%; padding: 0.75rem; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold; }
         #question-display { margin-top: 2rem; padding-top: 1rem; border-top: 2px solid #eee; }
-        .lifeline-row { display: flex; gap: 10px; margin-top: 15px; }
-        .btn-hub { background-color: #28a745; }
-        .btn-nat { background-color: #17a2b8; }
+        
+        /* Lifeline Button Row [cite: 2026-02-06] */
+        .lifeline-row { display: flex; gap: 8px; margin-top: 15px; }
+        .btn-hub { background-color: #28a745; flex: 1; }
+        .btn-nat { background-color: #17a2b8; flex: 1; }
+        .btn-dash { background-color: #333; flex: 1; }
+        
+        button:hover { opacity: 0.9; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <span class="version-label">Harness v1.2.5</span>
+    <span class="version-label">Harness v1.2.6</span>
     <h2>Orion Test Controller</h2>
     <div class="input-group">
-        <input type="number" id="qid" placeholder="Question ID">
+        <label for="qid">Enter Question ID:</label>
+        <input type="number" id="qid" placeholder="e.g. 7">
     </div>
     <button onclick="loadTestQuestion()">Load Question</button>
 
     <div id="question-display" style="display:none;">
         <h3 id="q-text"></h3>
         <div id="q-options"></div>
+        
         <div class="lifeline-row">
             <button id="ask-hub-btn" class="btn-hub">Ask Hub Capp</button>
             <button id="ask-nat-btn" class="btn-nat">GPS</button>
+            <button id="ask-dash-btn" class="btn-dash">Dash Kam</button>
         </div>
     </div>
 </div>
 
 <script src="askafriend.js"></script>
 <script src="natsav.js"></script>
+<script src="dashkam.js"></script>
 
 <script>
     function loadTestQuestion() {
         const id = document.getElementById('qid').value;
         const display = document.getElementById('question-display');
+        
+        // Simulation of Orion master data retrieval [cite: 2026-02-06]
         const masterData = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
         const question = masterData.find(q => q.id == id);
 
-        if (!question) return alert("Question ID not found!");
+        if (!question) {
+            alert("Question ID not found in local storage!");
+            return;
+        }
 
         display.style.display = 'block';
         document.getElementById('q-text').innerText = question.question;
@@ -54,12 +68,25 @@
         qOptions.innerHTML = '';
         
         for (const [key, value] of Object.entries(question.choices)) {
-            qOptions.innerHTML += `<p><strong>${key}:</strong> ${value}</p>`;
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>${key}:</strong> ${value}`;
+            qOptions.appendChild(p);
         }
 
-        document.getElementById('ask-hub-btn').onclick = () => askafriend(question.id, question.question, question.choices);
-        document.getElementById('ask-nat-btn').onclick = () => natsav(question.id);
+        // Initialize Lifeline Triggers [cite: 2026-02-06]
+        document.getElementById('ask-hub-btn').onclick = function() {
+            askafriend(question.id, question.question, question.choices);
+        };
+
+        document.getElementById('ask-nat-btn').onclick = function() {
+            natsav(question.id);
+        };
+
+        document.getElementById('ask-dash-btn').onclick = function() {
+            dashkam(question.id);
+        };
     }
 </script>
+
 </body>
 </html>
