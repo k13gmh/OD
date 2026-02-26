@@ -3,93 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion AI Test Harness v1.2.2</title>
+    <title>Orion AI Test Harness</title>
     <style>
-        body { font-family: sans-serif; background: #f4f4f9; padding: 20px; color: #333; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .version-label { font-size: 0.7rem; color: #999; float: right; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
-        button { width: 100%; padding: 15px; margin: 10px 0; cursor: pointer; border: none; border-radius: 5px; font-weight: bold; font-size: 1rem; transition: 0.2s; }
-        .btn-preview { background: #3498db; color: white; }
-        .btn-confirm { background: #2ecc71; color: white; display: none; }
-        #display-area { margin-top: 20px; padding: 15px; border-left: 4px solid #3498db; background: #f9f9f9; display: none; }
-        .choice { margin: 5px 0; padding: 8px; background: #eee; border-radius: 4px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+        }
+        h2 { margin-top: 0; color: #333; }
+        .input-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; color: #666; }
+        input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #0056b3; }
+        #question-display {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 2px solid #eee;
+        }
+        .version-label {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 0.7rem;
+            color: #ccc;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <span class="version-label">v1.2.2</span>
+    <span class="version-label">Harness v1.2.3</span>
     <h2>Orion Test Controller</h2>
     
-    <label for="qid-input">Enter Question ID:</label>
-    <input type="text" id="qid-input" placeholder="e.g. 400">
+    <div class="input-group">
+        <label for="qid">Enter Question ID:</label>
+        <input type="number" id="qid" placeholder="e.g. 7">
+    </div>
     
-    <button class="btn-preview" onclick="previewQuestion()">Load Question</button>
+    <button onclick="loadTestQuestion()">Load Question</button>
 
-    <div id="display-area">
-        <h3>Question Preview</h3>
-        <p id="q-text" style="font-size: 1.1rem;"></p>
+    <div id="question-display" style="display:none;">
+        <h3 id="q-text"></h3>
         <div id="q-options"></div>
-        <button class="btn-confirm" id="confirm-btn" onclick="triggerAI()">CONFIRM: Ask A Friend</button>
+        <br>
+        <button id="ask-hub-btn" style="background-color: #28a745;">Ask Hub Capp</button>
     </div>
 </div>
 
+<script src="askafriend.js"></script>
+
 <script>
-    // Simulating your Orion Master data [cite: 2026-02-06]
-    const orionMaster = {
-        "400": {
-            "question": "What should you do if your car begins to skid when you brake?",
-            "choices": {
-                "A": "Release the footbrake and steer into the skid",
-                "B": "Brake harder to stop the slide",
-                "C": "Select a higher gear",
-                "D": "Apply the handbrake"
-            }
-        },
-        "401": {
-            "question": "In which conditions are your stopping distances likely to be ten times longer?",
-            "choices": {
-                "A": "In heavy rain",
-                "B": "In thick fog",
-                "C": "On icy roads",
-                "D": "On a very hot day"
-            }
+    /**
+     * Simulation of the Orion Drive master data and memory systems
+     * for testing purposes. [cite: 2026-02-06]
+     */
+    function loadTestQuestion() {
+        const id = document.getElementById('qid').value;
+        const display = document.getElementById('question-display');
+        const qText = document.getElementById('q-text');
+        const qOptions = document.getElementById('q-options');
+        const hubBtn = document.getElementById('ask-hub-btn');
+
+        // Retrieve local data [cite: 2026-02-06]
+        const masterData = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
+        const question = masterData.find(q => q.id == id);
+
+        if (!question) {
+            alert("Question ID not found in local orion_master.json!");
+            return;
         }
-    };
 
-    function previewQuestion() {
-        const id = document.getElementById('qid-input').value.trim();
-        const data = orionMaster[id];
-        const display = document.getElementById('display-area');
-
-        if (data) {
-            document.getElementById('q-text').innerText = data.question;
-            const optionsDiv = document.getElementById('q-options');
-            optionsDiv.innerHTML = ""; 
-            
-            for (const [key, text] of Object.entries(data.choices)) {
-                optionsDiv.innerHTML += `<div class="choice"><strong>${key}:</strong> ${text}</div>`;
-            }
-
-            display.style.display = "block";
-            document.getElementById('confirm-btn').style.display = "block";
-        } else {
-            alert("ID " + id + " not found.");
-            display.style.display = "none";
+        // Setup display [cite: 2026-02-06]
+        display.style.display = 'block';
+        qText.innerText = question.question;
+        qOptions.innerHTML = '';
+        
+        // Render options [cite: 2026-02-06]
+        for (const [key, value] of Object.entries(question.choices)) {
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>${key}:</strong> ${value}`;
+            qOptions.appendChild(p);
         }
-    }
 
-    function triggerAI() {
-        const id = document.getElementById('qid-input').value.trim();
-        const data = orionMaster[id];
-
-        // This checks if the function "askafriend" exists globally [cite: 2026-02-06]
-        if (typeof askafriend === "function") {
-            askafriend(id, data.question, data.choices);
-        } else {
-            alert("Error: The function 'askafriend' is not defined. Ensure askafriend.js is loaded.");
-        }
+        // Connect the "Friend" trigger [cite: 2026-02-06]
+        hubBtn.onclick = function() {
+            askafriend(question.id, question.question, question.choices);
+        };
     }
 </script>
 
