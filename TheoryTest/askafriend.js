@@ -1,9 +1,8 @@
 /**
  * Orion Drive AI Assistant: askafriend.js
- * Version: 1.3.6
- * Character: Hub Capp
- * UI: White/Green Gauge (70%+ Green), E/F Markers.
- * Logic: Dither Penalty (Removes ID from memory).
+ * Version: 1.3.7
+ * Character: Hub Capp (The Face Gauge)
+ * UI: E/F as Eyes, Smile Arc, White/Green (70%+) Gauge.
  */
 
 function askafriend(id, question, choices) {
@@ -23,17 +22,14 @@ function askafriend(id, question, choices) {
     let responseText = "";
     let needleRotation = -90; 
 
-    // Quirk factor: 1-10 [cite: 2026-02-06]
     const quirkChance = Math.floor(Math.random() * 10) + 1;
 
     if (isLearned && foundInMaster) {
         if (quirkChance === 1) { 
-            // THE DITHERER: Forgets and loses memory [cite: 2026-02-06]
             needleRotation = Math.floor(Math.random() * 20) - 10; 
             statusText = "I can never remember this one...";
             responseText = `I thought I knew it, but I keep getting it wrong! I think it's ${foundInMaster.correct}?`;
             
-            // Dither Penalty: Remove from memory [cite: 2026-02-06]
             aiMemory = aiMemory.filter(mid => mid !== id);
             localStorage.setItem('orion_ai_memory', JSON.stringify(aiMemory));
         } else {
@@ -96,30 +92,36 @@ function injectAIStyles() {
         #orion-ai-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; justify-content: center; align-items: center; }
         .ai-card { background: white; width: 90%; max-width: 400px; padding: 25px; border-radius: 20px; text-align: center; font-family: sans-serif; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        .gauge-container { position: relative; width: 220px; margin: 10px auto; }
+        .gauge-container { position: relative; width: 220px; margin: 10px auto; height: 140px; }
         .gauge-box { width: 200px; height: 100px; margin: 0 auto; position: relative; overflow: hidden; }
         
         /* White to Green (70% split) [cite: 2026-02-06] */
         .gauge-arc { 
             width: 200px; height: 200px; border-radius: 50%; border: 15px solid white; 
             border-bottom-color: transparent; 
-            border-right-color: #2ecc71; /* Green only on the right [cite: 2026-02-06] */
+            border-right-color: #2ecc71; 
             transform: rotate(-45deg); box-sizing: border-box; 
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
         }
         
-        /* Background shadow for the white arc area */
         .gauge-box::before {
             content: ''; position: absolute; top: 0; left: 0; width: 200px; height: 200px; 
-            border-radius: 50%; border: 15px solid #f0f0f0; border-bottom-color: transparent;
+            border-radius: 50%; border: 15px solid #f4f4f4; border-bottom-color: transparent;
             z-index: -1; box-sizing: border-box;
         }
 
-        .gauge-label { position: absolute; bottom: 0; font-weight: bold; color: #333; font-size: 1.2rem; }
-        .label-e { left: 0; }
-        .label-f { right: 0; }
+        /* E and F as Eyes [cite: 2026-02-06] */
+        .gauge-label { position: absolute; top: 65px; font-weight: 900; color: #333; font-size: 1.6rem; letter-spacing: -1px; }
+        .label-e { left: 45px; }
+        .label-f { right: 45px; }
 
-        .ai-needle { width: 4px; height: 80px; background: #333; position: absolute; bottom: 0; left: 50%; transform-origin: bottom center; transform: rotate(-90deg); transition: transform 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 10; }
+        /* The Smile Arc [cite: 2026-02-06] */
+        .gauge-smile {
+            position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+            width: 60px; height: 30px; border: 3px solid #ddd;
+            border-top: 0; border-radius: 0 0 50px 50px;
+        }
+
+        .ai-needle { width: 4px; height: 80px; background: #333; position: absolute; bottom: 40px; left: 50%; transform-origin: bottom center; transform: rotate(-90deg); transition: transform 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 10; }
         .ai-needle::after { content: ''; position: absolute; bottom: -5px; left: -3px; width: 10px; height: 10px; background: #333; border-radius: 50%; }
 
         @keyframes dither {
@@ -130,7 +132,7 @@ function injectAIStyles() {
         }
         .dither-shake { animation: dither 0.3s infinite; animation-delay: 1.2s; }
 
-        .ai-status { color: #666; font-style: italic; margin: 15px 0 5px; min-height: 1.2em; }
+        .ai-status { color: #666; font-style: italic; margin: 5px 0; min-height: 1.2em; }
         .ai-response { font-size: 1.1rem; font-weight: bold; color: #2c3e50; margin-bottom: 20px; line-height: 1.4; }
         .ai-close-btn { background: #007bff; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         
@@ -153,11 +155,12 @@ function createAIOverlay() {
                 </div>
                 <span class="gauge-label label-e">E</span>
                 <span class="gauge-label label-f">F</span>
+                <div class="gauge-smile"></div>
             </div>
             <div id="ai-status-txt" class="ai-status">Checking the tank...</div>
             <div id="ai-response-txt" class="ai-response"></div>
             <button class="ai-close-btn" onclick="closeFriend()">Back to Question</button>
-            <span class="ver-stamp">v1.3.6</span>
+            <span class="ver-stamp">v1.3.7</span>
         </div>
     `;
     return div;
