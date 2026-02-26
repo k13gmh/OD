@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion AI Test Harness v1.2.2</title>
+    <title>Orion AI Test Harness v1.2.3</title>
     <style>
         body { font-family: sans-serif; background: #f4f4f9; padding: 20px; color: #333; }
         .container { max-width: 600px; margin: auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
@@ -19,76 +19,77 @@
 <body>
 
 <div class="container">
-    <span class="version-label">v1.2.2</span>
+    <span class="version-label">v1.2.3</span>
     <h2>Orion Test Controller</h2>
     
     <label for="qid-input">Enter Question ID:</label>
-    <input type="text" id="qid-input" placeholder="e.g. 400">
+    <input type="text" id="qid-input" placeholder="e.g. 1">
     
     <button class="btn-preview" onclick="previewQuestion()">Load Question</button>
 
     <div id="display-area">
         <h3>Question Preview</h3>
-        <p id="q-text" style="font-size: 1.1rem;"></p>
+        <p id="q-text" style="font-size: 1.1rem; font-weight: bold;"></p>
         <div id="q-options"></div>
         <button class="btn-confirm" id="confirm-btn" onclick="triggerAI()">CONFIRM: Ask A Friend</button>
     </div>
 </div>
 
+<script src="askafriend.js"></script>
+
 <script>
-    // Simulating your Orion Master data [cite: 2026-02-06]
-    const orionMaster = {
-        "400": {
-            "question": "What should you do if your car begins to skid when you brake?",
-            "choices": {
-                "A": "Release the footbrake and steer into the skid",
-                "B": "Brake harder to stop the slide",
-                "C": "Select a higher gear",
-                "D": "Apply the handbrake"
-            }
-        },
-        "401": {
-            "question": "In which conditions are your stopping distances likely to be ten times longer?",
-            "choices": {
-                "A": "In heavy rain",
-                "B": "In thick fog",
-                "C": "On icy roads",
-                "D": "On a very hot day"
-            }
-        }
-    };
+    let activeQuestionData = null;
 
     function previewQuestion() {
         const id = document.getElementById('qid-input').value.trim();
-        const data = orionMaster[id];
         const display = document.getElementById('display-area');
+        const optionsDiv = document.getElementById('q-options');
+        const confirmBtn = document.getElementById('confirm-btn');
 
-        if (data) {
-            document.getElementById('q-text').innerText = data.question;
-            const optionsDiv = document.getElementById('q-options');
+        // 1. Get raw data from Local Storage [cite: 2026-02-06]
+        const rawData = localStorage.getItem('orion_master.json');
+        
+        if (!rawData) {
+            alert("Error: 'orion_master.json' not found in Local Storage.");
+            return;
+        }
+
+        // 2. Parse the JSON string [cite: 2026-02-06]
+        const masterList = JSON.parse(rawData);
+        
+        // 3. Find the specific ID [cite: 2026-02-06]
+        const found = masterList.find(item => item.id == id);
+
+        if (found) {
+            activeQuestionData = found;
+            document.getElementById('q-text').innerText = found.question;
             optionsDiv.innerHTML = ""; 
             
-            for (const [key, text] of Object.entries(data.choices)) {
+            // Render options A-D [cite: 2026-02-06]
+            for (const [key, text] of Object.entries(found.choices)) {
                 optionsDiv.innerHTML += `<div class="choice"><strong>${key}:</strong> ${text}</div>`;
             }
 
             display.style.display = "block";
-            document.getElementById('confirm-btn').style.display = "block";
+            confirmBtn.style.display = "block";
         } else {
-            alert("ID " + id + " not found.");
+            alert("ID " + id + " not found in local master data.");
             display.style.display = "none";
         }
     }
 
     function triggerAI() {
-        const id = document.getElementById('qid-input').value.trim();
-        const data = orionMaster[id];
+        if (!activeQuestionData) return;
 
-        // This checks if the function "askafriend" exists globally [cite: 2026-02-06]
+        const id = activeQuestionData.id;
+        const question = activeQuestionData.question;
+        const choices = activeQuestionData.choices;
+
+        // Call the specific function name as requested [cite: 2026-02-06]
         if (typeof askafriend === "function") {
-            askafriend(id, data.question, data.choices);
+            askafriend(id, question, choices);
         } else {
-            alert("Error: The function 'askafriend' is not defined. Ensure askafriend.js is loaded.");
+            alert("System Message: Function 'askafriend' not found. Please create askafriend.js.");
         }
     }
 </script>
