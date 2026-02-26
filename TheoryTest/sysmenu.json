@@ -27,5 +27,9 @@
  {
     "description": "REROLL",
     "htmlName": "reroll.html"
+  },
+  {
+    "description": "AI TEST",
+    "htmlName": "ai_test.html"
   }
 ]
