@@ -12,11 +12,22 @@
         button { width: 100%; padding: 0.75rem; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold; }
         #question-display { margin-top: 2rem; padding-top: 1rem; border-top: 2px solid #eee; }
         
-        /* Lifeline Button Row [cite: 2026-02-06] */
+        /* Lifeline Button Row with Icons [cite: 2026-02-06] */
         .lifeline-row { display: flex; gap: 8px; margin-top: 15px; }
-        .btn-hub { background-color: #28a745; flex: 1; }
-        .btn-nat { background-color: #17a2b8; flex: 1; }
-        .btn-dash { background-color: #333; flex: 1; }
+        .btn-lifeline { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 5px; 
+            padding: 10px 5px; 
+        }
+        .btn-lifeline span { font-size: 1.2rem; } /* Icon size */
+        
+        .btn-hub { background-color: #28a745; }
+        .btn-nat { background-color: #17a2b8; }
+        .btn-dash { background-color: #333; }
         
         button:hover { opacity: 0.9; }
     </style>
@@ -24,7 +35,7 @@
 <body>
 
 <div class="container">
-    <span class="version-label">Harness v1.2.6</span>
+    <span class="version-label">Harness v1.2.7</span>
     <h2>Orion Test Controller</h2>
     <div class="input-group">
         <label for="qid">Enter Question ID:</label>
@@ -37,9 +48,15 @@
         <div id="q-options"></div>
         
         <div class="lifeline-row">
-            <button id="ask-hub-btn" class="btn-hub">Ask Hub Capp</button>
-            <button id="ask-nat-btn" class="btn-nat">GPS</button>
-            <button id="ask-dash-btn" class="btn-dash">Dash Kam</button>
+            <button id="ask-hub-btn" class="btn-lifeline btn-hub">
+                <span>📞</span> Hub
+            </button>
+            <button id="ask-nat-btn" class="btn-lifeline btn-nat">
+                <span>🛰️</span> Nat
+            </button>
+            <button id="ask-dash-btn" class="btn-lifeline btn-dash">
+                <span>📷</span> Dash
+            </button>
         </div>
     </div>
 </div>
@@ -52,8 +69,6 @@
     function loadTestQuestion() {
         const id = document.getElementById('qid').value;
         const display = document.getElementById('question-display');
-        
-        // Simulation of Orion master data retrieval [cite: 2026-02-06]
         const masterData = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
         const question = masterData.find(q => q.id == id);
 
