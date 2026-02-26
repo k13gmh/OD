@@ -58,12 +58,22 @@
             font-size: 0.7rem;
             color: #ccc;
         }
+        /* Layout for Lifeline Buttons [cite: 2026-02-06] */
+        .lifeline-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn-hub { background-color: #28a745; }
+        .btn-hub:hover { background-color: #218838; }
+        .btn-nat { background-color: #17a2b8; }
+        .btn-nat:hover { background-color: #138496; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <span class="version-label">Harness v1.2.3</span>
+    <span class="version-label">Harness v1.2.4</span>
     <h2>Orion Test Controller</h2>
     
     <div class="input-group">
@@ -76,49 +86,51 @@
     <div id="question-display" style="display:none;">
         <h3 id="q-text"></h3>
         <div id="q-options"></div>
-        <br>
-        <button id="ask-hub-btn" style="background-color: #28a745;">Ask Hub Capp</button>
+        
+        <div class="lifeline-row">
+            <button id="ask-hub-btn" class="btn-hub">Ask Hub Capp</button>
+            <button id="ask-nat-btn" class="btn-nat">Ask NatSav</button>
+        </div>
     </div>
 </div>
 
 <script src="askafriend.js"></script>
+<script src="natsav.js"></script>
 
 <script>
-    /**
-     * Simulation of the Orion Drive master data and memory systems
-     * for testing purposes. [cite: 2026-02-06]
-     */
     function loadTestQuestion() {
         const id = document.getElementById('qid').value;
         const display = document.getElementById('question-display');
         const qText = document.getElementById('q-text');
         const qOptions = document.getElementById('q-options');
         const hubBtn = document.getElementById('ask-hub-btn');
+        const natBtn = document.getElementById('ask-nat-btn');
 
-        // Retrieve local data [cite: 2026-02-06]
         const masterData = JSON.parse(localStorage.getItem('orion_master.json') || "[]");
         const question = masterData.find(q => q.id == id);
 
         if (!question) {
-            alert("Question ID not found in local orion_master.json!");
+            alert("Question ID not found!");
             return;
         }
 
-        // Setup display [cite: 2026-02-06]
         display.style.display = 'block';
         qText.innerText = question.question;
         qOptions.innerHTML = '';
         
-        // Render options [cite: 2026-02-06]
         for (const [key, value] of Object.entries(question.choices)) {
             const p = document.createElement('p');
             p.innerHTML = `<strong>${key}:</strong> ${value}`;
             qOptions.appendChild(p);
         }
 
-        // Connect the "Friend" trigger [cite: 2026-02-06]
+        // Connect Lifelines [cite: 2026-02-06]
         hubBtn.onclick = function() {
             askafriend(question.id, question.question, question.choices);
+        };
+
+        natBtn.onclick = function() {
+            natsav(question.id);
         };
     }
 </script>
