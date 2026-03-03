@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orion Drive - Image Manager Test Bench</title>
+    <style>
+        :root {
+            --primary: #007bff;
+            --bg: #f8f9fa;
+            --text: #333;
+        }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background: var(--bg); 
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        input {
+            width: 80%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        button {
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        button:active { opacity: 0.8; }
+        
+        #status-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #eee;
+            font-size: 0.9rem;
+            min-height: 50px;
+            line-height: 1.4;
+        }
+        #img-container {
+            margin-top: 20px;
+            width: 100%;
+            display: none;
+        }
+        #display-img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .source-tag {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            background: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Image Manager Test</h2>
+        <p>Enter a Question ID to test fetch/cache logic, or 'all' / 'check' for bulk modes.</p>
+        
+        <input type="text" id="userInput" placeholder="e.g. 101, all, or check">
+        
+        <div class="btn-group">
+            <button onclick="handleExecution()">EXECUTE COMMAND</button>
+        </div>
+
+        <div id="status-box">
+            System Ready.<br>
+            <span style="font-size: 0.7rem; color: #888;">Awaiting input...</span>
+        </div>
+
+        <div id="img-container">
+            <img id="display-img" src="" alt="Resulting Question Image">
+            <div id="source-indicator" class="source-tag">SOURCE: UNKNOWN</div>
+        </div>
+    </div>
+
+    <script src="jpgmgr.js"></script>
+
+    <script>
+        async function handleExecution() {
+            const input = document.getElementById('userInput').value.trim().toLowerCase();
+            const statusBox = document.getElementById('status-box');
+            const imgContainer = document.getElementById('img-container');
+            const displayImg = document.getElementById('display-img');
+            const sourceIndicator = document.getElementById('source-indicator');
+
+            // Reset UI for new request
+            imgContainer.style.display = "none";
+            statusBox.innerHTML = "Working...";
+            statusBox.style.color = "#333";
+
+            // 1. Check for bulk keywords
+            if (input === 'all' || input === 'check') {
+                alert("Mode recognized: " + input.toUpperCase() + "\nThis bulk logic is not yet coded in jpgmgr.js.");
+                statusBox.innerHTML = "Command: <strong>" + input.toUpperCase() + "</strong><br>Status: Awaiting logic implementation.";
+                return;
+            }
+
+            // 2. Validate ID input
+            if (!input) {
+                statusBox.innerHTML = "<span style='color:red;'>Error: Please enter an ID.</span>";
+                return;
+            }
+
+            // 3. Call the Manager
+            // We expect jpgmgr(id) to return an object: { success: bool, message: string, source: string }
+            try {
+                const result = await jpgmgr(input);
+
+                if (result.success) {
+                    statusBox.innerHTML = "<strong>Success</strong><br>" + result.message;
+                    statusBox.style.color = "green";
+                    
+                    // Show the image
+                    displayImg.src = `images/${input}.jpeg`;
+                    sourceIndicator.innerText = "SOURCE: " + (result.source || "UNKNOWN");
+                    imgContainer.style.display = "block";
+                } else {
+                    statusBox.innerHTML = "<strong>Failed</strong><br>" + result.message;
+                    statusBox.style.color = "red";
+                }
+            } catch (e) {
+                statusBox.innerHTML = "<span style='color:red;'>Script Error: jpgmgr.js not found or crashed.</span>";
+                console.error(e);
+            }
+        }
+    </script>
+</body>
+</html>
