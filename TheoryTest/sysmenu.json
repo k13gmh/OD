@@ -31,5 +31,9 @@
   {
     "description": "AI TEST",
     "htmlName": "ai_test.html"
+  },
+  {
+    "description": "IMAGE TEST",
+    "htmlName": "testjpg.html"
   }
 ]
