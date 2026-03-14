@@ -18,20 +18,22 @@
         .system-footer { background: #f8f9fa; padding: 10px 15px; border-top: 1px solid #eee; text-align: left; }
         .debug-line { display: flex; justify-content: space-between; align-items: center; color: #bbb; font-size: 0.65rem; font-family: sans-serif; font-weight: 400; }
         
-        /* Profile Button Styling */
+        /* Fixed Profile Button */
         .profile-btn { 
             position: absolute; 
-            top: 15px; 
-            right: 15px; 
+            top: -10px; /* Moves it above the card slightly to prevent overlap */
+            right: 0px; 
             display: none; 
-            z-index: 10; 
-            background: #f0f7ff;
-            padding: 8px;
+            z-index: 100; 
+            background: #fff;
+            padding: 10px;
             border-radius: 50%;
-            border: 1px solid #e1e8ed;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-decoration: none;
+            font-size: 1.5rem;
+            line-height: 1;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
         }
-        .profile-btn img { display: block; filter: invert(31%) sepia(94%) saturate(1414%) hue-rotate(193deg) brightness(101%) contrast(101%); }
         .profile-btn:active { transform: scale(0.9); }
     </style>
 </head>
@@ -56,14 +58,12 @@
     </div>
 
     <div class="container">
+        <a href="fuel.html" id="profile-btn" class="profile-btn">👤</a>
+
         <img src="images/logo.jpeg" alt="Orion Drive" style="width: 220px; margin-bottom: 5px;">
         <div id="status-msg" style="color:#28a745; font-weight:bold; font-size:0.85rem; margin-bottom:10px; display:none;">● System Online</div>
 
         <div class="card">
-            <a href="fuel.html" id="profile-btn" class="profile-btn">
-                <img src="images/profile_icon.png" alt="Profile" style="width: 24px; height: 24px;">
-            </a>
-
             <div id="lock-ui" style="padding: 30px 20px;">
                 <input type="text" id="passCode" placeholder="ENTER ACCESS CODE" autocomplete="off" style="background:#f9f9f9; border:1px solid #ddd; color:#007bff; padding:18px; font-size:1.2rem; width:100%; box-sizing:border-box; text-align:center; border-radius:12px; margin-bottom:15px;">
                 <button class="btn btn-blue" onclick="verifyAccess()" style="width:100%;">Unlock</button>
@@ -86,12 +86,12 @@
             <div class="system-footer">
                 <div class="debug-line">
                     <span id="debug-left">Orion Drive • Questions: --- • Signs: --- • Roll: -</span>
-                    <span id="debug-right">vh2.8.6 jloading...</span>
+                    <span id="debug-right">vh2.8.7 jloading...</span>
                 </div>
             </div>
         </div>
         <button onclick="triggerManualSync()" style="background:none; border:none; color:#ccc; text-decoration:underline; font-size:0.75rem; margin-top:20px; cursor:pointer;">Refresh Data</button>
     </div>
-    <script src="mainmenu.js?v=2.8.14"></script>
+    <script src="mainmenu.js?v=2.8.15"></script>
 </body>
 </html>
