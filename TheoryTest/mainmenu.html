@@ -8,8 +8,8 @@
     <style>
         #sync-modal, #smtm-modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); align-items:center; justify-content:center; z-index:9999; padding: 20px; box-sizing: border-box; }
         .sync-box, .smtm-box { background:#fff; padding:25px; border-radius:20px; width:100%; max-width:400px; text-align:center; }
-        .container { max-width: 480px; margin: 0 auto; padding: 10px; display: flex; flex-direction: column; align-items: center; }
-        .card { background: #fff; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 95%; display: flex; flex-direction: column; overflow: hidden; margin-top: 10px; }
+        .container { max-width: 480px; margin: 0 auto; padding: 10px; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .card { background: #fff; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 95%; display: flex; flex-direction: column; overflow: hidden; margin-top: 10px; position: relative; }
         #menu-options { display: none; flex-direction: column; padding: 25px 20px; gap: 15px; }
         .main-btn { text-decoration: none; padding: 18px 10px; border-radius: 12px; text-align: center; font-weight: 800; display: block; font-size: 1rem; letter-spacing: 0.5px; border: none; }
         .btn-grey { background: #adb5bd !important; color: white !important; cursor: not-allowed; }
@@ -17,6 +17,22 @@
         .smtm-choice { width: 100%; padding: 14px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 10px; background: #fff; cursor: pointer; text-align: left; font-size: 0.95rem; }
         .system-footer { background: #f8f9fa; padding: 10px 15px; border-top: 1px solid #eee; text-align: left; }
         .debug-line { display: flex; justify-content: space-between; align-items: center; color: #bbb; font-size: 0.65rem; font-family: sans-serif; font-weight: 400; }
+        
+        /* Profile Button Styling */
+        .profile-btn { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            display: none; 
+            z-index: 10; 
+            background: #f0f7ff;
+            padding: 8px;
+            border-radius: 50%;
+            border: 1px solid #e1e8ed;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .profile-btn img { display: block; filter: invert(31%) sepia(94%) saturate(1414%) hue-rotate(193deg) brightness(101%) contrast(101%); }
+        .profile-btn:active { transform: scale(0.9); }
     </style>
 </head>
 <body>
@@ -44,6 +60,10 @@
         <div id="status-msg" style="color:#28a745; font-weight:bold; font-size:0.85rem; margin-bottom:10px; display:none;">● System Online</div>
 
         <div class="card">
+            <a href="fuel.html" id="profile-btn" class="profile-btn">
+                <img src="images/profile_icon.png" alt="Profile" style="width: 24px; height: 24px;">
+            </a>
+
             <div id="lock-ui" style="padding: 30px 20px;">
                 <input type="text" id="passCode" placeholder="ENTER ACCESS CODE" autocomplete="off" style="background:#f9f9f9; border:1px solid #ddd; color:#007bff; padding:18px; font-size:1.2rem; width:100%; box-sizing:border-box; text-align:center; border-radius:12px; margin-bottom:15px;">
                 <button class="btn btn-blue" onclick="verifyAccess()" style="width:100%;">Unlock</button>
@@ -72,6 +92,6 @@
         </div>
         <button onclick="triggerManualSync()" style="background:none; border:none; color:#ccc; text-decoration:underline; font-size:0.75rem; margin-top:20px; cursor:pointer;">Refresh Data</button>
     </div>
-    <script src="mainmenu.js?v=2.8.13"></script>
+    <script src="mainmenu.js?v=2.8.14"></script>
 </body>
 </html>
