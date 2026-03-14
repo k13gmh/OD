@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Orion Drive - Fuel Settings</title>
     <style>
         :root { --primary: #007bff; --bg: #f8f9fa; --card-bg: #ffffff; --text: #333; --input-border: #ddd; }
@@ -13,7 +13,8 @@
         label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 0.9rem; }
         input, select { width: 100%; padding: 12px; border: 2px solid var(--input-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; outline: none; }
         input:focus { border-color: var(--primary); }
-        .btn-save { width: 100%; padding: 15px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+        .btn-save { width: 100%; padding: 15px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        .btn-return { background-color: #28a745 !important; }
         #status { text-align: center; margin-top: 15px; font-size: 0.85rem; font-weight: bold; }
         .version-tag { position: fixed; bottom: 10px; right: 15px; font-size: 0.7rem; color: #aaa; }
     </style>
@@ -59,9 +60,12 @@
         <div id="status"></div>
     </div>
 
-    <div class="version-tag">v1.2.2</div>
+    <div class="version-tag">v1.2.3</div>
 
     <script>
+        // Version Check: v1.2.3
+        let isSaved = false;
+
         window.onload = function() {
             if(localStorage.getItem('OrionUserName')) document.getElementById('ui_name').value = localStorage.getItem('OrionUserName');
             if(localStorage.getItem('OrionPostcode')) document.getElementById('ui_postcode').value = localStorage.getItem('OrionPostcode');
@@ -73,6 +77,13 @@
         async function saveToOrion() {
             const statusBox = document.getElementById('status');
             const saveBtn = document.getElementById('saveBtn');
+
+            // If already saved, act as a return button
+            if (isSaved) {
+                window.location.href = 'mainmenu.html';
+                return;
+            }
+
             let pc = document.getElementById('ui_postcode').value.trim().toUpperCase();
 
             if (!pc) {
@@ -85,9 +96,6 @@
             statusBox.innerText = "Finding coordinates...";
             saveBtn.disabled = true;
 
-            // Decide which API endpoint to use based on postcode length
-            // Full postcodes are usually 6-8 chars with a space.
-            // Outcodes (like DY10) are usually 2-4 chars.
             let apiUrl = `https://api.postcodes.io/postcodes/${pc}`;
             if (pc.length <= 4) {
                 apiUrl = `https://api.postcodes.io/outcodes/${pc}`;
@@ -110,7 +118,12 @@
                     localStorage.setItem('OrionFuelType', document.getElementById('ui_fuel').value);
 
                     statusBox.style.color = "green";
-                    statusBox.innerText = `Saved! (${pc} Geocoded)`;
+                    statusBox.innerText = `Preferences Saved!`;
+                    
+                    // Transformation to Return Button
+                    isSaved = true;
+                    saveBtn.innerText = "RETURN TO MENU";
+                    saveBtn.classList.add('btn-return');
                 } else {
                     statusBox.style.color = "red";
                     statusBox.innerText = "Invalid or incomplete postcode.";
