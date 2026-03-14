@@ -5,84 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orion Drive - Fuel Settings</title>
     <style>
-        :root {
-            --primary: #007bff;
-            --bg: #f8f9fa;
-            --card-bg: #ffffff;
-            --text: #333;
-            --input-border: #ddd;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 450px;
-        }
-
+        :root { --primary: #007bff; --bg: #f8f9fa; --card-bg: #ffffff; --text: #333; --input-border: #ddd; }
+        body { font-family: -apple-system, sans-serif; background-color: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .card { background: var(--card-bg); padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
         h2 { text-align: center; color: var(--primary); margin-top: 0; }
-
         .form-group { margin-bottom: 20px; }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--input-border);
-            border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
-            outline: none;
-        }
-
+        label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 0.9rem; }
+        input, select { width: 100%; padding: 12px; border: 2px solid var(--input-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; outline: none; }
         input:focus { border-color: var(--primary); }
-
-        .btn-save {
-            width: 100%;
-            padding: 15px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        #status {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-
-        .version-tag {
-            position: fixed;
-            bottom: 10px;
-            right: 15px;
-            font-size: 0.7rem;
-            color: #aaa;
-        }
+        .btn-save { width: 100%; padding: 15px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+        #status { text-align: center; margin-top: 15px; font-size: 0.85rem; font-weight: bold; }
+        .version-tag { position: fixed; bottom: 10px; right: 15px; font-size: 0.7rem; color: #aaa; }
     </style>
 </head>
 <body>
@@ -126,7 +59,7 @@
         <div id="status"></div>
     </div>
 
-    <div class="version-tag">v1.2.1</div>
+    <div class="version-tag">v1.2.2</div>
 
     <script>
         window.onload = function() {
@@ -140,7 +73,7 @@
         async function saveToOrion() {
             const statusBox = document.getElementById('status');
             const saveBtn = document.getElementById('saveBtn');
-            const pc = document.getElementById('ui_postcode').value.trim();
+            let pc = document.getElementById('ui_postcode').value.trim().toUpperCase();
 
             if (!pc) {
                 statusBox.style.color = "red";
@@ -149,18 +82,25 @@
             }
 
             statusBox.style.color = "orange";
-            statusBox.innerText = "Geocoding Postcode...";
+            statusBox.innerText = "Finding coordinates...";
             saveBtn.disabled = true;
 
+            // Decide which API endpoint to use based on postcode length
+            // Full postcodes are usually 6-8 chars with a space.
+            // Outcodes (like DY10) are usually 2-4 chars.
+            let apiUrl = `https://api.postcodes.io/postcodes/${pc}`;
+            if (pc.length <= 4) {
+                apiUrl = `https://api.postcodes.io/outcodes/${pc}`;
+            }
+
             try {
-                const response = await fetch(`https://api.postcodes.io/postcodes/${pc}`);
+                const response = await fetch(apiUrl);
                 const data = await response.json();
 
                 if (data.status === 200) {
                     const lat = data.result.latitude;
                     const lon = data.result.longitude;
 
-                    // Save everything
                     localStorage.setItem('OrionUserName', document.getElementById('ui_name').value);
                     localStorage.setItem('OrionPostcode', pc);
                     localStorage.setItem('OrionLat', lat);
@@ -170,10 +110,10 @@
                     localStorage.setItem('OrionFuelType', document.getElementById('ui_fuel').value);
 
                     statusBox.style.color = "green";
-                    statusBox.innerText = `Saved! (Lat: ${lat}, Lon: ${lon})`;
+                    statusBox.innerText = `Saved! (${pc} Geocoded)`;
                 } else {
                     statusBox.style.color = "red";
-                    statusBox.innerText = "Invalid Postcode.";
+                    statusBox.innerText = "Invalid or incomplete postcode.";
                 }
             } catch (error) {
                 statusBox.style.color = "red";
@@ -183,6 +123,5 @@
             }
         }
     </script>
-
 </body>
 </html>
