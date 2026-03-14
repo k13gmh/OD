@@ -1,10 +1,10 @@
 /**
  * File: mainmenu.js
- * Version: 2.8.13
- * Update: Fixed session token hand-off to prevent redirect loops.
+ * Version: 2.8.14
+ * Update: Added Profile button visibility logic.
  */
 
-const JS_VERSION = "2.8.13";
+const JS_VERSION = "2.8.14";
 const HTML_VERSION = "2.8.6"; 
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
@@ -30,15 +30,18 @@ function init() {
     const debugRight = document.getElementById('debug-right');
     if (debugRight) debugRight.innerText = `vh${HTML_VERSION} j${JS_VERSION}`;
     
+    const profileBtn = document.getElementById('profile-btn');
+    
     if (localStorage.getItem('gatekeeper_stamp') === curMonthYear) { 
-        // Ensure token exists even if user refreshed the page
         if (!localStorage.getItem('orion_session_token')) {
             localStorage.setItem('orion_session_token', 'active_' + Date.now());
         }
         document.getElementById('lock-ui').style.display = 'none';
+        if (profileBtn) profileBtn.style.display = 'block';
         checkSyncStatus(); 
     } else {
         document.getElementById('lock-ui').style.display = 'block';
+        if (profileBtn) profileBtn.style.display = 'none';
     }
 }
 
@@ -46,10 +49,12 @@ function verifyAccess() {
     const input = document.getElementById('passCode').value.toUpperCase();
     if (input === calcKey()) { 
         localStorage.setItem('gatekeeper_stamp', curMonthYear);
-        // Explicitly set the token required by untimed.js/mock.js
         localStorage.setItem('orion_session_token', 'active_' + Date.now());
         
         document.getElementById('lock-ui').style.display = 'none';
+        const profileBtn = document.getElementById('profile-btn');
+        if (profileBtn) profileBtn.style.display = 'block';
+        
         checkSyncStatus(); 
     } else { 
         alert("Access Denied."); 
