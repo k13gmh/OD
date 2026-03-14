@@ -1,11 +1,11 @@
 /**
  * File: mainmenu.js
- * Version: 2.8.14
- * Update: Added Profile button visibility logic.
+ * Version: 2.8.15
+ * Update: Switched profile button to emoji and improved positioning.
  */
 
-const JS_VERSION = "2.8.14";
-const HTML_VERSION = "2.8.6"; 
+const JS_VERSION = "2.8.15";
+const HTML_VERSION = "2.8.7"; 
 const ALPH = "ABCDEFGHJKMNPQRTUVWXYZ2346789#";
 const curMonthYear = (new Date().getUTCMonth() + 1) + "-" + new Date().getUTCFullYear();
 const IMAGE_CACHE_NAME = 'orion-image-cache';
