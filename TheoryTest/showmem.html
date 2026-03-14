@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Orion Drive - Raw Memory Dump</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Orion Drive - Memory Dump</title>
+    <link rel="stylesheet" href="style.css"> 
     <style>
         .mem-table { width: 100%; border-collapse: collapse; margin-top: 10px; table-layout: fixed; }
         .mem-table th, .mem-table td { 
@@ -19,7 +19,11 @@
         .raw-val { font-family: monospace; color: #d9534f; background: #fffcfc; display: block; padding: 5px; max-height: 100px; overflow-y: auto; }
         .key-name { font-weight: bold; color: #1a1a1a; }
         .btn-danger { background: #d9534f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
-        .btn-clear-all { background: #333; color: white; margin-bottom: 15px; width: 100%; }
+        .btn-clear-all { background: #333; color: white; margin-bottom: 15px; width: 100%; padding: 10px; cursor: pointer; }
+        .container { padding: 20px; max-width: 800px; margin: auto; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .card-footer { margin-top: 20px; display: flex; justify-content: space-between; font-size: 0.7rem; color: #888; }
+        .btn-blue { background: #007bff; color: white; padding: 10px 20px; border-radius: 5px; display: inline-block; }
     </style>
 </head>
 <body>
@@ -28,10 +32,12 @@
             <img src="images/logo.jpeg" alt="Orion Drive Logo" style="width: 180px; height: auto;">
         </div>
 
-        <h2>Complete Local Storage Dump</h2>
+        <h2>Orion Memory Dump</h2>
 
         <div class="card">
-            <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">Displaying all data strings currently held in browser memory.</p>
+            <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">
+                Showing keys starting with: <strong>Orion</strong>, <strong>smtm</strong>, or <strong>gatekeeper</strong>.
+            </p>
             
             <button onclick="clearAllMemory()" class="btn btn-clear-all">WIPE ALL STORAGE</button>
 
@@ -50,32 +56,39 @@
             <a href="sysmenu.html" class="btn btn-blue" style="margin-top:25px; text-decoration:none;">Back to System Menu</a>
             
             <div class="card-footer">
-                <span>TOTAL KEYS: <span id="key-count">0</span></span>
-                <span>v2.3.5</span>
+                <span>FILTERED KEYS: <span id="key-count">0</span></span>
+                <span>v2.3.6</span>
             </div>
         </div>
     </div>
 
     <script>
-        // Version Check: v2.3.5
+        // Version Check: v2.3.6
+        const DUMP_VERSION = "2.3.6";
         
         function dumpMemory() {
             const tbody = document.getElementById('mem-body');
             const countDisplay = document.getElementById('key-count');
             tbody.innerHTML = '';
             
-            const totalKeys = localStorage.length;
-            countDisplay.innerText = totalKeys;
+            let filteredCount = 0;
+            const keys = [];
 
-            if (totalKeys === 0) {
-                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding: 20px;">Memory is currently empty.</td></tr>';
-                return;
+            // Identify keys that match your prefixes
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('Orion') || key.startsWith('smtm') || key.startsWith('gatekeeper')) {
+                    keys.push(key);
+                }
             }
 
-            // Create an array of keys to avoid index shifting while rendering
-            const keys = [];
-            for (let i = 0; i < localStorage.length; i++) {
-                keys.push(localStorage.key(i));
+            // Sort keys alphabetically
+            keys.sort();
+            countDisplay.innerText = keys.length;
+
+            if (keys.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding: 20px;">No matching local data found.</td></tr>';
+                return;
             }
 
             keys.forEach(key => {
@@ -100,7 +113,7 @@
         }
 
         function clearAllMemory() {
-            if (confirm("WARNING: This will delete all local data, including scores, saved sessions, and downloaded questions. Proceed?")) {
+            if (confirm("WARNING: This will delete ALL local storage data. Proceed?")) {
                 localStorage.clear();
                 dumpMemory();
             }
