@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orion Drive - Fuel Finder Setup</title>
+    <title>Orion Drive - Fuel Settings</title>
     <style>
         :root {
             --primary: #007bff;
@@ -57,9 +57,8 @@
             border: 2px solid var(--input-border);
             border-radius: 8px;
             font-size: 1rem;
-            box-sizing: border-box; /* Ensures padding doesn't break width */
+            box-sizing: border-box;
             outline: none;
-            transition: border-color 0.2s;
         }
 
         input:focus {
@@ -76,11 +75,6 @@
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        .btn-save:active {
-            opacity: 0.8;
         }
 
         #status {
@@ -88,6 +82,7 @@
             margin-top: 15px;
             font-size: 0.85rem;
             font-weight: bold;
+            color: green;
         }
     </style>
 </head>
@@ -97,28 +92,28 @@
         <h2>Fuel Settings</h2>
         
         <div class="form-group">
-            <label for="userName">What do I call you?</label>
-            <input type="text" id="userName" placeholder="Enter name or nickname">
+            <label>What do I call you?</label>
+            <input type="text" id="ui_name" placeholder="Name or Nickname">
         </div>
 
         <div class="form-group">
-            <label for="postcode">Home Postcode (Min 4 chars)</label>
-            <input type="text" id="postcode" placeholder="e.g. DY10" maxlength="8">
+            <label>Home Postcode</label>
+            <input type="text" id="ui_postcode" placeholder="e.g. DY10">
         </div>
 
         <div class="form-group">
-            <label for="range">Search Radius (Miles)</label>
-            <input type="number" id="range" placeholder="e.g. 5" min="1" max="50">
+            <label>Search Radius (Miles)</label>
+            <input type="number" id="ui_range" placeholder="e.g. 5">
         </div>
 
         <div class="form-group">
-            <label for="brand">Preferred Brand</label>
-            <input type="text" id="brand" placeholder="e.g. Esso, Tesco or ALL">
+            <label>Preferred Brand</label>
+            <input type="text" id="ui_brand" placeholder="Esso, Tesco or ALL">
         </div>
 
         <div class="form-group">
-            <label for="fuelType">Fuel Type</label>
-            <select id="fuelType">
+            <label>Fuel Type</label>
+            <select id="ui_fuel">
                 <option value="E10">Unleaded (E10)</option>
                 <option value="E5">Super Unleaded (E5)</option>
                 <option value="B7">Diesel (B7)</option>
@@ -127,28 +122,37 @@
             </select>
         </div>
 
-        <button class="btn-save" onclick="saveFuelSettings()">SAVE PREFERENCES</button>
+        <button class="btn-save" onclick="saveToOrion()">SAVE PREFERENCES</button>
 
         <div id="status"></div>
     </div>
 
-    <script src="fuelmgr.js"></script>
-
     <script>
-        // Placeholder function until we build fuelmgr.js
-        function saveFuelSettings() {
-            const status = document.getElementById('status');
-            status.style.color = "orange";
-            status.innerText = "Connecting to fuelmgr.js...";
-            
-            if (typeof initFuelSave === "function") {
-                initFuelSave();
-            } else {
-                setTimeout(() => {
-                    status.style.color = "red";
-                    status.innerText = "Error: fuelmgr.js not found.";
-                }, 500);
-            }
+        // Load existing data if available
+        window.onload = function() {
+            if(localStorage.getItem('OrionUserName')) document.getElementById('ui_name').value = localStorage.getItem('OrionUserName');
+            if(localStorage.getItem('OrionPostcode')) document.getElementById('ui_postcode').value = localStorage.getItem('OrionPostcode');
+            if(localStorage.getItem('OrionRange')) document.getElementById('ui_range').value = localStorage.getItem('OrionRange');
+            if(localStorage.getItem('OrionBrand')) document.getElementById('ui_brand').value = localStorage.getItem('OrionBrand');
+            if(localStorage.getItem('OrionFuelType')) document.getElementById('ui_fuel').value = localStorage.getItem('OrionFuelType');
+        };
+
+        function saveToOrion() {
+            // Grab values
+            const name = document.getElementById('ui_name').value;
+            const pc = document.getElementById('ui_postcode').value;
+            const miles = document.getElementById('ui_range').value;
+            const brand = document.getElementById('ui_brand').value;
+            const fuel = document.getElementById('ui_fuel').value;
+
+            // Store with Orion prefix
+            localStorage.setItem('OrionUserName', name);
+            localStorage.setItem('OrionPostcode', pc);
+            localStorage.setItem('OrionRange', miles);
+            localStorage.setItem('OrionBrand', brand);
+            localStorage.setItem('OrionFuelType', fuel);
+
+            document.getElementById('status').innerText = "Preferences Saved Locally.";
         }
     </script>
 
