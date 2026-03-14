@@ -23,6 +23,7 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            position: relative;
         }
 
         .card {
@@ -84,6 +85,14 @@
             font-weight: bold;
             color: green;
         }
+
+        .version-tag {
+            position: fixed;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.7rem;
+            color: #aaa;
+        }
     </style>
 </head>
 <body>
@@ -127,32 +136,52 @@
         <div id="status"></div>
     </div>
 
+    <div class="version-tag">v1.2.0</div>
+
     <script>
-        // Load existing data if available
+        // Version constant for the script
+        const FUEL_VERSION = "1.2.0";
+
+        // Load existing data if available on startup
         window.onload = function() {
-            if(localStorage.getItem('OrionUserName')) document.getElementById('ui_name').value = localStorage.getItem('OrionUserName');
-            if(localStorage.getItem('OrionPostcode')) document.getElementById('ui_postcode').value = localStorage.getItem('OrionPostcode');
-            if(localStorage.getItem('OrionRange')) document.getElementById('ui_range').value = localStorage.getItem('OrionRange');
-            if(localStorage.getItem('OrionBrand')) document.getElementById('ui_brand').value = localStorage.getItem('OrionBrand');
-            if(localStorage.getItem('OrionFuelType')) document.getElementById('ui_fuel').value = localStorage.getItem('OrionFuelType');
+            if(localStorage.getItem('OrionUserName')) {
+                document.getElementById('ui_name').value = localStorage.getItem('OrionUserName');
+            }
+            if(localStorage.getItem('OrionPostcode')) {
+                document.getElementById('ui_postcode').value = localStorage.getItem('OrionPostcode');
+            }
+            if(localStorage.getItem('OrionRange')) {
+                document.getElementById('ui_range').value = localStorage.getItem('OrionRange');
+            }
+            if(localStorage.getItem('OrionBrand')) {
+                document.getElementById('ui_brand').value = localStorage.getItem('OrionBrand');
+            }
+            if(localStorage.getItem('OrionFuelType')) {
+                document.getElementById('ui_fuel').value = localStorage.getItem('OrionFuelType');
+            }
         };
 
         function saveToOrion() {
-            // Grab values
+            // Grab values from the UI
             const name = document.getElementById('ui_name').value;
             const pc = document.getElementById('ui_postcode').value;
             const miles = document.getElementById('ui_range').value;
             const brand = document.getElementById('ui_brand').value;
             const fuel = document.getElementById('ui_fuel').value;
 
-            // Store with Orion prefix
+            // Store values locally using Orion prefix
             localStorage.setItem('OrionUserName', name);
             localStorage.setItem('OrionPostcode', pc);
             localStorage.setItem('OrionRange', miles);
             localStorage.setItem('OrionBrand', brand);
             localStorage.setItem('OrionFuelType', fuel);
 
-            document.getElementById('status').innerText = "Preferences Saved Locally.";
+            // Notify user
+            const statusBox = document.getElementById('status');
+            statusBox.innerText = "Preferences Saved Locally.";
+            
+            // Clear status after 3 seconds
+            setTimeout(() => { statusBox.innerText = ""; }, 3000);
         }
     </script>
 
