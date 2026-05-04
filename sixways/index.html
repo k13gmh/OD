@@ -17,9 +17,6 @@
             margin: 0;
             padding: 20px;
         }
-        h1 { font-size: 2.5em; margin-bottom: 10px; color: #f0f0f0; }
-        p { color: #888; margin-bottom: 30px; }
-        
         .input-box {
             width: 100%;
             max-width: 300px;
@@ -31,10 +28,7 @@
             color: white;
             font-size: 1.2em;
             text-align: center;
-            outline: none;
         }
-        .input-box:focus { border-color: #007bff; }
-
         .btn { 
             display: inline-block; 
             width: 100%;
@@ -46,35 +40,31 @@
             border: none;
             border-radius: 8px;
             font-weight: bold;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s;
         }
-        .btn:hover { background: #0056b3; }
     </style>
 </head>
 <body>
 
     <h1>Coming Soon</h1>
-    <p>We are currently updating Gary's Driving Tutorials. Check back shortly for new content.</p>
+    <p>We are currently updating Gary's Driving Tutorials.</p>
     
-    <input type="text" id="entryCode" class="input-box" placeholder=" ">
+    <input type="tel" id="entryCode" class="input-box" placeholder=" ">
     
     <button onclick="checkAccess()" class="btn">Return to Portal</button>
 
     <script>
         function checkAccess() {
-            var code = document.getElementById("entryCode").value;
-            // The specific number check
+            var code = document.getElementById("entryCode").value.trim();
+            
             if (code === "07538054450") {
                 window.location.href = "Movies.html";
             } else {
-                // Optional: You can add an alert here if you want
-                // alert("Invalid reference number.");
+                // This is the "Force Exit" workaround
+                // It sends the browser to a dead internal link, effectively 'closing' your site
+                window.location.replace("about:blank");
             }
         }
 
-        // Allow pressing "Enter" on the keyboard to submit
         document.getElementById("entryCode").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
                 checkAccess();
