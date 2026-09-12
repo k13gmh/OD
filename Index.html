@@ -142,7 +142,7 @@
     <div class="form-content">
         <p>Get in touch with us to start your driving journey.</p>
         
-        <form name="enquiry-form" method="POST" data-netlify="true">
+        <form id="enquiry-form" name="enquiry-form">
             
             <label for="name">Your Full Name (required)</label>
             <input type="text" id="name" name="name" placeholder="e.g., Jane Smith" required>
@@ -201,6 +201,57 @@
         </form>
     </div>
 </div>
+
+<script>
+    const form = document.querySelector('#enquiry-form');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const submitBtn = form.querySelector('button');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+
+        // Collect all checked availability boxes automatically
+        const selectedAvailability = Array.from(
+            document.querySelectorAll('.availability-table input[type="checkbox"]:checked')
+        ).map(cb => cb.value);
+
+        const payload = {
+            full_name: document.querySelector('#name').value,
+            phone: document.querySelector('#phone').value,
+            email: document.querySelector('#email').value,
+            transmission: document.querySelector('#transmission').value,
+            postcode: document.querySelector('#postcode').value,
+            availability: selectedAvailability
+        };
+
+        try {
+            const response = await fetch('https://api.oriondrive.co.uk/api/enquiries', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert('Thank you! Your enquiry has been submitted.');
+                form.reset();
+            } else {
+                alert('Submission error: ' + (result.error || 'Please try again.'));
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+            alert('Unable to submit enquiry. Please check your internet connection.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Enquiry';
+        }
+    });
+</script>
 
 </body>
 </html>
